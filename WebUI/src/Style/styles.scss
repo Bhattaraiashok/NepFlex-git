@@ -97,12 +97,13 @@ header.masthead {
 
 header.masthead .overlay {
   position: absolute;
-  background-color: #0098ff29;
+ // background-color: #0098ff29;
+  background-color: #022346;
   height: 100%;
   width: 100%;
   top: 0;
   left: 0;
-  opacity: 0.3;
+  //opacity: 0.3;
 }
 
 @media (min-width: 768px) {

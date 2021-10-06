@@ -1,16 +1,11 @@
-<div class="global-desktop-body-column w-100">
-  <div class="global-desktop-header w-100">
-    <app-desktop-header></app-desktop-header>
-  </div>
-  <div class="global-desktop-container w-100">
-    <div class="body-container">
-      <div class="jumbotron container" id="aboutUsInfo">
-        <div class="title-about-us" [innerHTML]="aboutUsTitle"></div>
-        <div [innerHTML]="aboutUsText"></div>
-      </div>
+<app-desktop-header>
+</app-desktop-header>
+<div class="global-desktop-container w-100">
+  <div class="body-container">
+    <div class="jumbotron container" id="aboutUsInfo">
+      <div class="title-about-us" [innerHTML]="aboutUsTitle"></div>
+      <div [innerHTML]="aboutUsText"></div>
     </div>
   </div>
-  <div class="global-desktop-footer w-100">
-    <app-desktop-footer></app-desktop-footer>
-  </div>
 </div>
+<app-desktop-footer></app-desktop-footer>

@@ -2,6 +2,13 @@
 @import "../../../shared/styles-shared/styles.scss";
 @import '../../../../Style/styles.scss';
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem; 
+  }
+
 .header-body {
   @include displayFlex(nowrap, column, flex-start, stretch, stretch);
   background: black;

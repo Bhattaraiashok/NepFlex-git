@@ -1,10 +1,7 @@
-<div class="global-desktop-body-column w-100">
-  <div class="global-desktop-header w-100">
-    <app-desktop-header></app-desktop-header>
-  </div>
-  <div class="global-desktop-container w-100">
-    <form [formGroup]="reportForm" class="global-desktop-container">
-      <div class="body-container">
+<app-desktop-header></app-desktop-header>
+<div class="global-desktop-container w-100">
+  <form [formGroup]="reportForm" class="global-desktop-container">
+    <div class="body-container">
       <div class="left-section container col-lg-4" id="reportLeftsection">
         <div *ngIf="!turnSmallLoader" class="report-info" id="aboutUsInfo">
           <div class="title-text">Report Section</div>
@@ -26,8 +23,7 @@
               </textarea>
           </div>
           <div class="report-input-box" id="aboutUsInfo">
-            <div [ngClass]="{'submitBtn':!turnSubmitButtonDisable,'disable-button':turnSubmitButtonDisable}"
-              (click)="saveReport()">Submit</div>
+            <div [ngClass]="{'submitBtn':!turnSubmitButtonDisable,'disable-button':turnSubmitButtonDisable}" (click)="saveReport()">Submit</div>
           </div>
         </div>
       </div>
@@ -48,9 +44,6 @@
         </div>
       </div>
     </div>
-    </form>
-  </div>
-  <div class="global-desktop-footer w-100">
-    <app-desktop-footer></app-desktop-footer>
-  </div>
+  </form>
 </div>
+<app-desktop-footer></app-desktop-footer>
