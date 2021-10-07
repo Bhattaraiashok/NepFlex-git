@@ -10,6 +10,7 @@ namespace NepFlex.Core.Interfaces.Repositories
 {
     public interface ILoginRepository : IRepository<UserLoginResponse, int>
     {
-        UserLoginResponse UserLoginProcess(UserLogin login);
+        UserLoginResponse UserLoginProcess(UserLogin req);
+        UserRegisterResponse UserRegistrationProcess(UserRegisterRequest req);
     }
 }

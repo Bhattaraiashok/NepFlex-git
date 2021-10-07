@@ -67,7 +67,7 @@
     <Compile Include="Entities\ResourceModels\SearchedKeywordResults.cs" />
     <Compile Include="Entities\ResourceModels\SearchResponse.cs" />
     <Compile Include="Entities\ResourceModels\SendEmailRequest.cs" />
-    <Compile Include="Entities\ResourceModels\UserLogin.cs" />
+    <Compile Include="Entities\ResourceModels\UserModel.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositories\IDetailRepository.cs" />
     <Compile Include="Interfaces\Repositories\IItemDescriptionRepository.cs" />

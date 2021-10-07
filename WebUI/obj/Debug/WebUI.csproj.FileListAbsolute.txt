@@ -425,6 +425,7 @@ E:\GITHUB\WebUI\bin\System.Web.Razor.xml
 E:\GITHUB\WebUI\bin\System.Web.WebPages.xml
 E:\GITHUB\WebUI\bin\System.Web.WebPages.Deployment.xml
 E:\GITHUB\WebUI\bin\System.Web.WebPages.Razor.xml
+E:\GITHUB\WebUI\obj\Debug\WebUI.csprojAssemblyReference.cache
 E:\GITHUB\WebUI\obj\Debug\WebUI.csproj.CoreCompileInputs.cache
 E:\GITHUB\WebUI\obj\Debug\WebUI.csproj.CopyComplete
 E:\GITHUB\WebUI\obj\Debug\NepFlex.WebUI.dll

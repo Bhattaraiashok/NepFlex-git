@@ -1,35 +1,54 @@
-<form [formGroup]="registerForm" class="form example-form container" autocomplete="off">
-  <app-text-area data-test-id="user_company" placeholder='company' formControlName="company" textType='text' (newData)="onchangeform($event,'company')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{companyFCError}}</mat-error>
-  <app-text-area data-test-id="user_firstname" placeholder='firstname' formControlName="firstname" textType='text' (newData)="onchangeform($event,'firstname')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{firstnameFCError}}</mat-error>
-  <app-text-area data-test-id="user_lastname" placeholder='lastname' formControlName="lastname" textType='text' (newData)="onchangeform($event,'lastname')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{lastnameFCError}}</mat-error>
-  <app-text-area data-test-id="user_address" placeholder='address' formControlName="address" textType='text' (newData)="onchangeform($event,'address')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{addressFCError}}</mat-error>
-  <app-text-area data-test-id="user_address2" placeholder='address2' formControlName="address2" textType='text' (newData)="onchangeform($event,'address2')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{address2FCError}}</mat-error>
-  <app-text-area data-test-id="user_city" placeholder='city' formControlName="city" textType='text' (newData)="onchangeform($event,'city')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{cityFCError}}</mat-error>
-  <app-text-area data-test-id="user_state" placeholder='state' formControlName="state" textType='text' (newData)="onchangeform($event,'state')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{stateFCError}}</mat-error>
-  <app-text-area data-test-id="user_zipcode" placeholder='zipcode' formControlName="zipcode" textType='text' (newData)="onchangeform($event,'zipcode')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{zipcodeFCError}}</mat-error>
-  <app-text-area data-test-id="user_email" placeholder='email' formControlName="email" textType='email' (newData)="onchangeform($event,'email')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{emailFCError}}</mat-error>
-  <app-text-area data-test-id="user_phonenumber" placeholder='phonenumber' formControlName="phonenumber" textType='text' (newData)="onchangeform($event,'phonenumber')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{phonenumberFCError}}</mat-error>
-  <app-text-area data-test-id="user_username" placeholder='username' formControlName="username" textType='text' (newData)="onchangeform($event,'username')"></app-text-area>
-  <mat-error *ngIf="showFCError">{{usernameFCError}}</mat-error>
-  <!-- <app-text-area data-test-id="user_password" placeholder='password' formControlName="password" textType='text' (newData)="onchangeform($event,'password')"></app-text-area>
+<div class="global-desktop-container w-100">
+  <div class="body-container">
+    <form [formGroup]="registerForm" class="form example-form container" autocomplete="off">
+      <mat-card>
+        <section class="example-section">
+          <h4>Are you also registering this account as Seller?</h4>
+          <div *ngFor="let item of isUserASellerCheckbox;  let i = index">
+            <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeSellerCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+          </div>
+        </section>
+      </mat-card>
+      <app-text-area data-test-id="user_firstname" placeholder='firstname' formControlName="firstname" textType='text' (newData)="onchangeform($event,'firstname')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{firstnameFCError}}</mat-error>
+      <app-text-area data-test-id="user_lastname" placeholder='lastname' formControlName="lastname" textType='text' (newData)="onchangeform($event,'lastname')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{lastnameFCError}}</mat-error>
+      <app-text-area data-test-id="user_email" placeholder='email' formControlName="email" textType='email' (newData)="onchangeform($event,'email')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{emailFCError}}</mat-error>
+      <app-text-area data-test-id="user_phonenumber" placeholder='phonenumber' formControlName="phonenumber" textType='text' (newData)="onchangeform($event,'phonenumber')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{phonenumberFCError}}</mat-error>
+      <app-text-area data-test-id="user_username" placeholder='username' formControlName="username" textType='text' (newData)="onchangeform($event,'username')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{usernameFCError}}</mat-error>
+      <!-- <app-text-area data-test-id="user_password" placeholder='password' formControlName="password" textType='text' (newData)="onchangeform($event,'password')"></app-text-area>
     <mat-error *ngIf="showFCError">{{passwordFCError}}</mat-error> -->
-  <div class="form-group">
-    <div class="custom-search-glyphicon">
-      <i class="pass_show" (click)="passwordShowField($event)" *ngIf="!hide"></i>
-      <i class="pass_hide" (click)="passwordShowField($event)" *ngIf="hide"></i>
-    </div>
-    <label for="password" class="text-info">Password:</label><br>
-    <input type="text" id="strPassword" [type]="hide ? 'password' : 'text'" class="form-control passwordField" formControlName="password">
+
+      <app-text-area *ngIf="isASeller" data-test-id="user_company" placeholder='company' formControlName="company" textType='text'
+        (newData)="onchangeform($event,'company')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{companyFCError}}</mat-error>
+      <app-text-area *ngIf="isASeller" data-test-id="user_address" placeholder='address' formControlName="address" textType='text'
+        (newData)="onchangeform($event,'address')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{addressFCError}}</mat-error>
+      <app-text-area *ngIf="isASeller" data-test-id="user_address2" placeholder='address2' formControlName="address2" textType='text'
+        (newData)="onchangeform($event,'address2')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{address2FCError}}</mat-error>
+      <app-text-area *ngIf="isASeller" data-test-id="user_city" placeholder='city' formControlName="city" textType='text' (newData)="onchangeform($event,'city')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{cityFCError}}</mat-error>
+      <app-text-area *ngIf="isASeller" data-test-id="user_state" placeholder='state' formControlName="state" textType='text' (newData)="onchangeform($event,'state')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{stateFCError}}</mat-error>
+      <app-text-area *ngIf="isASeller" data-test-id="user_zipcode" placeholder='zipcode' formControlName="zipcode" textType='text'
+        (newData)="onchangeform($event,'zipcode')"></app-text-area>
+      <mat-error *ngIf="showFCError">{{zipcodeFCError}}</mat-error>
+
+      <div class="form-group">
+        <div class="custom-search-glyphicon">
+          <i class="pass_show" (click)="passwordShowField($event)" *ngIf="!hide"></i>
+          <i class="pass_hide" (click)="passwordShowField($event)" *ngIf="hide"></i>
+        </div>
+        <label for="password" class="text-info">Password:</label><br>
+        <input type="text" id="strPassword" [type]="hide ? 'password' : 'text'" class="form-control passwordField" formControlName="password">
+      </div>
+      <app-animated-button [buttonCollections]="detailButttons" (click)="registerNow()"></app-animated-button>
+
+    </form>
   </div>
-  <app-animated-button [buttonCollections]="detailButttons" (click)="registerNow()"></app-animated-button>
-</form>
+</div>

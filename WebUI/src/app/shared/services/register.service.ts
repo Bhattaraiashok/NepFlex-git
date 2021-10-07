@@ -10,14 +10,14 @@ import { ReportGetData } from 'app/shared/ResourceModels/ReportGetData';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Headers, RequestOptions } from '@angular/http';
-import { LoginRequest, LoginResponse } from "app/shared/ResourceModels/LoginModel";
+import { RegisterRequest, RegisterResponse } from "app/shared/ResourceModels/registerModel";
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class RegisterService {
 
-  private apiUrl_postReport = 'http://localhost/ServiceAPI/api/user/login';
+  private apiUrl_postReport = 'http://localhost/ServiceAPI/api/user/register';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -25,10 +25,10 @@ export class LoginService {
     })
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  login(val: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(
+  register(val: RegisterRequest): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(
       `${this.apiUrl_postReport}`,
       JSON.stringify(val),
       this.httpOptions

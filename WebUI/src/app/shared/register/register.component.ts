@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Valida
 import { ErrorStateMatcher } from '@angular/material/core';
 import { RouteTo } from '../interfaces/local-router';
 import { ButtonProperties } from '../ResourceModels/ButtonProperties';
+import { RegisterService } from "app/shared/services/register.service";
+import { RegisterRequest, RegisterResponse } from "app/shared/ResourceModels/registerModel";
 
 @Component({
   selector: 'app-register',
@@ -10,6 +12,8 @@ import { ButtonProperties } from '../ResourceModels/ButtonProperties';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  registerRequest: RegisterRequest = new RegisterRequest();
+  registerResponse: RegisterResponse;
   registerForm: FormGroup;
   detailButttons: ButtonProperties[] = new Array();
   showFCError: boolean = false;
@@ -17,18 +21,20 @@ export class RegisterComponent implements OnInit {
   passwordType = 'password';
   matcher = new MyErrorStateMatcher();
 
-  companyFC: FormControl = new FormControl('', [Validators.required]);
+  companyFC: FormControl = new FormControl('');
   firstnameFC: FormControl = new FormControl('', [Validators.required]);
+  middlenameFC: FormControl = new FormControl('');
   lastnameFC: FormControl = new FormControl('', [Validators.required]);
-  addressFC: FormControl = new FormControl('', [Validators.required]);
-  address2FC: FormControl = new FormControl('', [Validators.required]);
-  cityFC: FormControl = new FormControl('', [Validators.required]);
-  stateFC: FormControl = new FormControl('', [Validators.required]);
-  zipcodeFC: FormControl = new FormControl('', [Validators.required]);
+  addressFC: FormControl = new FormControl('');
+  address2FC: FormControl = new FormControl('');
+  cityFC: FormControl = new FormControl('');
+  stateFC: FormControl = new FormControl('');
+  zipcodeFC: FormControl = new FormControl('');
   emailFC: FormControl = new FormControl('', [Validators.required, Validators.email]);
   phonenumberFC: FormControl = new FormControl('', [Validators.required]);
   usernameFC: FormControl = new FormControl('', [Validators.required]);
   passwordFC: FormControl = new FormControl('', [Validators.required]);
+  SellerAccountFC: FormControl = new FormControl('');
 
   companyFCError: string;
   firstnameFCError: string;
@@ -42,9 +48,20 @@ export class RegisterComponent implements OnInit {
   phonenumberFCError: string;
   usernameFCError: string;
   passwordFCError: string;
+  SellerAccountFCError: string;
+  selected = -1;
+  isASeller = false;
+
+  isUserASellerCheckbox = [
+    { id: 0, label: 'Yes', isChecked: false },
+    { id: 1, label: 'No', isChecked: true },
+    { id: 2, label: 'May be later', isChecked: false }
+  ]
 
 
-  constructor(private fb: FormBuilder, private routeLink: RouteTo) {
+  constructor(private fb: FormBuilder,
+    private routeLink: RouteTo,
+    private registerService: RegisterService) {
     this.createForm();
   }
 
@@ -78,6 +95,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       company: this.companyFC,
       firstname: this.firstnameFC,
+      middlename: this.middlenameFC,
       lastname: this.lastnameFC,
       address: this.addressFC,
       address2: this.address2FC,
@@ -87,32 +105,42 @@ export class RegisterComponent implements OnInit {
       email: this.emailFC,
       phonenumber: this.phonenumberFC,
       username: this.usernameFC,
-      password: this.passwordFC
+      password: this.passwordFC,
+      userIsSeller: this.SellerAccountFC
     })
+  }
+
+  onchangeSellerCheckbox(e: { target; value: string }, id) {
+    const abc = e;
+    console.log(this.selected);
+    this.selected = id;
+    //fisrtly uncheck all
+    const allCheckbox = this.isUserASellerCheckbox.find(x => x.isChecked == true);
+    if (allCheckbox.id !== id) {
+      allCheckbox.isChecked = false;
+      //check only which was selected
+      this.isUserASellerCheckbox[id].isChecked = true;
+    }
+    const getCheckboxAnswer = this.isUserASellerCheckbox[id];
+    this.SellerAccountFC.setValue(getCheckboxAnswer.label);
+    this.registerForm.get('userIsSeller').patchValue(this.SellerAccountFC);
+    this.isASeller = (getCheckboxAnswer.label.toLowerCase() == 'yes') ? true : false;
   }
 
   onchangeform(
     event: { target; value: string },
     formControlName: string
   ) {
+
     const val = event.target.value;
     this.registerForm.get(formControlName).patchValue(val);
-    this.validateForrm();
-    // console.log(
-    //   'senderEmailVal: ',
-    //   val,
-    //   'formControlName: ',
-    //   formControlName,
-    //   'senderEmailForm: ',
-
-    //   this.sendEmailForm.get(formControlName).value
-    // );
+    this.validateForm();
   }
 
-  validateForrm() {
+  validateForm() {
     this.showFCError = true;
-    if (this.registerForm.invalid) {
-      if (
+    if (this.registerForm.touched) {
+      if (this.isASeller &&
         this.companyFC.invalid &&
         this.companyFC.hasError('required')
       ) {
@@ -183,16 +211,23 @@ export class RegisterComponent implements OnInit {
   }
 
   registerNow() {
-    this.validateForrm();
+    this.validateForm();
     if (this.registerForm.valid) {
       console.log('FORM IS VALID');
       // const val = Object.assign(
       //   new registerFormProperties(),
       //   this.registerForm.value
       // );
-      // this.registerService.register(val).subscribe(a => {
-      //   alert('registered');
-      // });
+      this.registerRequest.Email = this.registerForm.get('email').value;
+      this.registerRequest.Firstname = this.registerForm.get('firstname').value;
+      this.registerRequest.Lastname = this.registerForm.get('lastname').value;
+      this.registerRequest.Middlename = this.registerForm.get('middlename').value;
+      this.registerRequest.Password = this.registerForm.get('password').value;
+      this.registerRequest.Username = this.registerForm.get('username').value;
+      this.registerRequest.IsUserSeller = this.registerForm.get('userIsSeller').value;
+      this.registerService.register(this.registerRequest).subscribe(a => {
+        alert('registered');
+      });
     }
   }
 }

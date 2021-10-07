@@ -1,8 +1,4 @@
-﻿using DataAccess.Repositories;
-using NepFlex.Core.Entities.ResourceModels;
-using NepFlex.Core.Interfaces.Repositories;
-using NepFlex.DataAccess.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +8,7 @@ using System.Web.SessionState;
 
 namespace NepFlex.DataAccess.Repositories
 {
-    public class LoginRepository : Repository<UserLoginResponse, int>, ILoginRepository
+    public class UserRepository : Repository<UserLoginResponse, int>, ILoginRepository
     {
         private readonly IOnlinePasalContext _context;
         public LoginRepository(IOnlinePasalContext context) : base(context)
@@ -34,14 +30,6 @@ namespace NepFlex.DataAccess.Repositories
             SessionIDManager manager = new SessionIDManager();
             string newSessionId = manager.CreateSessionID(HttpContext.Current);
             _login.SessionID = newSessionId;
-            return _login;
-        }
-
-        public UserRegisterResponse UserRegistrationProcess(UserRegisterRequest req)
-        {
-            var _login = new UserRegisterResponse();
-            var result = _context.RegisterUser(req.Username, req.Firstname, req.Middlename, req.Lastname, req.Password, req.Email, req.UI);
-            _login.response = result.ResultSet1.ToString();
             return _login;
         }
     }

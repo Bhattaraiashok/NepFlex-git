@@ -6,6 +6,22 @@ using System.Threading.Tasks;
 
 namespace NepFlex.Core.Entities.ResourceModels
 {
+    public class UserRegisterRequest
+    {
+        public string Username { get; set; }
+        public string Firstname { get; set; }
+        public string Middlename { get; set; }
+        public string Lastname { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string UI { get; set; }
+        public bool? IsUserSeller { get; set; }
+    }
+    public class UserRegisterResponse
+    {
+        public string response { get; set; }
+    }
+
     public class UserLogin
     {
         public string UserID { get; set; }
