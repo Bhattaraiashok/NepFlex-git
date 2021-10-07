@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RouteTo } from 'app/shared/interfaces/local-router';
 import { LoginComponent } from 'app/shared/login/login.component';
-import { HeadersNavigation } from 'app/shared/ResourceModels/ButtonProperties';
+import { HeadersNavigation, ButtonProperties, DropDownList } from 'app/shared/ResourceModels/ButtonProperties';
 
 @Component({
   selector: 'app-desktop-header',
@@ -15,6 +15,9 @@ export class DesktopHeaderComponent implements OnInit {
   title: string = 'NepaliCraig';
   headersNavigation: HeadersNavigation[] = new Array();
   showPopUpModal = false;
+  isLoggedIn = false;
+  detailButttons: ButtonProperties[] = new Array();
+  dropdownlist: DropDownList[] = new Array();
 
   constructor(private routeLink: RouteTo, private modalService: NgbModal) {
     this.headersNavigation = [
@@ -76,7 +79,7 @@ export class DesktopHeaderComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { this.checkifUserIsLogedIn(); }
 
   // HeaderRoute(routeTo: string, routingEnabled: boolean): void {
   //   if (routingEnabled) {
@@ -93,5 +96,35 @@ export class DesktopHeaderComponent implements OnInit {
     this.showPopUpModal = true;
     // console.log('showPopUpModal: ', this.showPopUpModal);
     this.modalService.open(LoginComponent, { windowClass: 'dark-modal' });
+  }
+
+  checkifUserIsLogedIn() {
+    var userStatus = localStorage.getItem('isLoggedIn');
+    if (userStatus == 'true') {
+      this.isLoggedIn = true;
+      this.allButtons();
+    } else {
+      this.isLoggedIn = false;
+    }
+  }
+  allButtons() {
+    this.dropdownlist = [
+      { id: 1,parentLabel:'MyAccounthere', displayName: 'edit' },
+      { id: 2,parentLabel:'MyAccounthere', displayName: 'Post' }
+    ]
+
+    this.detailButttons = [
+      {
+        buttonId: 1,
+        buttonLabel: 'MY ACCOUNT',
+        hasPopUp: false,
+        buttonRoute: '',
+        canRoute: false,
+        HasDropDown: true,
+        DropDownList: this.dropdownlist,
+        popUpName: 'MyAccount2'
+      }
+    ];
+
   }
 }

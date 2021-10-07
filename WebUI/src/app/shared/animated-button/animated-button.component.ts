@@ -13,11 +13,11 @@ export class AnimatedButtonComponent implements OnInit {
   @Input() buttonCollections: ButtonProperties[];
   @Output() ParentEmitter: EventEmitter<ButtonProperties> = new EventEmitter<
     ButtonProperties
-  >();
+    >();
   showPopUpModal: boolean = false;
-  constructor(private router: Router, private modalService: NgbModal) {}
+  constructor(private router: Router, private modalService: NgbModal) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   functionalButton(id: number) {
     const buttonFunctions = this.buttonCollections.find(a => a.buttonId === id);
 
@@ -29,11 +29,13 @@ export class AnimatedButtonComponent implements OnInit {
       // console.log('showPopUpModal: ', this.showPopUpModal);
       this.modalService.open(SendEmailComponent, { windowClass: 'dark-modal' });
     }
+    if (buttonFunctions.HasDropDown) {
 
-    if (buttonFunctions.canRoute === true) {
+    }else if (buttonFunctions.canRoute === true) {
       // console.log('buttonFunctions.buttonRoute: ', buttonFunctions.buttonRoute);
       this.router.navigate([buttonFunctions.buttonRoute]);
     }
+    
     if (buttonFunctions.parentEmit === true) {
       this.ParentEmitter.emit(buttonFunctions);
     }

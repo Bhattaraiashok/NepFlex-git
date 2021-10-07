@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NepFlex.DataAccess.Context;
 using NepFlex.Core.Entities.ResourceModels;
-using NepFlex.Core.Entities.OnlinePasal;
 
 namespace DataAccess.Repositories
 {
@@ -32,14 +31,16 @@ namespace DataAccess.Repositories
 
         public List<MenuTopNav> GetMenuNav()
         {
-            var resultNav = _context.MenuNavigations;
-            return resultNav.Select(x => new MenuTopNav()
-            {
-                MenuId = x.MenuId,
-                MenuName = x.MenuName,
-                MenuUrl = x.MenuUrl,
-                Active = x.Active
-            }).ToList();
+            var resultNav = new List<MenuTopNav>();
+            //resultNav=_context.MenuNavigations;
+            //return resultNav.Select(x => new MenuTopNav()
+            //{
+            //    MenuId = x.MenuId,
+            //    MenuName = x.MenuName,
+            //    MenuUrl = x.MenuUrl,
+            //    Active = x.Active
+            //}).ToList();
+            return resultNav;
         }
         //public List<ClothingBrands> GetClothingBrands()
         //{

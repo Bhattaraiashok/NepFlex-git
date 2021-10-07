@@ -38,7 +38,7 @@ export class ItemContainerComponent implements OnInit {
         buttonRoute: 'detail/',
         canRoute: false,
         HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }],
+        DropDownList:null,
         popUpName: 'clickMoreDetailsButton'
       }
     ];

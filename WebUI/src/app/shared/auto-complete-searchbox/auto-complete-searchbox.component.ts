@@ -101,7 +101,6 @@ export class AutoCompleteSearchboxComponent implements OnInit {
         buttonRoute: '',
         canRoute: false,
         HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }],
         popUpName: '',
         parentEmit: false
       }

@@ -22,14 +22,14 @@ namespace NepFlex.DataAccess.Repositories
         {
             var results = _context.ItemDescriptions.Select(a => new a.ItemDescription()
             {
-                AutosBrand=a.AutosBrand,
-                Category=a.Category,
-                ExtraWarranty=a.ExtraWarranty,
-                Condition=a.Condition,
-                Warranty=a.Warranty,
-                Model=a.Model,
-                PhoneBrand=a.PhoneBrand,
-                MileKmph=a.MileKmph
+                //AutosBrand=a.AutosBrand,
+                //Category=a.Category,
+                //ExtraWarranty=a.ExtraWarranty,
+                //Condition=a.Condition,
+                //Warranty=a.Warranty,
+                //Model=a.Model,
+                //PhoneBrand=a.PhoneBrand,
+                //MileKmph=a.MileKmph
                 
             }).ToList();
             return results;

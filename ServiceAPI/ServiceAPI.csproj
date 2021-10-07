@@ -148,6 +148,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DetailController.cs" />
     <Compile Include="Controllers\ItemDescriptionController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MenuTopController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\searchController.cs" />

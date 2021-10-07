@@ -60,7 +60,6 @@ export class RegisterComponent implements OnInit {
         buttonRoute: '',
         canRoute: false,
         HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }],
         popUpName: 'clickSendEmailButton'
       }
     ];

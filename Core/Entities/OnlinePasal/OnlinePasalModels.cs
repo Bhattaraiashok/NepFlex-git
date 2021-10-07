@@ -9,7 +9,7 @@
 // The following connection settings were used to generate this file:
 //     Configuration file:     "Core\App.config"
 //     Connection String Name: "OnlinePasalModels"
-//     Connection String:      "data source=localhost;initial catalog=MyCraig;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
+//     Connection String:      "data source=DESKTOP-UHHBQK9\SQLEXPRESS;initial catalog=MyCraig;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : Express Edition (64-bit)
 // Database Engine Edition: Express
@@ -35,7 +35,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
 
     public interface IMyDbContext : System.IDisposable
     {
-        System.Data.Entity.DbSet<BlockedIp> BlockedIps { get; set; } // BlockedIP
         System.Data.Entity.DbSet<BrowserViewed> BrowserVieweds { get; set; } // BrowserViewed
         System.Data.Entity.DbSet<CraigArticle> CraigArticles { get; set; } // Craig_Articles
         System.Data.Entity.DbSet<CraigCoupon> CraigCoupons { get; set; } // Craig_Coupons
@@ -55,12 +54,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
         System.Data.Entity.DbSet<MasterServicesCategory> MasterServicesCategories { get; set; } // Master_ServicesCategory
         System.Data.Entity.DbSet<MasterTable> MasterTables { get; set; } // MasterTable
         System.Data.Entity.DbSet<MasterTravelsandToursCategory> MasterTravelsandToursCategories { get; set; } // Master_TravelsandToursCategory
-        System.Data.Entity.DbSet<MenuNavigation> MenuNavigations { get; set; } // MenuNavigation
         System.Data.Entity.DbSet<PostMyData> PostMyDatas { get; set; } // PostMyData
         System.Data.Entity.DbSet<SelectTopCategory> SelectTopCategories { get; set; } // SelectTopCategory
         System.Data.Entity.DbSet<TrackEmail> TrackEmails { get; set; } // TrackEmail
         System.Data.Entity.DbSet<User> Users { get; set; } // Users
-        System.Data.Entity.DbSet<UserActivity> UserActivities { get; set; } // UserActivity
         System.Data.Entity.DbSet<UserNcerrorWindow> UserNcerrorWindows { get; set; } // User_NCERROR_Windows
         System.Data.Entity.DbSet<ViewsCount> ViewsCounts { get; set; } // ViewsCount
         System.Data.Entity.DbSet<ViewsCountArticle> ViewsCountArticles { get; set; } // ViewsCount_Articles
@@ -81,16 +78,12 @@ namespace NepFlex.Core.Entities.OnlinePasal
         string ToString();
 
         // Stored Procedures
-        System.Collections.Generic.List<BlockThisIpReturnModel> BlockThisIp(string ipAddress, string country, string message, string action);
-        System.Collections.Generic.List<BlockThisIpReturnModel> BlockThisIp(string ipAddress, string country, string message, string action, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<BlockThisIpReturnModel>> BlockThisIpAsync(string ipAddress, string country, string message, string action);
-
         System.Collections.Generic.List<ButtonSearchOnClickReturnModel> ButtonSearchOnClick(string text);
         System.Collections.Generic.List<ButtonSearchOnClickReturnModel> ButtonSearchOnClick(string text, out int procResult);
         System.Threading.Tasks.Task<System.Collections.Generic.List<ButtonSearchOnClickReturnModel>> ButtonSearchOnClickAsync(string text);
 
-        ChangePasswordReturnModel ChangePassword(long? userid, string password, string passwordConfirm);
-        System.Threading.Tasks.Task<ChangePasswordReturnModel> ChangePasswordAsync(long? userid, string password, string passwordConfirm);
+        int ChangePassword(long? userid, string password, string passwordConfirm);
+        // ChangePasswordAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
         ChangeProfilePictureReturnModel ChangeProfilePicture(string email, long? userId, string image);
         System.Threading.Tasks.Task<ChangeProfilePictureReturnModel> ChangeProfilePictureAsync(string email, long? userId, string image);
@@ -105,12 +98,9 @@ namespace NepFlex.Core.Entities.OnlinePasal
         System.Collections.Generic.List<CraigDiscussionForumReturnModel> CraigDiscussionForum(string topic, string detail, string emailId, string ipAddress, string fullname, out int procResult);
         System.Threading.Tasks.Task<System.Collections.Generic.List<CraigDiscussionForumReturnModel>> CraigDiscussionForumAsync(string topic, string detail, string emailId, string ipAddress, string fullname);
 
-        System.Collections.Generic.List<CreateUserActivityReturnModel> CreateUserActivity(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress);
-        System.Collections.Generic.List<CreateUserActivityReturnModel> CreateUserActivity(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<CreateUserActivityReturnModel>> CreateUserActivityAsync(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress);
-
-        GetDataReturnModel GetData(long? id, string fromPage);
-        System.Threading.Tasks.Task<GetDataReturnModel> GetDataAsync(long? id, string fromPage);
+        System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage);
+        System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<GetDataReturnModel>> GetDataAsync(long? id, string fromPage);
 
         System.Collections.Generic.List<GetGuidReturnModel> GetGuid(string email);
         System.Collections.Generic.List<GetGuidReturnModel> GetGuid(string email, out int procResult);
@@ -122,8 +112,9 @@ namespace NepFlex.Core.Entities.OnlinePasal
         InsertCraigCouponsReturnModel InsertCraigCoupons(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images);
         System.Threading.Tasks.Task<InsertCraigCouponsReturnModel> InsertCraigCouponsAsync(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images);
 
-        int InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily);
-        // InsertCraigEventAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
+        System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily);
+        System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<InsertCraigEventReturnModel>> InsertCraigEventAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily);
 
         int InsertErrorLog(string ipAddress, string city, string country, string errorDetail, string others);
         // InsertErrorLogAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
@@ -137,7 +128,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
         int SendEmailChangePassword(string username, string email);
         // SendEmailChangePasswordAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
-        int SpBrowserViewed(string browserName, string ipAddress, string city, string country, string status);
+        int SpBrowserViewed(string browserName, string ipAddress, string city, string country);
         // SpBrowserViewedAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
         int SpCraigInquiry(string name, string email, string url, string detail, string username, string ui);
@@ -158,7 +149,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class MyDbContext : System.Data.Entity.DbContext, IMyDbContext
     {
-        public System.Data.Entity.DbSet<BlockedIp> BlockedIps { get; set; } // BlockedIP
         public System.Data.Entity.DbSet<BrowserViewed> BrowserVieweds { get; set; } // BrowserViewed
         public System.Data.Entity.DbSet<CraigArticle> CraigArticles { get; set; } // Craig_Articles
         public System.Data.Entity.DbSet<CraigCoupon> CraigCoupons { get; set; } // Craig_Coupons
@@ -178,12 +168,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public System.Data.Entity.DbSet<MasterServicesCategory> MasterServicesCategories { get; set; } // Master_ServicesCategory
         public System.Data.Entity.DbSet<MasterTable> MasterTables { get; set; } // MasterTable
         public System.Data.Entity.DbSet<MasterTravelsandToursCategory> MasterTravelsandToursCategories { get; set; } // Master_TravelsandToursCategory
-        public System.Data.Entity.DbSet<MenuNavigation> MenuNavigations { get; set; } // MenuNavigation
         public System.Data.Entity.DbSet<PostMyData> PostMyDatas { get; set; } // PostMyData
         public System.Data.Entity.DbSet<SelectTopCategory> SelectTopCategories { get; set; } // SelectTopCategory
         public System.Data.Entity.DbSet<TrackEmail> TrackEmails { get; set; } // TrackEmail
         public System.Data.Entity.DbSet<User> Users { get; set; } // Users
-        public System.Data.Entity.DbSet<UserActivity> UserActivities { get; set; } // UserActivity
         public System.Data.Entity.DbSet<UserNcerrorWindow> UserNcerrorWindows { get; set; } // User_NCERROR_Windows
         public System.Data.Entity.DbSet<ViewsCount> ViewsCounts { get; set; } // ViewsCount
         public System.Data.Entity.DbSet<ViewsCountArticle> ViewsCountArticles { get; set; } // ViewsCount_Articles
@@ -238,7 +226,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Configurations.Add(new BlockedIpConfiguration());
             modelBuilder.Configurations.Add(new BrowserViewedConfiguration());
             modelBuilder.Configurations.Add(new CraigArticleConfiguration());
             modelBuilder.Configurations.Add(new CraigCouponConfiguration());
@@ -258,12 +245,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
             modelBuilder.Configurations.Add(new MasterServicesCategoryConfiguration());
             modelBuilder.Configurations.Add(new MasterTableConfiguration());
             modelBuilder.Configurations.Add(new MasterTravelsandToursCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MenuNavigationConfiguration());
             modelBuilder.Configurations.Add(new PostMyDataConfiguration());
             modelBuilder.Configurations.Add(new SelectTopCategoryConfiguration());
             modelBuilder.Configurations.Add(new TrackEmailConfiguration());
             modelBuilder.Configurations.Add(new UserConfiguration());
-            modelBuilder.Configurations.Add(new UserActivityConfiguration());
             modelBuilder.Configurations.Add(new UserNcerrorWindowConfiguration());
             modelBuilder.Configurations.Add(new ViewsCountConfiguration());
             modelBuilder.Configurations.Add(new ViewsCountArticleConfiguration());
@@ -273,7 +258,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
 
         public static System.Data.Entity.DbModelBuilder CreateModel(System.Data.Entity.DbModelBuilder modelBuilder, string schema)
         {
-            modelBuilder.Configurations.Add(new BlockedIpConfiguration(schema));
             modelBuilder.Configurations.Add(new BrowserViewedConfiguration(schema));
             modelBuilder.Configurations.Add(new CraigArticleConfiguration(schema));
             modelBuilder.Configurations.Add(new CraigCouponConfiguration(schema));
@@ -293,12 +277,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
             modelBuilder.Configurations.Add(new MasterServicesCategoryConfiguration(schema));
             modelBuilder.Configurations.Add(new MasterTableConfiguration(schema));
             modelBuilder.Configurations.Add(new MasterTravelsandToursCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MenuNavigationConfiguration(schema));
             modelBuilder.Configurations.Add(new PostMyDataConfiguration(schema));
             modelBuilder.Configurations.Add(new SelectTopCategoryConfiguration(schema));
             modelBuilder.Configurations.Add(new TrackEmailConfiguration(schema));
             modelBuilder.Configurations.Add(new UserConfiguration(schema));
-            modelBuilder.Configurations.Add(new UserActivityConfiguration(schema));
             modelBuilder.Configurations.Add(new UserNcerrorWindowConfiguration(schema));
             modelBuilder.Configurations.Add(new ViewsCountConfiguration(schema));
             modelBuilder.Configurations.Add(new ViewsCountArticleConfiguration(schema));
@@ -308,60 +290,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
         }
 
         // Stored Procedures
-        public System.Collections.Generic.List<BlockThisIpReturnModel> BlockThisIp(string ipAddress, string country, string message, string action)
-        {
-            int procResult;
-            return BlockThisIp(ipAddress, country, message, action, out procResult);
-        }
-
-        public System.Collections.Generic.List<BlockThisIpReturnModel> BlockThisIp(string ipAddress, string country, string message, string action, out int procResult)
-        {
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 50 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var countryParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Country", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = country, Size = 50 };
-            if (countryParam.Value == null)
-                countryParam.Value = System.DBNull.Value;
-
-            var messageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Message", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = message, Size = 500 };
-            if (messageParam.Value == null)
-                messageParam.Value = System.DBNull.Value;
-
-            var actionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@action", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = action, Size = 20 };
-            if (actionParam.Value == null)
-                actionParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<BlockThisIpReturnModel>("EXEC @procResult = [dbo].[BlockThisIP] @IPAddress, @Country, @Message, @action", ipAddressParam, countryParam, messageParam, actionParam, procResultParam).ToList();
-
-            procResult = (int) procResultParam.Value;
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<BlockThisIpReturnModel>> BlockThisIpAsync(string ipAddress, string country, string message, string action)
-        {
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 50 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var countryParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Country", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = country, Size = 50 };
-            if (countryParam.Value == null)
-                countryParam.Value = System.DBNull.Value;
-
-            var messageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Message", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = message, Size = 500 };
-            if (messageParam.Value == null)
-                messageParam.Value = System.DBNull.Value;
-
-            var actionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@action", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = action, Size = 20 };
-            if (actionParam.Value == null)
-                actionParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<BlockThisIpReturnModel>("EXEC [dbo].[BlockThisIP] @IPAddress, @Country, @Message, @action", ipAddressParam, countryParam, messageParam, actionParam).ToListAsync();
-
-            return procResultData;
-        }
-
         public System.Collections.Generic.List<ButtonSearchOnClickReturnModel> ButtonSearchOnClick(string text)
         {
             int procResult;
@@ -392,7 +320,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return procResultData;
         }
 
-        public ChangePasswordReturnModel ChangePassword(long? userid, string password, string passwordConfirm)
+        public int ChangePassword(long? userid, string password, string passwordConfirm)
         {
             var useridParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userid", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = userid.GetValueOrDefault(), Precision = 19, Scale = 0 };
             if (!userid.HasValue)
@@ -406,86 +334,11 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (passwordConfirmParam.Value == null)
                 passwordConfirmParam.Value = System.DBNull.Value;
 
+            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
 
-            var procResultData = new ChangePasswordReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[ChangePassword]";
-            cmd.Parameters.Add(useridParam);
-            cmd.Parameters.Add(passwordParam);
-            cmd.Parameters.Add(passwordConfirmParam);
+            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[ChangePassword] @userid, @password, @password_confirm", useridParam, passwordParam, passwordConfirmParam, procResultParam);
 
-            try
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Open(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-                var reader = cmd.ExecuteReader();
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<ChangePasswordReturnModel.ResultSetModel1>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet2 = objectContext.Translate<ChangePasswordReturnModel.ResultSetModel2>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet3 = objectContext.Translate<ChangePasswordReturnModel.ResultSetModel3>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet4 = objectContext.Translate<ChangePasswordReturnModel.ResultSetModel4>(reader).ToList();
-                reader.Close();
-
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<ChangePasswordReturnModel> ChangePasswordAsync(long? userid, string password, string passwordConfirm)
-        {
-            var useridParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userid", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = userid.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!userid.HasValue)
-                useridParam.Value = System.DBNull.Value;
-
-            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = 35 };
-            if (passwordParam.Value == null)
-                passwordParam.Value = System.DBNull.Value;
-
-            var passwordConfirmParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@password_confirm", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = passwordConfirm, Size = 35 };
-            if (passwordConfirmParam.Value == null)
-                passwordConfirmParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new ChangePasswordReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[ChangePassword]";
-            cmd.Parameters.Add(useridParam);
-            cmd.Parameters.Add(passwordParam);
-            cmd.Parameters.Add(passwordConfirmParam);
-
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<ChangePasswordReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<ChangePasswordReturnModel.ResultSetModel2>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet3 = objectContext.Translate<ChangePasswordReturnModel.ResultSetModel3>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet4 = objectContext.Translate<ChangePasswordReturnModel.ResultSetModel4>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
+            return (int) procResultParam.Value;
         }
 
         public ChangeProfilePictureReturnModel ChangeProfilePicture(string email, long? userId, string image)
@@ -755,101 +608,30 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return procResultData;
         }
 
-        public System.Collections.Generic.List<CreateUserActivityReturnModel> CreateUserActivity(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress)
+        public System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage)
         {
             int procResult;
-            return CreateUserActivity(activityPage, activityTitle, insertedId, activityDetail, email, userId, sentto, sentFrom, ipAddress, out procResult);
+            return GetData(id, fromPage, out procResult);
         }
 
-        public System.Collections.Generic.List<CreateUserActivityReturnModel> CreateUserActivity(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress, out int procResult)
+        public System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage, out int procResult)
         {
-            var activityPageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ActivityPage", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = activityPage, Size = 50 };
-            if (activityPageParam.Value == null)
-                activityPageParam.Value = System.DBNull.Value;
+            var idParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ID", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = id.GetValueOrDefault(), Precision = 19, Scale = 0 };
+            if (!id.HasValue)
+                idParam.Value = System.DBNull.Value;
 
-            var activityTitleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ActivityTitle", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = activityTitle, Size = 250 };
-            if (activityTitleParam.Value == null)
-                activityTitleParam.Value = System.DBNull.Value;
-
-            var insertedIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@InsertedID", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = insertedId.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!insertedId.HasValue)
-                insertedIdParam.Value = System.DBNull.Value;
-
-            var activityDetailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ActivityDetail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = activityDetail, Size = 250 };
-            if (activityDetailParam.Value == null)
-                activityDetailParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserID", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = userId.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!userId.HasValue)
-                userIdParam.Value = System.DBNull.Value;
-
-            var senttoParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Sentto", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = sentto, Size = 150 };
-            if (senttoParam.Value == null)
-                senttoParam.Value = System.DBNull.Value;
-
-            var sentFromParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@SentFrom", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = sentFrom, Size = 150 };
-            if (sentFromParam.Value == null)
-                sentFromParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IpAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 26 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
+            var fromPageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@FromPage", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = fromPage, Size = 20 };
+            if (fromPageParam.Value == null)
+                fromPageParam.Value = System.DBNull.Value;
 
             var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<CreateUserActivityReturnModel>("EXEC @procResult = [dbo].[CreateUserActivity] @ActivityPage, @ActivityTitle, @InsertedID, @ActivityDetail, @email, @UserID, @Sentto, @SentFrom, @IpAddress", activityPageParam, activityTitleParam, insertedIdParam, activityDetailParam, emailParam, userIdParam, senttoParam, sentFromParam, ipAddressParam, procResultParam).ToList();
+            var procResultData = Database.SqlQuery<GetDataReturnModel>("EXEC @procResult = [dbo].[GetData] @ID, @FromPage", idParam, fromPageParam, procResultParam).ToList();
 
             procResult = (int) procResultParam.Value;
             return procResultData;
         }
 
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<CreateUserActivityReturnModel>> CreateUserActivityAsync(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress)
-        {
-            var activityPageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ActivityPage", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = activityPage, Size = 50 };
-            if (activityPageParam.Value == null)
-                activityPageParam.Value = System.DBNull.Value;
-
-            var activityTitleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ActivityTitle", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = activityTitle, Size = 250 };
-            if (activityTitleParam.Value == null)
-                activityTitleParam.Value = System.DBNull.Value;
-
-            var insertedIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@InsertedID", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = insertedId.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!insertedId.HasValue)
-                insertedIdParam.Value = System.DBNull.Value;
-
-            var activityDetailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ActivityDetail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = activityDetail, Size = 250 };
-            if (activityDetailParam.Value == null)
-                activityDetailParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserID", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = userId.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!userId.HasValue)
-                userIdParam.Value = System.DBNull.Value;
-
-            var senttoParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Sentto", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = sentto, Size = 150 };
-            if (senttoParam.Value == null)
-                senttoParam.Value = System.DBNull.Value;
-
-            var sentFromParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@SentFrom", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = sentFrom, Size = 150 };
-            if (sentFromParam.Value == null)
-                sentFromParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IpAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 26 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<CreateUserActivityReturnModel>("EXEC [dbo].[CreateUserActivity] @ActivityPage, @ActivityTitle, @InsertedID, @ActivityDetail, @email, @UserID, @Sentto, @SentFrom, @IpAddress", activityPageParam, activityTitleParam, insertedIdParam, activityDetailParam, emailParam, userIdParam, senttoParam, sentFromParam, ipAddressParam).ToListAsync();
-
-            return procResultData;
-        }
-
-        public GetDataReturnModel GetData(long? id, string fromPage)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<GetDataReturnModel>> GetDataAsync(long? id, string fromPage)
         {
             var idParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ID", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = id.GetValueOrDefault(), Precision = 19, Scale = 0 };
             if (!id.HasValue)
@@ -859,67 +641,8 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (fromPageParam.Value == null)
                 fromPageParam.Value = System.DBNull.Value;
 
+            var procResultData = await Database.SqlQuery<GetDataReturnModel>("EXEC [dbo].[GetData] @ID, @FromPage", idParam, fromPageParam).ToListAsync();
 
-            var procResultData = new GetDataReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[GetData]";
-            cmd.Parameters.Add(idParam);
-            cmd.Parameters.Add(fromPageParam);
-
-            try
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Open(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-                var reader = cmd.ExecuteReader();
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<GetDataReturnModel.ResultSetModel1>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet2 = objectContext.Translate<GetDataReturnModel.ResultSetModel2>(reader).ToList();
-                reader.Close();
-
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<GetDataReturnModel> GetDataAsync(long? id, string fromPage)
-        {
-            var idParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ID", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = id.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!id.HasValue)
-                idParam.Value = System.DBNull.Value;
-
-            var fromPageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@FromPage", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = fromPage, Size = 20 };
-            if (fromPageParam.Value == null)
-                fromPageParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new GetDataReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[GetData]";
-            cmd.Parameters.Add(idParam);
-            cmd.Parameters.Add(fromPageParam);
-
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<GetDataReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<GetDataReturnModel.ResultSetModel2>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
             return procResultData;
         }
 
@@ -1021,9 +744,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
                 reader.NextResult();
 
                 procResultData.ResultSet2 = objectContext.Translate<InsertCraigArticlesReturnModel.ResultSetModel2>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet3 = objectContext.Translate<InsertCraigArticlesReturnModel.ResultSetModel3>(reader).ToList();
                 reader.Close();
 
             }
@@ -1102,9 +822,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
                 await reader.NextResultAsync().ConfigureAwait(false);
 
                 procResultData.ResultSet2 = objectContext.Translate<InsertCraigArticlesReturnModel.ResultSetModel2>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet3 = objectContext.Translate<InsertCraigArticlesReturnModel.ResultSetModel3>(reader).ToList();
             }
             finally
             {
@@ -1307,7 +1024,13 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return procResultData;
         }
 
-        public int InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
+        public System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
+        {
+            int procResult;
+            return InsertCraigEvent(username, fullName, email, title, description, detail, images, ipAddress, fulldate, time, location, cost, friendsandFamily, out procResult);
+        }
+
+        public System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily, out int procResult)
         {
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
@@ -1362,10 +1085,69 @@ namespace NepFlex.Core.Entities.OnlinePasal
                 friendsandFamilyParam.Value = System.DBNull.Value;
 
             var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
+            var procResultData = Database.SqlQuery<InsertCraigEventReturnModel>("EXEC @procResult = [dbo].[Insert_CraigEvent] @Username, @fullName, @Email, @Title, @Description, @Detail, @Images, @IPAddress, @fulldate, @time, @Location, @Cost, @FriendsandFamily", usernameParam, fullNameParam, emailParam, titleParam, descriptionParam, detailParam, imagesParam, ipAddressParam, fulldateParam, timeParam, locationParam, costParam, friendsandFamilyParam, procResultParam).ToList();
 
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Insert_CraigEvent] @Username, @fullName, @Email, @Title, @Description, @Detail, @Images, @IPAddress, @fulldate, @time, @Location, @Cost, @FriendsandFamily", usernameParam, fullNameParam, emailParam, titleParam, descriptionParam, detailParam, imagesParam, ipAddressParam, fulldateParam, timeParam, locationParam, costParam, friendsandFamilyParam, procResultParam);
+            procResult = (int) procResultParam.Value;
+            return procResultData;
+        }
 
-            return (int) procResultParam.Value;
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<InsertCraigEventReturnModel>> InsertCraigEventAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
+        {
+            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
+            if (usernameParam.Value == null)
+                usernameParam.Value = System.DBNull.Value;
+
+            var fullNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fullName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullName, Size = 70 };
+            if (fullNameParam.Value == null)
+                fullNameParam.Value = System.DBNull.Value;
+
+            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 100 };
+            if (emailParam.Value == null)
+                emailParam.Value = System.DBNull.Value;
+
+            var titleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Title", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = title, Size = 150 };
+            if (titleParam.Value == null)
+                titleParam.Value = System.DBNull.Value;
+
+            var descriptionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Description", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = description, Size = 250 };
+            if (descriptionParam.Value == null)
+                descriptionParam.Value = System.DBNull.Value;
+
+            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = -1 };
+            if (detailParam.Value == null)
+                detailParam.Value = System.DBNull.Value;
+
+            var imagesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Images", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = images, Size = -1 };
+            if (imagesParam.Value == null)
+                imagesParam.Value = System.DBNull.Value;
+
+            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
+            if (ipAddressParam.Value == null)
+                ipAddressParam.Value = System.DBNull.Value;
+
+            var fulldateParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fulldate", SqlDbType = System.Data.SqlDbType.Date, Direction = System.Data.ParameterDirection.Input, Value = fulldate.GetValueOrDefault() };
+            if (!fulldate.HasValue)
+                fulldateParam.Value = System.DBNull.Value;
+
+            var timeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@time", SqlDbType = System.Data.SqlDbType.Time, Direction = System.Data.ParameterDirection.Input, Value = time.GetValueOrDefault() };
+            if (!time.HasValue)
+                timeParam.Value = System.DBNull.Value;
+
+            var locationParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Location", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = location, Size = 500 };
+            if (locationParam.Value == null)
+                locationParam.Value = System.DBNull.Value;
+
+            var costParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Cost", SqlDbType = System.Data.SqlDbType.Money, Direction = System.Data.ParameterDirection.Input, Value = cost.GetValueOrDefault(), Precision = 19, Scale = 4 };
+            if (!cost.HasValue)
+                costParam.Value = System.DBNull.Value;
+
+            var friendsandFamilyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@FriendsandFamily", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = friendsandFamily, Size = 15 };
+            if (friendsandFamilyParam.Value == null)
+                friendsandFamilyParam.Value = System.DBNull.Value;
+
+            var procResultData = await Database.SqlQuery<InsertCraigEventReturnModel>("EXEC [dbo].[Insert_CraigEvent] @Username, @fullName, @Email, @Title, @Description, @Detail, @Images, @IPAddress, @fulldate, @time, @Location, @Cost, @FriendsandFamily", usernameParam, fullNameParam, emailParam, titleParam, descriptionParam, detailParam, imagesParam, ipAddressParam, fulldateParam, timeParam, locationParam, costParam, friendsandFamilyParam).ToListAsync();
+
+            return procResultData;
         }
 
         public int InsertErrorLog(string ipAddress, string city, string country, string errorDetail, string others)
@@ -1629,7 +1411,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return (int) procResultParam.Value;
         }
 
-        public int SpBrowserViewed(string browserName, string ipAddress, string city, string country, string status)
+        public int SpBrowserViewed(string browserName, string ipAddress, string city, string country)
         {
             var browserNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@BrowserName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = browserName, Size = 35 };
             if (browserNameParam.Value == null)
@@ -1647,13 +1429,9 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (countryParam.Value == null)
                 countryParam.Value = System.DBNull.Value;
 
-            var statusParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@status", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = status, Size = 10 };
-            if (statusParam.Value == null)
-                statusParam.Value = System.DBNull.Value;
-
             var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
 
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Sp_BrowserViewed] @BrowserName, @IPAddress, @City, @Country, @status", browserNameParam, ipAddressParam, cityParam, countryParam, statusParam, procResultParam);
+            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Sp_BrowserViewed] @BrowserName, @IPAddress, @City, @Country", browserNameParam, ipAddressParam, cityParam, countryParam, procResultParam);
 
             return (int) procResultParam.Value;
         }
@@ -1816,7 +1594,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class FakeMyDbContext : IMyDbContext
     {
-        public System.Data.Entity.DbSet<BlockedIp> BlockedIps { get; set; }
         public System.Data.Entity.DbSet<BrowserViewed> BrowserVieweds { get; set; }
         public System.Data.Entity.DbSet<CraigArticle> CraigArticles { get; set; }
         public System.Data.Entity.DbSet<CraigCoupon> CraigCoupons { get; set; }
@@ -1836,12 +1613,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public System.Data.Entity.DbSet<MasterServicesCategory> MasterServicesCategories { get; set; }
         public System.Data.Entity.DbSet<MasterTable> MasterTables { get; set; }
         public System.Data.Entity.DbSet<MasterTravelsandToursCategory> MasterTravelsandToursCategories { get; set; }
-        public System.Data.Entity.DbSet<MenuNavigation> MenuNavigations { get; set; }
         public System.Data.Entity.DbSet<PostMyData> PostMyDatas { get; set; }
         public System.Data.Entity.DbSet<SelectTopCategory> SelectTopCategories { get; set; }
         public System.Data.Entity.DbSet<TrackEmail> TrackEmails { get; set; }
         public System.Data.Entity.DbSet<User> Users { get; set; }
-        public System.Data.Entity.DbSet<UserActivity> UserActivities { get; set; }
         public System.Data.Entity.DbSet<UserNcerrorWindow> UserNcerrorWindows { get; set; }
         public System.Data.Entity.DbSet<ViewsCount> ViewsCounts { get; set; }
         public System.Data.Entity.DbSet<ViewsCountArticle> ViewsCountArticles { get; set; }
@@ -1850,7 +1625,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
 
         public FakeMyDbContext()
         {
-            BlockedIps = new FakeDbSet<BlockedIp>("Ipid", "BlockedIp_");
             BrowserVieweds = new FakeDbSet<BrowserViewed>("ViewId");
             CraigArticles = new FakeDbSet<CraigArticle>("NewsId");
             CraigCoupons = new FakeDbSet<CraigCoupon>("CouponId");
@@ -1870,12 +1644,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
             MasterServicesCategories = new FakeDbSet<MasterServicesCategory>("ServiceId");
             MasterTables = new FakeDbSet<MasterTable>("Id");
             MasterTravelsandToursCategories = new FakeDbSet<MasterTravelsandToursCategory>("TravelsandToursId");
-            MenuNavigations = new FakeDbSet<MenuNavigation>("MenuId");
             PostMyDatas = new FakeDbSet<PostMyData>("PostId");
             SelectTopCategories = new FakeDbSet<SelectTopCategory>("Id");
             TrackEmails = new FakeDbSet<TrackEmail>("Id");
             Users = new FakeDbSet<User>("UserId");
-            UserActivities = new FakeDbSet<UserActivity>("ActivityId");
             UserNcerrorWindows = new FakeDbSet<UserNcerrorWindow>("Id", "UserName", "Password", "Email", "DateAdded");
             ViewsCounts = new FakeDbSet<ViewsCount>("Id", "TotalViews");
             ViewsCountArticles = new FakeDbSet<ViewsCountArticle>("Id", "TotalViews");
@@ -1944,25 +1716,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
 
 
         // Stored Procedures
-        public System.Collections.Generic.List<BlockThisIpReturnModel> BlockThisIp(string ipAddress, string country, string message, string action)
-        {
-            int procResult;
-            return BlockThisIp(ipAddress, country, message, action, out procResult);
-        }
-
-        public System.Collections.Generic.List<BlockThisIpReturnModel> BlockThisIp(string ipAddress, string country, string message, string action, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<BlockThisIpReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<BlockThisIpReturnModel>> BlockThisIpAsync(string ipAddress, string country, string message, string action)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(BlockThisIp(ipAddress, country, message, action, out procResult));
-        }
-
         public System.Collections.Generic.List<ButtonSearchOnClickReturnModel> ButtonSearchOnClick(string text)
         {
             int procResult;
@@ -1982,23 +1735,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return System.Threading.Tasks.Task.FromResult(ButtonSearchOnClick(text, out procResult));
         }
 
-        public ChangePasswordReturnModel ChangePassword(long? userid, string password, string passwordConfirm)
-        {
-            int procResult;
-            return ChangePassword(userid, password, passwordConfirm, out procResult);
-        }
-
-        public ChangePasswordReturnModel ChangePassword(long? userid, string password, string passwordConfirm, out int procResult)
+        public int ChangePassword(long? userid, string password, string passwordConfirm)
         {
 
-            procResult = 0;
-            return new ChangePasswordReturnModel();
-        }
-
-        public System.Threading.Tasks.Task<ChangePasswordReturnModel> ChangePasswordAsync(long? userid, string password, string passwordConfirm)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(ChangePassword(userid, password, passwordConfirm, out procResult));
+            return 0;
         }
 
         public ChangeProfilePictureReturnModel ChangeProfilePicture(string email, long? userId, string image)
@@ -2064,39 +1804,20 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return System.Threading.Tasks.Task.FromResult(CraigDiscussionForum(topic, detail, emailId, ipAddress, fullname, out procResult));
         }
 
-        public System.Collections.Generic.List<CreateUserActivityReturnModel> CreateUserActivity(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress)
-        {
-            int procResult;
-            return CreateUserActivity(activityPage, activityTitle, insertedId, activityDetail, email, userId, sentto, sentFrom, ipAddress, out procResult);
-        }
-
-        public System.Collections.Generic.List<CreateUserActivityReturnModel> CreateUserActivity(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<CreateUserActivityReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<CreateUserActivityReturnModel>> CreateUserActivityAsync(string activityPage, string activityTitle, long? insertedId, string activityDetail, string email, long? userId, string sentto, string sentFrom, string ipAddress)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(CreateUserActivity(activityPage, activityTitle, insertedId, activityDetail, email, userId, sentto, sentFrom, ipAddress, out procResult));
-        }
-
-        public GetDataReturnModel GetData(long? id, string fromPage)
+        public System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage)
         {
             int procResult;
             return GetData(id, fromPage, out procResult);
         }
 
-        public GetDataReturnModel GetData(long? id, string fromPage, out int procResult)
+        public System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage, out int procResult)
         {
 
             procResult = 0;
-            return new GetDataReturnModel();
+            return new System.Collections.Generic.List<GetDataReturnModel>();
         }
 
-        public System.Threading.Tasks.Task<GetDataReturnModel> GetDataAsync(long? id, string fromPage)
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<GetDataReturnModel>> GetDataAsync(long? id, string fromPage)
         {
             int procResult;
             return System.Threading.Tasks.Task.FromResult(GetData(id, fromPage, out procResult));
@@ -2159,10 +1880,23 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return System.Threading.Tasks.Task.FromResult(InsertCraigCoupons(email, userId, ipAddress, fullName, title, description, detail, discount, money, currency, appliedfrom, expires, logo, images, out procResult));
         }
 
-        public int InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
+        public System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
+        {
+            int procResult;
+            return InsertCraigEvent(username, fullName, email, title, description, detail, images, ipAddress, fulldate, time, location, cost, friendsandFamily, out procResult);
+        }
+
+        public System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily, out int procResult)
         {
 
-            return 0;
+            procResult = 0;
+            return new System.Collections.Generic.List<InsertCraigEventReturnModel>();
+        }
+
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<InsertCraigEventReturnModel>> InsertCraigEventAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
+        {
+            int procResult;
+            return System.Threading.Tasks.Task.FromResult(InsertCraigEvent(username, fullName, email, title, description, detail, images, ipAddress, fulldate, time, location, cost, friendsandFamily, out procResult));
         }
 
         public int InsertErrorLog(string ipAddress, string city, string country, string errorDetail, string others)
@@ -2202,7 +1936,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return 0;
         }
 
-        public int SpBrowserViewed(string browserName, string ipAddress, string city, string country, string status)
+        public int SpBrowserViewed(string browserName, string ipAddress, string city, string country)
         {
 
             return 0;
@@ -2497,17 +2231,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
 
     #region POCO classes
 
-    // BlockedIP
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class BlockedIp
-    {
-        public long Ipid { get; set; } // IPID (Primary key)
-        public string BlockedIp_ { get; set; } // BlockedIP (Primary key) (length: 50)
-        public string Country { get; set; } // Country (length: 50)
-        public string Message { get; set; } // Message (length: 500)
-        public bool? Status { get; set; } // Status
-    }
-
     // BrowserViewed
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class BrowserViewed
@@ -2518,8 +2241,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public string IpAddress { get; set; } // IPAddress (length: 25)
         public string City { get; set; } // City (length: 75)
         public string Country { get; set; } // Country (length: 50)
-        public System.DateTime? Datetime { get; set; } // Datetime
-        public string Status { get; set; } // Status (length: 10)
     }
 
     // Craig_Articles
@@ -2644,11 +2365,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
     public class ItemDescription
     {
         public long Id { get; set; } // ID (Primary key)
-        public string Category { get; set; } // Category (length: 50)
         public string Condition { get; set; } // Condition (length: 25)
         public string PhoneBrand { get; set; } // PhoneBrand (length: 20)
         public string AutosBrand { get; set; } // AutosBrand (length: 30)
-        public string Model { get; set; } // Model (length: 50)
+        public string Modal { get; set; } // Modal (length: 50)
         public string MileKmph { get; set; } // Mile_KMPH (length: 25)
         public string Warranty { get; set; } // Warranty (length: 10)
         public string ExtraWarranty { get; set; } // extra_Warranty (length: 25)
@@ -2751,16 +2471,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public string TravelsandTours { get; set; } // TravelsandTours (length: 50)
     }
 
-    // MenuNavigation
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MenuNavigation
-    {
-        public int MenuId { get; set; } // MenuID (Primary key)
-        public string MenuName { get; set; } // MenuName (length: 50)
-        public string MenuUrl { get; set; } // MenuUrl (length: 200)
-        public bool? Active { get; set; } // Active
-    }
-
     // PostMyData
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class PostMyData
@@ -2837,24 +2547,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
         }
     }
 
-    // UserActivity
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class UserActivity
-    {
-        public long ActivityId { get; set; } // ActivityID (Primary key)
-        public string ActivityPage { get; set; } // ActivityPage (length: 50)
-        public string ActivityTitle { get; set; } // ActivityTitle (length: 250)
-        public long? InsertedId { get; set; } // InsertedID
-        public string Email { get; set; } // Email (length: 150)
-        public long? UserId { get; set; } // UserId
-        public string Sentto { get; set; } // Sentto (length: 150)
-        public string SentFrom { get; set; } // SentFrom (length: 150)
-        public System.DateTime Datetime { get; set; } // datetime
-        public string ActivityDetail { get; set; } // ActivityDetail (length: 250)
-        public string Remark { get; set; } // Remark (length: 50)
-        public string IpAddress { get; set; } // IPAddress (length: 26)
-    }
-
     // User_NCERROR_Windows
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class UserNcerrorWindow
@@ -2927,28 +2619,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
 
     #region POCO Configuration
 
-    // BlockedIP
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class BlockedIpConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<BlockedIp>
-    {
-        public BlockedIpConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public BlockedIpConfiguration(string schema)
-        {
-            ToTable("BlockedIP", schema);
-            HasKey(x => new { x.Ipid, x.BlockedIp_ });
-
-            Property(x => x.Ipid).HasColumnName(@"IPID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.BlockedIp_).HasColumnName(@"BlockedIP").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Country).HasColumnName(@"Country").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
-            Property(x => x.Message).HasColumnName(@"Message").HasColumnType("nvarchar").IsOptional().HasMaxLength(500);
-            Property(x => x.Status).HasColumnName(@"Status").HasColumnType("bit").IsOptional();
-        }
-    }
-
     // BrowserViewed
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class BrowserViewedConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<BrowserViewed>
@@ -2969,8 +2639,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
             Property(x => x.IpAddress).HasColumnName(@"IPAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
             Property(x => x.City).HasColumnName(@"City").HasColumnType("nvarchar").IsOptional().HasMaxLength(75);
             Property(x => x.Country).HasColumnName(@"Country").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.Datetime).HasColumnName(@"Datetime").HasColumnType("datetime").IsOptional();
-            Property(x => x.Status).HasColumnName(@"Status").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
         }
     }
 
@@ -3167,11 +2835,10 @@ namespace NepFlex.Core.Entities.OnlinePasal
             HasKey(x => x.Id);
 
             Property(x => x.Id).HasColumnName(@"ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Category).HasColumnName(@"Category").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
             Property(x => x.Condition).HasColumnName(@"Condition").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
             Property(x => x.PhoneBrand).HasColumnName(@"PhoneBrand").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(20);
             Property(x => x.AutosBrand).HasColumnName(@"AutosBrand").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(30);
-            Property(x => x.Model).HasColumnName(@"Model").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.Modal).HasColumnName(@"Modal").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
             Property(x => x.MileKmph).HasColumnName(@"Mile_KMPH").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
             Property(x => x.Warranty).HasColumnName(@"Warranty").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
             Property(x => x.ExtraWarranty).HasColumnName(@"extra_Warranty").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
@@ -3396,27 +3063,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
         }
     }
 
-    // MenuNavigation
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MenuNavigationConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MenuNavigation>
-    {
-        public MenuNavigationConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MenuNavigationConfiguration(string schema)
-        {
-            ToTable("MenuNavigation", schema);
-            HasKey(x => x.MenuId);
-
-            Property(x => x.MenuId).HasColumnName(@"MenuID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.MenuName).HasColumnName(@"MenuName").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.MenuUrl).HasColumnName(@"MenuUrl").HasColumnType("nvarchar").IsOptional().HasMaxLength(200);
-            Property(x => x.Active).HasColumnName(@"Active").HasColumnType("bit").IsOptional();
-        }
-    }
-
     // PostMyData
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class PostMyDataConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<PostMyData>
@@ -3529,35 +3175,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
             Property(x => x.Guid).HasColumnName(@"GUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
             Property(x => x.ProfilePicture).HasColumnName(@"ProfilePicture").HasColumnType("nvarchar(max)").IsOptional();
             Property(x => x.Images).HasColumnName(@"Images").HasColumnType("nvarchar(max)").IsOptional();
-        }
-    }
-
-    // UserActivity
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class UserActivityConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<UserActivity>
-    {
-        public UserActivityConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public UserActivityConfiguration(string schema)
-        {
-            ToTable("UserActivity", schema);
-            HasKey(x => x.ActivityId);
-
-            Property(x => x.ActivityId).HasColumnName(@"ActivityID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.ActivityPage).HasColumnName(@"ActivityPage").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.ActivityTitle).HasColumnName(@"ActivityTitle").HasColumnType("nvarchar").IsOptional().HasMaxLength(250);
-            Property(x => x.InsertedId).HasColumnName(@"InsertedID").HasColumnType("bigint").IsOptional();
-            Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsOptional().HasMaxLength(150);
-            Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("bigint").IsOptional();
-            Property(x => x.Sentto).HasColumnName(@"Sentto").HasColumnType("nvarchar").IsOptional().HasMaxLength(150);
-            Property(x => x.SentFrom).HasColumnName(@"SentFrom").HasColumnType("nvarchar").IsOptional().HasMaxLength(150);
-            Property(x => x.Datetime).HasColumnName(@"datetime").HasColumnType("datetime").IsRequired();
-            Property(x => x.ActivityDetail).HasColumnName(@"ActivityDetail").HasColumnType("nvarchar").IsOptional().HasMaxLength(250);
-            Property(x => x.Remark).HasColumnName(@"Remark").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.IpAddress).HasColumnName(@"IPAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(26);
         }
     }
 
@@ -3689,13 +3306,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
     #region Stored procedure return models
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class BlockThisIpReturnModel
-    {
-        public System.String BlockedIP { get; set; }
-        public System.String Message { get; set; }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class ButtonSearchOnClickReturnModel
     {
         public System.Int64 PostID { get; set; }
@@ -3717,39 +3327,6 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public System.String Warranty { get; set; }
         public System.String extra_Warranty { get; set; }
         public System.DateTime? DateAdded { get; set; }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ChangePasswordReturnModel
-    {
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel1
-        {
-            public System.String result { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel2
-        {
-            public System.String result { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel3
-        {
-            public System.String result { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel3> ResultSet3;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel4
-        {
-            public System.String result { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel4> ResultSet4;
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
@@ -3823,71 +3400,29 @@ namespace NepFlex.Core.Entities.OnlinePasal
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CreateUserActivityReturnModel
-    {
-        public System.String Resultmsg { get; set; }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class GetDataReturnModel
     {
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel1
-        {
-            public System.String Title { get; set; }
-            public System.String Image { get; set; }
-            public System.String Detail { get; set; }
-            public System.String Name { get; set; }
-            public System.String Email { get; set; }
-            public System.String Contact { get; set; }
-            public System.String Address { get; set; }
-            public System.String Other { get; set; }
-            public System.String TopCategory { get; set; }
-            public System.String SubCategory { get; set; }
-            public System.Decimal? Price { get; set; }
-            public System.String Condition { get; set; }
-            public System.String Brand { get; set; }
-            public System.String Modal { get; set; }
-            public System.String Mile_KMPH { get; set; }
-            public System.String Warranty { get; set; }
-            public System.String extra_Warranty { get; set; }
-            public System.DateTime? DateAdded { get; set; }
-            public System.String ShowPhoneNumber { get; set; }
-            public System.String showEmailID { get; set; }
-            public System.String ProfilePicture { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel2
-        {
-            public System.Int64 ID { get; set; }
-            public System.String Username { get; set; }
-            public System.Int32? Likes { get; set; }
-            public System.Int32? Dislikes { get; set; }
-            public System.Int32? Loved { get; set; }
-            public System.Int32? TotalViews { get; set; }
-            public System.String FullName { get; set; }
-            public System.String Email { get; set; }
-            public System.String Title { get; set; }
-            public System.String ProfilePicture { get; set; }
-            public System.String Description { get; set; }
-            public System.String Detail { get; set; }
-            public System.String Images { get; set; }
-            public System.String IPAddress { get; set; }
-            public System.String Guid { get; set; }
-            public System.DateTime DatePosted { get; set; }
-            public System.Boolean? Active { get; set; }
-            public System.String Location { get; set; }
-            public System.Decimal? Cost { get; set; }
-            public System.String FriendsandFamily { get; set; }
-            public System.String EventMonth { get; set; }
-            public System.String EventDay { get; set; }
-            public System.String EventYear { get; set; }
-            public System.TimeSpan? EventTime { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
-
+        public System.String Title { get; set; }
+        public System.String Image { get; set; }
+        public System.String Detail { get; set; }
+        public System.String Name { get; set; }
+        public System.String Email { get; set; }
+        public System.String Contact { get; set; }
+        public System.String Address { get; set; }
+        public System.String Other { get; set; }
+        public System.String TopCategory { get; set; }
+        public System.String SubCategory { get; set; }
+        public System.Decimal? Price { get; set; }
+        public System.String Condition { get; set; }
+        public System.String Brand { get; set; }
+        public System.String Modal { get; set; }
+        public System.String Mile_KMPH { get; set; }
+        public System.String Warranty { get; set; }
+        public System.String extra_Warranty { get; set; }
+        public System.DateTime? DateAdded { get; set; }
+        public System.String ShowPhoneNumber { get; set; }
+        public System.String showEmailID { get; set; }
+        public System.String ProfilePicture { get; set; }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
@@ -3911,16 +3446,9 @@ namespace NepFlex.Core.Entities.OnlinePasal
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
         public class ResultSetModel2
         {
-            public System.Int32? Column1 { get; set; }
+            public System.Int32? Result { get; set; }
         }
         public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel3
-        {
-            public System.Int32? Column1 { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel3> ResultSet3;
 
     }
 
@@ -3941,6 +3469,12 @@ namespace NepFlex.Core.Entities.OnlinePasal
         }
         public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
 
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+    public class InsertCraigEventReturnModel
+    {
+        public System.Int32? Result { get; set; }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
@@ -3976,6 +3510,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public class ResultSetModel1
         {
             public System.Int64 UserID { get; set; }
+            public System.String Username { get; set; }
             public System.String Email { get; set; }
             public System.String GUID { get; set; }
             public System.String Firstname { get; set; }
