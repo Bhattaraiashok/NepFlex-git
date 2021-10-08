@@ -37,7 +37,7 @@ namespace NepFlex.Core.Entities.ResourceModels
         public bool? IsCompanyActive { get; set; }
         public string CompanyEmailID { get; set; }
     }
-    public class UserRegisterResponse
+    public class UserRegisterResponse : RequestStatus
     {
         public string response { get; set; }
     }
@@ -50,7 +50,7 @@ namespace NepFlex.Core.Entities.ResourceModels
         public string IsUserSeller { get; set; } //on the time of regester let user to choose if the same id is regester as seller too.
     }
 
-    public class UserLoginResponse
+    public class UserLoginResponse: RequestStatus
     {
         public int UserID { get; set; }
         public string Email { get; set; }

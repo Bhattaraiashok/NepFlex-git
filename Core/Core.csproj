@@ -64,10 +64,12 @@
     <Compile Include="Entities\ResourceModels\MenuTopContainer.cs" />
     <Compile Include="Entities\ResourceModels\MenuTopNav.cs" />
     <Compile Include="Entities\ResourceModels\ReportedData.cs" />
+    <Compile Include="Entities\ResourceModels\ResponseMessage.cs" />
     <Compile Include="Entities\ResourceModels\SearchedKeywordResults.cs" />
     <Compile Include="Entities\ResourceModels\SearchResponse.cs" />
     <Compile Include="Entities\ResourceModels\SendEmailRequest.cs" />
     <Compile Include="Entities\ResourceModels\UserModel.cs" />
+    <Compile Include="Entities\ResourceModels\Utility.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositories\IDetailRepository.cs" />
     <Compile Include="Interfaces\Repositories\IItemDescriptionRepository.cs" />

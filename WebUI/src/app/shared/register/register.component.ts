@@ -281,26 +281,32 @@ export class RegisterComponent implements OnInit {
     this.validateForm();
     if (this.registerForm.valid) {
       console.log('FORM IS VALID');
-      this.UserRegister.UserDetail.Email = this.registerForm.get('useremail').value;
-      this.UserRegister.UserDetail.Firstname = this.registerForm.get('firstname').value;
-      this.UserRegister.UserDetail.Lastname = this.registerForm.get('lastname').value;
-      this.UserRegister.UserDetail.Middlename = this.registerForm.get('middlename').value;
-      this.UserRegister.UserDetail.Password = this.registerForm.get('password').value;
-      this.UserRegister.UserDetail.Username = this.registerForm.get('username').value;
-      this.UserRegister.UserDetail.PhoneNumber = this.registerForm.get('userphonenumber').value;
-      this.UserRegister.UserDetail.ShowPhonenumber = this.registerForm.get('showOrHideUserPhonenumber').value;
-      this.UserRegister.UserDetail.IsUserSeller = this.registerForm.get('userIsSeller').value;
-      this.UserRegister.CompanyDetails.CompanyEmailID = this.registerForm.get('companyemail').value;
-      this.UserRegister.CompanyDetails.CompanyName = this.registerForm.get('companyname').value;
-      this.UserRegister.CompanyDetails.Address = this.registerForm.get('address').value;
-      this.UserRegister.CompanyDetails.PhoneNumber = this.registerForm.get('companyphonenumber').value;
-      this.UserRegister.CompanyDetails.PhoneCountryCode = this.registerForm.get('companycountryCode').value;
-      this.UserRegister.CompanyDetails.IsGOVRegisteredCompany = this.registerForm.get('showOrHideUserPhonenumber').value;
-      this.UserRegister.CompanyDetails.ShowPhonenumber = this.registerForm.get('showOrHideCompanyPhonenumber').value;
+      this.mappings();
       this.registerService.register(this.UserRegister).subscribe((item: RegisterResponse) => {
         alert(item.status);
+        if (item.status == "successfull") {
+
+        }
       });
     }
+  }
+  mappings() {
+    this.UserRegister.UserDetail.Email = this.registerForm.get('useremail').value;
+    this.UserRegister.UserDetail.Firstname = this.registerForm.get('firstname').value;
+    this.UserRegister.UserDetail.Lastname = this.registerForm.get('lastname').value;
+    this.UserRegister.UserDetail.Middlename = this.registerForm.get('middlename').value;
+    this.UserRegister.UserDetail.Password = this.registerForm.get('password').value;
+    this.UserRegister.UserDetail.Username = this.registerForm.get('username').value;
+    this.UserRegister.UserDetail.PhoneNumber = this.registerForm.get('userphonenumber').value;
+    this.UserRegister.UserDetail.ShowPhonenumber = this.registerForm.get('showOrHideUserPhonenumber').value;
+    this.UserRegister.UserDetail.IsUserSeller = this.registerForm.get('userIsSeller').value;
+    this.UserRegister.CompanyDetails.CompanyEmailID = this.registerForm.get('companyemail').value;
+    this.UserRegister.CompanyDetails.CompanyName = this.registerForm.get('companyname').value;
+    this.UserRegister.CompanyDetails.Address = this.registerForm.get('address').value;
+    this.UserRegister.CompanyDetails.PhoneNumber = this.registerForm.get('companyphonenumber').value;
+    this.UserRegister.CompanyDetails.PhoneCountryCode = this.registerForm.get('companycountryCode').value;
+    this.UserRegister.CompanyDetails.IsGOVRegisteredCompany = this.registerForm.get('showOrHideUserPhonenumber').value;
+    this.UserRegister.CompanyDetails.ShowPhonenumber = this.registerForm.get('showOrHideCompanyPhonenumber').value;
   }
 }
 /** Error when invalid control is dirty, touched, or submitted. */

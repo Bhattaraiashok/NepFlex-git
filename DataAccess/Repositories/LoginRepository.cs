@@ -37,12 +37,13 @@ namespace NepFlex.DataAccess.Repositories
             return _login;
         }
 
-        public UserRegisterResponse UserRegistrationProcess(UserRegister req)
+        public bool UserRegistrationProcess(UserRegister req)
         {
             var _login = new UserRegisterResponse();
             var result = new RegisterUserReturnModel();
             if (req.UserDetail.IsUserSeller == true)
             {
+                //saves user and company both
                 result = _context.RegisterUser(
                    req.UserDetail.Username,
                    req.UserDetail.Firstname,
@@ -50,7 +51,7 @@ namespace NepFlex.DataAccess.Repositories
                    req.UserDetail.Lastname,
                    req.UserDetail.Password,
                    req.UserDetail.Email,
-                   req.UserDetail.PhoneNumber, 
+                   req.UserDetail.PhoneNumber,
                    req.UserDetail.ShowPhonenumber,
                    "Yes",
                    req.CompanyDetails.CompanyName,
@@ -86,7 +87,11 @@ namespace NepFlex.DataAccess.Repositories
             }
 
             _login.response = result.ResultSet5.ToString();
-            return _login;
+
+            var status = new RequestStatus();
+            status = Utility.RequestStatus(_login.response);
+
+            return status.IsSuccess;
         }
     }
 }
