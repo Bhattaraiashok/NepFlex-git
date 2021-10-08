@@ -10,7 +10,7 @@ import { ReportGetData } from 'app/shared/ResourceModels/ReportGetData';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Headers, RequestOptions } from '@angular/http';
-import { RegisterRequest, RegisterResponse } from "app/shared/ResourceModels/registerModel";
+import { RegisterRequest, RegisterResponse, UserRegister } from "app/shared/ResourceModels/registerModel";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  register(val: RegisterRequest): Observable<RegisterResponse> {
+  register(val: UserRegister): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(
       `${this.apiUrl_postReport}`,
       JSON.stringify(val),

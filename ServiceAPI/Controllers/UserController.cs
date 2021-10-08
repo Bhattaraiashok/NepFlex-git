@@ -39,7 +39,7 @@ namespace Nepflex.ServiceAPI.Controllers
 
         [Route("register")]
         [HttpPost]
-        public IHttpActionResult UserRegistration([FromBody] UserRegisterRequest req)
+        public IHttpActionResult UserRegistration([FromBody] UserRegister req)
         {
             Console.WriteLine("came here in login");
             try

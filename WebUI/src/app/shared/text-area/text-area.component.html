@@ -19,6 +19,11 @@
     <textarea matInput placeholder="{{placeholder}}" value="{{selectedValue}}" (change)="TextChanged($event)" (keyup)="TextChanged($event)"></textarea>
     <span class="fa fa-times-circle text-clear-button" *ngIf="showClearButton" (click)="clearInput($event)"></span>
   </mat-form-field>
+  
+  <!--<mat-form-field *ngIf="textType==='phonenumber'">
+    <input matInput placeholder="{{placeholder}}" phoneMask [preValue]="selectedValue"  maxlength="14"/>
+    <span class="fa fa-times-circle text-clear-button" *ngIf="showClearButton" (click)="clearInput($event)"></span>
+  </mat-form-field>-->
 
   <mat-form-field *ngIf="textType==='select'">
     <mat-select placeholder="{{placeholder}}">

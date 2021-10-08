@@ -1,7 +1,9 @@
 <div class="global-desktop-container w-100">
   <div class="body-container">
-    <form [formGroup]="registerForm" class="form example-form container" autocomplete="off">
-      <mat-card>
+    <form [formGroup]="registerForm" class="form example-form container">
+      <h6>Please provide info on below fields in order to register the acount.
+        <br/>You have the option to choose whether or not you want to register as seller.</h6>
+      <mat-card class="mb-1">
         <section class="example-section">
           <h4>Are you also registering this account as Seller?</h4>
           <div *ngFor="let item of isUserASellerCheckbox;  let i = index">
@@ -9,46 +11,153 @@
           </div>
         </section>
       </mat-card>
-      <app-text-area data-test-id="user_firstname" placeholder='firstname' formControlName="firstname" textType='text' (newData)="onchangeform($event,'firstname')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{firstnameFCError}}</mat-error>
-      <app-text-area data-test-id="user_lastname" placeholder='lastname' formControlName="lastname" textType='text' (newData)="onchangeform($event,'lastname')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{lastnameFCError}}</mat-error>
-      <app-text-area data-test-id="user_email" placeholder='email' formControlName="email" textType='email' (newData)="onchangeform($event,'email')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{emailFCError}}</mat-error>
-      <app-text-area data-test-id="user_phonenumber" placeholder='phonenumber' formControlName="phonenumber" textType='text' (newData)="onchangeform($event,'phonenumber')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{phonenumberFCError}}</mat-error>
-      <app-text-area data-test-id="user_username" placeholder='username' formControlName="username" textType='text' (newData)="onchangeform($event,'username')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{usernameFCError}}</mat-error>
-      <!-- <app-text-area data-test-id="user_password" placeholder='password' formControlName="password" textType='text' (newData)="onchangeform($event,'password')"></app-text-area>
-    <mat-error *ngIf="showFCError">{{passwordFCError}}</mat-error> -->
-
-      <app-text-area *ngIf="isASeller" data-test-id="user_company" placeholder='company' formControlName="company" textType='text'
-        (newData)="onchangeform($event,'company')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{companyFCError}}</mat-error>
-      <app-text-area *ngIf="isASeller" data-test-id="user_address" placeholder='address' formControlName="address" textType='text'
-        (newData)="onchangeform($event,'address')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{addressFCError}}</mat-error>
-      <app-text-area *ngIf="isASeller" data-test-id="user_address2" placeholder='address2' formControlName="address2" textType='text'
-        (newData)="onchangeform($event,'address2')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{address2FCError}}</mat-error>
-      <app-text-area *ngIf="isASeller" data-test-id="user_city" placeholder='city' formControlName="city" textType='text' (newData)="onchangeform($event,'city')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{cityFCError}}</mat-error>
-      <app-text-area *ngIf="isASeller" data-test-id="user_state" placeholder='state' formControlName="state" textType='text' (newData)="onchangeform($event,'state')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{stateFCError}}</mat-error>
-      <app-text-area *ngIf="isASeller" data-test-id="user_zipcode" placeholder='zipcode' formControlName="zipcode" textType='text'
-        (newData)="onchangeform($event,'zipcode')"></app-text-area>
-      <mat-error *ngIf="showFCError">{{zipcodeFCError}}</mat-error>
-
-      <div class="form-group">
-        <div class="custom-search-glyphicon">
-          <i class="pass_show" (click)="passwordShowField($event)" *ngIf="!hide"></i>
-          <i class="pass_hide" (click)="passwordShowField($event)" *ngIf="hide"></i>
+      <mat-card class="mb-1">
+        <h4>Personal Details:</h4>
+        <app-text-area data-test-id="user_firstname" placeholder='Firstname' formControlName="firstname" textType='text' (newData)="onchangeform($event,'firstname')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{firstnameFCError}}</mat-error>
+        <app-text-area data-test-id="user_middlename" placeholder='Middlename' formControlName="middlename" textType='text' (newData)="onchangeform($event,'middlename')"></app-text-area>
+        <app-text-area data-test-id="user_lastname" placeholder='Lastname' formControlName="lastname" textType='text' (newData)="onchangeform($event,'lastname')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{lastnameFCError}}</mat-error>
+        <app-text-area data-test-id="user_email" placeholder='Email' formControlName="useremail" textType='email' (newData)="onchangeform($event,'useremail')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{emailFCError}}</mat-error>
+        <mat-card>
+          <section class="example-section">
+            <h4>show or hide your phone number on your profile?</h4>
+            <div *ngFor="let item of userChoiceOnPhonenumber;  let i = index">
+              <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeUserPhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+            </div>
+            <app-text-area data-test-id="user_countryCode" placeholder='Country Code' formControlName="usercountryCode" textType=number (newData)="onchangeform($event,'usercountryCode')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{countryCodeFCError}}</mat-error>
+            <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="registerForm.value.userphonenumber" formControlName="userphonenumber"
+              maxlength="14" (newData)="onchangeform($event,'userphonenumber')" />
+          </section>
+        </mat-card>
+      </mat-card>
+      <mat-card *ngIf="isASeller" class="mb-1">
+        <h4>Company Details:</h4>
+        <app-text-area *ngIf="isASeller" data-test-id="user_company" placeholder='Company Name' formControlName="companyname" textType='text'
+          (newData)="onchangeform($event,'companyname')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{companyFCError}}</mat-error>
+        <app-text-area *ngIf="isASeller" data-test-id="user_address" placeholder='Address' formControlName="address" textType='text'
+          (newData)="onchangeform($event,'address')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{addressFCError}}</mat-error>
+        <app-text-area data-test-id="company_email" placeholder='Company Email' formControlName="companyemail" textType='email' (newData)="onchangeform($event,'companyemail')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{companyEmailFCError}}</mat-error>
+        <mat-card>
+          <section class="example-section">
+            <h4>show or hide company phone number on your profile?</h4>
+            <div *ngFor="let item of companyChoiceOnPhonenumber;  let i = index">
+              <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeCompanyPhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+            </div>
+            <app-text-area data-test-id="company_countryCode" placeholder='Country Code' formControlName="companycountryCode" textType=number (newData)="onchangeform($event,'companycountryCode')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{countryCodeFCError}}</mat-error>
+            <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="registerForm.value.companyphonenumber" formControlName="companyphonenumber"
+              maxlength="14" (newData)="onchangeform($event,'companyphonenumber')" />
+          </section>
+        </mat-card>
+        <!--<app-text-area *ngIf="isASeller" data-test-id="user_address2" placeholder='Address2' formControlName="address2" textType='text'
+          (newData)="onchangeform($event,'address2')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{address2FCError}}</mat-error>
+        <app-text-area *ngIf="isASeller" data-test-id="user_city" placeholder='City' formControlName="city" textType='text' (newData)="onchangeform($event,'city')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{cityFCError}}</mat-error>
+        <app-text-area *ngIf="isASeller" data-test-id="user_state" placeholder='State' formControlName="state" textType='text' (newData)="onchangeform($event,'state')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{stateFCError}}</mat-error>
+        <app-text-area *ngIf="isASeller" data-test-id="user_zipcode" placeholder='Zipcode' formControlName="zipcode" textType='text'
+          (newData)="onchangeform($event,'zipcode')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{zipcodeFCError}}</mat-error>-->
+      </mat-card>
+      <mat-card>
+        <h4>Register:</h4>
+        <app-text-area data-test-id="user_username" placeholder='Username' formControlName="username" textType='text' (newData)="onchangeform($event,'username')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{usernameFCError}}</mat-error>
+        <div class="form-group">
+          <div class="custom-search-glyphicon">
+            <i class="pass_show" (click)="passwordShowField($event)" *ngIf="!hide"></i>
+            <i class="pass_hide" (click)="passwordShowField($event)" *ngIf="hide"></i>
+          </div>
+          <label for="password" class="text-info">Password:</label><br>
+          <input type="text" placeholder="Password" id="strPassword" [type]="hide ? 'password' : 'text'" class="form-control passwordField"
+            formControlName="password">
         </div>
-        <label for="password" class="text-info">Password:</label><br>
-        <input type="text" id="strPassword" [type]="hide ? 'password' : 'text'" class="form-control passwordField" formControlName="password">
-      </div>
-      <app-animated-button [buttonCollections]="detailButttons" (click)="registerNow()"></app-animated-button>
-
+        <app-animated-button [buttonCollections]="detailButttons" (click)="registerNow()"></app-animated-button>
+      </mat-card>
     </form>
   </div>
 </div>
+<!--
+<div class="global-desktop-container w-100">
+  <form [formGroup]="registerForm" class="container" autocomplete="off">
+    <div class="body-container">
+      <div class="left-section container col-lg-4" id="reportLeftsection">
+        <mat-card class="mb-1">
+          <h4>Personal Details:</h4>
+          <app-text-area data-test-id="user_firstname" placeholder='Firstname' formControlName="firstname" textType='text' (newData)="onchangeform($event,'firstname')"></app-text-area>
+          <mat-error *ngIf="showFCError">{{firstnameFCError}}</mat-error>
+          <app-text-area data-test-id="user_middlename" placeholder='Middlename' formControlName="middlename" textType='text' (newData)="onchangeform($event,'middlename')"></app-text-area>
+          <app-text-area data-test-id="user_lastname" placeholder='Lastname' formControlName="lastname" textType='text' (newData)="onchangeform($event,'lastname')"></app-text-area>
+          <mat-error *ngIf="showFCError">{{lastnameFCError}}</mat-error>
+          <app-text-area data-test-id="user_email" placeholder='Email' formControlName="email" textType='email' (newData)="onchangeform($event,'email')"></app-text-area>
+          <mat-error *ngIf="showFCError">{{emailFCError}}</mat-error>
+          <mat-card>
+            <section class="example-section">
+              <h4>show or hide your phone number on your profile?</h4>
+              <div *ngFor="let item of userChoiceOnPhonenumber;  let i = index">
+                <mat-checkbox [checked]="item.isChecked === true" (change)="onchangePhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+              </div>
+              <app-text-area data-test-id="user_countryCode" placeholder='Country Code' formControlName="countryCode" textType=number (newData)="onchangeform($event,'countryCode')"></app-text-area>
+              <mat-error *ngIf="showFCError">{{countryCodeFCError}}</mat-error>
+              <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="registerForm.value.phonenumber" formControlName="phonenumber"
+                maxlength="14" (newData)="onchangeform($event,'phonenumber')" />
+            </section>
+          </mat-card>
+        </mat-card>
+      </div>
+      <div class="right-section container col-lg-8 contact-us-info" id="reportRightsection">
+           <div class="title-text">Please provide info on below fields in order to register the acount.
+          <br/>You have the option to choose whether or not you want to register as seller.</div>
+        <mat-card class="mb-1">
+          <section class="example-section">
+            <div class="title-text">Are you also registering this account as Seller?</div>
+            <div *ngFor="let item of isUserASellerCheckbox;  let i = index">
+              <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeSellerCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+            </div>
+          </section>
+        </mat-card>
+          <mat-card *ngIf="isASeller" class="mb-1">
+            <h4>Company Details:</h4>
+            <app-text-area *ngIf="isASeller" data-test-id="user_company" placeholder='Company Name' formControlName="company" textType='text'
+              (newData)="onchangeform($event,'company')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{companyFCError}}</mat-error>
+            <app-text-area *ngIf="isASeller" data-test-id="user_address" placeholder='Address' formControlName="address" textType='text'
+              (newData)="onchangeform($event,'address')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{addressFCError}}</mat-error>
+            <app-text-area *ngIf="isASeller" data-test-id="user_address2" placeholder='Address2' formControlName="address2" textType='text'
+              (newData)="onchangeform($event,'address2')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{address2FCError}}</mat-error>
+            <app-text-area *ngIf="isASeller" data-test-id="user_city" placeholder='City' formControlName="city" textType='text' (newData)="onchangeform($event,'city')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{cityFCError}}</mat-error>
+            <app-text-area *ngIf="isASeller" data-test-id="user_state" placeholder='State' formControlName="state" textType='text' (newData)="onchangeform($event,'state')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{stateFCError}}</mat-error>
+            <app-text-area *ngIf="isASeller" data-test-id="user_zipcode" placeholder='Zipcode' formControlName="zipcode" textType='text'
+              (newData)="onchangeform($event,'zipcode')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{zipcodeFCError}}</mat-error>
+          </mat-card>
+          <mat-card>
+            <h4>Register:</h4>
+            <app-text-area data-test-id="user_username" placeholder='Username' formControlName="username" textType='text' (newData)="onchangeform($event,'username')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{usernameFCError}}</mat-error>
+            <div class="form-group">
+              <div class="custom-search-glyphicon">
+                <i class="pass_show" (click)="passwordShowField($event)" *ngIf="!hide"></i>
+                <i class="pass_hide" (click)="passwordShowField($event)" *ngIf="hide"></i>
+              </div>
+              <label for="password" class="text-info">Password:</label><br>
+              <input type="text" placeholder="Password" id="strPassword" [type]="hide ? 'password' : 'text'" class="form-control passwordField"
+                formControlName="password">
+            </div>
+            <app-animated-button [buttonCollections]="detailButttons" (click)="registerNow()"></app-animated-button>
+          </mat-card>
+      </div>
+    </div>
+  </form>
+</div>-->

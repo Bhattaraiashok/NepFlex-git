@@ -70,6 +70,7 @@ import { TabLayoutComponent } from './tab-layout/tab-layout.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouteTo } from './interfaces/local-router';
+import { TelephoneMaskDirective } from './directives/telephone-mask.directive';
 
 @NgModule({
   imports: [
@@ -140,7 +141,8 @@ import { RouteTo } from './interfaces/local-router';
     AutoCompleteSearchboxComponent,
     TabLayoutComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TelephoneMaskDirective
   ],
   providers: [
     ReportService,

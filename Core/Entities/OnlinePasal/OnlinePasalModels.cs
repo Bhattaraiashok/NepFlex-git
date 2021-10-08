@@ -122,8 +122,8 @@ namespace NepFlex.Core.Entities.OnlinePasal
         int Postdata(string title, string image, string detail, string username, string name, string email, string contact, string showPhoneNumber, string address, string other, string topCategory, string subCategory, decimal? price, string condition, string brand, string modal, string mileKmph, string warranty, string extraWarranty);
         // PostdataAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
-        RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string ui);
-        System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string ui);
+        RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
+        System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
 
         int SendEmailChangePassword(string username, string email);
         // SendEmailChangePasswordAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
@@ -1264,7 +1264,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return (int) procResultParam.Value;
         }
 
-        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string ui)
+        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
@@ -1290,6 +1290,46 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (emailParam.Value == null)
                 emailParam.Value = System.DBNull.Value;
 
+            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 10 };
+            if (userPhNumberParam.Value == null)
+                userPhNumberParam.Value = System.DBNull.Value;
+
+            var userShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = userShowPhNumber.GetValueOrDefault() };
+            if (!userShowPhNumber.HasValue)
+                userShowPhNumberParam.Value = System.DBNull.Value;
+
+            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
+            if (isUserSellerParam.Value == null)
+                isUserSellerParam.Value = System.DBNull.Value;
+
+            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
+            if (companyNameParam.Value == null)
+                companyNameParam.Value = System.DBNull.Value;
+
+            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
+            if (companyAddressParam.Value == null)
+                companyAddressParam.Value = System.DBNull.Value;
+
+            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
+            if (companyPhnCountryCodeParam.Value == null)
+                companyPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 10 };
+            if (companyPhoneNumberParam.Value == null)
+                companyPhoneNumberParam.Value = System.DBNull.Value;
+
+            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
+            if (!isGovRegisteredCompany.HasValue)
+                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
+
+            var companyEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyEmailId, Size = 200 };
+            if (companyEmailIdParam.Value == null)
+                companyEmailIdParam.Value = System.DBNull.Value;
+
+            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
+            if (!companyShowPhNumber.HasValue)
+                companyShowPhNumberParam.Value = System.DBNull.Value;
+
             var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
             if (uiParam.Value == null)
                 uiParam.Value = System.DBNull.Value;
@@ -1305,6 +1345,16 @@ namespace NepFlex.Core.Entities.OnlinePasal
             cmd.Parameters.Add(lastnameParam);
             cmd.Parameters.Add(passwordParam);
             cmd.Parameters.Add(emailParam);
+            cmd.Parameters.Add(userPhNumberParam);
+            cmd.Parameters.Add(userShowPhNumberParam);
+            cmd.Parameters.Add(isUserSellerParam);
+            cmd.Parameters.Add(companyNameParam);
+            cmd.Parameters.Add(companyAddressParam);
+            cmd.Parameters.Add(companyPhnCountryCodeParam);
+            cmd.Parameters.Add(companyPhoneNumberParam);
+            cmd.Parameters.Add(isGovRegisteredCompanyParam);
+            cmd.Parameters.Add(companyEmailIdParam);
+            cmd.Parameters.Add(companyShowPhNumberParam);
             cmd.Parameters.Add(uiParam);
 
             try
@@ -1320,6 +1370,18 @@ namespace NepFlex.Core.Entities.OnlinePasal
                 reader.NextResult();
 
                 procResultData.ResultSet3 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel3>(reader).ToList();
+                reader.NextResult();
+
+                procResultData.ResultSet4 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel4>(reader).ToList();
+                reader.NextResult();
+
+                procResultData.ResultSet5 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel5>(reader).ToList();
+                reader.NextResult();
+
+                procResultData.ResultSet6 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel6>(reader).ToList();
+                reader.NextResult();
+
+                procResultData.ResultSet7 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel7>(reader).ToList();
                 reader.Close();
 
             }
@@ -1330,7 +1392,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return procResultData;
         }
 
-        public async System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string ui)
+        public async System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
@@ -1356,6 +1418,46 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (emailParam.Value == null)
                 emailParam.Value = System.DBNull.Value;
 
+            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 10 };
+            if (userPhNumberParam.Value == null)
+                userPhNumberParam.Value = System.DBNull.Value;
+
+            var userShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = userShowPhNumber.GetValueOrDefault() };
+            if (!userShowPhNumber.HasValue)
+                userShowPhNumberParam.Value = System.DBNull.Value;
+
+            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
+            if (isUserSellerParam.Value == null)
+                isUserSellerParam.Value = System.DBNull.Value;
+
+            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
+            if (companyNameParam.Value == null)
+                companyNameParam.Value = System.DBNull.Value;
+
+            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
+            if (companyAddressParam.Value == null)
+                companyAddressParam.Value = System.DBNull.Value;
+
+            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
+            if (companyPhnCountryCodeParam.Value == null)
+                companyPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 10 };
+            if (companyPhoneNumberParam.Value == null)
+                companyPhoneNumberParam.Value = System.DBNull.Value;
+
+            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
+            if (!isGovRegisteredCompany.HasValue)
+                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
+
+            var companyEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyEmailId, Size = 200 };
+            if (companyEmailIdParam.Value == null)
+                companyEmailIdParam.Value = System.DBNull.Value;
+
+            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
+            if (!companyShowPhNumber.HasValue)
+                companyShowPhNumberParam.Value = System.DBNull.Value;
+
             var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
             if (uiParam.Value == null)
                 uiParam.Value = System.DBNull.Value;
@@ -1371,6 +1473,16 @@ namespace NepFlex.Core.Entities.OnlinePasal
             cmd.Parameters.Add(lastnameParam);
             cmd.Parameters.Add(passwordParam);
             cmd.Parameters.Add(emailParam);
+            cmd.Parameters.Add(userPhNumberParam);
+            cmd.Parameters.Add(userShowPhNumberParam);
+            cmd.Parameters.Add(isUserSellerParam);
+            cmd.Parameters.Add(companyNameParam);
+            cmd.Parameters.Add(companyAddressParam);
+            cmd.Parameters.Add(companyPhnCountryCodeParam);
+            cmd.Parameters.Add(companyPhoneNumberParam);
+            cmd.Parameters.Add(isGovRegisteredCompanyParam);
+            cmd.Parameters.Add(companyEmailIdParam);
+            cmd.Parameters.Add(companyShowPhNumberParam);
             cmd.Parameters.Add(uiParam);
 
             try
@@ -1386,6 +1498,18 @@ namespace NepFlex.Core.Entities.OnlinePasal
                 await reader.NextResultAsync().ConfigureAwait(false);
 
                 procResultData.ResultSet3 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel3>(reader).ToList();
+                await reader.NextResultAsync().ConfigureAwait(false);
+
+                procResultData.ResultSet4 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel4>(reader).ToList();
+                await reader.NextResultAsync().ConfigureAwait(false);
+
+                procResultData.ResultSet5 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel5>(reader).ToList();
+                await reader.NextResultAsync().ConfigureAwait(false);
+
+                procResultData.ResultSet6 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel6>(reader).ToList();
+                await reader.NextResultAsync().ConfigureAwait(false);
+
+                procResultData.ResultSet7 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel7>(reader).ToList();
             }
             finally
             {
@@ -1911,23 +2035,23 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return 0;
         }
 
-        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string ui)
+        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             int procResult;
-            return RegisterUser(username, firstname, middlename, lastname, password, email, ui, out procResult);
+            return RegisterUser(username, firstname, middlename, lastname, password, email, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
         }
 
-        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string ui, out int procResult)
+        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
         {
 
             procResult = 0;
             return new RegisterUserReturnModel();
         }
 
-        public System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string ui)
+        public System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             int procResult;
-            return System.Threading.Tasks.Task.FromResult(RegisterUser(username, firstname, middlename, lastname, password, email, ui, out procResult));
+            return System.Threading.Tasks.Task.FromResult(RegisterUser(username, firstname, middlename, lastname, password, email, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult));
         }
 
         public int SendEmailChangePassword(string username, string email)
@@ -2540,6 +2664,9 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public string Guid { get; set; } // GUID (length: 100)
         public string ProfilePicture { get; set; } // ProfilePicture
         public string Images { get; set; } // Images
+        public string IsUserSeller { get; set; } // IsUserSeller (length: 12)
+        public string PhNumber { get; set; } // PHNumber (length: 14)
+        public bool? ShowPhNumber { get; set; } // ShowPHNumber
 
         public User()
         {
@@ -3175,6 +3302,9 @@ namespace NepFlex.Core.Entities.OnlinePasal
             Property(x => x.Guid).HasColumnName(@"GUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
             Property(x => x.ProfilePicture).HasColumnName(@"ProfilePicture").HasColumnType("nvarchar(max)").IsOptional();
             Property(x => x.Images).HasColumnName(@"Images").HasColumnType("nvarchar(max)").IsOptional();
+            Property(x => x.IsUserSeller).HasColumnName(@"IsUserSeller").HasColumnType("nvarchar").IsOptional().HasMaxLength(12);
+            Property(x => x.PhNumber).HasColumnName(@"PHNumber").HasColumnType("nvarchar").IsOptional().HasMaxLength(14);
+            Property(x => x.ShowPhNumber).HasColumnName(@"ShowPHNumber").HasColumnType("bit").IsOptional();
         }
     }
 
@@ -3483,23 +3613,51 @@ namespace NepFlex.Core.Entities.OnlinePasal
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
         public class ResultSetModel1
         {
-            public System.Int32? Column1 { get; set; }
+            public System.String UserRegisteredID { get; set; }
         }
         public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
         public class ResultSetModel2
         {
-            public System.Int32? Column1 { get; set; }
+            public System.String UserRegisteredID { get; set; }
         }
         public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
         public class ResultSetModel3
         {
-            public System.Decimal? Column1 { get; set; }
+            public System.String UserRegisteredID { get; set; }
         }
         public System.Collections.Generic.List<ResultSetModel3> ResultSet3;
+
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+        public class ResultSetModel4
+        {
+            public System.String CompanyRegisteredID { get; set; }
+        }
+        public System.Collections.Generic.List<ResultSetModel4> ResultSet4;
+
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+        public class ResultSetModel5
+        {
+            public System.String CompanyRegisteredID { get; set; }
+        }
+        public System.Collections.Generic.List<ResultSetModel5> ResultSet5;
+
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+        public class ResultSetModel6
+        {
+            public System.Decimal? UserRegisteredID { get; set; }
+        }
+        public System.Collections.Generic.List<ResultSetModel6> ResultSet6;
+
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+        public class ResultSetModel7
+        {
+            public System.Decimal? CompanyRegisteredID { get; set; }
+        }
+        public System.Collections.Generic.List<ResultSetModel7> ResultSet7;
 
     }
 

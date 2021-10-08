@@ -37,11 +37,55 @@ namespace NepFlex.DataAccess.Repositories
             return _login;
         }
 
-        public UserRegisterResponse UserRegistrationProcess(UserRegisterRequest req)
+        public UserRegisterResponse UserRegistrationProcess(UserRegister req)
         {
             var _login = new UserRegisterResponse();
-            var result = _context.RegisterUser(req.Username, req.Firstname, req.Middlename, req.Lastname, req.Password, req.Email, req.UI);
-            _login.response = result.ResultSet1.ToString();
+            var result = new RegisterUserReturnModel();
+            if (req.UserDetail.IsUserSeller == true)
+            {
+                result = _context.RegisterUser(
+                   req.UserDetail.Username,
+                   req.UserDetail.Firstname,
+                   req.UserDetail.Middlename,
+                   req.UserDetail.Lastname,
+                   req.UserDetail.Password,
+                   req.UserDetail.Email,
+                   req.UserDetail.PhoneNumber, 
+                   req.UserDetail.ShowPhonenumber,
+                   "Yes",
+                   req.CompanyDetails.CompanyName,
+                   req.CompanyDetails.Address,
+                   req.CompanyDetails.PhoneCountryCode,
+                   req.CompanyDetails.PhoneNumber,
+                   req.CompanyDetails.IsGOVRegisteredCompany,
+                   req.CompanyDetails.CompanyEmailID,
+                   req.CompanyDetails.ShowPhonenumber,
+                   req.UserDetail.UI);
+            }
+            else
+            {
+                // this will only save user info but not company
+                result = _context.RegisterUser(
+                    req.UserDetail.Username,
+                    req.UserDetail.Firstname,
+                    req.UserDetail.Middlename,
+                    req.UserDetail.Lastname,
+                    req.UserDetail.Password,
+                    req.UserDetail.Email,
+                    req.UserDetail.PhoneNumber,
+                    req.UserDetail.ShowPhonenumber,
+                   "No",
+                   "N/A",
+                   "N/A",
+                   "N/A",
+                   "N/A",
+                   false,
+                   "N/A",
+                   false,
+                   req.UserDetail.UI);
+            }
+
+            _login.response = result.ResultSet5.ToString();
             return _login;
         }
     }
