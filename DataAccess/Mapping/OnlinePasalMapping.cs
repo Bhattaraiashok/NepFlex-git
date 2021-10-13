@@ -122,8 +122,9 @@ namespace NepFlex.DataAccess.Mapping
         int Postdata(string title, string image, string detail, string username, string name, string email, string contact, string showPhoneNumber, string address, string other, string topCategory, string subCategory, decimal? price, string condition, string brand, string modal, string mileKmph, string warranty, string extraWarranty);
         // PostdataAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
-        RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
-        System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
+        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
+        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
 
         int SendEmailChangePassword(string username, string email);
         // SendEmailChangePasswordAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
@@ -1264,7 +1265,13 @@ namespace NepFlex.DataAccess.Mapping
             return (int) procResultParam.Value;
         }
 
-        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        {
+            int procResult;
+            return RegisterUser(username, firstname, middlename, lastname, password, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
+        }
+
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
         {
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
@@ -1290,7 +1297,11 @@ namespace NepFlex.DataAccess.Mapping
             if (emailParam.Value == null)
                 emailParam.Value = System.DBNull.Value;
 
-            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 10 };
+            var userPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhnCountryCode, Size = 10 };
+            if (userPhnCountryCodeParam.Value == null)
+                userPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 14 };
             if (userPhNumberParam.Value == null)
                 userPhNumberParam.Value = System.DBNull.Value;
 
@@ -1314,7 +1325,7 @@ namespace NepFlex.DataAccess.Mapping
             if (companyPhnCountryCodeParam.Value == null)
                 companyPhnCountryCodeParam.Value = System.DBNull.Value;
 
-            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 10 };
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
             if (companyPhoneNumberParam.Value == null)
                 companyPhoneNumberParam.Value = System.DBNull.Value;
 
@@ -1334,65 +1345,14 @@ namespace NepFlex.DataAccess.Mapping
             if (uiParam.Value == null)
                 uiParam.Value = System.DBNull.Value;
 
+            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
+            var procResultData = Database.SqlQuery<RegisterUserReturnModel>("EXEC @procResult = [dbo].[Register_User] @username, @Firstname, @Middlename, @Lastname, @Password, @Email, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @CompanyEmailID, @CompanyShowPHNumber, @UI", usernameParam, firstnameParam, middlenameParam, lastnameParam, passwordParam, emailParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, companyEmailIdParam, companyShowPhNumberParam, uiParam, procResultParam).ToList();
 
-            var procResultData = new RegisterUserReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[Register_User]";
-            cmd.Parameters.Add(usernameParam);
-            cmd.Parameters.Add(firstnameParam);
-            cmd.Parameters.Add(middlenameParam);
-            cmd.Parameters.Add(lastnameParam);
-            cmd.Parameters.Add(passwordParam);
-            cmd.Parameters.Add(emailParam);
-            cmd.Parameters.Add(userPhNumberParam);
-            cmd.Parameters.Add(userShowPhNumberParam);
-            cmd.Parameters.Add(isUserSellerParam);
-            cmd.Parameters.Add(companyNameParam);
-            cmd.Parameters.Add(companyAddressParam);
-            cmd.Parameters.Add(companyPhnCountryCodeParam);
-            cmd.Parameters.Add(companyPhoneNumberParam);
-            cmd.Parameters.Add(isGovRegisteredCompanyParam);
-            cmd.Parameters.Add(companyEmailIdParam);
-            cmd.Parameters.Add(companyShowPhNumberParam);
-            cmd.Parameters.Add(uiParam);
-
-            try
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Open(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-                var reader = cmd.ExecuteReader();
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel1>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet2 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel2>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet3 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel3>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet4 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel4>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet5 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel5>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet6 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel6>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet7 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel7>(reader).ToList();
-                reader.Close();
-
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
+            procResult = (int) procResultParam.Value;
             return procResultData;
         }
 
-        public async System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
@@ -1418,7 +1378,11 @@ namespace NepFlex.DataAccess.Mapping
             if (emailParam.Value == null)
                 emailParam.Value = System.DBNull.Value;
 
-            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 10 };
+            var userPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhnCountryCode, Size = 10 };
+            if (userPhnCountryCodeParam.Value == null)
+                userPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 14 };
             if (userPhNumberParam.Value == null)
                 userPhNumberParam.Value = System.DBNull.Value;
 
@@ -1442,7 +1406,7 @@ namespace NepFlex.DataAccess.Mapping
             if (companyPhnCountryCodeParam.Value == null)
                 companyPhnCountryCodeParam.Value = System.DBNull.Value;
 
-            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 10 };
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
             if (companyPhoneNumberParam.Value == null)
                 companyPhoneNumberParam.Value = System.DBNull.Value;
 
@@ -1462,59 +1426,8 @@ namespace NepFlex.DataAccess.Mapping
             if (uiParam.Value == null)
                 uiParam.Value = System.DBNull.Value;
 
+            var procResultData = await Database.SqlQuery<RegisterUserReturnModel>("EXEC [dbo].[Register_User] @username, @Firstname, @Middlename, @Lastname, @Password, @Email, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @CompanyEmailID, @CompanyShowPHNumber, @UI", usernameParam, firstnameParam, middlenameParam, lastnameParam, passwordParam, emailParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, companyEmailIdParam, companyShowPhNumberParam, uiParam).ToListAsync();
 
-            var procResultData = new RegisterUserReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[Register_User]";
-            cmd.Parameters.Add(usernameParam);
-            cmd.Parameters.Add(firstnameParam);
-            cmd.Parameters.Add(middlenameParam);
-            cmd.Parameters.Add(lastnameParam);
-            cmd.Parameters.Add(passwordParam);
-            cmd.Parameters.Add(emailParam);
-            cmd.Parameters.Add(userPhNumberParam);
-            cmd.Parameters.Add(userShowPhNumberParam);
-            cmd.Parameters.Add(isUserSellerParam);
-            cmd.Parameters.Add(companyNameParam);
-            cmd.Parameters.Add(companyAddressParam);
-            cmd.Parameters.Add(companyPhnCountryCodeParam);
-            cmd.Parameters.Add(companyPhoneNumberParam);
-            cmd.Parameters.Add(isGovRegisteredCompanyParam);
-            cmd.Parameters.Add(companyEmailIdParam);
-            cmd.Parameters.Add(companyShowPhNumberParam);
-            cmd.Parameters.Add(uiParam);
-
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel2>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet3 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel3>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet4 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel4>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet5 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel5>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet6 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel6>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet7 = objectContext.Translate<RegisterUserReturnModel.ResultSetModel7>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
             return procResultData;
         }
 
@@ -2035,23 +1948,23 @@ namespace NepFlex.DataAccess.Mapping
             return 0;
         }
 
-        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             int procResult;
-            return RegisterUser(username, firstname, middlename, lastname, password, email, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
+            return RegisterUser(username, firstname, middlename, lastname, password, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
         }
 
-        public RegisterUserReturnModel RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
         {
 
             procResult = 0;
-            return new RegisterUserReturnModel();
+            return new System.Collections.Generic.List<RegisterUserReturnModel>();
         }
 
-        public System.Threading.Tasks.Task<RegisterUserReturnModel> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             int procResult;
-            return System.Threading.Tasks.Task.FromResult(RegisterUser(username, firstname, middlename, lastname, password, email, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult));
+            return System.Threading.Tasks.Task.FromResult(RegisterUser(username, firstname, middlename, lastname, password, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult));
         }
 
         public int SendEmailChangePassword(string username, string email)
@@ -2667,6 +2580,7 @@ namespace NepFlex.DataAccess.Mapping
         public string IsUserSeller { get; set; } // IsUserSeller (length: 12)
         public string PhNumber { get; set; } // PHNumber (length: 14)
         public bool? ShowPhNumber { get; set; } // ShowPHNumber
+        public string UserPhnCode { get; set; } // UserPHNCode (length: 10)
 
         public User()
         {
@@ -3305,6 +3219,7 @@ namespace NepFlex.DataAccess.Mapping
             Property(x => x.IsUserSeller).HasColumnName(@"IsUserSeller").HasColumnType("nvarchar").IsOptional().HasMaxLength(12);
             Property(x => x.PhNumber).HasColumnName(@"PHNumber").HasColumnType("nvarchar").IsOptional().HasMaxLength(14);
             Property(x => x.ShowPhNumber).HasColumnName(@"ShowPHNumber").HasColumnType("bit").IsOptional();
+            Property(x => x.UserPhnCode).HasColumnName(@"UserPHNCode").HasColumnType("nvarchar").IsOptional().HasMaxLength(10);
         }
     }
 
@@ -3610,55 +3525,8 @@ namespace NepFlex.DataAccess.Mapping
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class RegisterUserReturnModel
     {
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel1
-        {
-            public System.String UserRegisteredID { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel2
-        {
-            public System.String UserRegisteredID { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel3
-        {
-            public System.String UserRegisteredID { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel3> ResultSet3;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel4
-        {
-            public System.String CompanyRegisteredID { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel4> ResultSet4;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel5
-        {
-            public System.String CompanyRegisteredID { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel5> ResultSet5;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel6
-        {
-            public System.Decimal? UserRegisteredID { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel6> ResultSet6;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel7
-        {
-            public System.Decimal? CompanyRegisteredID { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel7> ResultSet7;
-
+        public System.String Ver_Status { get; set; }
+        public System.String VER_Detail { get; set; }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]

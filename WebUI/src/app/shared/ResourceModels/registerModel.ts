@@ -1,22 +1,24 @@
 export class UserRegister {
-    UserDetail: RegisterRequest = new RegisterRequest();
+    UserDetail: UserRequest = new UserRequest();
     CompanyDetails: CompanyRequest = new CompanyRequest();
 }
 
-export class RegisterRequest {
+export class UserRequest {
     Username: string;
     Firstname: string;
     Middlename: string;
     Lastname: string;
     Password: string;
     Email: string;
+    PhoneCountryCode: string;
     PhoneNumber: string;
     ShowPhonenumber: boolean;
     IsUserSeller: boolean;
 }
 
-export class RegisterResponse {
-    status: string;
+export class ResponseObjects {
+    isSuccess: boolean;
+    strMesssage:string[];
 }
 
 export class CompanyRequest {

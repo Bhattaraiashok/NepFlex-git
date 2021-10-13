@@ -21,8 +21,9 @@ namespace NepFlex.Core.Entities.ResourceModels
         public string Password { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
-        public string UI { get; set; }
+        public string UI { get { return "craig"; } }
         public bool IsUserSeller { get; set; }
+        public string PhoneCountryCode { get; set; }
         public string PhoneNumber { get; set; }
         public bool? ShowPhonenumber { get; set; }
     }
@@ -37,10 +38,6 @@ namespace NepFlex.Core.Entities.ResourceModels
         public bool? IsCompanyActive { get; set; }
         public string CompanyEmailID { get; set; }
     }
-    public class UserRegisterResponse : RequestStatus
-    {
-        public string response { get; set; }
-    }
 
     public class UserLogin
     {
@@ -50,7 +47,7 @@ namespace NepFlex.Core.Entities.ResourceModels
         public string IsUserSeller { get; set; } //on the time of regester let user to choose if the same id is regester as seller too.
     }
 
-    public class UserLoginResponse: RequestStatus
+    public class UserLoginResponse: ResponseStatus
     {
         public int UserID { get; set; }
         public string Email { get; set; }

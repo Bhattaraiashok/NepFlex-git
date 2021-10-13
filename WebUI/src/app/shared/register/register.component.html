@@ -1,6 +1,7 @@
 <div class="global-desktop-container w-100">
   <div class="body-container">
     <form [formGroup]="registerForm" class="form example-form container">
+      <h3 class="text-center text-info">Register</h3>
       <h6>Please provide info on below fields in order to register the acount.
         <br/>You have the option to choose whether or not you want to register as seller.</h6>
       <mat-card class="mb-1">
@@ -26,10 +27,11 @@
             <div *ngFor="let item of userChoiceOnPhonenumber;  let i = index">
               <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeUserPhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
             </div>
-            <app-text-area data-test-id="user_countryCode" placeholder='Country Code' formControlName="usercountryCode" textType=number (newData)="onchangeform($event,'usercountryCode')"></app-text-area>
+            <app-text-area data-test-id="user_countryCode" placeholder='Country Code' formControlName="usercountryCode" textType=number
+              (newData)="onchangeform($event,'usercountryCode')"></app-text-area>
             <mat-error *ngIf="showFCError">{{countryCodeFCError}}</mat-error>
-            <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="registerForm.value.userphonenumber" formControlName="userphonenumber"
-              maxlength="14" (newData)="onchangeform($event,'userphonenumber')" />
+            <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="registerForm.value.userphonenumber"
+              formControlName="userphonenumber" maxlength="14" (newData)="onchangeform($event,'userphonenumber')" />
           </section>
         </mat-card>
       </mat-card>
@@ -49,10 +51,11 @@
             <div *ngFor="let item of companyChoiceOnPhonenumber;  let i = index">
               <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeCompanyPhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
             </div>
-            <app-text-area data-test-id="company_countryCode" placeholder='Country Code' formControlName="companycountryCode" textType=number (newData)="onchangeform($event,'companycountryCode')"></app-text-area>
+            <app-text-area data-test-id="company_countryCode" placeholder='Country Code' formControlName="companycountryCode" textType=number
+              (newData)="onchangeform($event,'companycountryCode')"></app-text-area>
             <mat-error *ngIf="showFCError">{{countryCodeFCError}}</mat-error>
-            <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="registerForm.value.companyphonenumber" formControlName="companyphonenumber"
-              maxlength="14" (newData)="onchangeform($event,'companyphonenumber')" />
+            <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="registerForm.value.companyphonenumber"
+              formControlName="companyphonenumber" maxlength="14" (newData)="onchangeform($event,'companyphonenumber')" />
           </section>
         </mat-card>
         <!--<app-text-area *ngIf="isASeller" data-test-id="user_address2" placeholder='Address2' formControlName="address2" textType='text'
@@ -79,11 +82,19 @@
           <input type="text" placeholder="Password" id="strPassword" [type]="hide ? 'password' : 'text'" class="form-control passwordField"
             formControlName="password">
         </div>
-        <app-animated-button [buttonCollections]="detailButttons" (click)="registerNow()"></app-animated-button>
+        <section class="example-section">
+          <h4>Agree to terms and conditions</h4>
+          <div *ngFor="let item of userAgreementCheckbox;  let i = index">
+            <mat-checkbox [checked]="item.isChecked === true" (change)="onChange_ToUserAgreementCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+            <mat-error *ngIf="showFCError">{{isUserAgreementCheckedFCError}}</mat-error>
+          </div>
+        </section>
+        <app-animated-button [buttonCollections]="detailButttons" (ParentEmitter)="registerNow()"></app-animated-button>
       </mat-card>
     </form>
   </div>
 </div>
+<app-alert *ngIf="showAlertMessages" [messageAlert]="messageAlerts"></app-alert>
 <!--
 <div class="global-desktop-container w-100">
   <form [formGroup]="registerForm" class="container" autocomplete="off">

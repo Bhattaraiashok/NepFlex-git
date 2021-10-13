@@ -37,11 +37,10 @@ namespace NepFlex.DataAccess.Repositories
             return _login;
         }
 
-        public bool UserRegistrationProcess(UserRegister req)
+        public ResponseStatus UserRegistrationProcess(UserRegister req)
         {
-            var _login = new UserRegisterResponse();
-            var result = new RegisterUserReturnModel();
-            if (req.UserDetail.IsUserSeller == true)
+            var result = new List<RegisterUserReturnModel>();
+            if (req.UserDetail.IsUserSeller)
             {
                 //saves user and company both
                 result = _context.RegisterUser(
@@ -51,13 +50,14 @@ namespace NepFlex.DataAccess.Repositories
                    req.UserDetail.Lastname,
                    req.UserDetail.Password,
                    req.UserDetail.Email,
-                   req.UserDetail.PhoneNumber,
+                   req.UserDetail.PhoneCountryCode,
+                   req.UserDetail.PhoneNumber != null ? req.UserDetail.PhoneNumber.Replace("[^a-zA-Z0-9]", "") : req.UserDetail.PhoneNumber,
                    req.UserDetail.ShowPhonenumber,
                    "Yes",
                    req.CompanyDetails.CompanyName,
                    req.CompanyDetails.Address,
                    req.CompanyDetails.PhoneCountryCode,
-                   req.CompanyDetails.PhoneNumber,
+                   req.CompanyDetails.PhoneNumber != null ? req.CompanyDetails.PhoneNumber.Replace("[^a-zA-Z0-9]", "") : req.CompanyDetails.PhoneNumber,
                    req.CompanyDetails.IsGOVRegisteredCompany,
                    req.CompanyDetails.CompanyEmailID,
                    req.CompanyDetails.ShowPhonenumber,
@@ -73,7 +73,8 @@ namespace NepFlex.DataAccess.Repositories
                     req.UserDetail.Lastname,
                     req.UserDetail.Password,
                     req.UserDetail.Email,
-                    req.UserDetail.PhoneNumber,
+                    req.UserDetail.PhoneCountryCode,
+                    req.UserDetail.PhoneNumber != null ? req.UserDetail.PhoneNumber.Replace("[^a-zA-Z0-9]", "") : req.UserDetail.PhoneNumber,
                     req.UserDetail.ShowPhonenumber,
                    "No",
                    "N/A",
@@ -86,12 +87,15 @@ namespace NepFlex.DataAccess.Repositories
                    req.UserDetail.UI);
             }
 
-            _login.response = result.ResultSet5.ToString();
+            ResponseStatus _status = new ResponseStatus
+            {
+                StrMesssage = new List<string>()
+            };
 
-            var status = new RequestStatus();
-            status = Utility.RequestStatus(_login.response);
+            _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
+            _status.StrMesssage.Add(result[0].VER_Detail);
 
-            return status.IsSuccess;
+            return _status;
         }
     }
 }

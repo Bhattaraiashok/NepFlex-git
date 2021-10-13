@@ -22,10 +22,10 @@ namespace NepFlex.Core.Entities.ResourceModels
         public bool IsErrorOccured { get; set; }
     }
 
-    public class RequestStatus
+    public class ResponseStatus
     {
         public bool IsSuccess { get; set; }
-        public string StrMesssage { get; set; }
+        public List<string> StrMesssage { get; set; }
     }
 
     public class Messages
@@ -36,15 +36,18 @@ namespace NepFlex.Core.Entities.ResourceModels
             {
                 return new List<ResponseMessages>() {
                 //general
-                new ResponseMessages{Code="0", Returned=false, Type="success", Message="successful"},
-                new ResponseMessages{Code="-1", Returned=false, Type="error", Message="Exception occured"},
+                new ResponseMessages{Code=ConstList.RES_OBJ_CONST_SUCCESS, Returned=false, Type="success", Message="successful"},
+                new ResponseMessages{Code=ConstList.RES_OBJ_CONST_FAILURE, Returned=false, Type="error", Message="Exception occured"},
                 //backend
-                new ResponseMessages{Code="-2", Returned=false, Type="error", Message="Backend returned error, please try again."},
-                new ResponseMessages{Code="-3", Returned=false, Type="error", Message="SVC is returning null."},
-                new ResponseMessages{Code="-4", Returned=false, Type="error", Message="System Error, Please try again."},
+                new ResponseMessages{Code=ConstList.RES_OBJ_CONST_NULL, Returned=false, Type="error", Message="SVC is returning null."},
+                new ResponseMessages{Code=ConstList.SYS_OBJ_CONST_FAILURE, Returned=false, Type="error", Message="System Error, Please try again."},
                 //Auth
-                new ResponseMessages{Code="-5", Returned=false, Type="error", Message="UserRole is null"},
-                new ResponseMessages{Code="-5", Returned=false, Type="error", Message="User is not able to authorize."}
+                new ResponseMessages{Code=ConstList.ROLE_USER_RES_CONST_FAILURE, Returned=false, Type="error", Message="User is not able to authorize."},
+
+                //DB CODE
+                 new ResponseMessages{Code=ConstList.USER_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your user account."},
+                 new ResponseMessages{Code=ConstList.COMPANY_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your company account."},
+                 new ResponseMessages{Code=ConstList.USERANDCOMPANY_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your account."},
             };
             }
         }

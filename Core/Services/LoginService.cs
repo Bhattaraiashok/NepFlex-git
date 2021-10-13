@@ -20,7 +20,7 @@ namespace NepFlex.Core.Services
         {
             return _unitOfWork.LoginRepository.UserLoginProcess(login);
         }
-        public bool UserRegistrationProcess(UserRegister req)
+        public ResponseStatus UserRegistrationProcess(UserRegister req)
         {
             return _unitOfWork.LoginRepository.UserRegistrationProcess(req);
         }

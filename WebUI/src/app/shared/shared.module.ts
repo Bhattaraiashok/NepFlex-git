@@ -71,6 +71,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouteTo } from './interfaces/local-router';
 import { TelephoneMaskDirective } from './directives/telephone-mask.directive';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   imports: [
@@ -142,7 +143,8 @@ import { TelephoneMaskDirective } from './directives/telephone-mask.directive';
     TabLayoutComponent,
     LoginComponent,
     RegisterComponent,
-    TelephoneMaskDirective
+    TelephoneMaskDirective,
+    AlertComponent
   ],
   providers: [
     ReportService,

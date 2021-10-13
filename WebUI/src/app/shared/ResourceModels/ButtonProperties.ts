@@ -5,6 +5,7 @@ export class ButtonProperties {
   buttonLabel?: string;
   buttonRoute?: string;
   canRoute?: boolean;
+  isDisable?:boolean;
   HasDropDown?: boolean;
   DropDownList?: DropDownList[];
   hasPopUp?: boolean;

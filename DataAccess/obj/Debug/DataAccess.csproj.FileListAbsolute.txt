@@ -45,6 +45,8 @@ E:\Git_Nepflex\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
 E:\Git_Nepflex\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 E:\Git_Nepflex\DataAccess\obj\Debug\NepFlex.DataAccess.dll
 E:\Git_Nepflex\DataAccess\obj\Debug\NepFlex.DataAccess.pdb
+E:\GITHUB\DataAccess\obj\Debug\DataAccess.csprojAssemblyReference.cache
+E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
 E:\GITHUB\DataAccess\bin\Debug\NepFlex.DataAccess.dll.config
 E:\GITHUB\DataAccess\bin\Debug\NepFlex.DataAccess.dll
 E:\GITHUB\DataAccess\bin\Debug\NepFlex.DataAccess.pdb
@@ -57,8 +59,6 @@ E:\GITHUB\DataAccess\bin\Debug\NepFlex.Core.dll.config
 E:\GITHUB\DataAccess\bin\Debug\EntityFramework.xml
 E:\GITHUB\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
 E:\GITHUB\DataAccess\bin\Debug\Newtonsoft.Json.xml
-E:\GITHUB\DataAccess\obj\Debug\DataAccess.csprojAssemblyReference.cache
-E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
 E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.dll
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.pdb

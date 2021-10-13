@@ -11,6 +11,6 @@ namespace NepFlex.Core.Interfaces.Repositories
     public interface ILoginRepository : IRepository<UserLoginResponse, int>
     {
         UserLoginResponse UserLoginProcess(UserLogin req);
-        bool UserRegistrationProcess(UserRegister req);
+        ResponseStatus UserRegistrationProcess(UserRegister req);
     }
 }

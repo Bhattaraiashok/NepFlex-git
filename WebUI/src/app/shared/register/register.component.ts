@@ -4,7 +4,9 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { RouteTo } from '../interfaces/local-router';
 import { ButtonProperties } from '../ResourceModels/ButtonProperties';
 import { RegisterService } from "app/shared/services/register.service";
-import { RegisterResponse, UserRegister } from "app/shared/ResourceModels/registerModel";
+import { UserRegister, ResponseObjects } from "app/shared/ResourceModels/registerModel";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
 
 @Component({
   selector: 'app-register',
@@ -13,13 +15,15 @@ import { RegisterResponse, UserRegister } from "app/shared/ResourceModels/regist
 })
 export class RegisterComponent implements OnInit {
   UserRegister: UserRegister = new UserRegister();
-  registerResponse: RegisterResponse;
+  registerResponse: ResponseObjects;
   registerForm: FormGroup;
   detailButttons: ButtonProperties[] = new Array();
   showFCError: boolean = false;
   hide = true;
   passwordType = 'password';
   matcher = new MyErrorStateMatcher();
+  showAlertMessages: boolean = false;
+  messageAlerts: AlertMessageProperties = new AlertMessageProperties();
 
   companyFC: FormControl = new FormControl('');
   firstnameFC: FormControl = new FormControl('', [Validators.required]);
@@ -31,17 +35,19 @@ export class RegisterComponent implements OnInit {
   stateFC: FormControl = new FormControl('');
   zipcodeFC: FormControl = new FormControl('');
   userEmailFC: FormControl = new FormControl('', [Validators.required, Validators.email]);
-  companyEmailFC: FormControl = new FormControl('', [Validators.required, Validators.email]);
-  userCountryCodeFC: FormControl = new FormControl('', [Validators.pattern(/^\d{3}$/), Validators.required]);
-  userPhonenumberFC: FormControl = new FormControl('', [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/), Validators.required]);
-  companyCountryCodeFC: FormControl = new FormControl('', [Validators.pattern(/^\d{3}$/), Validators.required]);
-  companyPhonenumberFC: FormControl = new FormControl('', [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/), Validators.required]);
+  companyEmailFC: FormControl = new FormControl('', [Validators.email]);
+  userCountryCodeFC: FormControl = new FormControl('', [Validators.pattern(/\d{3}$/)]);
+  userPhonenumberFC: FormControl = new FormControl('', [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/)]);
+  companyCountryCodeFC: FormControl = new FormControl('', [Validators.pattern(/\d{3}$/)]);
+  companyPhonenumberFC: FormControl = new FormControl('', [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/)]);
   usernameFC: FormControl = new FormControl('', [Validators.required]);
   passwordFC: FormControl = new FormControl('', [Validators.required]);
   SellerAccountFC: FormControl = new FormControl('');
   showOrHideUserPhonenumberFC: FormControl = new FormControl('');
   showOrHideCompanyPhonenumberFC: FormControl = new FormControl('');
   isCompanyRegisteredFC: FormControl = new FormControl('');
+  //user agreement
+  isUserAgreementCheckedFC: FormControl = new FormControl('');
 
   companyFCError: string;
   firstnameFCError: string;
@@ -55,6 +61,7 @@ export class RegisterComponent implements OnInit {
   companyEmailFCError: string;
   userPhonenumberFCError: string;
   companyPhonenumberFCError: string;
+  isUserAgreementCheckedFCError: string;
   usernameFCError: string;
   passwordFCError: string;
   SellerAccountFCError: string;
@@ -77,11 +84,15 @@ export class RegisterComponent implements OnInit {
     { id: 0, label: 'Show', isChecked: false, note: `you have choosen to show your phone number, this will allow other to see your number when ever you post something or on your profile. ` },
     { id: 1, label: 'Hide', isChecked: true, note: `you have choosen to hide your phone number, we will not show your number on your future post or on your profile unless you change it through profile.` }
   ]
+  userAgreementCheckbox = [
+    { id: 0, label: 'Yes', isChecked: false, note: `You must agree to terms and conditions before submitting.` },
+  ]
 
 
   constructor(private fb: FormBuilder,
     private routeLink: RouteTo,
-    private registerService: RegisterService) {
+    private registerService: RegisterService,
+    private modalService: NgbModal) {
     this.createForm();
   }
 
@@ -93,11 +104,13 @@ export class RegisterComponent implements OnInit {
       {
         buttonId: 1,
         buttonLabel: 'Register Now',
+        isDisable: true,
         hasPopUp: false,
         buttonRoute: '',
         canRoute: false,
         HasDropDown: false,
-        popUpName: 'clickSendEmailButton'
+        popUpName: 'clickSendEmailButton',
+        parentEmit: true
       }
     ];
   }
@@ -133,7 +146,8 @@ export class RegisterComponent implements OnInit {
       password: this.passwordFC,
       userIsSeller: this.SellerAccountFC,
       showOrHideUserPhonenumber: this.showOrHideUserPhonenumberFC,
-      showOrHideCompanyPhonenumber: this.showOrHideCompanyPhonenumberFC
+      showOrHideCompanyPhonenumber: this.showOrHideCompanyPhonenumberFC,
+      isUserAgreementChecked: this.isUserAgreementCheckedFC
     })
   }
 
@@ -170,6 +184,10 @@ export class RegisterComponent implements OnInit {
     this.hideUserPhonenumber = (getCheckboxAnswer.label.toLowerCase() == 'show') ? true : false;
     this.registerForm.get('showOrHideUserPhonenumber').patchValue(this.hideUserPhonenumber);
   }
+  onChange_ToUserAgreementCheckbox(e: { target; value: string }, id) {
+    this.selected = id;
+    this.userAgreementCheckbox[id].isChecked = true;
+  }
 
   onchangeCompanyPhoneNumberCheckbox(e: { target; value: string }, id) {
     const abc = e;
@@ -200,6 +218,16 @@ export class RegisterComponent implements OnInit {
   validateForm() {
     this.showFCError = true;
     if (this.registerForm.touched) {
+      if (
+        this.isUserAgreementCheckedFC.invalid &&
+        this.isUserAgreementCheckedFC.hasError('required')
+      ) {
+        this.isUserAgreementCheckedFCError = this.userAgreementCheckbox[0].note;
+        return;
+      } else {
+        this.isUserAgreementCheckedFCError = '';
+      }
+
       if (this.isASeller &&
         this.companyFC.invalid &&
         this.companyFC.hasError('required')
@@ -268,7 +296,8 @@ export class RegisterComponent implements OnInit {
       this.addressFCError = '';
       this.address2FCError = '';
       this.userPhonenumberFCError = '';
-
+      this.isUserAgreementCheckedFCError = '';
+      this.detailButttons.find(x => x.buttonLabel.toLocaleLowerCase() == 'register now').isDisable = false;
     }
   }
 
@@ -282,14 +311,24 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       console.log('FORM IS VALID');
       this.mappings();
-      this.registerService.register(this.UserRegister).subscribe((item: RegisterResponse) => {
-        alert(item.status);
-        if (item.status == "successfull") {
-
+      this.registerService.register(this.UserRegister).subscribe((item: ResponseObjects) => {
+        if (item.isSuccess === true) {
+          console.log(item.strMesssage);
+          this.call_MessageAlertComponent('success', item.strMesssage[0]);
+        } else {
+          console.log(item.strMesssage);
+          this.call_MessageAlertComponent('error', item.strMesssage[0]);
         }
       });
     }
   }
+
+  call_MessageAlertComponent(alertType, alertMsg) {
+    this.showAlertMessages = true;
+    this.messageAlerts.alertType = alertType;
+    this.messageAlerts.alertMsg = alertMsg;
+  }
+
   mappings() {
     this.UserRegister.UserDetail.Email = this.registerForm.get('useremail').value;
     this.UserRegister.UserDetail.Firstname = this.registerForm.get('firstname').value;
@@ -297,9 +336,10 @@ export class RegisterComponent implements OnInit {
     this.UserRegister.UserDetail.Middlename = this.registerForm.get('middlename').value;
     this.UserRegister.UserDetail.Password = this.registerForm.get('password').value;
     this.UserRegister.UserDetail.Username = this.registerForm.get('username').value;
+    this.UserRegister.UserDetail.PhoneCountryCode = this.registerForm.get('usercountryCode').value;
     this.UserRegister.UserDetail.PhoneNumber = this.registerForm.get('userphonenumber').value;
     this.UserRegister.UserDetail.ShowPhonenumber = this.registerForm.get('showOrHideUserPhonenumber').value;
-    this.UserRegister.UserDetail.IsUserSeller = this.registerForm.get('userIsSeller').value;
+    this.UserRegister.UserDetail.IsUserSeller = this.registerForm.get('userIsSeller').value ? this.registerForm.get('userIsSeller').value : false;
     this.UserRegister.CompanyDetails.CompanyEmailID = this.registerForm.get('companyemail').value;
     this.UserRegister.CompanyDetails.CompanyName = this.registerForm.get('companyname').value;
     this.UserRegister.CompanyDetails.Address = this.registerForm.get('address').value;

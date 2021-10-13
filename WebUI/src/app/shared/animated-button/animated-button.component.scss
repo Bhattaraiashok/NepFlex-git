@@ -29,7 +29,8 @@ div.animBtn:visited {
   display: block;
   padding: 14px 15px;
   // background-color: rgba(108, 110, 212, 1);
-  color: #ce7508;
+  color: #ffffff;
+  background: #005ccd;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
@@ -52,9 +53,11 @@ div.animBtn:visited {
   }
 
   &:hover {
-    color: #008ba3;
-    text-shadow: none;
-    background: #ce7508;
+   color: #781313;
+    text-shadow: 0 0 black;
+    font-size: larger;
+    border: 1px solid #105da1;
+    background: #879bb5;
     transition: all 0.3s ease;
     z-index: 1;
     position: relative;

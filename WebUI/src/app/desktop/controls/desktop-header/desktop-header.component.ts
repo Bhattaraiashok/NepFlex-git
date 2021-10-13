@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RouteTo } from 'app/shared/interfaces/local-router';
 import { LoginComponent } from 'app/shared/login/login.component';
 import { HeadersNavigation, ButtonProperties, DropDownList } from 'app/shared/ResourceModels/ButtonProperties';
+import { RegisterComponent } from "app/shared/register/register.component";
 
 @Component({
   selector: 'app-desktop-header',
@@ -14,7 +15,8 @@ export class DesktopHeaderComponent implements OnInit {
   isThisComingFromHomePage: boolean = false;
   title: string = 'NepaliCraig';
   headersNavigation: HeadersNavigation[] = new Array();
-  showPopUpModal = false;
+  showLoginPopUpModal = false;
+  showRegisterationPopUpModal=false;
   isLoggedIn = false;
   detailButttons: ButtonProperties[] = new Array();
   dropdownlist: DropDownList[] = new Array();
@@ -93,9 +95,15 @@ export class DesktopHeaderComponent implements OnInit {
   }
 
   loginPopUp() {
-    this.showPopUpModal = true;
+    this.showLoginPopUpModal = true;
     // console.log('showPopUpModal: ', this.showPopUpModal);
     this.modalService.open(LoginComponent, { windowClass: 'dark-modal' });
+  }
+
+  registerPopUp() {
+    this.showRegisterationPopUpModal = true;
+    // console.log('showRegisterationPopUpModal: ', this.showPopUpModal);
+    this.modalService.open(RegisterComponent, { windowClass: 'dark-modal' });
   }
 
   checkifUserIsLogedIn() {
