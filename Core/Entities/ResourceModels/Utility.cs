@@ -28,6 +28,43 @@ namespace NepFlex.Core.Entities.ResourceModels
             return _requestStatus;
         }
 
+        public static int LogTransaction(LogTransactionDetail _logDetail, out string _transId, out List<string> diagnostics)
+        {
+            // DB call to log Transaction
+            string transId = "0";
+            List<string> _diagnostics = new List<string>();
+
+            _transId = transId;
+            diagnostics = _diagnostics;
+
+            return 0;
+        }
+
+        public enum TransactionStatus
+        {
+            COMMITTED = 0,
+            SUCCEEDED = 2,
+            IN_PROGRESS = 3,
+            FAILED = 4
+
+        }
+
+        //TODOs: 
+        // complete DB LogTransaction
+        // determine Logged in User Type like -internal or extrenal
+
+    }
+
+    public class LogTransactionDetail
+    {
+        public string UI;
+        public string TranArg;
+        public Utility.TransactionStatus TranStatus;
+        public string UserLocation;
+        public string TranTitle;
+        public string TranDetail;
+        
+        public string TranId { get; set; }
     }
     public class CONSTResponse
     {
@@ -35,7 +72,7 @@ namespace NepFlex.Core.Entities.ResourceModels
         public readonly static string CONST_FAILURE = "FAILURE";
     }
 
-        public class ConstList
+    public class ConstList
     {
         //general
         public readonly static string REQ_OBJ_CONST_SUCCESS = "REQ_OBJ_CONST_SUCCESS";

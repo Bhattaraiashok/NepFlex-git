@@ -36,7 +36,6 @@ E:\GITHUB\Core\bin\Debug\EntityFramework.dll
 E:\GITHUB\Core\bin\Debug\EntityFramework.SqlServer.dll
 E:\GITHUB\Core\bin\Debug\EntityFramework.xml
 E:\GITHUB\Core\bin\Debug\EntityFramework.SqlServer.xml
-E:\GITHUB\Core\obj\Debug\Core.csprojAssemblyReference.cache
 E:\GITHUB\Core\obj\Debug\Core.csproj.CoreCompileInputs.cache
 E:\GITHUB\Core\obj\Debug\Core.csproj.CopyComplete
 E:\GITHUB\Core\obj\Debug\NepFlex.Core.dll

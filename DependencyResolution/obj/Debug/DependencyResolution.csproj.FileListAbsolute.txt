@@ -160,8 +160,6 @@ E:\Git_Nepflex\DependencyResolution\obj\Debug\DependencyResolution.csproj.CoreCo
 E:\Git_Nepflex\DependencyResolution\obj\Debug\DependencyResolution.csproj.CopyComplete
 E:\Git_Nepflex\DependencyResolution\obj\Debug\DependencyResolution.dll
 E:\Git_Nepflex\DependencyResolution\obj\Debug\DependencyResolution.pdb
-E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.csproj.App.config
-E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.csproj.CoreCompileInputs.cache
 E:\GITHUB\DependencyResolution\bin\Debug\DependencyResolution.dll.config
 E:\GITHUB\DependencyResolution\bin\Debug\DependencyResolution.dll
 E:\GITHUB\DependencyResolution\bin\Debug\DependencyResolution.pdb
@@ -214,7 +212,9 @@ E:\GITHUB\DependencyResolution\bin\Debug\System.Web.Razor.xml
 E:\GITHUB\DependencyResolution\bin\Debug\System.Web.WebPages.xml
 E:\GITHUB\DependencyResolution\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\GITHUB\DependencyResolution\bin\Debug\System.Web.WebPages.Razor.xml
+E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.csproj.App.config
 E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.csprojAssemblyReference.cache
+E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.csproj.CoreCompileInputs.cache
 E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.csproj.CopyComplete
 E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.dll
 E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.pdb
