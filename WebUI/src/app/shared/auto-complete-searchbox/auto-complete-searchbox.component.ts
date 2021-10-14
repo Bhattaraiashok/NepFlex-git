@@ -102,21 +102,21 @@ export class AutoCompleteSearchboxComponent implements OnInit {
         canRoute: false,
         HasDropDown: false,
         popUpName: '',
-        parentEmit: false
+        parentEmit: true
       }
     ];
   }
   searchBtnClicked(e: Event) {
     // console.log(this.searchString, this.searchStringOption);
-    if (this.searchStringOption.length < 2) {
+    if (this.searchStringOption.length > 0) {
       this.searchString['name'] = this.searchStringOption;
       this.ParentButtonEmitter.emit(this.searchString['name']);
     }
 
-    if (this.searchStringOption.length > 1) {
-      this.searchString['name'] = this.searchStringOption;
-      this.ParentButtonEmitter.emit(this.searchString['name']);
-    }
+    // if (this.searchStringOption.length > 1) {
+    //   this.searchString['name'] = this.searchStringOption;
+    //   this.ParentButtonEmitter.emit(this.searchString['name']);
+    // }
   }
 }
 

@@ -108,8 +108,8 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
             this.searchResults.push(e)
           });
           // this.searchResults = x;
-          this.turnLargeLoader = false;
-          console.log('this.searchResults first observation:', this.searchResults);
+          this.turnLargeLoader = this.TotalCount == 0;
+          console.log('this.searchResults first observation:', this.searchResults,this.turnLargeLoader);
         });
         // });
       }

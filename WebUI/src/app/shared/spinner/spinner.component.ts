@@ -11,7 +11,9 @@ export class SpinnerComponent implements OnInit {
   @Input() showLargeLoader: boolean = false;
   @Input() showSmallLoader: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('spinner component large and small loader :', this.showLargeLoader, this.showSmallLoader);
+  }
 }

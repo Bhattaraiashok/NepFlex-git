@@ -1,70 +1,64 @@
-<ng-container *ngIf="(asyncTabs | async) === null">
-  Loading tabs...
-</ng-container>
 
 <mat-tab-group>
   <mat-tab *ngFor="let tab of asyncTabs | async">
     <ng-template mat-tab-label>{{tab.searchText}}</ng-template>
-   <!--need to bring breadcrumb-->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-sm-6" *ngFor="let item of tab.itemDetail;let j=index;">
-          <div class="product-grid3">
-            <div class="product-image3">
-              <a href="#">
+    <!--need to bring breadcrumb-->
+    <!--<div class="container">-->
+    <div class="row">
+      <div class="col-md-2 col-sm-6" *ngFor="let item of tab.itemDetail;let j=index;">
+        <div class="product-grid3">
+          <div class="product-image3">
+            <a href="#">
                         <img class="pic-1" src="https://picsum.photos/360/360?image=0">
                         <img class="pic-2" src="https://images.pexels.com/photos/821414/pexels-photo-821414.jpeg?auto=compress&cs=tinysrgb&h=650&w=940">
                     </a>
-              <ul class="social">
-                <h6>{{item.detail}}</h6>
+            <ul class="social">
+              <h6>{{item.detail}}</h6>
 
-                <li><button mat-raised-button matTooltip="send email to this poster" matTooltipClass="example-tooltip-red" aria-label="email poster"
-                    class="example-button"> <i class="fa fa-envelope"></i></button>
-                </li>
-                <li><button mat-raised-button matTooltip="see poster details" matTooltipClass="example-tooltip-red" aria-label="poster details"
-                    class="example-button"><i class="fa fa-user"></i></button></li>
-                <li><button mat-raised-button matTooltip="add this to wishlist" matTooltipClass="example-tooltip-red" aria-label="poster details"
-                    class="example-button"><i class="fa fa-plus"></i></button></li>
-                <app-animated-button [buttonCollections]="detailButttons" (click)="goToMoreDetails(item.postID)"></app-animated-button>
-              </ul>
+              <li><button mat-raised-button matTooltip="send email to this poster" matTooltipClass="example-tooltip-red" aria-label="email poster"
+                  class="example-button"> <i class="fa fa-envelope"></i></button>
+              </li>
+              <li><button mat-raised-button matTooltip="see poster details" matTooltipClass="example-tooltip-red" aria-label="poster details"
+                  class="example-button"><i class="fa fa-user"></i></button></li>
+              <li><button mat-raised-button matTooltip="add this to wishlist" matTooltipClass="example-tooltip-red" aria-label="poster details"
+                  class="example-button"><i class="fa fa-plus"></i></button></li>
+              <app-animated-button [buttonCollections]="detailButttons" (click)="goToMoreDetails(item.postID)"></app-animated-button>
+            </ul>
 
-              <span class="product-new-label">New</span>
+            <span class="product-new-label">New</span>
+          </div>
+          <div class="product-content">
+            <h3 class="title title-text"><a href="#">{{item.title}}</a></h3>
+            <div class="price">
+              ${{item.price}}
+              <span>${{item.price}}</span>
             </div>
-            <div class="product-content">
-              <h3 class="title">
-                <a href="#">{{item.title}}</a>
-
-              </h3>
-              <div class="price">
-                ${{item.price}}
-                <span>${{item.price}}</span>
-              </div>
-              <ul class="rating">
-                <li class="fa fa-star"></li>
-                <li class="fa fa-star"></li>
-                <li class="fa fa-star"></li>
-                <li class="fa fa-star disable"></li>
-                <li class="fa fa-star disable"></li>
-              </ul>
-              <ul class="list-inline">
-                <li class="list-inline-item">
-                  <a class="social-icon text-xs-center" href="https://facebook.com/sharer.php?u=http://www.nepalicraig.com/Detail.aspx?Id={{item.postID}}"
-                    title="{{item.title}}" target="_blank">
+            <ul class="rating">
+              <li class="fa fa-star"></li>
+              <li class="fa fa-star"></li>
+              <li class="fa fa-star"></li>
+              <li class="fa fa-star disable"></li>
+              <li class="fa fa-star disable"></li>
+            </ul>
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <a class="social-icon text-xs-center" href="https://facebook.com/sharer.php?u=http://www.nepalicraig.com/Detail.aspx?Id={{item.postID}}"
+                  title="{{item.title}}" target="_blank">
                             <i class="fa fa-facebook"></i>
                           </a>
-                </li>
-                <li class="list-inline-item">
-                  <a class="social-icon text-xs-center" href="https://twitter.com/intent/tweet?url=http://www.nepalicraig.com/Detail.aspx?Id={{item.postID}} & text='{{item.title}}' & via=NepaliCraig&hashtags=NepaliCraigPost"
-                    target="_blank">
+              </li>
+              <li class="list-inline-item">
+                <a class="social-icon text-xs-center" href="https://twitter.com/intent/tweet?url=http://www.nepalicraig.com/Detail.aspx?Id={{item.postID}} & text='{{item.title}}' & via=NepaliCraig&hashtags=NepaliCraigPost"
+                  target="_blank">
                             <i class="fa fa-twitter"></i>
                           </a>
-                </li>
-              </ul>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
+    <!--</div>-->
 
 
   </mat-tab>
