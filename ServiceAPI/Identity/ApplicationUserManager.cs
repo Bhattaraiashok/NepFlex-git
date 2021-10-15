@@ -9,6 +9,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using Nepflex.ServiceAPI.App_Start;
 using Nepflex.ServiceAPI.Models;
+using NepFlex.Core.Entities.ResourceModels;
 
 namespace Nepflex.ServiceAPI.Identity
 {

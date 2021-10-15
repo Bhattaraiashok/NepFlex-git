@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Nepflex.ServiceAPI.Models;
+using NepFlex.Core.Entities.ResourceModels;
 
 namespace Nepflex.ServiceAPI.Identity
 {

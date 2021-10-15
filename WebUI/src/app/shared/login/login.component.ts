@@ -5,6 +5,7 @@ import { RouteTo } from '../interfaces/local-router';
 import { LoginService } from "app/shared/services/login.service";
 import { LoginResponse, LoginRequest } from "app/shared/ResourceModels/LoginModel";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,6 +14,8 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 export class LoginComponent implements OnInit {
   loginRequest: LoginRequest;
   loginResponse: LoginResponse;
+  messageAlerts: AlertMessageProperties = new AlertMessageProperties();
+  showAlertMessages: boolean = false;
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -45,9 +48,14 @@ export class LoginComponent implements OnInit {
       this.loginRequest.UserPSWD = formValue2;
       this.loginRequest.IsRememberMe = _isRememberMe;
       this.loginService.login(this.loginRequest).subscribe((item: LoginResponse) => {
-        this.manageLocalStorage(item);
-        this.RouteTo('home');
-        this.modalService.close('close');
+        if (item.isSuccess == true) {
+          this.call_MessageAlertComponent('Success', item.strMessage[0]);
+          this.manageLocalStorage(item);
+          this.RouteTo('home');
+          this.modalService.close('close');
+        } else {
+            this.call_MessageAlertComponent('Error', item.strMessage[0]);
+          }
       });
     }
   }
@@ -74,6 +82,12 @@ export class LoginComponent implements OnInit {
   RouteTo(routeTo: string, routingEnabled = true): void {
     console.log('now routing: ', routeTo);
     this.routeLink.RouteTo(routeTo, routingEnabled);
+  }
+
+  call_MessageAlertComponent(alertType, alertMsg) {
+    this.showAlertMessages = true;
+    this.messageAlerts.alertType = alertType;
+    this.messageAlerts.alertMsg = alertMsg;
   }
 
 }

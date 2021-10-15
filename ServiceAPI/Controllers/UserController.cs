@@ -49,6 +49,7 @@ namespace Nepflex.ServiceAPI.Controllers
                 var results = new UserLoginResponse
                 {
                     IsSuccess = false,
+                    StrMessage = new List<string>(),
                     IsAuthenticated = false
                 };
                 //put if else to check userID if not use email or phone number, phn number are unique on the table too.
@@ -57,24 +58,21 @@ namespace Nepflex.ServiceAPI.Controllers
                 {
                     case SignInStatus.Success:
                         var _userDetail = signInManager.UserManager.Users.Where(x => x.UserName == login.UserID).FirstOrDefault();
-                        var _strPass = _userDetail.PasswordHash;
-                        login.UserID = _userDetail.UserName;
-                        login.UserPSWD = _strPass;
-                        results = _loginService.UserLoginProcess(login);
+                        results = _loginService.UserLoginProcess(login, _userDetail);
                         return Ok(results);
                     case SignInStatus.LockedOut:
-                        results.StrMesssage.Add("Opps! you are locked out.");
+                        results.StrMessage.Add("Opps! you are locked out.");
                         results.IsSuccess = false;
                         return Ok(results);
                     case SignInStatus.RequiresVerification:
                         return Ok(results);
                     // return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                     case SignInStatus.Failure:
-                        results.StrMesssage.Add("Sorry, we could not find you in our system.");
+                        results.StrMessage.Add("Login failed. please enter username and password correctly.");
                         results.IsSuccess = false;
                         return Ok(results);
                     default:
-                        results.StrMesssage.Add("Invalid Login Attempts...");
+                        results.StrMessage.Add("Invalid Login Attempts...");
                         return BadRequest();
                 }
             }
@@ -96,11 +94,23 @@ namespace Nepflex.ServiceAPI.Controllers
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    req.UserDetail.PSWDHASH = user.PasswordHash;
-                    var results = _loginService.UserRegistrationProcess(req);
+                    var results = _loginService.UserRegistrationProcess(req, user);
                     return Ok(results);
                 }
-                return Ok(result.Errors);
+                else
+                {
+                    ResponseStatus _status = new ResponseStatus
+                    {
+                        StrMessage = new List<string>()
+                    };
+
+                    _status.IsSuccess = false;
+                    foreach (var item in result.Errors)
+                    {
+                        _status.StrMessage.Add(item);
+                    }
+                    return Ok(_status);
+                }
             }
             catch (Exception ex)
             {

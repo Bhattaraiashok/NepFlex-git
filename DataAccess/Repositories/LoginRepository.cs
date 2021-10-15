@@ -17,34 +17,46 @@ namespace NepFlex.DataAccess.Repositories
     public class LoginRepository : Repository<UserLoginResponse, int>, ILoginRepository
     {
         private readonly IOnlinePasalContext _context;
+
         public LoginRepository(IOnlinePasalContext context) : base(context)
         {
             _context = context;
         }
-        public UserLoginResponse UserLoginProcess(UserLogin login)
+        public UserLoginResponse UserLoginProcess(UserLogin login, ApplicationUser identityVerifiedUser)
         {
+            login.UserPSWD = identityVerifiedUser.PasswordHash;
+            login.UserID = identityVerifiedUser.UserName;
+
             var _login = new UserLoginResponse();
 
             ValidateUserReturnModel _login2 = new ValidateUserReturnModel();
+
             _login2 = _context.ValidateUser(login.UserID, login.UserPSWD, login.UI);
 
-            _login.Email = _login2.ResultSet1.Select(x => x.Email).FirstOrDefault();
-            //_login.UserID= _login2.ResultSet1.Select(x => x.Email).FirstOrDefault();
-            _login.UserGuid = _login2.ResultSet1.Select(x => x.GUID).FirstOrDefault();
-            _login._Auth = _login2.ResultSet1.Select(x => x.Lastname).FirstOrDefault(); // need to modify this
-            _login.Firstname = _login2.ResultSet1.Select(x => x.Firstname).FirstOrDefault();
-            SessionIDManager manager = new SessionIDManager();
-            string newSessionId = manager.CreateSessionID(HttpContext.Current);
-            _login.SessionID = newSessionId;
+            if (_login2.ResultSet1.Count > 0)
+            {
+                _login.Email = _login2.ResultSet1.Select(x => x.Email).FirstOrDefault();
+                _login.UserGuid = _login2.ResultSet1.Select(x => x.GUID).FirstOrDefault();
+                _login._Auth = _login2.ResultSet1.Select(x => x.Lastname).FirstOrDefault(); // need to modify this
+                _login.Firstname = _login2.ResultSet1.Select(x => x.Firstname).FirstOrDefault();
+                SessionIDManager manager = new SessionIDManager();
+                string newSessionId = manager.CreateSessionID(HttpContext.Current);
+                _login.SessionID = newSessionId;
+            }
+            else
+            {
+                _login.IsSuccess = false;
+                _login.StrMessage.Add("Login Attempt: Failed");
+            }
             return _login;
         }
 
 
 
-        public ResponseStatus UserRegistrationProcess(UserRegister req)
+        public ResponseStatus UserRegistrationProcess(UserRegister req, ApplicationUser req2)
         {
-            var result = new List<RegisterUserReturnModel>();   
-
+            var result = new List<RegisterUserReturnModel>();
+            req.UserDetail.PSWDHASH = req2.PasswordHash;
             if (req.UserDetail.IsUserSeller)
             {
                 //saves user and company both
@@ -96,11 +108,11 @@ namespace NepFlex.DataAccess.Repositories
 
             ResponseStatus _status = new ResponseStatus
             {
-                StrMesssage = new List<string>()
+                StrMessage = new List<string>()
             };
 
             _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
-            _status.StrMesssage.Add(result[0].VER_Detail);
+            _status.StrMessage.Add(result[0].VER_Detail);
 
             return _status;
         }

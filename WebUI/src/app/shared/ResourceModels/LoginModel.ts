@@ -1,7 +1,7 @@
 export class LoginRequest {
     UserID: string;
     UserPSWD: string;
-    IsRememberMe:boolean;
+    IsRememberMe: boolean;
     IsUserSeller: boolean;
 }
 
@@ -17,4 +17,10 @@ export class LoginResponse {
     isAuthenticated: boolean;// this needs to be true in order to be successfully login
     sessionID: string;
     timeStamp: Date;
+    strMessage: string[];
+    isSuccess: boolean;
+}
+export class ResponseObjects {
+    isSuccess: boolean;
+    strMesssage: string[];
 }

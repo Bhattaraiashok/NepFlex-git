@@ -25,7 +25,7 @@ namespace NepFlex.Core.Entities.ResourceModels
     public class ResponseStatus
     {
         public bool IsSuccess { get; set; }
-        public List<string> StrMesssage { get; set; }
+        public List<string> StrMessage { get; set; }
     }
 
     public class Messages

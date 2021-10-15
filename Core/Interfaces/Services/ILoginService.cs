@@ -9,7 +9,7 @@ namespace NepFlex.Core.Interfaces.Services
 {
     public interface ILoginService
     {
-        UserLoginResponse UserLoginProcess(UserLogin req);
-        ResponseStatus UserRegistrationProcess(UserRegister req);
+        UserLoginResponse UserLoginProcess(UserLogin req, ApplicationUser req2);
+        ResponseStatus UserRegistrationProcess(UserRegister req, ApplicationUser req2);
     }
 }

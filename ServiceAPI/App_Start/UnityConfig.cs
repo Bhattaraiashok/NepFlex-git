@@ -7,6 +7,7 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Nepflex.ServiceAPI.Models;
+using NepFlex.Core.Entities.ResourceModels;
 
 namespace Nepflex.ServiceAPI.App_Start
 {

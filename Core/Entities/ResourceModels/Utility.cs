@@ -12,7 +12,7 @@ namespace NepFlex.Core.Entities.ResourceModels
         {
             ResponseStatus _requestStatus = new ResponseStatus
             {
-                StrMesssage = new List<string>()
+                StrMessage = new List<string>()
             };
 
             Messages msg = new Messages();
@@ -22,7 +22,7 @@ namespace NepFlex.Core.Entities.ResourceModels
             if (responseMessage != null)
             {
                 _requestStatus.IsSuccess = responseMessage.Returned;
-                _requestStatus.StrMesssage.Add(responseMessage.Message);
+                _requestStatus.StrMessage.Add(responseMessage.Message);
             }
 
             return _requestStatus;

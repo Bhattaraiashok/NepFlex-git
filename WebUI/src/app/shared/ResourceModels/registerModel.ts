@@ -19,7 +19,7 @@ export class UserRequest {
 
 export class ResponseObjects {
     isSuccess: boolean;
-    strMesssage:string[];
+    strMessage:string[];
 }
 
 export class CompanyRequest {

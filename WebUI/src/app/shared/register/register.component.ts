@@ -309,16 +309,17 @@ export class RegisterComponent implements OnInit {
   registerNow() {
     this.validateForm();
     if (this.registerForm.valid) {
+      this.mappings();
       console.log('FORM IS VALID');
       const secondLayerValidation = this.mappingValidation();
       if (secondLayerValidation === true) {
         this.registerService.register(this.UserRegister).subscribe((item: ResponseObjects) => {
           if (item.isSuccess === true) {
-            console.log(item.strMesssage);
-            this.call_MessageAlertComponent('success', item.strMesssage[0]);
+            console.log(item.strMessage);
+            this.call_MessageAlertComponent('Success', item.strMessage[0]);
           } else {
-            console.log(item.strMesssage);
-            this.call_MessageAlertComponent('error', item.strMesssage[0]);
+            console.log(item.strMessage);
+            this.call_MessageAlertComponent('Error', item.strMessage[0]);
           }
         });
       }
@@ -365,26 +366,27 @@ export class RegisterComponent implements OnInit {
 
   userCheck(): boolean {
     const result = (
-      (this.UserRegister.UserDetail.UserEmail !== null || this.UserRegister.UserDetail.UserEmail !== '')
-      && (this.UserRegister.UserDetail.Firstname !== null || this.UserRegister.UserDetail.Firstname !== '')
-      && (this.UserRegister.UserDetail.Lastname !== null || this.UserRegister.UserDetail.Lastname !== '')
-      && (this.UserRegister.UserDetail.PSWDHASH !== null || this.UserRegister.UserDetail.PSWDHASH !== '')
-      && (this.UserRegister.UserDetail.Username !== null || this.UserRegister.UserDetail.Username !== '')
-      && (this.UserRegister.UserDetail.PhoneCountryCode !== null || this.UserRegister.UserDetail.PhoneCountryCode !== '')
-      && (this.UserRegister.UserDetail.PhoneNumber !== null || this.UserRegister.UserDetail.PhoneNumber !== '')
-      && (this.UserRegister.UserDetail.IsUserAgreementChecked !== null)
-      && (this.UserRegister.UserDetail.IsUserSeller !== null)
-      && (this.UserRegister.UserDetail.ShowPhonenumber !== null));
+      (this.UserRegister.UserDetail.UserEmail !== undefined && this.UserRegister.UserDetail.UserEmail !== null && this.UserRegister.UserDetail.UserEmail !== '')
+      && (this.UserRegister.UserDetail.Firstname !== undefined && this.UserRegister.UserDetail.Firstname !== null && this.UserRegister.UserDetail.Firstname !== '')
+      && (this.UserRegister.UserDetail.Lastname !== undefined && this.UserRegister.UserDetail.Lastname !== null && this.UserRegister.UserDetail.Lastname !== '')
+      && (this.UserRegister.UserDetail.PSWDHASH !== undefined && this.UserRegister.UserDetail.PSWDHASH !== null && this.UserRegister.UserDetail.PSWDHASH !== '')
+      && (this.UserRegister.UserDetail.Username !== undefined && this.UserRegister.UserDetail.Username !== null && this.UserRegister.UserDetail.Username !== '')
+      && (this.UserRegister.UserDetail.PhoneCountryCode !== undefined && this.UserRegister.UserDetail.PhoneCountryCode !== null && this.UserRegister.UserDetail.PhoneCountryCode !== '')
+      && (this.UserRegister.UserDetail.PhoneNumber !== undefined && this.UserRegister.UserDetail.PhoneNumber !== null && this.UserRegister.UserDetail.PhoneNumber !== '')
+      && (this.UserRegister.UserDetail.IsUserAgreementChecked !== undefined && this.UserRegister.UserDetail.IsUserAgreementChecked !== null)
+      && (this.UserRegister.UserDetail.IsUserSeller !== undefined && this.UserRegister.UserDetail.IsUserSeller !== null)
+      && (this.UserRegister.UserDetail.ShowPhonenumber !== undefined && this.UserRegister.UserDetail.ShowPhonenumber !== null));
     return result;
   }
   companyCheck(): boolean {
-    const result = ((this.UserRegister.CompanyDetails.CompanyEmailID !== null || this.UserRegister.CompanyDetails.CompanyEmailID == '')
-      && (this.UserRegister.CompanyDetails.CompanyName !== null || this.UserRegister.CompanyDetails.CompanyName == '')
-      && (this.UserRegister.CompanyDetails.Address !== null || this.UserRegister.CompanyDetails.Address == '')
-      && (this.UserRegister.CompanyDetails.PhoneNumber !== null || this.UserRegister.CompanyDetails.PhoneNumber == '')
-      && (this.UserRegister.CompanyDetails.PhoneCountryCode !== null || this.UserRegister.CompanyDetails.PhoneCountryCode == '')
-      && (this.UserRegister.CompanyDetails.IsGOVRegisteredCompany !== null)
-      && (this.UserRegister.CompanyDetails.ShowPhonenumber !== null));
+    const result = (
+      (this.UserRegister.CompanyDetails.CompanyEmailID !== undefined && this.UserRegister.CompanyDetails.CompanyEmailID !== null && this.UserRegister.CompanyDetails.CompanyEmailID == '')
+      && (this.UserRegister.CompanyDetails.CompanyName !== undefined && this.UserRegister.CompanyDetails.CompanyName !== null && this.UserRegister.CompanyDetails.CompanyName == '')
+      && (this.UserRegister.CompanyDetails.Address !== undefined && this.UserRegister.CompanyDetails.Address !== null && this.UserRegister.CompanyDetails.Address == '')
+      && (this.UserRegister.CompanyDetails.PhoneNumber !== undefined && this.UserRegister.CompanyDetails.PhoneNumber !== null && this.UserRegister.CompanyDetails.PhoneNumber == '')
+      && (this.UserRegister.CompanyDetails.PhoneCountryCode !== undefined && this.UserRegister.CompanyDetails.PhoneCountryCode !== null && this.UserRegister.CompanyDetails.PhoneCountryCode == '')
+      && (this.UserRegister.CompanyDetails.IsGOVRegisteredCompany !== undefined && this.UserRegister.CompanyDetails.IsGOVRegisteredCompany !== null)
+      && (this.UserRegister.CompanyDetails.ShowPhonenumber !== undefined && this.UserRegister.CompanyDetails.ShowPhonenumber !== null));
     return result;
   }
 }

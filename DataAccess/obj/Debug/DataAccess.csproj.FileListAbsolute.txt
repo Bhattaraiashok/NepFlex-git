@@ -234,3 +234,5 @@ E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
 E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.dll
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.pdb
+E:\GITHUB\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+E:\GITHUB\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.xml

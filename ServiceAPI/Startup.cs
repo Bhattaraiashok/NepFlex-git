@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity.Owin;
 using System;
+using NepFlex.Core.Entities.ResourceModels;
 
 [assembly: OwinStartupAttribute(typeof(Nepflex.ServiceAPI.Startup))]
 namespace Nepflex.ServiceAPI
