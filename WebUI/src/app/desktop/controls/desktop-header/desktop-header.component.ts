@@ -16,7 +16,7 @@ export class DesktopHeaderComponent implements OnInit {
   title: string = 'NepaliCraig';
   headersNavigation: HeadersNavigation[] = new Array();
   showLoginPopUpModal = false;
-  showRegisterationPopUpModal=false;
+  showRegisterationPopUpModal = false;
   isLoggedIn = false;
   detailButttons: ButtonProperties[] = new Array();
   dropdownlist: DropDownList[] = new Array();
@@ -81,7 +81,10 @@ export class DesktopHeaderComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void { this.checkifUserIsLogedIn(); }
+  ngOnInit(): void { 
+    this.checkifUserIsLogedIn();
+    this.cacheChecker(); 
+  }
 
   // HeaderRoute(routeTo: string, routingEnabled: boolean): void {
   //   if (routingEnabled) {
@@ -98,6 +101,30 @@ export class DesktopHeaderComponent implements OnInit {
     this.showLoginPopUpModal = true;
     // console.log('showPopUpModal: ', this.showPopUpModal);
     this.modalService.open(LoginComponent, { windowClass: 'dark-modal' });
+  }
+
+  appLogout($event) {
+    // if it comes here firstly lets clear localstorage
+    localStorage.clear();
+    sessionStorage.clear();
+    caches.delete('_authSessionToken');
+    caches.delete('isLoggedIn');
+
+    const isStillCached = localStorage.getItem("_authSessionToken");
+    if (isStillCached == null || isStillCached == undefined) {
+      this.isLoggedIn == false;
+      this.RouteTo(''); //routes to homepage
+    }
+  }
+
+  cacheChecker() {
+    const isStillSessionActive = localStorage.getItem("_authSessionToken");
+    const isStillUserLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isStillSessionActive == null || isStillSessionActive == undefined) {
+      this.isLoggedIn == false;
+    } else if (isStillSessionActive != null && isStillUserLoggedIn != null) {
+      this.isLoggedIn == true;;
+    } 
   }
 
   registerPopUp() {
@@ -117,8 +144,8 @@ export class DesktopHeaderComponent implements OnInit {
   }
   allButtons() {
     this.dropdownlist = [
-      { id: 1,parentLabel:'MyAccounthere', displayName: 'edit' },
-      { id: 2,parentLabel:'MyAccounthere', displayName: 'Post' }
+      { id: 1, parentLabel: 'MyAccounthere', displayName: 'edit' },
+      { id: 2, parentLabel: 'MyAccounthere', displayName: 'Post' }
     ]
 
     this.detailButttons = [

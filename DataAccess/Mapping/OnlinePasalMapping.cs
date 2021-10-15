@@ -122,9 +122,9 @@ namespace NepFlex.DataAccess.Mapping
         int Postdata(string title, string image, string detail, string username, string name, string email, string contact, string showPhoneNumber, string address, string other, string topCategory, string subCategory, decimal? price, string condition, string brand, string modal, string mileKmph, string warranty, string extraWarranty);
         // PostdataAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
-        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
-        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
+        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
+        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
 
         int SendEmailChangePassword(string username, string email);
         // SendEmailChangePasswordAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
@@ -1265,17 +1265,25 @@ namespace NepFlex.DataAccess.Mapping
             return (int) procResultParam.Value;
         }
 
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             int procResult;
-            return RegisterUser(username, firstname, middlename, lastname, password, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
+            return RegisterUser(username, pswdHash, pswdSalt, firstname, middlename, lastname, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
         }
 
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
         {
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
+
+            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = 500 };
+            if (pswdHashParam.Value == null)
+                pswdHashParam.Value = System.DBNull.Value;
+
+            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = 500 };
+            if (pswdSaltParam.Value == null)
+                pswdSaltParam.Value = System.DBNull.Value;
 
             var firstnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Firstname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = firstname, Size = 20 };
             if (firstnameParam.Value == null)
@@ -1288,10 +1296,6 @@ namespace NepFlex.DataAccess.Mapping
             var lastnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Lastname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = lastname, Size = 30 };
             if (lastnameParam.Value == null)
                 lastnameParam.Value = System.DBNull.Value;
-
-            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = 50 };
-            if (passwordParam.Value == null)
-                passwordParam.Value = System.DBNull.Value;
 
             var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 50 };
             if (emailParam.Value == null)
@@ -1346,17 +1350,25 @@ namespace NepFlex.DataAccess.Mapping
                 uiParam.Value = System.DBNull.Value;
 
             var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<RegisterUserReturnModel>("EXEC @procResult = [dbo].[Register_User] @username, @Firstname, @Middlename, @Lastname, @Password, @Email, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @CompanyEmailID, @CompanyShowPHNumber, @UI", usernameParam, firstnameParam, middlenameParam, lastnameParam, passwordParam, emailParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, companyEmailIdParam, companyShowPhNumberParam, uiParam, procResultParam).ToList();
+            var procResultData = Database.SqlQuery<RegisterUserReturnModel>("EXEC @procResult = [dbo].[Register_User] @username, @pswdHASH, @pswdSALT, @Firstname, @Middlename, @Lastname, @Email, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @CompanyEmailID, @CompanyShowPHNumber, @UI", usernameParam, pswdHashParam, pswdSaltParam, firstnameParam, middlenameParam, lastnameParam, emailParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, companyEmailIdParam, companyShowPhNumberParam, uiParam, procResultParam).ToList();
 
             procResult = (int) procResultParam.Value;
             return procResultData;
         }
 
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
+
+            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = 500 };
+            if (pswdHashParam.Value == null)
+                pswdHashParam.Value = System.DBNull.Value;
+
+            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = 500 };
+            if (pswdSaltParam.Value == null)
+                pswdSaltParam.Value = System.DBNull.Value;
 
             var firstnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Firstname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = firstname, Size = 20 };
             if (firstnameParam.Value == null)
@@ -1369,10 +1381,6 @@ namespace NepFlex.DataAccess.Mapping
             var lastnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Lastname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = lastname, Size = 30 };
             if (lastnameParam.Value == null)
                 lastnameParam.Value = System.DBNull.Value;
-
-            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = 50 };
-            if (passwordParam.Value == null)
-                passwordParam.Value = System.DBNull.Value;
 
             var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 50 };
             if (emailParam.Value == null)
@@ -1426,7 +1434,7 @@ namespace NepFlex.DataAccess.Mapping
             if (uiParam.Value == null)
                 uiParam.Value = System.DBNull.Value;
 
-            var procResultData = await Database.SqlQuery<RegisterUserReturnModel>("EXEC [dbo].[Register_User] @username, @Firstname, @Middlename, @Lastname, @Password, @Email, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @CompanyEmailID, @CompanyShowPHNumber, @UI", usernameParam, firstnameParam, middlenameParam, lastnameParam, passwordParam, emailParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, companyEmailIdParam, companyShowPhNumberParam, uiParam).ToListAsync();
+            var procResultData = await Database.SqlQuery<RegisterUserReturnModel>("EXEC [dbo].[Register_User] @username, @pswdHASH, @pswdSALT, @Firstname, @Middlename, @Lastname, @Email, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @CompanyEmailID, @CompanyShowPHNumber, @UI", usernameParam, pswdHashParam, pswdSaltParam, firstnameParam, middlenameParam, lastnameParam, emailParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, companyEmailIdParam, companyShowPhNumberParam, uiParam).ToListAsync();
 
             return procResultData;
         }
@@ -1948,23 +1956,23 @@ namespace NepFlex.DataAccess.Mapping
             return 0;
         }
 
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             int procResult;
-            return RegisterUser(username, firstname, middlename, lastname, password, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
+            return RegisterUser(username, pswdHash, pswdSalt, firstname, middlename, lastname, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
         }
 
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
         {
 
             procResult = 0;
             return new System.Collections.Generic.List<RegisterUserReturnModel>();
         }
 
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string firstname, string middlename, string lastname, string password, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
         {
             int procResult;
-            return System.Threading.Tasks.Task.FromResult(RegisterUser(username, firstname, middlename, lastname, password, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult));
+            return System.Threading.Tasks.Task.FromResult(RegisterUser(username, pswdHash, pswdSalt, firstname, middlename, lastname, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult));
         }
 
         public int SendEmailChangePassword(string username, string email)
@@ -2565,7 +2573,6 @@ namespace NepFlex.DataAccess.Mapping
     {
         public long UserId { get; set; } // UserID (Primary key)
         public string Username { get; set; } // Username (length: 50)
-        public string Password { get; set; } // Password (length: 50)
         public string Firstname { get; set; } // Firstname (length: 20)
         public string Middlename { get; set; } // Middlename (length: 15)
         public string Lastname { get; set; } // Lastname (length: 30)
@@ -2575,6 +2582,7 @@ namespace NepFlex.DataAccess.Mapping
         public System.DateTime? Lastlogindate { get; set; } // Lastlogindate
         public string Ui { get; set; } // UI (length: 5)
         public string Guid { get; set; } // GUID (length: 100)
+        public string Emailguid { get; set; } // EMAILGUID (length: 100)
         public string ProfilePicture { get; set; } // ProfilePicture
         public string Images { get; set; } // Images
         public string IsUserSeller { get; set; } // IsUserSeller (length: 12)
@@ -3204,7 +3212,6 @@ namespace NepFlex.DataAccess.Mapping
 
             Property(x => x.UserId).HasColumnName(@"UserID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.Username).HasColumnName(@"Username").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
-            Property(x => x.Password).HasColumnName(@"Password").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
             Property(x => x.Firstname).HasColumnName(@"Firstname").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(20);
             Property(x => x.Middlename).HasColumnName(@"Middlename").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(15);
             Property(x => x.Lastname).HasColumnName(@"Lastname").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(30);
@@ -3214,6 +3221,7 @@ namespace NepFlex.DataAccess.Mapping
             Property(x => x.Lastlogindate).HasColumnName(@"Lastlogindate").HasColumnType("datetime").IsOptional();
             Property(x => x.Ui).HasColumnName(@"UI").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(5);
             Property(x => x.Guid).HasColumnName(@"GUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
+            Property(x => x.Emailguid).HasColumnName(@"EMAILGUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
             Property(x => x.ProfilePicture).HasColumnName(@"ProfilePicture").HasColumnType("nvarchar(max)").IsOptional();
             Property(x => x.Images).HasColumnName(@"Images").HasColumnType("nvarchar(max)").IsOptional();
             Property(x => x.IsUserSeller).HasColumnName(@"IsUserSeller").HasColumnType("nvarchar").IsOptional().HasMaxLength(12);

@@ -8,12 +8,13 @@ export class UserRequest {
     Firstname: string;
     Middlename: string;
     Lastname: string;
-    Password: string;
-    Email: string;
+    PSWDHASH: string;
+    UserEmail: string;
     PhoneCountryCode: string;
     PhoneNumber: string;
     ShowPhonenumber: boolean;
     IsUserSeller: boolean;
+    IsUserAgreementChecked:boolean;
 }
 
 export class ResponseObjects {

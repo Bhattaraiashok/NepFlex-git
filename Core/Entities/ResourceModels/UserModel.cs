@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,20 +13,26 @@ namespace NepFlex.Core.Entities.ResourceModels
         public CompanyRegisterRequest CompanyDetails { get; set; }
     }
 
-    public class UserRegisterRequest
+    public class UserRegisterRequest : IdentityUser
     {
         public string Username { get; set; }
         public string Firstname { get; set; }
         public string Middlename { get; set; }
         public string Lastname { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        public string PSWDHASH { get; set; }
+        public string PSWDSALT { get; set; }
+        public string UserEmail { get; set; }
         public string Address { get; set; }
         public string UI { get { return "craig"; } }
         public bool IsUserSeller { get; set; }
         public string PhoneCountryCode { get; set; }
-        public string PhoneNumber { get; set; }
+        public override string PhoneNumber { get; set; }
         public bool? ShowPhonenumber { get; set; }
+        public bool? IsUserAgreementChecked { get; set; }
+
+        public override string Email => UserEmail;
+        //public string passwordHash => PSWDHASH;
+        public override bool LockoutEnabled { get => base.LockoutEnabled; set => base.LockoutEnabled = true; }
     }
     public class CompanyRegisterRequest
     {
@@ -44,10 +51,11 @@ namespace NepFlex.Core.Entities.ResourceModels
         public string UserID { get; set; }
         public string UserPSWD { get; set; }
         public string UI { get { return "craig"; } }
+        public bool IsRememberMe { get; set; }
         public string IsUserSeller { get; set; } //on the time of regester let user to choose if the same id is regester as seller too.
     }
 
-    public class UserLoginResponse: ResponseStatus
+    public class UserLoginResponse : ResponseStatus
     {
         public int UserID { get; set; }
         public string Email { get; set; }

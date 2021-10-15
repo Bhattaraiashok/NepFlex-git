@@ -44,6 +44,9 @@
                 <li class="nav-link" *ngIf="isLoggedIn">
                     <button class="btn btn-primary btn-block btn-login" (click)="RouteTo('profile')">Profile</button>
                 </li>
+                <li class="nav-link" *ngIf="isLoggedIn">
+                    <button class="btn btn-primary btn-block btn-login" (click)="appLogout()">Logout</button>
+                </li>
             </ul>
         </div>
 

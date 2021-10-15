@@ -10,6 +10,9 @@ using Core.Interfaces;
 using DataAccess;
 using NepFlex.Core.Interfaces.Services;
 using NepFlex.Core.Services;
+using Microsoft.AspNet.Identity;
+using NepFlex.Core.Entities.ResourceModels;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DependencyResolution
 {

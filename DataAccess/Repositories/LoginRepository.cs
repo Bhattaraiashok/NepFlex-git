@@ -2,10 +2,12 @@
 using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Interfaces.Repositories;
 using NepFlex.DataAccess.Context;
+using NepFlex.DataAccess.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.SessionState;
@@ -37,18 +39,22 @@ namespace NepFlex.DataAccess.Repositories
             return _login;
         }
 
+
+
         public ResponseStatus UserRegistrationProcess(UserRegister req)
         {
-            var result = new List<RegisterUserReturnModel>();
+            var result = new List<RegisterUserReturnModel>();   
+
             if (req.UserDetail.IsUserSeller)
             {
                 //saves user and company both
                 result = _context.RegisterUser(
                    req.UserDetail.Username,
+                   req.UserDetail.PSWDHASH,
+                   req.UserDetail.PSWDSALT,
                    req.UserDetail.Firstname,
                    req.UserDetail.Middlename,
                    req.UserDetail.Lastname,
-                   req.UserDetail.Password,
                    req.UserDetail.Email,
                    req.UserDetail.PhoneCountryCode,
                    req.UserDetail.PhoneNumber != null ? req.UserDetail.PhoneNumber.Replace("[^a-zA-Z0-9]", "") : req.UserDetail.PhoneNumber,
@@ -68,10 +74,11 @@ namespace NepFlex.DataAccess.Repositories
                 // this will only save user info but not company
                 result = _context.RegisterUser(
                     req.UserDetail.Username,
+                    req.UserDetail.PSWDHASH,
+                    req.UserDetail.PSWDSALT,
                     req.UserDetail.Firstname,
                     req.UserDetail.Middlename,
                     req.UserDetail.Lastname,
-                    req.UserDetail.Password,
                     req.UserDetail.Email,
                     req.UserDetail.PhoneCountryCode,
                     req.UserDetail.PhoneNumber != null ? req.UserDetail.PhoneNumber.Replace("[^a-zA-Z0-9]", "") : req.UserDetail.PhoneNumber,

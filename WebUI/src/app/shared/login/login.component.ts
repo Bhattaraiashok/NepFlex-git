@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
   passwordType = 'password';
   form = this.fb.group({
     username: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
+    isRememberMe: ['']
   })
   constructor(private fb: FormBuilder,
     private routeLink: RouteTo,
@@ -36,11 +37,13 @@ export class LoginComponent implements OnInit {
   validateForm(e: Event) {
     const formValue1 = this.form.get('username').value;
     const formValue2 = this.form.get('password').value;
+    const _isRememberMe = this.form.get('isRememberMe').value;
     console.log('username', formValue1 + ' and ' + formValue2);
     if (formValue1 !== null && formValue2 !== null) {
       this.loginRequest = new LoginRequest();
       this.loginRequest.UserID = formValue1;
       this.loginRequest.UserPSWD = formValue2;
+      this.loginRequest.IsRememberMe = _isRememberMe;
       this.loginService.login(this.loginRequest).subscribe((item: LoginResponse) => {
         this.manageLocalStorage(item);
         this.RouteTo('home');
