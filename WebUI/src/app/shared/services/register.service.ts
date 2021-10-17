@@ -10,7 +10,8 @@ import { ReportGetData } from 'app/shared/ResourceModels/ReportGetData';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Headers, RequestOptions } from '@angular/http';
-import { UserRegister, ResponseObjects } from "app/shared/ResourceModels/registerModel";
+import { UserRegister } from "app/shared/ResourceModels/registerModel";
+import { ResponseObjects } from "app/shared/ResourceModels/ResponseStatus";
 
 @Injectable({
   providedIn: 'root'

@@ -29,10 +29,10 @@ namespace Nepflex.ServiceAPI.Identity
             this.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 8,
-                RequireNonLetterOrDigit = false,
-                RequireDigit = false,
-                RequireLowercase = false,
-                RequireUppercase = false,
+                RequireNonLetterOrDigit = true,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireUppercase = true,
             };
 
             // Configure user lockout defaults

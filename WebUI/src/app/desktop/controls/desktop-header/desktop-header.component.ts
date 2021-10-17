@@ -1,27 +1,31 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RouteTo } from 'app/shared/interfaces/local-router';
 import { LoginComponent } from 'app/shared/login/login.component';
 import { HeadersNavigation, ButtonProperties, DropDownList } from 'app/shared/ResourceModels/ButtonProperties';
 import { RegisterComponent } from "app/shared/register/register.component";
+import { LoginService } from "app/shared/services/login.service";
+import { ResponseObjects } from "app/shared/ResourceModels/ResponseStatus";
 
 @Component({
   selector: 'app-desktop-header',
   templateUrl: './desktop-header.component.html',
-  styleUrls: ['./desktop-header.component.scss']
+  styleUrls: ['./desktop-header.component.scss'],
 })
 export class DesktopHeaderComponent implements OnInit {
-  @Input()
-  isThisComingFromHomePage: boolean = false;
+  @Input() isThisComingFromHomePage: boolean = false;
+  showLoginPopUpModal: boolean = false;
   title: string = 'NepaliCraig';
   headersNavigation: HeadersNavigation[] = new Array();
-  showLoginPopUpModal = false;
+  //showLoginPopUpModal = false;
   showRegisterationPopUpModal = false;
   isLoggedIn = false;
   detailButttons: ButtonProperties[] = new Array();
   dropdownlist: DropDownList[] = new Array();
 
-  constructor(private routeLink: RouteTo, private modalService: NgbModal) {
+  headerPopUpName: string = '';
+
+  constructor(private routeLink: RouteTo, private modalService: NgbModal, private loginService: LoginService) {
     this.headersNavigation = [
       {
         headerId: 1,
@@ -81,9 +85,9 @@ export class DesktopHeaderComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.checkifUserIsLogedIn();
-    this.cacheChecker(); 
+    this.cacheChecker();
   }
 
   // HeaderRoute(routeTo: string, routingEnabled: boolean): void {
@@ -97,24 +101,57 @@ export class DesktopHeaderComponent implements OnInit {
     this.routeLink.RouteTo(routeTo, routingEnabled);
   }
 
-  loginPopUp() {
-    this.showLoginPopUpModal = true;
-    // console.log('showPopUpModal: ', this.showPopUpModal);
-    this.modalService.open(LoginComponent, { windowClass: 'dark-modal' });
+  triggerPopUp(val: string) {
+    console.log('Trigger pop up', val);
+    if (val == "login") {
+      this.headerPopUpName = "login";
+      this.showLoginPopUpModal = true;
+      this.turnOffOtherModal();
+      this.modalService.open(LoginComponent, { windowClass: 'dark-modal' });
+    } else if (val == "register") {
+      this.showRegisterationPopUpModal = true;
+      this.headerPopUpName = "register";
+      this.turnOffOtherModal();
+      // console.log('showRegisterationPopUpModal: ', this.showPopUpModal);
+      this.modalService.open(RegisterComponent, { windowClass: 'dark-modal' });
+    }
+
+  }
+  turnOffOtherModal() {
+    if (this.showLoginPopUpModal == true) {
+      this.showRegisterationPopUpModal = false;
+    } else if (this.showRegisterationPopUpModal == true) {
+      this.showLoginPopUpModal == false;
+    }
   }
 
-  appLogout($event) {
-    // if it comes here firstly lets clear localstorage
-    localStorage.clear();
-    sessionStorage.clear();
-    caches.delete('_authSessionToken');
-    caches.delete('isLoggedIn');
+  // registerPopUp() {
+  //   this.showRegisterationPopUpModal = true;
+  //   this.turnOffOtherModal();
+  //   // console.log('showRegisterationPopUpModal: ', this.showPopUpModal);
+  //   this.modalService.open(RegisterComponent, { windowClass: 'dark-modal' });
+  // }
 
-    const isStillCached = localStorage.getItem("_authSessionToken");
-    if (isStillCached == null || isStillCached == undefined) {
-      this.isLoggedIn == false;
-      this.RouteTo(''); //routes to homepage
-    }
+  appLogout($event) {
+    this.loginService.logout().subscribe((item: ResponseObjects) => {
+      if (item.isSuccess == true) {
+        // if it comes here firstly lets clear localstorage
+        localStorage.clear();
+        sessionStorage.clear();
+        caches.delete('_authSessionToken');
+        caches.delete('isLoggedIn');
+
+        const isAuthStillCached = localStorage.getItem("_authSessionToken");
+        const isUserLoggedInStill = localStorage.getItem("isLoggedIn");
+        const checkUserLogStatus = ((isAuthStillCached == null || isAuthStillCached == undefined || isAuthStillCached == '')
+          && (isUserLoggedInStill == null || isUserLoggedInStill == undefined || isUserLoggedInStill == ''));
+
+        if (checkUserLogStatus) {
+          this.isLoggedIn == false;
+          this.RouteTo(''); //routes to homepage
+        }
+      }
+    });
   }
 
   cacheChecker() {
@@ -124,13 +161,7 @@ export class DesktopHeaderComponent implements OnInit {
       this.isLoggedIn == false;
     } else if (isStillSessionActive != null && isStillUserLoggedIn != null) {
       this.isLoggedIn == true;;
-    } 
-  }
-
-  registerPopUp() {
-    this.showRegisterationPopUpModal = true;
-    // console.log('showRegisterationPopUpModal: ', this.showPopUpModal);
-    this.modalService.open(RegisterComponent, { windowClass: 'dark-modal' });
+    }
   }
 
   checkifUserIsLogedIn() {

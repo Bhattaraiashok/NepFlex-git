@@ -33,7 +33,7 @@ namespace NepFlex.DataAccess.Repositories
 
             _login2 = _context.ValidateUser(login.UserID, login.UserPSWD, login.UI);
 
-            if (_login2.ResultSet1.Count > 0)
+            if (_login2.ResultSet1.Count > 0 && _login2.ResultSet1[0].UserID != 0 && _login2.ResultSet1[0].Username != null)
             {
                 _login.Email = _login2.ResultSet1.Select(x => x.Email).FirstOrDefault();
                 _login.UserGuid = _login2.ResultSet1.Select(x => x.GUID).FirstOrDefault();
@@ -42,11 +42,13 @@ namespace NepFlex.DataAccess.Repositories
                 SessionIDManager manager = new SessionIDManager();
                 string newSessionId = manager.CreateSessionID(HttpContext.Current);
                 _login.SessionID = newSessionId;
+
+                //append status
+                _login = Utility.AppendStatus<UserLoginResponse>(ConstList.RES_OBJ_CONST_SUCCESS, _login);
             }
             else
             {
-                _login.IsSuccess = false;
-                _login.StrMessage.Add("Login Attempt: Failed");
+                _login = Utility.AppendStatus<UserLoginResponse>(ConstList.USER_LOGIN_CONST_FAILURE, _login);
             }
             return _login;
         }

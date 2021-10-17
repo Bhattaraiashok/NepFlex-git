@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { RouteTo } from '../interfaces/local-router';
 import { ButtonProperties } from '../ResourceModels/ButtonProperties';
 import { RegisterService } from "app/shared/services/register.service";
-import { UserRegister, ResponseObjects } from "app/shared/ResourceModels/registerModel";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { UserRegister } from "app/shared/ResourceModels/registerModel";
 import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
+import { ResponseObjects } from "app/shared/ResourceModels/ResponseStatus";
+import { LoginComponent } from "app/shared/login/login.component";
+import { DesktopHeaderComponent } from "app/desktop/controls/desktop-header/desktop-header.component";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-register',
@@ -14,6 +17,8 @@ import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages"
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  @Output() PopUpName: string;
+
   UserRegister: UserRegister = new UserRegister();
   registerResponse: ResponseObjects;
   registerForm: FormGroup;
@@ -24,6 +29,9 @@ export class RegisterComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   showAlertMessages: boolean = false;
   messageAlerts: AlertMessageProperties = new AlertMessageProperties();
+  userIsRegistered: boolean = false;
+  spinnerActivated: boolean = false;
+
 
   companyFC: FormControl = new FormControl('');
   firstnameFC: FormControl = new FormControl('', [Validators.required]);
@@ -92,19 +100,21 @@ export class RegisterComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private routeLink: RouteTo,
     private registerService: RegisterService,
-    private modalService: NgbModal) {
+    private modalService: NgbActiveModal) {
     this.createForm();
   }
 
   ngOnInit(): void {
     this.allButtons();
   }
+
   allButtons() {
     this.detailButttons = [
       {
         buttonId: 1,
         buttonLabel: 'Register Now',
-        isDisable: true,
+        isDisable: !this.registerForm.valid,
+        tooltip: !this.registerForm.valid ? "Please, complete above fields to enable registration" : " Click here to register.",
         hasPopUp: false,
         buttonRoute: '',
         canRoute: false,
@@ -214,6 +224,11 @@ export class RegisterComponent implements OnInit {
     this.registerForm.get(formControlName).patchValue(val);
     this.validateForm();
   }
+  
+  smallSpinner() {
+    this.spinnerActivated = !this.spinnerActivated;
+    console.log('turnOnSmallLoader :  ', this.spinnerActivated);
+  }
 
   validateForm() {
     this.showFCError = true;
@@ -307,6 +322,7 @@ export class RegisterComponent implements OnInit {
   }
 
   registerNow() {
+    this.smallSpinner();
     this.validateForm();
     if (this.registerForm.valid) {
       this.mappings();
@@ -317,12 +333,19 @@ export class RegisterComponent implements OnInit {
           if (item.isSuccess === true) {
             console.log(item.strMessage);
             this.call_MessageAlertComponent('Success', item.strMessage[0]);
+            this.userIsRegistered == true;
+             this.modalService.close('close');
           } else {
+            this.smallSpinner();
             console.log(item.strMessage);
             this.call_MessageAlertComponent('Error', item.strMessage[0]);
           }
         });
+      } else {
+        this.smallSpinner();
       }
+    } else {
+      this.smallSpinner();
     }
   }
 

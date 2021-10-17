@@ -189,6 +189,7 @@ E:\GITHUB\DataAccess\bin\Debug\System.Security.Cryptography.Xml.dll
 E:\GITHUB\DataAccess\bin\Debug\System.Security.Permissions.dll
 E:\GITHUB\DataAccess\bin\Debug\System.Security.Principal.Windows.dll
 E:\GITHUB\DataAccess\bin\Debug\System.Text.Encodings.Web.dll
+E:\GITHUB\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.dll
 E:\GITHUB\DataAccess\bin\Debug\NepFlex.Core.pdb
 E:\GITHUB\DataAccess\bin\Debug\NepFlex.Core.dll.config
 E:\GITHUB\DataAccess\bin\Debug\EntityFramework.xml
@@ -229,10 +230,9 @@ E:\GITHUB\DataAccess\bin\Debug\System.Memory.xml
 E:\GITHUB\DataAccess\bin\Debug\System.Numerics.Vectors.xml
 E:\GITHUB\DataAccess\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 E:\GITHUB\DataAccess\bin\Debug\System.Text.Encodings.Web.xml
+E:\GITHUB\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 E:\GITHUB\DataAccess\obj\Debug\DataAccess.csprojAssemblyReference.cache
 E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
 E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.dll
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.pdb
-E:\GITHUB\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.dll
-E:\GITHUB\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.xml

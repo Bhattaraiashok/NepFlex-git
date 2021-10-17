@@ -1277,11 +1277,11 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
 
-            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = 500 };
+            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = -1 };
             if (pswdHashParam.Value == null)
                 pswdHashParam.Value = System.DBNull.Value;
 
-            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = 500 };
+            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = -1 };
             if (pswdSaltParam.Value == null)
                 pswdSaltParam.Value = System.DBNull.Value;
 
@@ -1362,11 +1362,11 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
 
-            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = 500 };
+            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = -1 };
             if (pswdHashParam.Value == null)
                 pswdHashParam.Value = System.DBNull.Value;
 
-            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = 500 };
+            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = -1 };
             if (pswdSaltParam.Value == null)
                 pswdSaltParam.Value = System.DBNull.Value;
 
@@ -1553,7 +1553,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
 
-            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = 30 };
+            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = -1 };
             if (passwordParam.Value == null)
                 passwordParam.Value = System.DBNull.Value;
 
@@ -1596,7 +1596,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
 
-            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = 30 };
+            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = -1 };
             if (passwordParam.Value == null)
                 passwordParam.Value = System.DBNull.Value;
 

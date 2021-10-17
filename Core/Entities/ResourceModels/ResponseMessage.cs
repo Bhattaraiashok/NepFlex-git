@@ -25,6 +25,7 @@ namespace NepFlex.Core.Entities.ResourceModels
     public class ResponseStatus
     {
         public bool IsSuccess { get; set; }
+        public string StatusType { get; set; }
         public List<string> StrMessage { get; set; }
     }
 
@@ -36,14 +37,18 @@ namespace NepFlex.Core.Entities.ResourceModels
             {
                 return new List<ResponseMessages>() {
                 //general
-                new ResponseMessages{Code=ConstList.RES_OBJ_CONST_SUCCESS, Returned=false, Type="success", Message="successful"},
+                new ResponseMessages{Code=ConstList.RES_OBJ_CONST_SUCCESS, Returned=true, Type="success", Message="Successful."},
+                 new ResponseMessages{Code=ConstList.REQ_OBJ_CONST_SUCCESS, Returned=true, Type="success", Message="Successful."},
                 new ResponseMessages{Code=ConstList.RES_OBJ_CONST_FAILURE, Returned=false, Type="error", Message="Exception occured"},
                 //backend
-                new ResponseMessages{Code=ConstList.RES_OBJ_CONST_NULL, Returned=false, Type="error", Message="SVC is returning null."},
+                new ResponseMessages{Code=ConstList.RES_OBJ_CONST_NULL, Returned=false, Type="info", Message="SVC is returning null."},
                 new ResponseMessages{Code=ConstList.SYS_OBJ_CONST_FAILURE, Returned=false, Type="error", Message="System Error, Please try again."},
                 //Auth
                 new ResponseMessages{Code=ConstList.ROLE_USER_RES_CONST_FAILURE, Returned=false, Type="error", Message="User is not able to authorize."},
-
+                //login-register
+                 new ResponseMessages{Code=ConstList.USER_LOGIN_CONST_SUCCESS, Returned=true, Type="success", Message="Login successful."},
+                new ResponseMessages{Code=ConstList.USER_LOGIN_CONST_FAILURE, Returned=false, Type="error", Message="Login failed."},
+                new ResponseMessages{Code=ConstList.COMPANY_LOGIN_CONST_FAILURE, Returned=false, Type="error", Message="Login attempt: failed."},
                 //DB CODE
                  new ResponseMessages{Code=ConstList.USER_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your user account."},
                  new ResponseMessages{Code=ConstList.COMPANY_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your company account."},

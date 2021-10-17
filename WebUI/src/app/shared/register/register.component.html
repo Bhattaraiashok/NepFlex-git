@@ -89,7 +89,9 @@
             <mat-error *ngIf="showFCError">{{isUserAgreementCheckedFCError}}</mat-error>
           </div>
         </section>
-        <app-animated-button [buttonCollections]="detailButttons" (ParentEmitter)="registerNow()"></app-animated-button>
+        <!--<div class="home-load-spinner" *ngIf="!registerForm.valid"></div>-->
+        <app-spinner [showSmallLoader]="spinnerActivated"></app-spinner>
+        <app-animated-button *ngIf="!spinnerActivated || !userIsRegistered" [buttonCollections]="detailButttons" (ParentEmitter)="registerNow()"></app-animated-button>
       </mat-card>
     </form>
   </div>

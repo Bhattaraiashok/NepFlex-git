@@ -17,7 +17,8 @@ import { LoginRequest, LoginResponse } from "app/shared/ResourceModels/LoginMode
 })
 export class LoginService {
 
-  private apiUrl_postReport = 'http://localhost/ServiceAPI/api/user/login';
+  private apiUrl_login = 'http://localhost/ServiceAPI/api/user/login';
+  private apiUrl_logOut = 'http://localhost/ServiceAPI/api/user/logoff';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -29,8 +30,15 @@ export class LoginService {
 
   login(val: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
-      `${this.apiUrl_postReport}`,
+      `${this.apiUrl_login}`,
       JSON.stringify(val),
+      this.httpOptions
+    );
+  }
+
+  logout(){
+    return this.http.post(
+      `${this.apiUrl_logOut}`,
       this.httpOptions
     );
   }

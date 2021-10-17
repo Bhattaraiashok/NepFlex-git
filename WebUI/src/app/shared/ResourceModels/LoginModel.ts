@@ -19,8 +19,5 @@ export class LoginResponse {
     timeStamp: Date;
     strMessage: string[];
     isSuccess: boolean;
-}
-export class ResponseObjects {
-    isSuccess: boolean;
-    strMesssage: string[];
+    statusType:string;
 }

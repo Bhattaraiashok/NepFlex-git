@@ -6,16 +6,24 @@ import { LoginService } from "app/shared/services/login.service";
 import { LoginResponse, LoginRequest } from "app/shared/ResourceModels/LoginModel";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
+import { ButtonProperties } from "app/shared/ResourceModels/ButtonProperties";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginRequest: LoginRequest;
-  loginResponse: LoginResponse;
+  loginRequest: LoginRequest = new LoginRequest();
+  loginResponse: LoginResponse = new LoginResponse();
   messageAlerts: AlertMessageProperties = new AlertMessageProperties();
+  loginComponentButttons: ButtonProperties[] = new Array();
   showAlertMessages: boolean = false;
+  showFCError: boolean = false;
+  disableLoginButton: boolean = true;
+
+  userIsInProcessOfLogin: boolean = false;
+  spinnerActivated: boolean = false;
+
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -24,29 +32,60 @@ export class LoginComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   hide = true;
   passwordType = 'password';
-  form = this.fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-    isRememberMe: ['']
-  })
+  loginForm: FormGroup;
+
+  usernameFC: FormControl = new FormControl('', [Validators.required]);
+  passwordFC: FormControl = new FormControl('', [Validators.required]);
+  isRememberMeFC: FormControl = new FormControl('');
+
+  usernameFCError: string;
+  passwordFCError: string;
+
   constructor(private fb: FormBuilder,
     private routeLink: RouteTo,
     private loginService: LoginService,
-    private modalService: NgbActiveModal) { }
+    private modalService: NgbActiveModal) {
+    this.createForm();
+  }
 
   ngOnInit(): void {
+    this.allButtons();
+  }
+
+  allButtons() {
+    this.loginComponentButttons = [
+      {
+        buttonId: 1,
+        buttonLabel: 'Login',
+        isDisable: (!this.loginForm.valid && this.disableLoginButton),
+        tooltip: (!this.loginForm.valid && this.disableLoginButton) ? "Please, provide login info." : " Click here to login.",
+        hasPopUp: false,
+        buttonRoute: '',
+        canRoute: false,
+        HasDropDown: false,
+        parentEmit: true
+      }
+    ];
+  }
+
+  createForm() {
+    this.loginForm = this.fb.group({
+      username: this.usernameFC,
+      password: this.passwordFC,
+      isRememberMe: this.isRememberMeFC
+    });
+  }
+
+  smallSpinner() {
+    this.spinnerActivated = !this.spinnerActivated;
+    console.log('turnOnSmallLoader :  ', this.spinnerActivated);
   }
 
   validateForm(e: Event) {
-    const formValue1 = this.form.get('username').value;
-    const formValue2 = this.form.get('password').value;
-    const _isRememberMe = this.form.get('isRememberMe').value;
-    console.log('username', formValue1 + ' and ' + formValue2);
-    if (formValue1 !== null && formValue2 !== null) {
-      this.loginRequest = new LoginRequest();
-      this.loginRequest.UserID = formValue1;
-      this.loginRequest.UserPSWD = formValue2;
-      this.loginRequest.IsRememberMe = _isRememberMe;
+    this.smallSpinner();
+    this.mapping();
+    const firstLayerValidation = this.userValidation();
+    if (firstLayerValidation === true && this.loginForm.valid) {
       this.loginService.login(this.loginRequest).subscribe((item: LoginResponse) => {
         if (item.isSuccess == true) {
           this.call_MessageAlertComponent('Success', item.strMessage[0]);
@@ -54,10 +93,74 @@ export class LoginComponent implements OnInit {
           this.RouteTo('home');
           this.modalService.close('close');
         } else {
+          if (item.strMessage[0] !== null && item.strMessage[0] !== undefined) {
             this.call_MessageAlertComponent('Error', item.strMessage[0]);
+          } else {
+            this.call_MessageAlertComponent('Error', '!! ERROR !!');
           }
+          this.smallSpinner();
+        }
       });
+    } else {
+      this.validationErrorMapping();
+      this.smallSpinner();
     }
+
+  }
+  validationErrorMapping() {
+    this.showFCError = true;
+    if (this.loginForm.touched || this.loginForm.dirty) {
+      if (
+        this.usernameFC.invalid &&
+        this.usernameFC.hasError('required')
+      ) {
+        this.usernameFCError = "You must enter Username.";
+        this.call_MessageAlertComponent('info', this.usernameFCError);
+        return;
+      } else {
+        this.usernameFCError = '';
+      }
+      if (
+        this.passwordFC.invalid &&
+        this.passwordFC.hasError('required')
+      ) {
+        this.passwordFCError = "You must enter Password.";
+        this.call_MessageAlertComponent('info', this.passwordFCError);
+        return;
+      } else {
+        this.passwordFCError = '';
+      }
+    } else {
+      this.showFCError = false;
+      this.passwordFCError = '';
+      this.usernameFCError = '';
+      return;
+    }
+  }
+
+  onchangeform(
+    event: { target; value: string },
+    formControlName: string
+  ) {
+
+    const val = event.target.value;
+    this.loginForm.get(formControlName).patchValue(val);
+    this.validationErrorMapping();
+    this.disableLoginButton == this.showFCError;
+    this.allButtons();
+  }
+
+  userValidation(): boolean {
+    const valResult = ((this.loginRequest.UserID != null && this.loginRequest.UserID != undefined && this.loginRequest.UserID != '')
+      && (this.loginRequest.UserPSWD != null && this.loginRequest.UserPSWD != undefined && this.loginRequest.UserPSWD != ''));
+    this.allButtons();
+    return valResult;
+  }
+
+  mapping() {
+    this.loginRequest.UserID = this.loginForm.get('username').value;
+    this.loginRequest.UserPSWD = this.loginForm.get('password').value;
+    this.loginRequest.IsRememberMe = this.loginForm.get('isRememberMe').value;
   }
 
   manageLocalStorage(item: LoginResponse) {

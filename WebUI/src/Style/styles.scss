@@ -4,9 +4,14 @@
 .hidden {
   display: none;
 }
+.disable{
+  background-color: rgb(0 0 0 / 12%);
+  cursor: not-allowed;
+}
 
 .fixed-top {
-  background: #f3faff;
+  //background: #f3faff;
+  background-color: #00000021;
 }
 
 .global-desktop-body {
@@ -98,7 +103,8 @@ header.masthead {
 header.masthead .overlay {
   position: absolute;
  // background-color: #0098ff29;
-  background-color: #022346;
+  //background-color: #022346;
+  background-color: #0d0022;
   height: 100%;
   width: 100%;
   top: 0;

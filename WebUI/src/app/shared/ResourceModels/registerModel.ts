@@ -17,11 +17,6 @@ export class UserRequest {
     IsUserAgreementChecked:boolean;
 }
 
-export class ResponseObjects {
-    isSuccess: boolean;
-    strMessage:string[];
-}
-
 export class CompanyRequest {
     CompanyName: string;
     Address: string;

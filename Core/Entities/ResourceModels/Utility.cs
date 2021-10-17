@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,10 +23,74 @@ namespace NepFlex.Core.Entities.ResourceModels
             if (responseMessage != null)
             {
                 _requestStatus.IsSuccess = responseMessage.Returned;
+                _requestStatus.StatusType = responseMessage.Type;
                 _requestStatus.StrMessage.Add(responseMessage.Message);
             }
 
             return _requestStatus;
+        }
+
+        //public static T AppendStatus<T>(string code) where T : new()
+        //{
+        //    T _parent = new T();
+        //    T obj = new T();
+
+        //    if (code != null)
+        //    {
+        //        Messages msg = new Messages();
+        //        var responseMessage = msg.ResponseMessageList.Find(x => x.Code == code);
+        //        List<string> responseMsgs = new List<string>
+        //                                        {
+        //                                            responseMessage.Message
+        //                                        };
+
+        //        if (responseMessage != null)
+        //        {
+        //            // is success
+        //            var isSuccessAppend = _parent.GetType().GetProperty("IsSuccess").GetValue(_parent);
+        //            _parent.GetType().GetProperty("IsSuccess").SetValue(_parent, responseMessage.Returned);
+
+        //            // status type
+        //            var statusTypeAppend = _parent.GetType().GetProperty("StatusType").GetValue(_parent);
+        //            _parent.GetType().GetProperty("StatusType").SetValue(_parent, responseMessage.Type);
+
+        //            // message
+        //            var strMessageAppend = _parent.GetType().GetProperty("StrMessage").GetValue(_parent);
+        //            _parent.GetType().GetProperty("StrMessage").SetValue(_parent, responseMsgs);
+        //        }
+
+        //        obj = (T)_parent;
+        //    }
+        //    return obj;
+        //}
+
+        public static T AppendStatus<T>(string code, T objectWithData)
+        {
+            if (code != null)
+            {
+                Messages msg = new Messages();
+                var responseMessage = msg.ResponseMessageList.Find(x => x.Code == code);
+                List<string> responseMsgs = new List<string>
+                                                {
+                                                    responseMessage.Message
+                                                };
+
+                if (responseMessage != null)
+                {
+                    // is success
+                    var isSuccessAppend = objectWithData.GetType().GetProperty("IsSuccess").GetValue(objectWithData);
+                    objectWithData.GetType().GetProperty("IsSuccess").SetValue(objectWithData, responseMessage.Returned);
+
+                    // status type
+                    var statusTypeAppend = objectWithData.GetType().GetProperty("StatusType").GetValue(objectWithData);
+                    objectWithData.GetType().GetProperty("StatusType").SetValue(objectWithData, responseMessage.Type);
+
+                    // message
+                    var strMessageAppend = objectWithData.GetType().GetProperty("StrMessage").GetValue(objectWithData);
+                    objectWithData.GetType().GetProperty("StrMessage").SetValue(objectWithData, responseMsgs);
+                }
+            }
+            return objectWithData;
         }
 
         public static int LogTransaction(LogTransactionDetail _logDetail, out string _transId, out List<string> diagnostics)
@@ -63,7 +128,7 @@ namespace NepFlex.Core.Entities.ResourceModels
         public string UserLocation;
         public string TranTitle;
         public string TranDetail;
-        
+
         public string TranId { get; set; }
     }
     public class CONSTResponse

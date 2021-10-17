@@ -20,7 +20,7 @@
   @include display-parent-flex(row, nowrap, flex-start, flex-start, flex-start);
 }
 
-//---------------
+//---------------wehen all good with button------------------------------------------------
 div.animBtn,
 div.animBtn:visited {
   @include display-child-flex(1, 1, auto, auto);
@@ -71,6 +71,46 @@ div.animBtn:visited {
 
 div.animBtn {
   &.themeA:after {
+    transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+  }
+}
+
+//// -------------------when button are disabled-------------------------------------------------------
+div.disBtn,
+div.disBtn:visited {
+  @include display-child-flex(1, 1, auto, auto);
+  margin-right: 1em;
+  position: relative;
+  display: block;
+  padding: 14px 15px;
+  // background-color: rgba(108, 110, 212, 1);
+  color: #ffffff;
+  background: rgb(0 0 0 / 14%);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: not-allowed;
+  @include display-child-flex(1, 1, auto, auto);
+
+  &:after {
+    content: '';
+    position: absolute;
+    background: none repeat scroll 0 0 #fff;
+    height: 0%;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    z-index: -1;
+    transition: all 0.3s ease 0s;
+  }
+}
+
+div.disBtn {
+  &.disA:after {
     transform: translateX(-50%) translateY(-50%) rotate(-45deg);
   }
 }

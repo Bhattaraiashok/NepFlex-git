@@ -36,10 +36,10 @@
                     <button class="btn btn-primary btn-block btn-login" (click)="RouteTo('home')">Home</button>
                 </li>
                 <li class="nav-link" *ngIf="!isLoggedIn">
-                    <button class="btn btn-primary btn-block btn-login" (click)="loginPopUp()">Login</button>
+                    <button class="btn btn-primary btn-block btn-login" (click)="triggerPopUp('login')">Login</button>
                 </li>
                 <li class="nav-link" *ngIf="!isLoggedIn">
-                    <button class="btn btn-primary btn-block btn-login" (click)="registerPopUp()">Register</button>
+                    <button class="btn btn-primary btn-block btn-login" (click)="triggerPopUp('register')">Register</button>
                 </li>
                 <li class="nav-link" *ngIf="isLoggedIn">
                     <button class="btn btn-primary btn-block btn-login" (click)="RouteTo('profile')">Profile</button>
@@ -53,4 +53,5 @@
     </div>
 </nav>
 
-<app-modal *ngIf="showLoginPopUpModal || showRegisterationPopUpModal"></app-modal>
+<app-modal *ngIf="showLoginPopUpModal || showRegisterationPopUpModal"
+(ParentEmitter)="triggerPopUp($event)"></app-modal>

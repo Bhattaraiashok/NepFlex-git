@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using Core.Interfaces;
 using Microsoft.AspNet.Identity.Owin;
@@ -38,6 +39,28 @@ namespace Nepflex.ServiceAPI.Controllers
             this.signInManager = signInManager;
             this.authenticationManager = authenticationManager;
         }
+        [HttpPost]
+        [Route("logoff")]
+        //[ValidateAntiForgeryToken]
+        public IHttpActionResult LogOff()
+        {
+            try
+            {
+                var _loginOut = new UserLoginResponse
+                {
+                    IsSuccess = false,
+                    StrMessage = new List<string>()
+                };
+                authenticationManager.SignOut();
+                _loginOut = Utility.AppendStatus<UserLoginResponse>(ConstList.REQ_OBJ_CONST_SUCCESS, _loginOut);
+                return Ok(_loginOut);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+
+        }
 
         [Route("login")]
         [HttpPost]
@@ -59,6 +82,10 @@ namespace Nepflex.ServiceAPI.Controllers
                     case SignInStatus.Success:
                         var _userDetail = signInManager.UserManager.Users.Where(x => x.UserName == login.UserID).FirstOrDefault();
                         results = _loginService.UserLoginProcess(login, _userDetail);
+                        if (results.IsSuccess == false)
+                        {
+                            authenticationManager.SignOut();
+                        }
                         return Ok(results);
                     case SignInStatus.LockedOut:
                         results.StrMessage.Add("Opps! you are locked out.");
@@ -117,5 +144,9 @@ namespace Nepflex.ServiceAPI.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        #region Helpers
+        //still not added
+        #endregion
     }
 }
