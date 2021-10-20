@@ -25,7 +25,7 @@ namespace NepFlex.Core.Entities.ResourceModels
         public string PSWDSALT { get; set; }
         public string UserEmail { get; set; }
         public string Address { get; set; }
-        public string UI { get { return "craig"; } }
+        public string UI { get { return CONSTUINAME.UI_NAME; } }
         public bool IsUserSeller { get; set; }
         public string PhoneCountryCode { get; set; }
         public override string PhoneNumber { get; set; }
@@ -64,7 +64,7 @@ namespace NepFlex.Core.Entities.ResourceModels
     {
         public string UserID { get; set; }
         public string UserPSWD { get; set; }
-        public string UI { get { return "craig"; } }
+        public string UI { get { return CONSTUINAME.UI_NAME; } }
         public bool IsRememberMe { get; set; }
         public string IsUserSeller { get; set; } //on the time of regester let user to choose if the same id is regester as seller too.
     }

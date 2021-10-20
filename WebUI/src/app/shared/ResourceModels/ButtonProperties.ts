@@ -12,6 +12,7 @@ export class ButtonProperties {
   hasPopUp?: boolean;
   popUpName?: string;
   parentEmit?: boolean;
+  spinnerActive?:boolean;
 }
 
 export class HeadersNavigation {

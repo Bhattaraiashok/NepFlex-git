@@ -137,6 +137,11 @@ namespace NepFlex.Core.Entities.ResourceModels
         public readonly static string CONST_FAILURE = "FAILURE";
     }
 
+    public class CONSTUINAME
+    {
+        public readonly static string UI_NAME = "Craig";
+    }
+
     public class ConstList
     {
         //general
@@ -164,6 +169,10 @@ namespace NepFlex.Core.Entities.ResourceModels
 
         public readonly static string USERANDCOMPANY_REGISTER_CONST_SUCCESS = "USERANDCOMPANY_REGISTER_CONST_SUCCESS";
         public readonly static string USERANDCOMPANY_REGISTER_CONST_FAILURE = "USERANDCOMPANY_REGISTER_CONST_FAILURE";
+
+        public readonly static string USER_UPDATE_CONST_SUCCESS = "USER_UPDATE_CONST_SUCCESS";
+        public readonly static string USER_UPDATE_CONST_FAILURE = "USER_UPDATE_CONST_FAILURE";
+
 
         //PAGESstatic
         public readonly static string PAGE_SEARCH_CONST = "PAGE_SEARCH_CONST";

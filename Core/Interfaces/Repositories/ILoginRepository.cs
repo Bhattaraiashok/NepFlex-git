@@ -12,5 +12,6 @@ namespace NepFlex.Core.Interfaces.Repositories
     {
         UserLoginResponse UserLoginProcess(UserLogin req, ApplicationUser req2);
         ResponseStatus UserRegistrationProcess(UserRegister req, ApplicationUser req2);
+        ResponseStatus UpdateUser(UserRegister req, ApplicationUser req2);
     }
 }

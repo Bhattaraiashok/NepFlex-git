@@ -2571,15 +2571,16 @@ namespace NepFlex.Core.Entities.OnlinePasal
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class User
     {
-        public long UserId { get; set; } // UserID (Primary key)
-        public string Username { get; set; } // Username (length: 50)
-        public string Firstname { get; set; } // Firstname (length: 20)
-        public string Middlename { get; set; } // Middlename (length: 15)
-        public string Lastname { get; set; } // Lastname (length: 30)
+        public string UserId { get; set; } // UserID (Primary key) (length: 150)
+        public string UserName { get; set; } // UserName (length: 50)
+        public string FirstName { get; set; } // FirstName (length: 20)
+        public string MiddleName { get; set; } // MiddleName (length: 15)
+        public string LastName { get; set; } // LastName (length: 30)
         public int? FkRoleId { get; set; } // FK_RoleId
         public string Email { get; set; } // Email (length: 100)
-        public System.DateTime CreatedDate { get; set; } // created date
-        public System.DateTime? Lastlogindate { get; set; } // Lastlogindate
+        public System.DateTime CreatedDate { get; set; } // Created Date
+        public System.DateTime? UpdatedDate { get; set; } // Updated Date
+        public System.DateTime? LastLoginDate { get; set; } // LastLoginDate
         public string Ui { get; set; } // UI (length: 5)
         public string Guid { get; set; } // GUID (length: 100)
         public string Emailguid { get; set; } // EMAILGUID (length: 100)
@@ -3210,15 +3211,16 @@ namespace NepFlex.Core.Entities.OnlinePasal
             ToTable("Users", schema);
             HasKey(x => x.UserId);
 
-            Property(x => x.UserId).HasColumnName(@"UserID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Username).HasColumnName(@"Username").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
-            Property(x => x.Firstname).HasColumnName(@"Firstname").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(20);
-            Property(x => x.Middlename).HasColumnName(@"Middlename").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(15);
-            Property(x => x.Lastname).HasColumnName(@"Lastname").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(30);
+            Property(x => x.UserId).HasColumnName(@"UserID").HasColumnType("nvarchar").IsRequired().HasMaxLength(150).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.UserName).HasColumnName(@"UserName").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
+            Property(x => x.FirstName).HasColumnName(@"FirstName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(20);
+            Property(x => x.MiddleName).HasColumnName(@"MiddleName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(15);
+            Property(x => x.LastName).HasColumnName(@"LastName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(30);
             Property(x => x.FkRoleId).HasColumnName(@"FK_RoleId").HasColumnType("int").IsOptional();
             Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsRequired().HasMaxLength(100);
-            Property(x => x.CreatedDate).HasColumnName(@"created date").HasColumnType("datetime").IsRequired();
-            Property(x => x.Lastlogindate).HasColumnName(@"Lastlogindate").HasColumnType("datetime").IsOptional();
+            Property(x => x.CreatedDate).HasColumnName(@"Created Date").HasColumnType("datetime").IsRequired();
+            Property(x => x.UpdatedDate).HasColumnName(@"Updated Date").HasColumnType("datetime").IsOptional();
+            Property(x => x.LastLoginDate).HasColumnName(@"LastLoginDate").HasColumnType("datetime").IsOptional();
             Property(x => x.Ui).HasColumnName(@"UI").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(5);
             Property(x => x.Guid).HasColumnName(@"GUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
             Property(x => x.Emailguid).HasColumnName(@"EMAILGUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
@@ -3543,7 +3545,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
         public class ResultSetModel1
         {
-            public System.Int64 UserID { get; set; }
+            public System.String UserID { get; set; }
             public System.String Username { get; set; }
             public System.String Email { get; set; }
             public System.String GUID { get; set; }

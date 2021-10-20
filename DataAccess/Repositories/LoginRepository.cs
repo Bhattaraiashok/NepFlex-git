@@ -33,7 +33,7 @@ namespace NepFlex.DataAccess.Repositories
 
             _login2 = _context.ValidateUser(login.UserID, login.UserPSWD, login.UI);
 
-            if (_login2.ResultSet1.Count > 0 && _login2.ResultSet1[0].UserID != 0 && _login2.ResultSet1[0].Username != null)
+            if (_login2.ResultSet1.Count > 0 && _login2.ResultSet1[0].UserID != null && _login2.ResultSet1[0].Username != null)
             {
                 _login.Email = _login2.ResultSet1.Select(x => x.Email).FirstOrDefault();
                 _login.UserGuid = _login2.ResultSet1.Select(x => x.GUID).FirstOrDefault();
@@ -59,55 +59,55 @@ namespace NepFlex.DataAccess.Repositories
         {
             var result = new List<RegisterUserReturnModel>();
             req.UserDetail.PSWDHASH = req2.PasswordHash;
-            if (req.UserDetail.IsUserSeller)
-            {
-                //saves user and company both
-                result = _context.RegisterUser(
-                   req.UserDetail.Username,
-                   req.UserDetail.PSWDHASH,
-                   req.UserDetail.PSWDSALT,
-                   req.UserDetail.Firstname,
-                   req.UserDetail.Middlename,
-                   req.UserDetail.Lastname,
-                   req.UserDetail.Email,
-                   req.UserDetail.PhoneCountryCode,
-                   req.UserDetail.PhoneNumber != null ? req.UserDetail.PhoneNumber.Replace("[^a-zA-Z0-9]", "") : req.UserDetail.PhoneNumber,
-                   req.UserDetail.ShowPhonenumber,
-                   "Yes",
-                   req.CompanyDetails.CompanyName,
-                   req.CompanyDetails.Address,
-                   req.CompanyDetails.PhoneCountryCode,
-                   req.CompanyDetails.PhoneNumber != null ? req.CompanyDetails.PhoneNumber.Replace("[^a-zA-Z0-9]", "") : req.CompanyDetails.PhoneNumber,
-                   req.CompanyDetails.IsGOVRegisteredCompany,
-                   req.CompanyDetails.CompanyEmailID,
-                   req.CompanyDetails.ShowPhonenumber,
-                   req.UserDetail.UI);
-            }
-            else
-            {
-                // this will only save user info but not company
-                result = _context.RegisterUser(
-                    req.UserDetail.Username,
-                    req.UserDetail.PSWDHASH,
-                    req.UserDetail.PSWDSALT,
-                    req.UserDetail.Firstname,
-                    req.UserDetail.Middlename,
-                    req.UserDetail.Lastname,
-                    req.UserDetail.Email,
-                    req.UserDetail.PhoneCountryCode,
-                    req.UserDetail.PhoneNumber != null ? req.UserDetail.PhoneNumber.Replace("[^a-zA-Z0-9]", "") : req.UserDetail.PhoneNumber,
-                    req.UserDetail.ShowPhonenumber,
-                   "No",
-                   "N/A",
-                   "N/A",
-                   "N/A",
-                   "N/A",
-                   false,
-                   "N/A",
-                   false,
-                   req.UserDetail.UI);
-            }
 
+            //saves user initial registration
+            result = _context.RegisterUser(
+               req.UserDetail.Email,
+               req.UserDetail.Username,
+               req.UserDetail.PhoneNumber,
+               req.UserDetail.PSWDHASH,
+               req.UserDetail.PSWDSALT,
+               req.UserDetail.UI);
+
+
+            ResponseStatus _status = new ResponseStatus
+            {
+                StrMessage = new List<string>()
+            };
+
+            _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
+            _status.StrMessage.Add(result[0].VER_Detail);
+
+            return _status;
+        }
+
+        public ResponseStatus UpdateUser(UserRegister req, ApplicationUser req2)
+        {
+            var result = new List<UpdateUserReturnModel>();
+            result = _context.UpdateUser(
+                              req2.Email,
+                              req2.UserName,
+                              req2.Id,
+                              CONSTUINAME.UI_NAME,
+                              req.UserDetail.Firstname,
+                              req.UserDetail.Middlename,
+                              req.UserDetail.Lastname,
+                              req.UserDetail.PhoneCountryCode,
+                              req.UserDetail.PhoneNumber,
+                              req.UserDetail.ShowPhonenumber,
+                              req.UserDetail.IsUserSeller ? "yes" : "no",
+                              req.CompanyDetails.CompanyName,
+                              req.CompanyDetails.Address,
+                              req.CompanyDetails.PhoneCountryCode,
+                              req.CompanyDetails.PhoneNumber,
+                              req.CompanyDetails.IsGOVRegisteredCompany,
+                              req.CompanyDetails.IsCompanyActive,
+                              req.UserDetail.Email,
+                              req.UserDetail.ShowPhonenumber
+                             );
+
+
+            //start response
             ResponseStatus _status = new ResponseStatus
             {
                 StrMessage = new List<string>()

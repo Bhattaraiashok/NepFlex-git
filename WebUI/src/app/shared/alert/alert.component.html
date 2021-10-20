@@ -1,22 +1,25 @@
 <div class="container">
-    <div *ngIf="messageAlert.alertType=='success' || messageAlert.alertType=='Success' || messageAlert.alertType=='SUCCESS'" class="alert alert-success alert-dismissible fade in">
-        <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
+    <div *ngIf="messageAlert.alertType=='success' || messageAlert.alertType=='Success' || messageAlert.alertType=='SUCCESS'"
+        class="alert alert-success alert-dismissible fade in">
+        <a href="#" *ngIf="messageAlert.showCloseButton" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>{{messageAlert.alertType}}!</strong> {{messageAlert.alertMsg}}
     </div>
     <div *ngIf="messageAlert.alertType=='info' || messageAlert.alertType=='Info' || messageAlert.alertType=='INFO'" class="alert alert-info alert-dismissible fade in">
-        <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
+        <a href="#" *ngIf="messageAlert.showCloseButton" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>{{messageAlert.alertType}}!</strong> {{messageAlert.alertMsg}}
     </div>
-    <div *ngIf="messageAlert.alertType=='warning' || messageAlert.alertType=='Warning' || messageAlert.alertType=='WARNING'" class="alert alert-warning alert-dismissible fade in">
-        <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
+    <div *ngIf="messageAlert.alertType=='warning' || messageAlert.alertType=='Warning' || messageAlert.alertType=='WARNING'"
+        class="alert alert-warning alert-dismissible fade in">
+        <a href="#" *ngIf="messageAlert.showCloseButton" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>{{messageAlert.alertType}}!</strong> {{messageAlert.alertMsg}}
     </div>
     <div *ngIf="messageAlert.alertType=='error' || messageAlert.alertType=='Error' || messageAlert.alertType=='ERROR'" class="alert alert-danger alert-dismissible fade in">
-        <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
+        <a href="#" *ngIf="messageAlert.showCloseButton" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>{{messageAlert.alertType}}!</strong> {{messageAlert.alertMsg}}
     </div>
-    <div *ngIf="messageAlert.alertType=='failure' || messageAlert.alertType=='Failure' || messageAlert.alertType=='FAILURE'" class="alert alert-danger alert-dismissible fade in">
-        <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
+    <div *ngIf="messageAlert.alertType=='failure' || messageAlert.alertType=='Failure' || messageAlert.alertType=='FAILURE'"
+        class="alert alert-danger alert-dismissible fade in">
+        <a href="#" *ngIf="messageAlert.showCloseButton" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>{{messageAlert.alertType}}!</strong> {{messageAlert.alertMsg}}
     </div>
 </div>

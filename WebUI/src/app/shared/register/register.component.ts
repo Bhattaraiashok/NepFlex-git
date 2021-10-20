@@ -22,15 +22,14 @@ export class RegisterComponent implements OnInit {
   UserRegister: UserRegister = new UserRegister();
   registerResponse: ResponseObjects;
 
-  //three forms lined up
+  //two forms lined up
   userRegisterForm: FormGroup;
-  companyRegisterForm: FormGroup;
-  agreementRegisterForm: FormGroup;
 
   //three button types
   submitStepButton: ButtonProperties[] = new Array();
   nextStepButton: ButtonProperties[] = new Array();
   registerButtton: ButtonProperties[] = new Array();
+  backStepButton: ButtonProperties[] = new Array();
 
   showFCError: boolean = false;
   hide = true;
@@ -40,6 +39,7 @@ export class RegisterComponent implements OnInit {
   messageAlerts: AlertMessageProperties = new AlertMessageProperties();
   userIsRegistered: boolean = false;
   spinnerActivated: boolean = false;
+  disableBackButton: boolean = false;
   disableCurrentButton: boolean = true;
 
 
@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
   showOrHideCompanyPhonenumberFC: FormControl = new FormControl('');
   isCompanyRegisteredFC: FormControl = new FormControl('');
   //user agreement
-  isUserAgreementCheckedFC: FormControl = new FormControl('', [Validators.required]);
+  isUserAgreementCheckedFC: FormControl = new FormControl('');
 
   companyFCError: string;
   firstnameFCError: string;
@@ -97,6 +97,7 @@ export class RegisterComponent implements OnInit {
   userAgreement_flow: string = "userAgreement_flow;"
 
   currentActiveStep: number = 1;
+  isBackClicked: boolean = false;
 
   isUserASellerCheckbox = [
     { id: 0, label: 'Yes', isChecked: false },
@@ -121,12 +122,18 @@ export class RegisterComponent implements OnInit {
     private routeLink: RouteTo,
     private registerService: RegisterService,
     private modalService: NgbActiveModal) {
-    this.createUserForm();
   }
 
+  // ngAfterViewChecked(): void {
+  //   if (this.isBackClicked) {
+  //     this.backMappings();
+  //   }
+  // }
+
   ngOnInit(): void {
+    this.createUserForm();
     this.allButtons();
-    this.registrationFlow(1);
+    this.registrationFlow(1, null);
   }
 
   allButtons() {
@@ -140,8 +147,22 @@ export class RegisterComponent implements OnInit {
         buttonRoute: '',
         canRoute: false,
         HasDropDown: false,
-        parentEmit: true
+        parentEmit: true,
+        spinnerActive: this.spinnerActivated
       }];
+
+    this.backStepButton = [{
+      buttonId: 2,
+      buttonLabel: 'Back',
+      isDisable: this.disableBackButton,
+      tooltip: (this.disableBackButton) ? "Back is diabled." : " Go back.",
+      hasPopUp: false,
+      buttonRoute: '',
+      canRoute: false,
+      HasDropDown: false,
+      parentEmit: true,
+      spinnerActive: false
+    }];
 
     this.nextStepButton = [{
       buttonId: 2,
@@ -152,7 +173,8 @@ export class RegisterComponent implements OnInit {
       buttonRoute: '',
       canRoute: false,
       HasDropDown: false,
-      parentEmit: true
+      parentEmit: true,
+      spinnerActive: false
     }];
 
     this.registerButtton = [{
@@ -164,11 +186,12 @@ export class RegisterComponent implements OnInit {
       buttonRoute: '',
       canRoute: false,
       HasDropDown: false,
-      parentEmit: true
+      parentEmit: true,
+      spinnerActive: this.spinnerActivated
     }];
   }
 
-  registrationFlow(steps: number) {
+  registrationFlow(steps: number, btnRecognize: string) {
     console.log('current steps: ', steps);
     if (steps == 1) {
       this.userRegCurrentFlow = this.usernameAndPassword_Flow;
@@ -176,45 +199,56 @@ export class RegisterComponent implements OnInit {
       this.userRegCurrentFlow = this.userDetail_Flow;
     } else if (steps == 3) {
       this.userRegCurrentFlow = this.askIfSeller_flow;
-    } else if (steps == 4) {
+    } else if (steps == 4 && this.isASeller) {
       this.userRegCurrentFlow = this.companyDetail_flow;
-      this.createCompanyForm();
-    } else if (steps == 5) {
+    } else if (steps == 5 || (steps == 4 && !this.isASeller)) {
       this.userRegCurrentFlow = this.userAgreement_flow;
+      // this.createAgreementForm();
     } else {
-      this.userRegCurrentFlow = this.usernameAndPassword_Flow;
-      this.createAgreementForm();
+      console.log('SOMETHING WRONG HERE !!! ', this.userRegCurrentFlow);
+    }
+
+    if (btnRecognize == 'back') {
+      this.isBackClicked = true;
     }
     console.log('steps shown: ', this.userRegCurrentFlow);
   }
 
-  onchangeform(event: { target; value: string }, formControlName: string) {
+  onchangeform(event: { target; value: string },
+    formControlName: string) {
     const val = event.target.value;
-    if (this.userRegCurrentFlow == this.usernameAndPassword_Flow) {
-      this.userRegisterForm.get(formControlName).patchValue(val);
-    } else if (this.userRegCurrentFlow == this.userDetail_Flow) {
-      this.userRegisterForm.get(formControlName).patchValue(val);
-    } else if (this.userRegCurrentFlow == this.askIfSeller_flow) {
-      this.userRegisterForm.get(formControlName).patchValue(val);
-    } else if (this.userRegCurrentFlow == this.companyDetail_flow) {
-      this.companyRegisterForm.get(formControlName).patchValue(val);
-    } else if (this.userRegCurrentFlow == this.userAgreement_flow) {
-      this.agreementRegisterForm.get(formControlName).patchValue(val);
-    }
+    this.userRegisterForm.get(formControlName).patchValue(val);
+    this.formAndButtons();
+  }
 
+  formAndButtons() {
     this.validateForm();
     this.disableCurrentButton = this.showFCError;
+    if (this.userRegCurrentFlow == this.usernameAndPassword_Flow
+      && (this.currentActiveStep !== 1 && this.currentActiveStep !== 2)) {
+      this.disableBackButton = false;
+    }
     this.allButtons();
   }
 
-  nextStep() {
-    this.currentActiveStep++;
-    this.registrationFlow(this.currentActiveStep);
+  backStep(e: Event) {
+    this.currentActiveStep--;
+    this.registrationFlow(this.currentActiveStep, 'back');
   }
 
-  submit() {
+  nextStep(e: Event) {
+    this.formAndButtons();
+    if (!this.showFCError) {
+      this.currentActiveStep++;
+      this.registrationFlow(this.currentActiveStep, 'next');
+      this.smallSpinner(); //spinner has to be off at next flow
+    }
+  }
+
+  submit(e: Event) {
+    this.formAndButtons();
     //let user submit uname and password first
-    this.registerTheFlow();
+    this.registerTheFlow(e);
   }
 
   passwordShowField(e: Event) {
@@ -238,12 +272,8 @@ export class RegisterComponent implements OnInit {
       username: this.usernameFC,
       password: this.passwordFC,
       userIsSeller: this.SellerAccountFC,
-      showOrHideUserPhonenumber: this.showOrHideUserPhonenumberFC
-    });
-  }
-  createCompanyForm() {
-    //if(this.isASeller)
-    this.companyRegisterForm = this.fb.group({
+      showOrHideUserPhonenumber: this.showOrHideUserPhonenumberFC,
+      isUserAgreementChecked: this.isUserAgreementCheckedFC,
       companyname: this.companyFC,
       address: this.addressFC,
       address2: this.address2FC,
@@ -255,11 +285,6 @@ export class RegisterComponent implements OnInit {
       companyphonenumber: this.companyPhonenumberFC,
       isCompanyRegistered: this.isCompanyRegisteredFC,
       showOrHideCompanyPhonenumber: this.showOrHideCompanyPhonenumberFC,
-    });
-  }
-  createAgreementForm() {
-    this.agreementRegisterForm = this.fb.group({
-      isUserAgreementChecked: this.isUserAgreementCheckedFC
     });
   }
 
@@ -278,11 +303,7 @@ export class RegisterComponent implements OnInit {
     this.SellerAccountFC.setValue(getCheckboxAnswer.label);
     this.isASeller = (getCheckboxAnswer.label.toLowerCase() == 'yes') ? true : false;
     this.userRegisterForm.get('userIsSeller').patchValue(this.isASeller);
-    this.validateForm();
-    this.disableCurrentButton = this.showFCError;
-    if (this.isASeller) {
-      this.allButtons();
-    }
+    this.formAndButtons();
   }
 
   onchangeUserPhoneNumberCheckbox(e: { target; value: string }, id) {
@@ -300,18 +321,15 @@ export class RegisterComponent implements OnInit {
     this.showOrHideUserPhonenumberFC.setValue(getCheckboxAnswer.label);
     this.hideUserPhonenumber = (getCheckboxAnswer.label.toLowerCase() == 'show') ? true : false;
     this.userRegisterForm.get('showOrHideUserPhonenumber').patchValue(this.hideUserPhonenumber);
-    this.validateForm();
-    this.disableCurrentButton = this.showFCError;
-    this.allButtons();
+    this.formAndButtons();
   }
   onChange_ToUserAgreementCheckbox(e: { target; value: string }, id) {
     this.selected = id;
     this.userAgreementCheckbox[id].isChecked = !this.userAgreementCheckbox[id].isChecked;
     this.isUserAgreementCheckedFC.setValue(this.userAgreementCheckbox[id].isChecked);
-    this.agreementRegisterForm.get('isUserAgreementChecked').patchValue(this.isUserAgreementCheckedFC);
-    this.validateForm();
-    this.disableCurrentButton = this.showFCError;
-    this.allButtons();
+
+    this.userRegisterForm.get('isUserAgreementChecked').patchValue(this.userAgreementCheckbox[id].isChecked);
+    this.formAndButtons();
   }
 
   onchangeCompanyPhoneNumberCheckbox(e: { target; value: string }, id) {
@@ -328,10 +346,8 @@ export class RegisterComponent implements OnInit {
     const getCheckboxAnswer = this.userChoiceOnPhonenumber[id];
     this.showOrHideCompanyPhonenumberFC.setValue(getCheckboxAnswer.label);
     this.hideCompanyPhonenumber = (getCheckboxAnswer.label.toLowerCase() == 'show') ? true : false;
-    this.companyRegisterForm.get('showOrHideCompanyPhonenumber').patchValue(this.hideCompanyPhonenumber);
-    this.validateForm();
-    this.disableCurrentButton = this.showFCError;
-    this.allButtons();
+    this.userRegisterForm.get('showOrHideCompanyPhonenumber').patchValue(this.hideCompanyPhonenumber);
+    this.formAndButtons();
   }
 
   smallSpinner() {
@@ -341,102 +357,110 @@ export class RegisterComponent implements OnInit {
 
   validateForm() {
     this.showFCError = true;
-    if (this.userRegisterForm.dirty) {
-      //check intital step 1 flow:
-      if (this.userRegCurrentFlow == this.usernameAndPassword_Flow && this.currentActiveStep == 1) {
-        if (this.userEmailFC.invalid && this.userEmailFC.hasError('email')) {
-          this.userEmailFCError = 'Not a valid email';
+    //check intital step 1 flow:
+    if (this.userRegCurrentFlow == this.usernameAndPassword_Flow && this.currentActiveStep == 1) {
+      if (this.userEmailFC.invalid || this.userEmailFC.hasError('email') || this.userEmailFC.value === null || this.userEmailFC.value === '') {
+        this.userEmailFCError = 'Not a valid email';
+        return;
+      } else if (this.usernameFC.invalid || this.usernameFC.hasError('required') || this.usernameFC.value === null || this.usernameFC.value === '') {
+        this.usernameFCError = 'You must create a username';
+        return;
+      } else if (this.passwordFC.invalid || this.passwordFC.hasError('required') || this.passwordFC.value === null || this.passwordFC.value === '') {
+        this.passwordFCError = 'You must create a new password';
+        return;
+      } else {
+        this.showFCError = false;
+        this.userEmailFCError = '';
+        this.usernameFCError = '';
+        this.passwordFCError = '';
+      }
+    }
+
+    //check intital step 2 flow:
+    if (this.userRegCurrentFlow == this.userDetail_Flow && this.currentActiveStep == 2) {
+      if (this.firstnameFC.invalid || this.firstnameFC.hasError('required') || this.firstnameFC.value === null || this.firstnameFC.value === '') {
+        this.firstnameFCError = 'You must enter your firstname';
+        return;
+      } else if (this.lastnameFC.invalid || this.lastnameFC.hasError('required') || this.lastnameFC.value === null || this.lastnameFC.value === '') {
+        this.lastnameFCError = 'You must enter your lastname';
+        return;
+      } else {
+        this.showFCError = false;
+        this.firstnameFCError = '';
+        this.lastnameFCError = '';
+      }
+    }
+
+    //check step 3 -ask is seller flow:
+    if (this.userRegCurrentFlow == this.askIfSeller_flow && this.currentActiveStep == 3) {
+      if (this.SellerAccountFC.invalid || this.SellerAccountFC.hasError('required') || this.SellerAccountFC.value === null || this.SellerAccountFC.value === '') {
+        this.SellerAccountFCError = 'you must choose one for now. if you are not sure, please choose "may be later" option.'
+      } else {
+        this.showFCError = false;
+        this.SellerAccountFCError = '';
+      }
+    }
+
+    if (this.userRegisterForm && this.isASeller && this.currentActiveStep == 4) {
+      //check step 4 - check company detail if isSeller:
+      if (this.userRegCurrentFlow == this.companyDetail_flow) {
+        if (this.companyFC.invalid || this.companyFC.hasError('required') || this.companyFC.value === null || this.companyFC.value === '') {
+          this.companyFCError = 'You must enter your company name';
           return;
-        } else if (this.usernameFC.invalid && this.usernameFC.hasError('required')) {
-          this.usernameFCError = 'You must create a username';
-          return;
-        } else if (this.passwordFC.invalid && this.passwordFC.hasError('required')) {
-          this.passwordFCError = 'You must create a new password';
+        } else if (this.companyEmailFC.invalid || this.companyEmailFC.hasError('email') || this.companyEmailFC.value === null || this.companyEmailFC.value === '') {
+          this.companyEmailFCError = 'Not a valid email';
           return;
         } else {
           this.showFCError = false;
-          this.userEmailFCError = '';
-          this.usernameFCError = '';
-          this.passwordFCError = '';
+          this.companyFCError = '';
+          this.companyEmailFCError = '';
         }
       }
+    }
 
-      //check intital step 2 flow:
-      if (this.userRegCurrentFlow == this.userDetail_Flow && this.currentActiveStep == 2) {
-        if (this.firstnameFC.invalid && this.firstnameFC.hasError('required')) {
-          this.firstnameFCError = 'You must enter your firstname';
-          return;
-        } else if (this.lastnameFC.invalid && this.lastnameFC.hasError('required')) {
-          this.lastnameFCError = 'You must enter your lastname';
+    if (this.userRegisterForm.valid && (this.currentActiveStep == 5 || (this.currentActiveStep == 4 && !this.isASeller)) && this.userRegCurrentFlow == this.userAgreement_flow) {
+      if (this.userRegisterForm.touched || this.userRegisterForm.dirty) {
+        //check step 5 -final flow check agreement:
+        if (this.isUserAgreementCheckedFC.invalid || this.isUserAgreementCheckedFC.hasError('required') || this.isUserAgreementCheckedFC.value === null || this.isUserAgreementCheckedFC.value === ''
+        ) {
+          this.isUserAgreementCheckedFCError = this.userAgreementCheckbox[0].note;
           return;
         } else {
           this.showFCError = false;
-          this.firstnameFCError = '';
-          this.lastnameFCError = '';
-        }
-      }
-
-      //check step 3 -ask is seller flow:
-      if (this.userRegCurrentFlow == this.askIfSeller_flow && this.currentActiveStep == 3) {
-        if (this.SellerAccountFC.invalid && this.SellerAccountFC.hasError('required')) {
-          this.SellerAccountFCError = 'you must choose one for now. if you are not sure, please choose "may be later" option.'
-        } else {
-          this.showFCError = false;
-          this.SellerAccountFCError = '';
-        }
-      }
-
-      if (this.companyRegisterForm) {
-        if (this.companyRegisterForm.touched && this.currentActiveStep == 4) {
-          //check step 4 - check company detail if isSeller:
-          if (this.isASeller && this.userRegCurrentFlow == this.companyDetail_flow) {
-            if (this.companyFC.invalid && this.companyFC.hasError('required')) {
-              this.companyFCError = 'You must enter your company name';
-              return;
-            } else if (this.companyEmailFC.invalid && this.companyEmailFC.hasError('email')) {
-              this.companyEmailFCError = 'Not a valid email';
-              return;
-            } else {
-              this.companyFCError = '';
-              this.companyEmailFCError = '';
-            }
-          }
-        }
-      }
-
-      if (this.agreementRegisterForm) {
-        if (this.agreementRegisterForm.touched && this.currentActiveStep == 5) {
-          //check step 5 -final flow check agreement:
-          if (this.userRegCurrentFlow == this.userAgreement_flow) {
-            if (this.isUserAgreementCheckedFC.invalid && this.isUserAgreementCheckedFC.hasError('required')
-            ) {
-              this.isUserAgreementCheckedFCError = this.userAgreementCheckbox[0].note;
-              return;
-            } else {
-              this.showFCError = false;
-              this.isUserAgreementCheckedFCError = '';
-            }
-          }
+          this.isUserAgreementCheckedFCError = '';
         }
       }
     }
   }
+
 
   RouteTo(routeTo: string, routingEnabled = true): void {
     console.log('now routing: ', routeTo);
     this.routeLink.RouteTo(routeTo, routingEnabled);
   }
 
-  registerTheFlow() {
+  registerTheFlow(e: Event) {
     this.smallSpinner();
-    this.validateForm();
-    console.log(this.userRegisterForm, this.companyRegisterForm, this.agreementRegisterForm)
+    this.formAndButtons();
+    console.log(this.userRegisterForm)
     if (!this.showFCError) {
       this.mappings();
       console.log('FORM IS VALID');
       const secondLayerValidation = this.mappingValidation();
       if (secondLayerValidation === true) {
-        this.serviceCall();
+        this.registerService.register(this.UserRegister).subscribe((item: ResponseObjects) => {
+          if (item.isSuccess === true) {
+            console.log(item.strMessage);
+            this.call_MessageAlertComponent('Success', item.strMessage[0]);
+            this.userIsRegistered == true;
+            this.nextStep(e);
+            //this.modalService.close('close'); --no close here on first step
+          } else {
+            this.smallSpinner();
+            console.log(item.strMessage);
+            this.call_MessageAlertComponent('Error', item.strMessage[0]);
+          }
+        });
       } else {
         this.smallSpinner();
       }
@@ -445,50 +469,89 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  serviceCall() {
-    this.registerService.register(this.UserRegister).subscribe((item: ResponseObjects) => {
-      if (item.isSuccess === true) {
-        console.log(item.strMessage);
-        this.call_MessageAlertComponent('Success', item.strMessage[0]);
-        this.userIsRegistered == true;
-        this.modalService.close('close');
+  UpdateTheFlow(e: Event) {
+    this.smallSpinner();
+    this.formAndButtons();
+    console.log(this.userRegisterForm.getRawValue());
+    if (!this.showFCError) {
+      this.mappings();
+      console.log('FORM IS VALID');
+      const secondLayerValidation = this.mappingValidation();
+      if (secondLayerValidation === true) {
+        //const newReq = Object.assign(new UserRegister(), JSON.stringify(this.UserRegister));
+        const obj = new UserRegister();
+        obj.UserDetail = this.UserRegister.UserDetail;
+        obj.CompanyDetails = this.UserRegister.CompanyDetails;
+        this.registerService.update(obj).subscribe((item: ResponseObjects) => {
+          if (item.isSuccess === true) {
+            console.log(item.strMessage);
+            this.call_MessageAlertComponent('Success', item.strMessage[0]);
+            this.userIsRegistered == true;
+            //this.modalService.close('close');
+          } else {
+            this.smallSpinner();
+            console.log(item.strMessage);
+            this.call_MessageAlertComponent('Error', item.strMessage[0]);
+          }
+        });
       } else {
         this.smallSpinner();
-        console.log(item.strMessage);
-        this.call_MessageAlertComponent('Error', item.strMessage[0]);
       }
-    });
+    } else {
+      this.smallSpinner();
+    }
   }
 
   call_MessageAlertComponent(alertType, alertMsg) {
     this.showAlertMessages = true;
     this.messageAlerts.alertType = alertType;
     this.messageAlerts.alertMsg = alertMsg;
+    this.messageAlerts.showCloseButton = this.showAlertMessages;
   }
 
   mappings() {
     //let's map first step and rest seperatly
-    if (this.userRegCurrentFlow == this.usernameAndPassword_Flow && this.currentActiveStep == 1) {
-      this.UserRegister.UserDetail.UserEmail = this.userRegisterForm.get('useremail').value;
-      this.UserRegister.UserDetail.PSWDHASH = this.userRegisterForm.get('password').value;
-      this.UserRegister.UserDetail.Username = this.userRegisterForm.get('username').value;
-    } else {
-      this.UserRegister.UserDetail.Firstname = this.userRegisterForm.get('firstname').value;
-      this.UserRegister.UserDetail.Lastname = this.userRegisterForm.get('lastname').value;
-      this.UserRegister.UserDetail.Middlename = this.userRegisterForm.get('middlename').value;
-      this.UserRegister.UserDetail.PhoneCountryCode = this.userRegisterForm.get('usercountryCode').value;
-      this.UserRegister.UserDetail.PhoneNumber = this.userRegisterForm.get('userphonenumber').value;
-      this.UserRegister.UserDetail.ShowPhonenumber = this.userRegisterForm.get('showOrHideUserPhonenumber').value;
-      this.UserRegister.UserDetail.IsUserSeller = this.userRegisterForm.get('userIsSeller').value ? this.userRegisterForm.get('userIsSeller').value : false;
-      this.UserRegister.CompanyDetails.CompanyEmailID = this.companyRegisterForm.get('companyemail').value;
-      this.UserRegister.CompanyDetails.CompanyName = this.companyRegisterForm.get('companyname').value;
-      this.UserRegister.CompanyDetails.Address = this.companyRegisterForm.get('address').value;
-      this.UserRegister.CompanyDetails.PhoneNumber = this.companyRegisterForm.get('companyphonenumber').value;
-      this.UserRegister.CompanyDetails.PhoneCountryCode = this.companyRegisterForm.get('companycountryCode').value;
-      this.UserRegister.CompanyDetails.IsGOVRegisteredCompany = true; //need actual mapping here.
-      this.UserRegister.CompanyDetails.ShowPhonenumber = this.companyRegisterForm.get('showOrHideCompanyPhonenumber').value;
-      //agreement
-      this.UserRegister.UserDetail.IsUserAgreementChecked = this.agreementRegisterForm.get('isUserAgreementChecked').value;
+    // if (this.userRegCurrentFlow == this.usernameAndPassword_Flow && this.currentActiveStep == 1) {
+    this.UserRegister.UserDetail.UserEmail = this.userRegisterForm.get('useremail').value;
+    this.UserRegister.UserDetail.PSWDHASH = this.userRegisterForm.get('password').value;
+    this.UserRegister.UserDetail.Username = this.userRegisterForm.get('username').value;
+    // } else {
+    this.UserRegister.UserDetail.Firstname = this.userRegisterForm.get('firstname').value;
+    this.UserRegister.UserDetail.Lastname = this.userRegisterForm.get('lastname').value;
+    this.UserRegister.UserDetail.Middlename = this.userRegisterForm.get('middlename').value;
+    this.UserRegister.UserDetail.PhoneCountryCode = this.userRegisterForm.get('usercountryCode').value;
+    this.UserRegister.UserDetail.PhoneNumber = this.userRegisterForm.get('userphonenumber').value;
+    this.UserRegister.UserDetail.ShowPhonenumber = this.userRegisterForm.get('showOrHideUserPhonenumber').value;
+    this.UserRegister.UserDetail.IsUserSeller = this.userRegisterForm.get('userIsSeller').value ? this.userRegisterForm.get('userIsSeller').value : false;
+    this.UserRegister.CompanyDetails.CompanyEmailID = this.userRegisterForm.get('companyemail').value;
+    this.UserRegister.CompanyDetails.CompanyName = this.userRegisterForm.get('companyname').value;
+    this.UserRegister.CompanyDetails.Address = this.userRegisterForm.get('address').value;
+    this.UserRegister.CompanyDetails.PhoneNumber = this.userRegisterForm.get('companyphonenumber').value;
+    this.UserRegister.CompanyDetails.PhoneCountryCode = this.userRegisterForm.get('companycountryCode').value;
+    this.UserRegister.CompanyDetails.IsGOVRegisteredCompany = true; //need actual mapping here.
+    this.UserRegister.CompanyDetails.ShowPhonenumber = this.userRegisterForm.get('showOrHideCompanyPhonenumber').value;
+    //agreement
+    this.UserRegister.UserDetail.IsUserAgreementChecked = this.userRegisterForm.get('isUserAgreementChecked').value;
+    //}
+  }
+
+  backMappings() {
+    if (this.UserRegister != null) {
+      this.userRegisterForm.get('firstname').patchValue(this.UserRegister.UserDetail.Firstname);
+      this.userRegisterForm.get('lastname').patchValue(this.UserRegister.UserDetail.Lastname);
+      this.userRegisterForm.get('middlename').patchValue(this.UserRegister.UserDetail.Middlename);
+      this.userRegisterForm.get('usercountryCode').patchValue(this.UserRegister.UserDetail.PhoneCountryCode);
+      this.userRegisterForm.get('userphonenumber').patchValue(this.UserRegister.UserDetail.PhoneNumber);
+      this.userRegisterForm.get('showOrHideUserPhonenumber').patchValue(this.UserRegister.UserDetail.ShowPhonenumber);
+      this.userRegisterForm.get('userIsSeller').patchValue(this.UserRegister.UserDetail.IsUserSeller);
+      this.userRegisterForm.get('companyemail').patchValue(this.UserRegister.CompanyDetails.CompanyEmailID);
+      this.userRegisterForm.get('companyname').patchValue(this.UserRegister.CompanyDetails.CompanyName);
+      this.userRegisterForm.get('address').patchValue(this.UserRegister.CompanyDetails.Address);
+      this.userRegisterForm.get('companyphonenumber').patchValue(this.UserRegister.CompanyDetails.PhoneNumber);
+      this.userRegisterForm.get('companycountryCode').patchValue(this.UserRegister.CompanyDetails.PhoneCountryCode);
+      this.userRegisterForm.get('IsGOVRegisteredCompany').patchValue(true);
+      this.userRegisterForm.get('showOrHideCompanyPhonenumber').patchValue(this.UserRegister.CompanyDetails.ShowPhonenumber);
+      this.userRegisterForm.get('isUserAgreementChecked').patchValue(this.UserRegister.UserDetail.IsUserAgreementChecked);
     }
   }
 
@@ -526,11 +589,11 @@ export class RegisterComponent implements OnInit {
 
   companyCheck(): boolean {
     const result = (
-      (this.UserRegister.CompanyDetails.CompanyEmailID !== undefined && this.UserRegister.CompanyDetails.CompanyEmailID !== null && this.UserRegister.CompanyDetails.CompanyEmailID == '')
-      && (this.UserRegister.CompanyDetails.CompanyName !== undefined && this.UserRegister.CompanyDetails.CompanyName !== null && this.UserRegister.CompanyDetails.CompanyName == '')
-      && (this.UserRegister.CompanyDetails.Address !== undefined && this.UserRegister.CompanyDetails.Address !== null && this.UserRegister.CompanyDetails.Address == '')
-      && (this.UserRegister.CompanyDetails.PhoneNumber !== undefined && this.UserRegister.CompanyDetails.PhoneNumber !== null && this.UserRegister.CompanyDetails.PhoneNumber == '')
-      && (this.UserRegister.CompanyDetails.PhoneCountryCode !== undefined && this.UserRegister.CompanyDetails.PhoneCountryCode !== null && this.UserRegister.CompanyDetails.PhoneCountryCode == '')
+      (this.UserRegister.CompanyDetails.CompanyEmailID !== undefined && this.UserRegister.CompanyDetails.CompanyEmailID !== null && this.UserRegister.CompanyDetails.CompanyEmailID !== '')
+      && (this.UserRegister.CompanyDetails.CompanyName !== undefined && this.UserRegister.CompanyDetails.CompanyName !== null && this.UserRegister.CompanyDetails.CompanyName !== '')
+      && (this.UserRegister.CompanyDetails.Address !== undefined && this.UserRegister.CompanyDetails.Address !== null && this.UserRegister.CompanyDetails.Address !== '')
+      && (this.UserRegister.CompanyDetails.PhoneNumber !== undefined && this.UserRegister.CompanyDetails.PhoneNumber !== null && this.UserRegister.CompanyDetails.PhoneNumber !== '')
+      && (this.UserRegister.CompanyDetails.PhoneCountryCode !== undefined && this.UserRegister.CompanyDetails.PhoneCountryCode !== null && this.UserRegister.CompanyDetails.PhoneCountryCode !== '')
       && (this.UserRegister.CompanyDetails.IsGOVRegisteredCompany !== undefined && this.UserRegister.CompanyDetails.IsGOVRegisteredCompany !== null)
       && (this.UserRegister.CompanyDetails.ShowPhonenumber !== undefined && this.UserRegister.CompanyDetails.ShowPhonenumber !== null));
     return result;

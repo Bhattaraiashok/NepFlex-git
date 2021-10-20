@@ -6,8 +6,12 @@
         <app-dropdown *ngIf="item.HasDropDown" [dropdownOptions]="item.DropDownList">
         </app-dropdown>
       </div>
-      <div *ngIf="item.isDisable" class="disable disBtn disA" [title]="item.tooltip">
+      <div *ngIf="item.isDisable && !item.spinnerActive" class="disable disBtn disA" [title]="item.tooltip">
         <div>{{item.buttonLabel}}</div>
+      </div>
+      <div *ngIf="item.isDisable && item.spinnerActive" class="disable disBtn disA">
+        <!--<div class="home-load-spinner" *ngIf="spinnerActivated"></div>-->
+        <app-spinner [showSmallLoader]="item.spinnerActive"></app-spinner>
       </div>
     </div>
   </div>

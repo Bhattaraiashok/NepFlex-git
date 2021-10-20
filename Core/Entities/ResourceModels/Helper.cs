@@ -336,7 +336,7 @@ namespace NepFlex.Core.Entities.ResourceModels
                 TranId = _transactionId,
                 TranStatus = _status,
                 TranTitle = _tranName,
-                UI = "craig",
+                UI = CONSTUINAME.UI_NAME,
                 UserLocation = System.Net.Dns.GetHostName()
             };
 

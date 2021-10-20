@@ -40,25 +40,27 @@ html {
   border-radius: 50%;
   width: 120px;
   height: 120px;
+  background: #ffffff;
   animation: spin 2s linear infinite;
   top: 50%;
-  margin-top: 5em;
+  /*margin-top: 5em;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -100px;*/
   position: relative;
   text-align: center;
 }
 .loader-sm {
   width: 43px;
   height: 42px;
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #697b87;
+  background: #ffffff;
+  border: 16px solid #56bbcb; /* Light grey */
+  border-top: 16px solid #d98e05;
   border-radius: 50%;
   animation: spin 2s linear infinite;
   top: 50%;
-  margin-top: 5em;
+  /*margin-top: 5em;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -100px;*/
   position: relative;
   text-align: center;
 }

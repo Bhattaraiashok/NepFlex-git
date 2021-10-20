@@ -203,7 +203,9 @@
 				"ViewsCount",
 				"ViewsCount_Articles",
 				"ViewsCount_Coupon",
-				"ViewsCount_Event"
+				"ViewsCount_Event",
+				"UpdateUser",
+				"RegisterUser"
 		};
 
         // Example: Exclude any table in dbo schema with "order" in its name.

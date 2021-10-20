@@ -24,5 +24,9 @@ namespace NepFlex.Core.Services
         {
             return _unitOfWork.LoginRepository.UserRegistrationProcess(req, req2);
         }
+        public ResponseStatus UpdateUser(UserRegister req, ApplicationUser req2)
+        {
+            return _unitOfWork.LoginRepository.UpdateUser(req, req2);
+        }
     }
 }

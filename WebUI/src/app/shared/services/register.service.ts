@@ -18,7 +18,8 @@ import { ResponseObjects } from "app/shared/ResourceModels/ResponseStatus";
 })
 export class RegisterService {
 
-  private apiUrl_postReport = 'http://localhost/ServiceAPI/api/user/register';
+  private apiUrl_postRegister = 'http://localhost/ServiceAPI/api/user/register';
+  private apiUrl_postUpdate = 'http://localhost/ServiceAPI/api/user/update';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -30,7 +31,15 @@ export class RegisterService {
 
   register(val: UserRegister): Observable<ResponseObjects> {
     return this.http.post<ResponseObjects>(
-      `${this.apiUrl_postReport}`,
+      `${this.apiUrl_postRegister}`,
+      JSON.stringify(val),
+      this.httpOptions
+    );
+  }
+
+  update(val: UserRegister): Observable<ResponseObjects> {
+    return this.http.post<ResponseObjects>(
+      `${this.apiUrl_postUpdate}`,
       JSON.stringify(val),
       this.httpOptions
     );

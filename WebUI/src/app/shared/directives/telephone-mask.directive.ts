@@ -6,8 +6,6 @@ import { ISubscription } from 'rxjs/Subscription';
   selector: '[formControlName][phoneMask]'
 })
 export class TelephoneMaskDirective implements OnInit, OnDestroy {
-
-
   private _preValue: string;
 
   @Input()

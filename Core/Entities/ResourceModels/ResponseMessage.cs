@@ -46,9 +46,12 @@ namespace NepFlex.Core.Entities.ResourceModels
                 //Auth
                 new ResponseMessages{Code=ConstList.ROLE_USER_RES_CONST_FAILURE, Returned=false, Type="error", Message="User is not able to authorize."},
                 //login-register
-                 new ResponseMessages{Code=ConstList.USER_LOGIN_CONST_SUCCESS, Returned=true, Type="success", Message="Login successful."},
+                new ResponseMessages{Code=ConstList.USER_LOGIN_CONST_SUCCESS, Returned=true, Type="success", Message="Login successful."},
                 new ResponseMessages{Code=ConstList.USER_LOGIN_CONST_FAILURE, Returned=false, Type="error", Message="Login failed."},
                 new ResponseMessages{Code=ConstList.COMPANY_LOGIN_CONST_FAILURE, Returned=false, Type="error", Message="Login attempt: failed."},
+
+                new ResponseMessages{Code=ConstList.USER_UPDATE_CONST_SUCCESS, Returned=true, Type="success", Message="Successfully, User info updated."},
+                new ResponseMessages{Code=ConstList.USER_UPDATE_CONST_FAILURE, Returned=false, Type="error", Message="Issue occured when updating Your changes."},
                 //DB CODE
                  new ResponseMessages{Code=ConstList.USER_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your user account."},
                  new ResponseMessages{Code=ConstList.COMPANY_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your company account."},

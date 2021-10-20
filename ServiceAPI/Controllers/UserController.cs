@@ -145,6 +145,38 @@ namespace Nepflex.ServiceAPI.Controllers
             }
         }
 
+        [Route("update")]
+        [HttpPost]
+        public async Task<IHttpActionResult> UserUpdate([FromBody] UserRegister login)
+        {
+            Console.WriteLine("came here in login");
+            try
+            {
+                var user = await userManager.FindByEmailAsync(login.UserDetail.Email);
+                var result = await signInManager.UserManager.FindByIdAsync(user.Id);
+                if (!string.IsNullOrEmpty(result.Id))
+                {
+                    var results = _loginService.UpdateUser(login, result);
+                    return Ok(results);
+                }
+                else
+                {
+                    ResponseStatus _status = new ResponseStatus
+                    {
+                        StrMessage = new List<string>()
+                    };
+
+                    Utility.AppendStatus<ResponseStatus>(ConstList.USER_LOGIN_CONST_FAILURE, _status);
+                    return Ok(_status);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
         #region Helpers
         //still not added
         #endregion
