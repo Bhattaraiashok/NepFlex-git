@@ -43,6 +43,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
         System.Data.Entity.DbSet<CraigInquiry> CraigInquiries { get; set; } // Craig_Inquiry
         System.Data.Entity.DbSet<ErrorLog> ErrorLogs { get; set; } // Error_Log
         System.Data.Entity.DbSet<ItemDescription> ItemDescriptions { get; set; } // Item_Description
+        System.Data.Entity.DbSet<MasterCompany> MasterCompanies { get; set; } // Master_Company
         System.Data.Entity.DbSet<MasterDiscussionForumCategory> MasterDiscussionForumCategories { get; set; } // Master_DiscussionForumCategory
         System.Data.Entity.DbSet<MasterEducationMaterialCategory> MasterEducationMaterialCategories { get; set; } // Master_EducationMaterialCategory
         System.Data.Entity.DbSet<MasterJobsCategory> MasterJobsCategories { get; set; } // Master_JOBSCategory
@@ -122,9 +123,9 @@ namespace NepFlex.Core.Entities.OnlinePasal
         int Postdata(string title, string image, string detail, string username, string name, string email, string contact, string showPhoneNumber, string address, string other, string topCategory, string subCategory, decimal? price, string condition, string brand, string modal, string mileKmph, string warranty, string extraWarranty);
         // PostdataAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
-        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
-        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui);
+        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui);
+        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui);
 
         int SendEmailChangePassword(string username, string email);
         // SendEmailChangePasswordAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
@@ -137,6 +138,14 @@ namespace NepFlex.Core.Entities.OnlinePasal
 
         int SpTrackEmail(string sender, string receiver, string detail, string attachments, string ipAddress, bool? status);
         // SpTrackEmailAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
+
+        System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber);
+        System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateCompanyReturnModel>> UpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber);
+
+        System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber);
+        System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber);
 
         ValidateUserReturnModel ValidateUser(string username, string password, string ui);
         System.Threading.Tasks.Task<ValidateUserReturnModel> ValidateUserAsync(string username, string password, string ui);
@@ -158,6 +167,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public System.Data.Entity.DbSet<CraigInquiry> CraigInquiries { get; set; } // Craig_Inquiry
         public System.Data.Entity.DbSet<ErrorLog> ErrorLogs { get; set; } // Error_Log
         public System.Data.Entity.DbSet<ItemDescription> ItemDescriptions { get; set; } // Item_Description
+        public System.Data.Entity.DbSet<MasterCompany> MasterCompanies { get; set; } // Master_Company
         public System.Data.Entity.DbSet<MasterDiscussionForumCategory> MasterDiscussionForumCategories { get; set; } // Master_DiscussionForumCategory
         public System.Data.Entity.DbSet<MasterEducationMaterialCategory> MasterEducationMaterialCategories { get; set; } // Master_EducationMaterialCategory
         public System.Data.Entity.DbSet<MasterJobsCategory> MasterJobsCategories { get; set; } // Master_JOBSCategory
@@ -235,6 +245,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             modelBuilder.Configurations.Add(new CraigInquiryConfiguration());
             modelBuilder.Configurations.Add(new ErrorLogConfiguration());
             modelBuilder.Configurations.Add(new ItemDescriptionConfiguration());
+            modelBuilder.Configurations.Add(new MasterCompanyConfiguration());
             modelBuilder.Configurations.Add(new MasterDiscussionForumCategoryConfiguration());
             modelBuilder.Configurations.Add(new MasterEducationMaterialCategoryConfiguration());
             modelBuilder.Configurations.Add(new MasterJobsCategoryConfiguration());
@@ -267,6 +278,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             modelBuilder.Configurations.Add(new CraigInquiryConfiguration(schema));
             modelBuilder.Configurations.Add(new ErrorLogConfiguration(schema));
             modelBuilder.Configurations.Add(new ItemDescriptionConfiguration(schema));
+            modelBuilder.Configurations.Add(new MasterCompanyConfiguration(schema));
             modelBuilder.Configurations.Add(new MasterDiscussionForumCategoryConfiguration(schema));
             modelBuilder.Configurations.Add(new MasterEducationMaterialCategoryConfiguration(schema));
             modelBuilder.Configurations.Add(new MasterJobsCategoryConfiguration(schema));
@@ -1265,17 +1277,25 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return (int) procResultParam.Value;
         }
 
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui)
         {
             int procResult;
-            return RegisterUser(username, pswdHash, pswdSalt, firstname, middlename, lastname, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
+            return RegisterUser(email, username, userPhNumber, pswdHash, pswdSalt, ui, out procResult);
         }
 
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui, out int procResult)
         {
+            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 50 };
+            if (emailParam.Value == null)
+                emailParam.Value = System.DBNull.Value;
+
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
+
+            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 20 };
+            if (userPhNumberParam.Value == null)
+                userPhNumberParam.Value = System.DBNull.Value;
 
             var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = -1 };
             if (pswdHashParam.Value == null)
@@ -1284,83 +1304,31 @@ namespace NepFlex.Core.Entities.OnlinePasal
             var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = -1 };
             if (pswdSaltParam.Value == null)
                 pswdSaltParam.Value = System.DBNull.Value;
-
-            var firstnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Firstname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = firstname, Size = 20 };
-            if (firstnameParam.Value == null)
-                firstnameParam.Value = System.DBNull.Value;
-
-            var middlenameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Middlename", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = middlename, Size = 15 };
-            if (middlenameParam.Value == null)
-                middlenameParam.Value = System.DBNull.Value;
-
-            var lastnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Lastname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = lastname, Size = 30 };
-            if (lastnameParam.Value == null)
-                lastnameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 50 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var userPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhnCountryCode, Size = 10 };
-            if (userPhnCountryCodeParam.Value == null)
-                userPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 14 };
-            if (userPhNumberParam.Value == null)
-                userPhNumberParam.Value = System.DBNull.Value;
-
-            var userShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = userShowPhNumber.GetValueOrDefault() };
-            if (!userShowPhNumber.HasValue)
-                userShowPhNumberParam.Value = System.DBNull.Value;
-
-            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
-            if (isUserSellerParam.Value == null)
-                isUserSellerParam.Value = System.DBNull.Value;
-
-            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
-            if (companyNameParam.Value == null)
-                companyNameParam.Value = System.DBNull.Value;
-
-            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
-            if (companyAddressParam.Value == null)
-                companyAddressParam.Value = System.DBNull.Value;
-
-            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
-            if (companyPhnCountryCodeParam.Value == null)
-                companyPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
-            if (companyPhoneNumberParam.Value == null)
-                companyPhoneNumberParam.Value = System.DBNull.Value;
-
-            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
-            if (!isGovRegisteredCompany.HasValue)
-                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
-
-            var companyEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyEmailId, Size = 200 };
-            if (companyEmailIdParam.Value == null)
-                companyEmailIdParam.Value = System.DBNull.Value;
-
-            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
-            if (!companyShowPhNumber.HasValue)
-                companyShowPhNumberParam.Value = System.DBNull.Value;
 
             var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
             if (uiParam.Value == null)
                 uiParam.Value = System.DBNull.Value;
 
             var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<RegisterUserReturnModel>("EXEC @procResult = [dbo].[Register_User] @username, @pswdHASH, @pswdSALT, @Firstname, @Middlename, @Lastname, @Email, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @CompanyEmailID, @CompanyShowPHNumber, @UI", usernameParam, pswdHashParam, pswdSaltParam, firstnameParam, middlenameParam, lastnameParam, emailParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, companyEmailIdParam, companyShowPhNumberParam, uiParam, procResultParam).ToList();
+            var procResultData = Database.SqlQuery<RegisterUserReturnModel>("EXEC @procResult = [dbo].[RegisterUser] @Email, @username, @userPHNumber, @pswdHASH, @pswdSALT, @UI", emailParam, usernameParam, userPhNumberParam, pswdHashParam, pswdSaltParam, uiParam, procResultParam).ToList();
 
             procResult = (int) procResultParam.Value;
             return procResultData;
         }
 
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui)
         {
+            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 50 };
+            if (emailParam.Value == null)
+                emailParam.Value = System.DBNull.Value;
+
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
+
+            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 20 };
+            if (userPhNumberParam.Value == null)
+                userPhNumberParam.Value = System.DBNull.Value;
 
             var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = -1 };
             if (pswdHashParam.Value == null)
@@ -1370,71 +1338,11 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (pswdSaltParam.Value == null)
                 pswdSaltParam.Value = System.DBNull.Value;
 
-            var firstnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Firstname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = firstname, Size = 20 };
-            if (firstnameParam.Value == null)
-                firstnameParam.Value = System.DBNull.Value;
-
-            var middlenameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Middlename", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = middlename, Size = 15 };
-            if (middlenameParam.Value == null)
-                middlenameParam.Value = System.DBNull.Value;
-
-            var lastnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Lastname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = lastname, Size = 30 };
-            if (lastnameParam.Value == null)
-                lastnameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 50 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var userPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhnCountryCode, Size = 10 };
-            if (userPhnCountryCodeParam.Value == null)
-                userPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 14 };
-            if (userPhNumberParam.Value == null)
-                userPhNumberParam.Value = System.DBNull.Value;
-
-            var userShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = userShowPhNumber.GetValueOrDefault() };
-            if (!userShowPhNumber.HasValue)
-                userShowPhNumberParam.Value = System.DBNull.Value;
-
-            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
-            if (isUserSellerParam.Value == null)
-                isUserSellerParam.Value = System.DBNull.Value;
-
-            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
-            if (companyNameParam.Value == null)
-                companyNameParam.Value = System.DBNull.Value;
-
-            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
-            if (companyAddressParam.Value == null)
-                companyAddressParam.Value = System.DBNull.Value;
-
-            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
-            if (companyPhnCountryCodeParam.Value == null)
-                companyPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
-            if (companyPhoneNumberParam.Value == null)
-                companyPhoneNumberParam.Value = System.DBNull.Value;
-
-            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
-            if (!isGovRegisteredCompany.HasValue)
-                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
-
-            var companyEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyEmailId, Size = 200 };
-            if (companyEmailIdParam.Value == null)
-                companyEmailIdParam.Value = System.DBNull.Value;
-
-            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
-            if (!companyShowPhNumber.HasValue)
-                companyShowPhNumberParam.Value = System.DBNull.Value;
-
             var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
             if (uiParam.Value == null)
                 uiParam.Value = System.DBNull.Value;
 
-            var procResultData = await Database.SqlQuery<RegisterUserReturnModel>("EXEC [dbo].[Register_User] @username, @pswdHASH, @pswdSALT, @Firstname, @Middlename, @Lastname, @Email, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @CompanyEmailID, @CompanyShowPHNumber, @UI", usernameParam, pswdHashParam, pswdSaltParam, firstnameParam, middlenameParam, lastnameParam, emailParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, companyEmailIdParam, companyShowPhNumberParam, uiParam).ToListAsync();
+            var procResultData = await Database.SqlQuery<RegisterUserReturnModel>("EXEC [dbo].[RegisterUser] @Email, @username, @userPHNumber, @pswdHASH, @pswdSALT, @UI", emailParam, usernameParam, userPhNumberParam, pswdHashParam, pswdSaltParam, uiParam).ToListAsync();
 
             return procResultData;
         }
@@ -1547,6 +1455,290 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return (int) procResultParam.Value;
         }
 
+        public System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return UpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult);
+        }
+
+        public System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult)
+        {
+            var existingEmailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ExistingEmail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = existingEmail, Size = -1 };
+            if (existingEmailParam.Value == null)
+                existingEmailParam.Value = System.DBNull.Value;
+
+            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
+            if (userIdParam.Value == null)
+                userIdParam.Value = System.DBNull.Value;
+
+            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
+            if (isUserSellerParam.Value == null)
+                isUserSellerParam.Value = System.DBNull.Value;
+
+            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
+            if (companyNameParam.Value == null)
+                companyNameParam.Value = System.DBNull.Value;
+
+            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
+            if (companyAddressParam.Value == null)
+                companyAddressParam.Value = System.DBNull.Value;
+
+            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
+            if (companyPhnCountryCodeParam.Value == null)
+                companyPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
+            if (companyPhoneNumberParam.Value == null)
+                companyPhoneNumberParam.Value = System.DBNull.Value;
+
+            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
+            if (!isGovRegisteredCompany.HasValue)
+                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
+
+            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
+            if (!isCompanyActive.HasValue)
+                isCompanyActiveParam.Value = System.DBNull.Value;
+
+            var companyNewEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyNewEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyNewEmailId, Size = 200 };
+            if (companyNewEmailIdParam.Value == null)
+                companyNewEmailIdParam.Value = System.DBNull.Value;
+
+            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
+            if (!companyShowPhNumber.HasValue)
+                companyShowPhNumberParam.Value = System.DBNull.Value;
+
+            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
+            var procResultData = Database.SqlQuery<UpdateCompanyReturnModel>("EXEC @procResult = [dbo].[UpdateCompany] @ExistingEmail, @userId, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyNewEmailID, @CompanyShowPHNumber", existingEmailParam, userIdParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyNewEmailIdParam, companyShowPhNumberParam, procResultParam).ToList();
+
+            procResult = (int) procResultParam.Value;
+            return procResultData;
+        }
+
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateCompanyReturnModel>> UpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
+        {
+            var existingEmailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ExistingEmail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = existingEmail, Size = -1 };
+            if (existingEmailParam.Value == null)
+                existingEmailParam.Value = System.DBNull.Value;
+
+            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
+            if (userIdParam.Value == null)
+                userIdParam.Value = System.DBNull.Value;
+
+            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
+            if (isUserSellerParam.Value == null)
+                isUserSellerParam.Value = System.DBNull.Value;
+
+            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
+            if (companyNameParam.Value == null)
+                companyNameParam.Value = System.DBNull.Value;
+
+            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
+            if (companyAddressParam.Value == null)
+                companyAddressParam.Value = System.DBNull.Value;
+
+            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
+            if (companyPhnCountryCodeParam.Value == null)
+                companyPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
+            if (companyPhoneNumberParam.Value == null)
+                companyPhoneNumberParam.Value = System.DBNull.Value;
+
+            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
+            if (!isGovRegisteredCompany.HasValue)
+                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
+
+            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
+            if (!isCompanyActive.HasValue)
+                isCompanyActiveParam.Value = System.DBNull.Value;
+
+            var companyNewEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyNewEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyNewEmailId, Size = 200 };
+            if (companyNewEmailIdParam.Value == null)
+                companyNewEmailIdParam.Value = System.DBNull.Value;
+
+            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
+            if (!companyShowPhNumber.HasValue)
+                companyShowPhNumberParam.Value = System.DBNull.Value;
+
+            var procResultData = await Database.SqlQuery<UpdateCompanyReturnModel>("EXEC [dbo].[UpdateCompany] @ExistingEmail, @userId, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyNewEmailID, @CompanyShowPHNumber", existingEmailParam, userIdParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyNewEmailIdParam, companyShowPhNumberParam).ToListAsync();
+
+            return procResultData;
+        }
+
+        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, out procResult);
+        }
+
+        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, out int procResult)
+        {
+            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = -1 };
+            if (emailParam.Value == null)
+                emailParam.Value = System.DBNull.Value;
+
+            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
+            if (usernameParam.Value == null)
+                usernameParam.Value = System.DBNull.Value;
+
+            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
+            if (userIdParam.Value == null)
+                userIdParam.Value = System.DBNull.Value;
+
+            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
+            if (uiParam.Value == null)
+                uiParam.Value = System.DBNull.Value;
+
+            var firstnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Firstname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = firstname, Size = 20 };
+            if (firstnameParam.Value == null)
+                firstnameParam.Value = System.DBNull.Value;
+
+            var middlenameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Middlename", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = middlename, Size = 15 };
+            if (middlenameParam.Value == null)
+                middlenameParam.Value = System.DBNull.Value;
+
+            var lastnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Lastname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = lastname, Size = 30 };
+            if (lastnameParam.Value == null)
+                lastnameParam.Value = System.DBNull.Value;
+
+            var userPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhnCountryCode, Size = 10 };
+            if (userPhnCountryCodeParam.Value == null)
+                userPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 14 };
+            if (userPhNumberParam.Value == null)
+                userPhNumberParam.Value = System.DBNull.Value;
+
+            var userShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = userShowPhNumber.GetValueOrDefault() };
+            if (!userShowPhNumber.HasValue)
+                userShowPhNumberParam.Value = System.DBNull.Value;
+
+            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
+            if (isUserSellerParam.Value == null)
+                isUserSellerParam.Value = System.DBNull.Value;
+
+            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
+            if (companyNameParam.Value == null)
+                companyNameParam.Value = System.DBNull.Value;
+
+            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
+            if (companyAddressParam.Value == null)
+                companyAddressParam.Value = System.DBNull.Value;
+
+            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
+            if (companyPhnCountryCodeParam.Value == null)
+                companyPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
+            if (companyPhoneNumberParam.Value == null)
+                companyPhoneNumberParam.Value = System.DBNull.Value;
+
+            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
+            if (!isGovRegisteredCompany.HasValue)
+                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
+
+            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
+            if (!isCompanyActive.HasValue)
+                isCompanyActiveParam.Value = System.DBNull.Value;
+
+            var companyEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyEmailId, Size = 200 };
+            if (companyEmailIdParam.Value == null)
+                companyEmailIdParam.Value = System.DBNull.Value;
+
+            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
+            if (!companyShowPhNumber.HasValue)
+                companyShowPhNumberParam.Value = System.DBNull.Value;
+
+            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
+            var procResultData = Database.SqlQuery<UpdateUserReturnModel>("EXEC @procResult = [dbo].[UpdateUser] @Email, @username, @userId, @UI, @Firstname, @Middlename, @Lastname, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyEmailID, @CompanyShowPHNumber", emailParam, usernameParam, userIdParam, uiParam, firstnameParam, middlenameParam, lastnameParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyEmailIdParam, companyShowPhNumberParam, procResultParam).ToList();
+
+            procResult = (int) procResultParam.Value;
+            return procResultData;
+        }
+
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber)
+        {
+            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = -1 };
+            if (emailParam.Value == null)
+                emailParam.Value = System.DBNull.Value;
+
+            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
+            if (usernameParam.Value == null)
+                usernameParam.Value = System.DBNull.Value;
+
+            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
+            if (userIdParam.Value == null)
+                userIdParam.Value = System.DBNull.Value;
+
+            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
+            if (uiParam.Value == null)
+                uiParam.Value = System.DBNull.Value;
+
+            var firstnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Firstname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = firstname, Size = 20 };
+            if (firstnameParam.Value == null)
+                firstnameParam.Value = System.DBNull.Value;
+
+            var middlenameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Middlename", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = middlename, Size = 15 };
+            if (middlenameParam.Value == null)
+                middlenameParam.Value = System.DBNull.Value;
+
+            var lastnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Lastname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = lastname, Size = 30 };
+            if (lastnameParam.Value == null)
+                lastnameParam.Value = System.DBNull.Value;
+
+            var userPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhnCountryCode, Size = 10 };
+            if (userPhnCountryCodeParam.Value == null)
+                userPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 14 };
+            if (userPhNumberParam.Value == null)
+                userPhNumberParam.Value = System.DBNull.Value;
+
+            var userShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = userShowPhNumber.GetValueOrDefault() };
+            if (!userShowPhNumber.HasValue)
+                userShowPhNumberParam.Value = System.DBNull.Value;
+
+            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
+            if (isUserSellerParam.Value == null)
+                isUserSellerParam.Value = System.DBNull.Value;
+
+            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
+            if (companyNameParam.Value == null)
+                companyNameParam.Value = System.DBNull.Value;
+
+            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
+            if (companyAddressParam.Value == null)
+                companyAddressParam.Value = System.DBNull.Value;
+
+            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
+            if (companyPhnCountryCodeParam.Value == null)
+                companyPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
+            if (companyPhoneNumberParam.Value == null)
+                companyPhoneNumberParam.Value = System.DBNull.Value;
+
+            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
+            if (!isGovRegisteredCompany.HasValue)
+                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
+
+            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
+            if (!isCompanyActive.HasValue)
+                isCompanyActiveParam.Value = System.DBNull.Value;
+
+            var companyEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyEmailId, Size = 200 };
+            if (companyEmailIdParam.Value == null)
+                companyEmailIdParam.Value = System.DBNull.Value;
+
+            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
+            if (!companyShowPhNumber.HasValue)
+                companyShowPhNumberParam.Value = System.DBNull.Value;
+
+            var procResultData = await Database.SqlQuery<UpdateUserReturnModel>("EXEC [dbo].[UpdateUser] @Email, @username, @userId, @UI, @Firstname, @Middlename, @Lastname, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyEmailID, @CompanyShowPHNumber", emailParam, usernameParam, userIdParam, uiParam, firstnameParam, middlenameParam, lastnameParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyEmailIdParam, companyShowPhNumberParam).ToListAsync();
+
+            return procResultData;
+        }
+
         public ValidateUserReturnModel ValidateUser(string username, string password, string ui)
         {
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 40 };
@@ -1647,6 +1839,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public System.Data.Entity.DbSet<CraigInquiry> CraigInquiries { get; set; }
         public System.Data.Entity.DbSet<ErrorLog> ErrorLogs { get; set; }
         public System.Data.Entity.DbSet<ItemDescription> ItemDescriptions { get; set; }
+        public System.Data.Entity.DbSet<MasterCompany> MasterCompanies { get; set; }
         public System.Data.Entity.DbSet<MasterDiscussionForumCategory> MasterDiscussionForumCategories { get; set; }
         public System.Data.Entity.DbSet<MasterEducationMaterialCategory> MasterEducationMaterialCategories { get; set; }
         public System.Data.Entity.DbSet<MasterJobsCategory> MasterJobsCategories { get; set; }
@@ -1678,6 +1871,7 @@ namespace NepFlex.Core.Entities.OnlinePasal
             CraigInquiries = new FakeDbSet<CraigInquiry>("Id", "Name", "Email", "Detail", "DateAdded");
             ErrorLogs = new FakeDbSet<ErrorLog>("Id");
             ItemDescriptions = new FakeDbSet<ItemDescription>("Id");
+            MasterCompanies = new FakeDbSet<MasterCompany>("CompanyId", "UserId", "CompanyName", "Address", "PhnCountryCode", "PhNumber", "ShowPhNumber");
             MasterDiscussionForumCategories = new FakeDbSet<MasterDiscussionForumCategory>("DiscussionForumId");
             MasterEducationMaterialCategories = new FakeDbSet<MasterEducationMaterialCategory>("EduId");
             MasterJobsCategories = new FakeDbSet<MasterJobsCategory>("JobsId");
@@ -1956,23 +2150,23 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return 0;
         }
 
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui)
         {
             int procResult;
-            return RegisterUser(username, pswdHash, pswdSalt, firstname, middlename, lastname, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult);
+            return RegisterUser(email, username, userPhNumber, pswdHash, pswdSalt, ui, out procResult);
         }
 
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui, out int procResult)
+        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui, out int procResult)
         {
 
             procResult = 0;
             return new System.Collections.Generic.List<RegisterUserReturnModel>();
         }
 
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string username, string pswdHash, string pswdSalt, string firstname, string middlename, string lastname, string email, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, string companyEmailId, bool? companyShowPhNumber, string ui)
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui)
         {
             int procResult;
-            return System.Threading.Tasks.Task.FromResult(RegisterUser(username, pswdHash, pswdSalt, firstname, middlename, lastname, email, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, companyEmailId, companyShowPhNumber, ui, out procResult));
+            return System.Threading.Tasks.Task.FromResult(RegisterUser(email, username, userPhNumber, pswdHash, pswdSalt, ui, out procResult));
         }
 
         public int SendEmailChangePassword(string username, string email)
@@ -1997,6 +2191,44 @@ namespace NepFlex.Core.Entities.OnlinePasal
         {
 
             return 0;
+        }
+
+        public System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return UpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult);
+        }
+
+        public System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult)
+        {
+
+            procResult = 0;
+            return new System.Collections.Generic.List<UpdateCompanyReturnModel>();
+        }
+
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateCompanyReturnModel>> UpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return System.Threading.Tasks.Task.FromResult(UpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult));
+        }
+
+        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, out procResult);
+        }
+
+        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, out int procResult)
+        {
+
+            procResult = 0;
+            return new System.Collections.Generic.List<UpdateUserReturnModel>();
+        }
+
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return System.Threading.Tasks.Task.FromResult(UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, out procResult));
         }
 
         public ValidateUserReturnModel ValidateUser(string username, string password, string ui)
@@ -2419,6 +2651,33 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public string ExtraWarranty { get; set; } // extra_Warranty (length: 25)
     }
 
+    // Master_Company
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+    public class MasterCompany
+    {
+        public long CompanyId { get; set; } // CompanyID (Primary key)
+        public string UserId { get; set; } // UserID (Primary key) (length: 150)
+        public string CompanyName { get; set; } // CompanyName (Primary key) (length: 200)
+        public string Address { get; set; } // Address (Primary key) (length: 200)
+        public string PhnCountryCode { get; set; } // PHNCountryCode (Primary key) (length: 10)
+        public string PhNumber { get; set; } // PHNumber (Primary key) (length: 14)
+        public string EmailId { get; set; } // EmailID (length: 200)
+        public bool? IsGovRegistered { get; set; } // IsGOVRegistered
+        public bool? IsActive { get; set; } // IsActive
+        public bool? EmailVerified { get; set; } // EmailVerified
+        public bool? PhoneVerified { get; set; } // PhoneVerified
+        public bool ShowPhNumber { get; set; } // ShowPHNumber (Primary key)
+        public System.DateTime? CreatedDate { get; set; } // Created Date
+        public System.DateTime? UpdatedDate { get; set; } // Updated Date
+
+        // Foreign keys
+
+        /// <summary>
+        /// Parent User pointed by [Master_Company].([UserId]) (FK_Master_Company_Users)
+        /// </summary>
+        public virtual User User { get; set; } // FK_Master_Company_Users
+    }
+
     // Master_DiscussionForumCategory
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class MasterDiscussionForumCategory
@@ -2591,9 +2850,17 @@ namespace NepFlex.Core.Entities.OnlinePasal
         public bool? ShowPhNumber { get; set; } // ShowPHNumber
         public string UserPhnCode { get; set; } // UserPHNCode (length: 10)
 
+        // Reverse navigation
+
+        /// <summary>
+        /// Child MasterCompanies where [Master_Company].[UserID] point to this entity (FK_Master_Company_Users)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<MasterCompany> MasterCompanies { get; set; } // Master_Company.FK_Master_Company_Users
+
         public User()
         {
             CreatedDate = System.DateTime.Now;
+            MasterCompanies = new System.Collections.Generic.List<MasterCompany>();
         }
     }
 
@@ -2892,6 +3159,40 @@ namespace NepFlex.Core.Entities.OnlinePasal
             Property(x => x.MileKmph).HasColumnName(@"Mile_KMPH").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
             Property(x => x.Warranty).HasColumnName(@"Warranty").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
             Property(x => x.ExtraWarranty).HasColumnName(@"extra_Warranty").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
+        }
+    }
+
+    // Master_Company
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+    public class MasterCompanyConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterCompany>
+    {
+        public MasterCompanyConfiguration()
+            : this("dbo")
+        {
+        }
+
+        public MasterCompanyConfiguration(string schema)
+        {
+            ToTable("Master_Company", schema);
+            HasKey(x => new { x.CompanyId, x.UserId, x.CompanyName, x.Address, x.PhnCountryCode, x.PhNumber, x.ShowPhNumber });
+
+            Property(x => x.CompanyId).HasColumnName(@"CompanyID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.UserId).HasColumnName(@"UserID").HasColumnType("nvarchar").IsRequired().HasMaxLength(150).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.CompanyName).HasColumnName(@"CompanyName").HasColumnType("nvarchar").IsRequired().HasMaxLength(200).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Address).HasColumnName(@"Address").HasColumnType("nvarchar").IsRequired().HasMaxLength(200).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.PhnCountryCode).HasColumnName(@"PHNCountryCode").HasColumnType("nchar").IsRequired().IsFixedLength().HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.PhNumber).HasColumnName(@"PHNumber").HasColumnType("nvarchar").IsRequired().HasMaxLength(14).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.EmailId).HasColumnName(@"EmailID").HasColumnType("nvarchar").IsOptional().HasMaxLength(200);
+            Property(x => x.IsGovRegistered).HasColumnName(@"IsGOVRegistered").HasColumnType("bit").IsOptional();
+            Property(x => x.IsActive).HasColumnName(@"IsActive").HasColumnType("bit").IsOptional();
+            Property(x => x.EmailVerified).HasColumnName(@"EmailVerified").HasColumnType("bit").IsOptional();
+            Property(x => x.PhoneVerified).HasColumnName(@"PhoneVerified").HasColumnType("bit").IsOptional();
+            Property(x => x.ShowPhNumber).HasColumnName(@"ShowPHNumber").HasColumnType("bit").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.CreatedDate).HasColumnName(@"Created Date").HasColumnType("datetime").IsOptional();
+            Property(x => x.UpdatedDate).HasColumnName(@"Updated Date").HasColumnType("datetime").IsOptional();
+
+            // Foreign keys
+            HasRequired(a => a.User).WithMany(b => b.MasterCompanies).HasForeignKey(c => c.UserId).WillCascadeOnDelete(false); // FK_Master_Company_Users
         }
     }
 
@@ -3534,6 +3835,20 @@ namespace NepFlex.Core.Entities.OnlinePasal
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class RegisterUserReturnModel
+    {
+        public System.String Ver_Status { get; set; }
+        public System.String VER_Detail { get; set; }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+    public class UpdateCompanyReturnModel
+    {
+        public System.String Ver_Status { get; set; }
+        public System.String VER_Detail { get; set; }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
+    public class UpdateUserReturnModel
     {
         public System.String Ver_Status { get; set; }
         public System.String VER_Detail { get; set; }

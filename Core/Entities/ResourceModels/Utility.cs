@@ -135,6 +135,9 @@ namespace NepFlex.Core.Entities.ResourceModels
     {
         public readonly static string CONST_SUCCESS = "SUCCESS";
         public readonly static string CONST_FAILURE = "FAILURE";
+
+        public readonly static int INT_CONST_SUCCESS = 1;
+        public readonly static int INT_CONST_FAILURE = 0;
     }
 
     public class CONSTUINAME
@@ -173,6 +176,8 @@ namespace NepFlex.Core.Entities.ResourceModels
         public readonly static string USER_UPDATE_CONST_SUCCESS = "USER_UPDATE_CONST_SUCCESS";
         public readonly static string USER_UPDATE_CONST_FAILURE = "USER_UPDATE_CONST_FAILURE";
 
+        public readonly static string USER_PROFILE_CONST_SUCCESS = "USER_PROFILE_CONST_SUCCESS";
+        public readonly static string USER_PROFILE_CONST_FAILURE = "USER_PROFILE_CONST_FAILURE";
 
         //PAGESstatic
         public readonly static string PAGE_SEARCH_CONST = "PAGE_SEARCH_CONST";

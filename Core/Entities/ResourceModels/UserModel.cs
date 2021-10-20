@@ -48,7 +48,7 @@ namespace NepFlex.Core.Entities.ResourceModels
             return userIdentity;
         }
     }
-    public class CompanyRegisterRequest
+    public class CompanyRegisterRequest : UID
     {
         public string CompanyName { get; set; }
         public string Address { get; set; }
@@ -84,5 +84,10 @@ namespace NepFlex.Core.Entities.ResourceModels
         public bool? IsAuthenticated { get; set; } // this needs to be true in order to be successfully login
         public string SessionID { get; set; }
         public DateTime? TimeStamp { get; set; }
+    }
+
+    public class UID
+    {
+        public string UserID { get; set; }
     }
 }

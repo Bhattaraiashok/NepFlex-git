@@ -487,7 +487,7 @@ export class RegisterComponent implements OnInit {
             console.log(item.strMessage);
             this.call_MessageAlertComponent('Success', item.strMessage[0]);
             this.userIsRegistered == true;
-            //this.modalService.close('close');
+            this.modalService.close('close');
           } else {
             this.smallSpinner();
             console.log(item.strMessage);

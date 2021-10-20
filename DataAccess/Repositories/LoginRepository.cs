@@ -83,38 +83,181 @@ namespace NepFlex.DataAccess.Repositories
 
         public ResponseStatus UpdateUser(UserRegister req, ApplicationUser req2)
         {
-            var result = new List<UpdateUserReturnModel>();
-            result = _context.UpdateUser(
-                              req2.Email,
-                              req2.UserName,
-                              req2.Id,
-                              CONSTUINAME.UI_NAME,
-                              req.UserDetail.Firstname,
-                              req.UserDetail.Middlename,
-                              req.UserDetail.Lastname,
-                              req.UserDetail.PhoneCountryCode,
-                              req.UserDetail.PhoneNumber,
-                              req.UserDetail.ShowPhonenumber,
-                              req.UserDetail.IsUserSeller ? "yes" : "no",
-                              req.CompanyDetails.CompanyName,
-                              req.CompanyDetails.Address,
-                              req.CompanyDetails.PhoneCountryCode,
-                              req.CompanyDetails.PhoneNumber,
-                              req.CompanyDetails.IsGOVRegisteredCompany,
-                              req.CompanyDetails.IsCompanyActive,
-                              req.UserDetail.Email,
-                              req.UserDetail.ShowPhonenumber
-                             );
-
-
-            //start response
             ResponseStatus _status = new ResponseStatus
             {
+                IsSuccess = false,
                 StrMessage = new List<string>()
             };
 
-            _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
-            _status.StrMessage.Add(result[0].VER_Detail);
+            var _usrInfo = (from _usr in _context.Users
+                            where _usr.UserName == req.UserDetail.Username &&
+                             _usr.Email == req.UserDetail.Email && _usr.Ui.ToLower() == CONSTUINAME.UI_NAME
+                            select _usr).FirstOrDefault();
+
+            req.CompanyDetails.UserID = _usrInfo.UserId;
+
+            if (_usrInfo != null)
+            {
+                //user
+                if (_usrInfo.FirstName != req.UserDetail.Firstname)
+                {
+                    _usrInfo.FirstName = req.UserDetail.Firstname;
+                }
+                if (_usrInfo.MiddleName != req.UserDetail.Middlename)
+                {
+                    _usrInfo.MiddleName = req.UserDetail.Middlename;
+                }
+                if (_usrInfo.LastName != req.UserDetail.Lastname)
+                {
+                    _usrInfo.LastName = req.UserDetail.Lastname;
+                }
+                if (_usrInfo.PhNumber != req.UserDetail.PhoneNumber)
+                {
+                    _usrInfo.PhNumber = req.UserDetail.PhoneNumber;
+                }
+                if (_usrInfo.Email != req.UserDetail.Email)
+                {
+                    _usrInfo.Email = req.UserDetail.Email;
+                }
+                if (_usrInfo.ShowPhNumber != req.UserDetail.ShowPhonenumber)
+                {
+                    _usrInfo.ShowPhNumber = req.UserDetail.ShowPhonenumber;
+                }
+                if (_usrInfo.UserPhnCode != req.UserDetail.PhoneCountryCode)
+                {
+                    _usrInfo.UserPhnCode = req.UserDetail.PhoneCountryCode;
+                }
+
+                _usrInfo.UpdatedDate = DateTime.Now;
+
+
+                var IsSeller = req.UserDetail.IsUserSeller == true ? "yes" : "no";
+                if (_usrInfo.IsUserSeller != IsSeller)
+                {
+                    _usrInfo.IsUserSeller = IsSeller;
+                }
+
+                var returnRes = _context.SaveChanges();
+
+                //company info
+                if (_usrInfo.IsUserSeller == "yes")
+                {
+                    UpdateCompany(req, _usrInfo);
+                }
+
+                if (returnRes == CONSTResponse.INT_CONST_SUCCESS)
+                {
+                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_SUCCESS, _status);
+                }
+            }
+            else
+            {
+                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_PROFILE_CONST_FAILURE, _status);
+            }
+
+            return _status;
+        }
+
+        public ResponseStatus UpdateCompany(UserRegister req, User _userInfo)
+        {
+            var _companyInfo = (from _comp in _context.MasterCompanies
+                                where _comp.UserId == req.CompanyDetails.UserID
+                                select _comp).FirstOrDefault();
+
+            ResponseStatus _status = new ResponseStatus
+            {
+                IsSuccess = false,
+                StrMessage = new List<string>()
+            };
+
+            int returnResults = 0; //failure
+
+            if (_companyInfo != null)
+            {
+                if (_companyInfo.CompanyName != req.CompanyDetails.CompanyName)
+                {
+                    _companyInfo.CompanyName = req.CompanyDetails.CompanyName;
+                }
+                if (_companyInfo.EmailId != req.CompanyDetails.CompanyEmailID)
+                {
+                    //_companyInfo.EmailId = req.CompanyDetails.CompanyEmailID; //do not do this since on modify user has to look up using existing email
+                }
+                if (_companyInfo.IsActive != req.CompanyDetails.IsCompanyActive)
+                {
+                    _companyInfo.IsActive = req.CompanyDetails.IsCompanyActive;
+                }
+                if (_companyInfo.IsGovRegistered != req.CompanyDetails.IsGOVRegisteredCompany)
+                {
+                    _companyInfo.IsGovRegistered = req.CompanyDetails.IsGOVRegisteredCompany;
+                }
+                if (_companyInfo.PhnCountryCode != req.CompanyDetails.PhoneCountryCode)
+                {
+                    _companyInfo.PhnCountryCode = req.CompanyDetails.PhoneCountryCode;
+                }
+                if (_companyInfo.PhNumber != req.CompanyDetails.PhoneNumber)
+                {
+                    _companyInfo.PhNumber = req.CompanyDetails.PhoneNumber;
+                }
+
+                if (_companyInfo.ShowPhNumber != req.CompanyDetails.ShowPhonenumber)
+                {
+                    _companyInfo.ShowPhNumber = req.CompanyDetails.ShowPhonenumber == true ? true : false;
+                }
+
+                _companyInfo.UpdatedDate = DateTime.Now;
+
+                // have to insert through DB due to primary keys on various fields.
+                var result = new List<UpdateCompanyReturnModel>();
+                result = _context.UpdateCompany(
+                                  _companyInfo.EmailId,
+                                  _companyInfo.UserId,
+                                  "yes",
+                                  _companyInfo.CompanyName,
+                                  _companyInfo.Address,
+                                  _companyInfo.PhnCountryCode,
+                                  _companyInfo.PhNumber,
+                                  _companyInfo.IsGovRegistered,
+                                  _companyInfo.IsActive,
+                                   req.CompanyDetails.CompanyEmailID,
+                                  _companyInfo.ShowPhNumber
+                                );
+
+                _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
+                _status.StrMessage.Add(result[0].VER_Detail);
+            }
+            else
+            {
+                if (req.UserDetail.IsUserSeller == true)
+                {
+                    _companyInfo = new MasterCompany
+                    {
+                        User = _userInfo,
+                        UserId = _userInfo.UserId,
+                        CompanyName = req.CompanyDetails.CompanyName,
+                        EmailId = req.CompanyDetails.CompanyEmailID,
+                        Address = req.CompanyDetails.Address,
+                        IsActive = req.CompanyDetails.IsCompanyActive,
+                        IsGovRegistered = req.CompanyDetails.IsGOVRegisteredCompany,
+                        PhnCountryCode = req.CompanyDetails.PhoneCountryCode,
+                        PhNumber = req.CompanyDetails.PhoneNumber,
+                        ShowPhNumber = req.CompanyDetails.ShowPhonenumber == true ? true : false,
+                        CreatedDate = DateTime.Now,
+                        UpdatedDate = DateTime.Now
+                    };
+                }
+                _context.MasterCompanies.Add(_companyInfo);
+                returnResults = _context.SaveChanges();
+
+
+                if (returnResults == CONSTResponse.INT_CONST_SUCCESS)
+                {
+                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_SUCCESS, _status);
+                }
+                else
+                {
+                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_FAILURE, _status);
+                }
+            }
 
             return _status;
         }

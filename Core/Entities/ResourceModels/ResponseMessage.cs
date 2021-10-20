@@ -38,7 +38,7 @@ namespace NepFlex.Core.Entities.ResourceModels
                 return new List<ResponseMessages>() {
                 //general
                 new ResponseMessages{Code=ConstList.RES_OBJ_CONST_SUCCESS, Returned=true, Type="success", Message="Successful."},
-                 new ResponseMessages{Code=ConstList.REQ_OBJ_CONST_SUCCESS, Returned=true, Type="success", Message="Successful."},
+                new ResponseMessages{Code=ConstList.REQ_OBJ_CONST_SUCCESS, Returned=true, Type="success", Message="Successful."},
                 new ResponseMessages{Code=ConstList.RES_OBJ_CONST_FAILURE, Returned=false, Type="error", Message="Exception occured"},
                 //backend
                 new ResponseMessages{Code=ConstList.RES_OBJ_CONST_NULL, Returned=false, Type="info", Message="SVC is returning null."},
@@ -52,10 +52,12 @@ namespace NepFlex.Core.Entities.ResourceModels
 
                 new ResponseMessages{Code=ConstList.USER_UPDATE_CONST_SUCCESS, Returned=true, Type="success", Message="Successfully, User info updated."},
                 new ResponseMessages{Code=ConstList.USER_UPDATE_CONST_FAILURE, Returned=false, Type="error", Message="Issue occured when updating Your changes."},
+                new ResponseMessages{Code=ConstList.USER_PROFILE_CONST_SUCCESS, Returned=true, Type="success", Message="Successfully, your Profile is updated."},
+                new ResponseMessages{Code=ConstList.USER_PROFILE_CONST_FAILURE, Returned=false, Type="error", Message="User profile not found."},
                 //DB CODE
-                 new ResponseMessages{Code=ConstList.USER_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your user account."},
-                 new ResponseMessages{Code=ConstList.COMPANY_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your company account."},
-                 new ResponseMessages{Code=ConstList.USERANDCOMPANY_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your account."},
+                new ResponseMessages{Code=ConstList.USER_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your user account."},
+                new ResponseMessages{Code=ConstList.COMPANY_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your company account."},
+                new ResponseMessages{Code=ConstList.USERANDCOMPANY_REGISTER_CONST_FAILURE, Returned=false, Type="error", Message="Occured some problem while registering your account."},
             };
             }
         }
