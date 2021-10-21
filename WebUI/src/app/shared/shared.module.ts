@@ -72,6 +72,8 @@ import { RegisterComponent } from './register/register.component';
 import { RouteTo } from './interfaces/local-router';
 import { TelephoneMaskDirective } from './directives/telephone-mask.directive';
 import { AlertComponent } from './alert/alert.component';
+import { NotifierComponent } from './notifier/notifier.component';
+import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
 
 @NgModule({
   imports: [
@@ -144,7 +146,8 @@ import { AlertComponent } from './alert/alert.component';
     LoginComponent,
     RegisterComponent,
     TelephoneMaskDirective,
-    AlertComponent
+    AlertComponent,
+    NotifierComponent
   ],
   providers: [
     ReportService,
@@ -159,6 +162,7 @@ import { AlertComponent } from './alert/alert.component';
     HomeService,
     SearchString,
     RouteTo,
+    AlertMessageProperties,
     HTTPHeader,
     {
       provide: MAT_CHIPS_DEFAULT_OPTIONS,

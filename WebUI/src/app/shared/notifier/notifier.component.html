@@ -1,0 +1,9 @@
+<div>
+    {{data.alertType | titlecase}}
+</div>
+<div>
+    {{data.alertMsg}}
+</div>
+<div *ngIf="data.showButton">
+    <button mat-flat-button (click)="snackBarRef.dismiss()">{{data.alertBtnLabel}}</button>
+</div>

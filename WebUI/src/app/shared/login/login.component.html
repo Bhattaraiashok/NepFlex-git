@@ -35,9 +35,9 @@
     </div>
   </div>
 </div>
-<app-alert *ngIf="showAlertMessages" [messageAlert]="messageAlerts"></app-alert>
+<!--<app-alert *ngIf="showAlertMessages" [messageAlert]="messageAlerts"></app-alert>-->
 
-
+<app-snackbar-alert *ngIf="showAlertMessages" [snackbarMsg]="messageAlerts"></app-snackbar-alert>
 
 <!--<div id="login">
   <h3 class="text-center text-white">Login form</h3>

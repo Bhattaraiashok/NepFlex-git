@@ -5,7 +5,7 @@ import { RouteTo } from '../interfaces/local-router';
 import { ButtonProperties } from '../ResourceModels/ButtonProperties';
 import { RegisterService } from "app/shared/services/register.service";
 import { UserRegister } from "app/shared/ResourceModels/registerModel";
-import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
+import { AlertMessageProperties, CONSTList } from "app/shared/ResourceModels/AlertMessages";
 import { ResponseObjects } from "app/shared/ResourceModels/ResponseStatus";
 import { LoginComponent } from "app/shared/login/login.component";
 import { DesktopHeaderComponent } from "app/desktop/controls/desktop-header/desktop-header.component";
@@ -21,6 +21,8 @@ export class RegisterComponent implements OnInit {
 
   UserRegister: UserRegister = new UserRegister();
   registerResponse: ResponseObjects;
+
+  CONSTList: CONSTList=new CONSTList();
 
   //two forms lined up
   userRegisterForm: FormGroup;
@@ -451,14 +453,14 @@ export class RegisterComponent implements OnInit {
         this.registerService.register(this.UserRegister).subscribe((item: ResponseObjects) => {
           if (item.isSuccess === true) {
             console.log(item.strMessage);
-            this.call_MessageAlertComponent('Success', item.strMessage[0]);
+            this.call_MessageAlertComponent(this.CONSTList.success, item.strMessage[0]);
             this.userIsRegistered == true;
             this.nextStep(e);
             //this.modalService.close('close'); --no close here on first step
           } else {
             this.smallSpinner();
             console.log(item.strMessage);
-            this.call_MessageAlertComponent('Error', item.strMessage[0]);
+            this.call_MessageAlertComponent(this.CONSTList.error, item.strMessage[0]);
           }
         });
       } else {
@@ -485,13 +487,13 @@ export class RegisterComponent implements OnInit {
         this.registerService.update(obj).subscribe((item: ResponseObjects) => {
           if (item.isSuccess === true) {
             console.log(item.strMessage);
-            this.call_MessageAlertComponent('Success', item.strMessage[0]);
+            this.call_MessageAlertComponent(this.CONSTList.success, item.strMessage[0]);
             this.userIsRegistered == true;
             this.modalService.close('close');
           } else {
             this.smallSpinner();
             console.log(item.strMessage);
-            this.call_MessageAlertComponent('Error', item.strMessage[0]);
+            this.call_MessageAlertComponent(this.CONSTList.error, item.strMessage[0]);
           }
         });
       } else {
@@ -506,7 +508,8 @@ export class RegisterComponent implements OnInit {
     this.showAlertMessages = true;
     this.messageAlerts.alertType = alertType;
     this.messageAlerts.alertMsg = alertMsg;
-    this.messageAlerts.showCloseButton = this.showAlertMessages;
+    this.messageAlerts.alertBtnLabel="OK";
+    this.messageAlerts.showButton = this.showAlertMessages;
   }
 
   mappings() {

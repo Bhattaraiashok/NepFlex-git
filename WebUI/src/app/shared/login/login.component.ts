@@ -5,8 +5,9 @@ import { RouteTo } from '../interfaces/local-router';
 import { LoginService } from "app/shared/services/login.service";
 import { LoginResponse, LoginRequest } from "app/shared/ResourceModels/LoginModel";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
+import { AlertMessageProperties, CONSTList } from "app/shared/ResourceModels/AlertMessages";
 import { ButtonProperties } from "app/shared/ResourceModels/ButtonProperties";
+import { NotificationService } from "app/shared/services/control-services/notification.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   loginRequest: LoginRequest = new LoginRequest();
   loginResponse: LoginResponse = new LoginResponse();
   messageAlerts: AlertMessageProperties = new AlertMessageProperties();
+  CONSTList: CONSTList=new CONSTList();
   loginComponentButttons: ButtonProperties[] = new Array();
   showAlertMessages: boolean = false;
   showFCError: boolean = false;
@@ -44,7 +46,9 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private routeLink: RouteTo,
     private loginService: LoginService,
-    private modalService: NgbActiveModal) {
+    private modalService: NgbActiveModal,
+    private notificationService: NotificationService) {
+    this.passwordFC.disable(true)
     this.createForm();
   }
 
@@ -88,15 +92,15 @@ export class LoginComponent implements OnInit {
     if (firstLayerValidation === true && this.loginForm.valid) {
       this.loginService.login(this.loginRequest).subscribe((item: LoginResponse) => {
         if (item.isSuccess == true) {
-          this.call_MessageAlertComponent('Success', item.strMessage[0]);
+          this.call_MessageAlertComponent(this.CONSTList.success, item.strMessage[0]);
           this.manageLocalStorage(item);
           this.RouteTo('home');
           this.modalService.close('close');
         } else {
           if (item.strMessage[0] !== null && item.strMessage[0] !== undefined) {
-            this.call_MessageAlertComponent('Error', item.strMessage[0]);
+            this.call_MessageAlertComponent(this.CONSTList.error, item.strMessage[0]);
           } else {
-            this.call_MessageAlertComponent('Error', '!! ERROR !!');
+            this.call_MessageAlertComponent(this.CONSTList.error, '!! ERROR !!');
           }
           this.smallSpinner();
         }
@@ -115,25 +119,24 @@ export class LoginComponent implements OnInit {
         this.usernameFC.hasError('required')
       ) {
         this.usernameFCError = "You must enter Username.";
-        this.call_MessageAlertComponent('info', this.usernameFCError);
+        this.call_MessageAlertComponent(this.CONSTList.info, this.usernameFCError);
         return;
-      } else {
-        this.usernameFCError = '';
-      }
-      if (
-        this.passwordFC.invalid &&
+      } else if (
+        this.passwordFC.invalid && this.passwordFC.enabled==true &&
         this.passwordFC.hasError('required')
       ) {
         this.passwordFCError = "You must enter Password.";
-        this.call_MessageAlertComponent('info', this.passwordFCError);
+        this.call_MessageAlertComponent(this.CONSTList.info, this.passwordFCError);
         return;
       } else {
         this.passwordFCError = '';
+        this.passwordFC.enable(true);
       }
     } else {
       this.showFCError = false;
       this.passwordFCError = '';
       this.usernameFCError = '';
+      this.passwordFC.enable(true);
       return;
     }
   }
@@ -191,6 +194,9 @@ export class LoginComponent implements OnInit {
     this.showAlertMessages = true;
     this.messageAlerts.alertType = alertType;
     this.messageAlerts.alertMsg = alertMsg;
+    this.messageAlerts.alertBtnLabel = 'OK';
+    this.messageAlerts.showButton = true;
+    this.notificationService.showNotification(this.messageAlerts);
   }
 
 }

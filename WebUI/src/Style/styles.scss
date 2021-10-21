@@ -1,5 +1,6 @@
 @import './_variables.scss';
 @import './_mixins.scss';
+@import '~@angular/material/theming';
 
 .hidden {
   display: none;
@@ -11,7 +12,7 @@
 
 .fixed-top {
   //background: #f3faff;
-  background-color: #00000021;
+  background-color: '#00000021';
 }
 
 .global-desktop-body {
@@ -34,6 +35,12 @@
 .global-desktop-footer {
   @include display-child-flex(0, 1, auto, auto);
 }
+
+// @include mat-core();
+
+// $snackbar-theme: mat-palette($mat-indigo);
+
+// $mysnackbar-theme:mat-snack-bar-color($snackbar-theme);
 
 .custom-red-btn {
   color: #fff;

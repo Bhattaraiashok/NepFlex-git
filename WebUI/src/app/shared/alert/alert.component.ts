@@ -8,11 +8,15 @@ import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages"
 })
 export class AlertComponent implements OnInit {
   @Input() messageAlert: AlertMessageProperties;
-  constructor() { 
+  constructor() {
   }
 
   ngOnInit(): void {
     console.log('messageAlert', this.messageAlert);
+  }
+
+  autoFadeAlert(e: Event) {
+
   }
 
 }
