@@ -13,6 +13,8 @@ import { CoreModule } from 'app/core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
+import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
 
 @NgModule({
   declarations: [AppComponent, PagenotfoundComponent, HomeComponent],
@@ -30,7 +32,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    CanDeactivateGuardService,
+    CanActivateGuardService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

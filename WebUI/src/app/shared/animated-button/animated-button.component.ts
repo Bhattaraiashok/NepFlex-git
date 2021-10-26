@@ -3,6 +3,7 @@ import { ButtonProperties } from 'app/shared/ResourceModels/ButtonProperties';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SendEmailComponent } from 'app/shared/send-email/send-email.component';
+import { SpinnerService } from "app/shared/services/control-services/spinner.service";
 
 @Component({
   selector: 'app-animated-button',
@@ -15,7 +16,8 @@ export class AnimatedButtonComponent implements OnInit {
     ButtonProperties
     >();
   showPopUpModal: boolean = false;
-  constructor(private router: Router, private modalService: NgbModal) { }
+  constructor(private router: Router,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
     console.log('buttonCollections: ', this.buttonCollections);

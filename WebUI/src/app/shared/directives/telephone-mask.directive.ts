@@ -3,7 +3,7 @@ import { NgControl } from '@angular/forms';
 import { ISubscription } from 'rxjs/Subscription';
 
 @Directive({
-  selector: '[formControlName][phoneMask]'
+  selector: '[phoneMask]'
 })
 export class TelephoneMaskDirective implements OnInit, OnDestroy {
   private _preValue: string;

@@ -2,7 +2,6 @@
   <app-filter-box class="filter-bar" (filteredBy)="filterBy()" (closeFilterBar)="closeOverlay($event)"></app-filter-box>
   <div class="search-overlay-container">
     <div class="all-results">Total Results({{TotalCount}})</div>
-    <app-spinner [showLargeLoader]="turnLargeLoader"></app-spinner>
     <div *ngIf="!turnLargeLoader">
       <!-- <app-item-container *ngIf="TotalCount!==0" [itemResults]="searchResults"></app-item-container> -->
       <app-tab-layout *ngIf="TotalCount!==0" [tabResults]="searchResults"></app-tab-layout>

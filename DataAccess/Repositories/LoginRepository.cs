@@ -99,40 +99,40 @@ namespace NepFlex.DataAccess.Repositories
             if (_usrInfo != null)
             {
                 //user
-                if (_usrInfo.FirstName != req.UserDetail.Firstname)
+                if (_usrInfo.FirstName != req.UserDetail.Firstname && req.FieldUpdateRequest == CONST_Update_FormControlName.firstname)
                 {
-                    _usrInfo.FirstName = req.UserDetail.Firstname;
+                    _usrInfo.FirstName = !string.IsNullOrWhiteSpace(req.UserDetail.Firstname) ? req.UserDetail.Firstname : _usrInfo.FirstName;
                 }
-                if (_usrInfo.MiddleName != req.UserDetail.Middlename)
+                if (_usrInfo.MiddleName != req.UserDetail.Middlename && req.FieldUpdateRequest == CONST_Update_FormControlName.middlename)
                 {
-                    _usrInfo.MiddleName = req.UserDetail.Middlename;
+                    _usrInfo.MiddleName = !string.IsNullOrWhiteSpace(req.UserDetail.Middlename) ? req.UserDetail.Middlename : _usrInfo.MiddleName;
                 }
-                if (_usrInfo.LastName != req.UserDetail.Lastname)
+                if (_usrInfo.LastName != req.UserDetail.Lastname && req.FieldUpdateRequest == CONST_Update_FormControlName.lastname)
                 {
-                    _usrInfo.LastName = req.UserDetail.Lastname;
+                    _usrInfo.LastName = !string.IsNullOrWhiteSpace(req.UserDetail.Lastname) ? req.UserDetail.Lastname : _usrInfo.LastName;
                 }
-                if (_usrInfo.PhNumber != req.UserDetail.PhoneNumber)
+                if (_usrInfo.PhNumber != req.UserDetail.PhoneNumber && req.FieldUpdateRequest == CONST_Update_FormControlName.userphonenumber)
                 {
-                    _usrInfo.PhNumber = req.UserDetail.PhoneNumber;
+                    _usrInfo.PhNumber = !string.IsNullOrWhiteSpace(req.UserDetail.PhoneNumber) ? req.UserDetail.PhoneNumber : _usrInfo.PhNumber;
                 }
-                if (_usrInfo.Email != req.UserDetail.Email)
+                if (_usrInfo.Email != req.UserDetail.Email && req.FieldUpdateRequest == CONST_Update_FormControlName.useremail)
                 {
-                    _usrInfo.Email = req.UserDetail.Email;
+                    _usrInfo.Email = !string.IsNullOrWhiteSpace(req.UserDetail.Email) ? req.UserDetail.Email : _usrInfo.Email;
                 }
-                if (_usrInfo.ShowPhNumber != req.UserDetail.ShowPhonenumber)
+                if (_usrInfo.ShowPhNumber != req.UserDetail.ShowPhonenumber && req.FieldUpdateRequest == CONST_Update_FormControlName.showOrHideUserPhonenumber)
                 {
                     _usrInfo.ShowPhNumber = req.UserDetail.ShowPhonenumber;
                 }
-                if (_usrInfo.UserPhnCode != req.UserDetail.PhoneCountryCode)
+                if (_usrInfo.UserPhnCode != req.UserDetail.PhoneCountryCode && req.FieldUpdateRequest == CONST_Update_FormControlName.usercountryCode)
                 {
-                    _usrInfo.UserPhnCode = req.UserDetail.PhoneCountryCode;
+                    _usrInfo.UserPhnCode = !string.IsNullOrWhiteSpace(req.UserDetail.PhoneCountryCode) ? req.UserDetail.PhoneCountryCode : _usrInfo.UserPhnCode;
                 }
 
                 _usrInfo.UpdatedDate = DateTime.Now;
 
 
                 var IsSeller = req.UserDetail.IsUserSeller == true ? "yes" : "no";
-                if (_usrInfo.IsUserSeller != IsSeller)
+                if (_usrInfo.IsUserSeller != IsSeller && req.FieldUpdateRequest == CONST_Update_FormControlName.userIsSeller)
                 {
                     _usrInfo.IsUserSeller = IsSeller;
                 }
@@ -174,32 +174,32 @@ namespace NepFlex.DataAccess.Repositories
 
             if (_companyInfo != null)
             {
-                if (_companyInfo.CompanyName != req.CompanyDetails.CompanyName)
+                if (_companyInfo.CompanyName != req.CompanyDetails.CompanyName && req.FieldUpdateRequest == CONST_Update_FormControlName.companyname)
                 {
-                    _companyInfo.CompanyName = req.CompanyDetails.CompanyName;
+                    _companyInfo.CompanyName = !string.IsNullOrWhiteSpace(req.CompanyDetails.CompanyName) ? req.CompanyDetails.CompanyName : _companyInfo.CompanyName;
                 }
-                if (_companyInfo.EmailId != req.CompanyDetails.CompanyEmailID)
+                if (_companyInfo.EmailId != req.CompanyDetails.CompanyEmailID && req.FieldUpdateRequest == CONST_Update_FormControlName.companyemail)
                 {
                     //_companyInfo.EmailId = req.CompanyDetails.CompanyEmailID; //do not do this since on modify user has to look up using existing email
                 }
-                if (_companyInfo.IsActive != req.CompanyDetails.IsCompanyActive)
+                if (_companyInfo.IsActive != req.CompanyDetails.IsCompanyActive && req.FieldUpdateRequest == CONST_Update_FormControlName.isCompanyRegistered) //TODO: need to change
                 {
                     _companyInfo.IsActive = req.CompanyDetails.IsCompanyActive;
                 }
-                if (_companyInfo.IsGovRegistered != req.CompanyDetails.IsGOVRegisteredCompany)
+                if (_companyInfo.IsGovRegistered != req.CompanyDetails.IsGOVRegisteredCompany && req.FieldUpdateRequest == CONST_Update_FormControlName.isCompanyRegistered)
                 {
                     _companyInfo.IsGovRegistered = req.CompanyDetails.IsGOVRegisteredCompany;
                 }
-                if (_companyInfo.PhnCountryCode != req.CompanyDetails.PhoneCountryCode)
+                if (_companyInfo.PhnCountryCode != req.CompanyDetails.PhoneCountryCode && req.FieldUpdateRequest == CONST_Update_FormControlName.companycountryCode)
                 {
-                    _companyInfo.PhnCountryCode = req.CompanyDetails.PhoneCountryCode;
+                    _companyInfo.PhnCountryCode = !string.IsNullOrWhiteSpace(req.CompanyDetails.PhoneCountryCode) ? req.CompanyDetails.PhoneCountryCode : _companyInfo.PhnCountryCode;
                 }
-                if (_companyInfo.PhNumber != req.CompanyDetails.PhoneNumber)
+                if (_companyInfo.PhNumber != req.CompanyDetails.PhoneNumber && req.FieldUpdateRequest == CONST_Update_FormControlName.companyphonenumber)
                 {
-                    _companyInfo.PhNumber = req.CompanyDetails.PhoneNumber;
+                    _companyInfo.PhNumber = !string.IsNullOrWhiteSpace(req.CompanyDetails.PhoneNumber) ? req.CompanyDetails.PhoneNumber : _companyInfo.PhNumber;
                 }
 
-                if (_companyInfo.ShowPhNumber != req.CompanyDetails.ShowPhonenumber)
+                if (_companyInfo.ShowPhNumber != req.CompanyDetails.ShowPhonenumber && req.FieldUpdateRequest == CONST_Update_FormControlName.showOrHideCompanyPhonenumber)
                 {
                     _companyInfo.ShowPhNumber = req.CompanyDetails.ShowPhonenumber == true ? true : false;
                 }
@@ -223,7 +223,7 @@ namespace NepFlex.DataAccess.Repositories
                                 );
 
                 _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
-                _status.StrMessage.Add(result[0].VER_Detail);
+                _status.StrMessage.Add(req.FieldUpdateRequest + result[0].VER_Detail);
             }
             else
             {

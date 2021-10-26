@@ -10,19 +10,29 @@ import { ResponseObjects } from "app/shared/ResourceModels/ResponseStatus";
 import { LoginComponent } from "app/shared/login/login.component";
 import { DesktopHeaderComponent } from "app/desktop/controls/desktop-header/desktop-header.component";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { SpinnerService } from "app/shared/services/control-services/spinner.service";
+import { IDeactivateComponent } from "app/shared/guards/can-deactivate-guard.service";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, IDeactivateComponent {
+  canExit() {
+    if (this.userRegisterForm.dirty) {
+      const res = window.confirm('You have not saved changes yet. Are you sure you want to cancel?');
+      return res;
+    }
+    return true;
+  }
+
   @Output() PopUpName: string;
 
   UserRegister: UserRegister = new UserRegister();
   registerResponse: ResponseObjects;
 
-  CONSTList: CONSTList=new CONSTList();
+  CONSTList: CONSTList = new CONSTList();
 
   //two forms lined up
   userRegisterForm: FormGroup;
@@ -32,6 +42,7 @@ export class RegisterComponent implements OnInit {
   nextStepButton: ButtonProperties[] = new Array();
   registerButtton: ButtonProperties[] = new Array();
   backStepButton: ButtonProperties[] = new Array();
+  syncingButton: ButtonProperties[] = new Array();
 
   showFCError: boolean = false;
   hide = true;
@@ -43,7 +54,9 @@ export class RegisterComponent implements OnInit {
   spinnerActivated: boolean = false;
   disableBackButton: boolean = false;
   disableCurrentButton: boolean = true;
+  showSignAgreement: boolean = false;
 
+  currentStatus: string = null;
 
   companyFC: FormControl = new FormControl('');
   firstnameFC: FormControl = new FormControl('', [Validators.required]);
@@ -56,10 +69,14 @@ export class RegisterComponent implements OnInit {
   zipcodeFC: FormControl = new FormControl('');
   userEmailFC: FormControl = new FormControl('', [Validators.required, Validators.email]);
   companyEmailFC: FormControl = new FormControl('', [Validators.email]);
-  userCountryCodeFC: FormControl = new FormControl('', [Validators.pattern(/\d{3}$/)]);
-  userPhonenumberFC: FormControl = new FormControl('', [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/)]);
-  companyCountryCodeFC: FormControl = new FormControl('', [Validators.pattern(/\d{3}$/)]);
-  companyPhonenumberFC: FormControl = new FormControl('', [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/)]);
+  //userCountryCodeFC: FormControl = new FormControl('', [Validators.pattern(/\d{3}$/)]);
+  // userPhonenumberFC: FormControl = new FormControl('', [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/)]);
+  // companyCountryCodeFC: FormControl = new FormControl('', [Validators.pattern(/\d{3}$/)]);
+  // companyPhonenumberFC: FormControl = new FormControl('', [Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/)]);
+  userCountryCodeFC: FormControl = new FormControl('');
+  userPhonenumberFC: FormControl = new FormControl('');
+  companyCountryCodeFC: FormControl = new FormControl('');
+  companyPhonenumberFC: FormControl = new FormControl('');
   usernameFC: FormControl = new FormControl('', [Validators.required]);
   passwordFC: FormControl = new FormControl('', [Validators.required]);
   SellerAccountFC: FormControl = new FormControl('', [Validators.required]);
@@ -68,6 +85,9 @@ export class RegisterComponent implements OnInit {
   isCompanyRegisteredFC: FormControl = new FormControl('');
   //user agreement
   isUserAgreementCheckedFC: FormControl = new FormControl('');
+
+  //finalbutton
+  showUpdateProfileButton: boolean = false;
 
   companyFCError: string;
   firstnameFCError: string;
@@ -96,7 +116,6 @@ export class RegisterComponent implements OnInit {
   userDetail_Flow: string = "userDetail_Flow";
   askIfSeller_flow: string = "askIfSeller_flow";
   companyDetail_flow: string = "companyDetail_flow";
-  userAgreement_flow: string = "userAgreement_flow;"
 
   currentActiveStep: number = 1;
   isBackClicked: boolean = false;
@@ -123,19 +142,16 @@ export class RegisterComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private routeLink: RouteTo,
     private registerService: RegisterService,
+    private spinnerService: SpinnerService,
     private modalService: NgbActiveModal) {
   }
 
-  // ngAfterViewChecked(): void {
-  //   if (this.isBackClicked) {
-  //     this.backMappings();
-  //   }
-  // }
 
   ngOnInit(): void {
     this.createUserForm();
     this.allButtons();
     this.registrationFlow(1, null);
+    this.canExit();
   }
 
   allButtons() {
@@ -143,12 +159,8 @@ export class RegisterComponent implements OnInit {
       {
         buttonId: 1,
         buttonLabel: 'Submit',
-        isDisable: this.disableCurrentButton,
+        isDisable: (this.disableCurrentButton && !this.isUserAgreementCheckedFC.value == true) || this.spinnerActivated,
         tooltip: ((this.userRegCurrentFlow == this.usernameAndPassword_Flow) && this.disableCurrentButton) ? "Please, complete above fields to submit" : " Click here to submit.",
-        hasPopUp: false,
-        buttonRoute: '',
-        canRoute: false,
-        HasDropDown: false,
         parentEmit: true,
         spinnerActive: this.spinnerActivated
       }];
@@ -158,12 +170,7 @@ export class RegisterComponent implements OnInit {
       buttonLabel: 'Back',
       isDisable: this.disableBackButton,
       tooltip: (this.disableBackButton) ? "Back is diabled." : " Go back.",
-      hasPopUp: false,
-      buttonRoute: '',
-      canRoute: false,
-      HasDropDown: false,
       parentEmit: true,
-      spinnerActive: false
     }];
 
     this.nextStepButton = [{
@@ -171,24 +178,24 @@ export class RegisterComponent implements OnInit {
       buttonLabel: 'Next',
       isDisable: this.disableCurrentButton,
       tooltip: (this.disableCurrentButton) ? "Please, complete above fields to continue" : " Click here to continue.",
-      hasPopUp: false,
-      buttonRoute: '',
-      canRoute: false,
-      HasDropDown: false,
       parentEmit: true,
-      spinnerActive: false
     }];
 
     this.registerButtton = [{
       buttonId: 3,
       buttonLabel: 'Register Now',
-      isDisable: this.disableCurrentButton,
+      isDisable: this.disableCurrentButton && this.showUpdateProfileButton,
       tooltip: (this.disableCurrentButton) ? "Please, complete above fields to enable registration" : " Click here to register.",
-      hasPopUp: false,
-      buttonRoute: '',
-      canRoute: false,
-      HasDropDown: false,
       parentEmit: true,
+      spinnerActive: this.spinnerActivated
+    }];
+
+    this.syncingButton = [{
+      buttonId: 3,
+      buttonLabel: this.currentStatus,
+      isDisable: true,
+      tooltip: 'your changes are awaiting to saved.',
+      showButtonLabelWithSpinner: true,
       spinnerActive: this.spinnerActivated
     }];
   }
@@ -203,9 +210,6 @@ export class RegisterComponent implements OnInit {
       this.userRegCurrentFlow = this.askIfSeller_flow;
     } else if (steps == 4 && this.isASeller) {
       this.userRegCurrentFlow = this.companyDetail_flow;
-    } else if (steps == 5 || (steps == 4 && !this.isASeller)) {
-      this.userRegCurrentFlow = this.userAgreement_flow;
-      // this.createAgreementForm();
     } else {
       console.log('SOMETHING WRONG HERE !!! ', this.userRegCurrentFlow);
     }
@@ -223,6 +227,32 @@ export class RegisterComponent implements OnInit {
     this.formAndButtons();
   }
 
+  onBlurVision(event: { target; value: string },
+    formControlName: string) {
+    this.currentStatus = null;
+    this.currentStatus = 'Syncing...';
+    console.log("BLURRR");
+    const val = event.target.value;
+    if (val != null && val != "") {
+      this.userRegisterForm.get(formControlName).patchValue(val);
+      this.UserRegister.FieldUpdateRequest = formControlName;
+      this.mappings();
+      this.registerService.update(this.UserRegister).subscribe((item: ResponseObjects) => {
+        if (item.isSuccess === true) {
+          console.log(item.strMessage);
+          this.currentStatus = formControlName + ' Saved';
+          this.smallSpinner();
+          this.call_MessageAlertComponent(this.CONSTList.success, item.strMessage[0]);
+        } else {
+          this.smallSpinner();
+          console.log(item.strMessage);
+          this.currentStatus = null;
+          this.call_MessageAlertComponent(this.CONSTList.error, item.strMessage[0]);
+        }
+      });
+    }
+  }
+
   formAndButtons() {
     this.validateForm();
     this.disableCurrentButton = this.showFCError;
@@ -230,7 +260,29 @@ export class RegisterComponent implements OnInit {
       && (this.currentActiveStep !== 1 && this.currentActiveStep !== 2)) {
       this.disableBackButton = false;
     }
+
+    if ((this.userRegCurrentFlow == this.usernameAndPassword_Flow && this.currentActiveStep == 1) && this.formInitialUserCheck()) {
+      this.showSignAgreement = true;
+    }
+
+    if (this.userRegCurrentFlow == this.askIfSeller_flow && this.currentActiveStep == 3 && !this.isASeller) {
+      this.showUpdateProfileButton = true;
+    } else if (this.userRegCurrentFlow == this.companyDetail_flow && this.currentActiveStep == 4 && this.isASeller) {
+      this.showUpdateProfileButton = true;
+    }
+
     this.allButtons();
+  }
+
+  formInitialUserCheck(): boolean {
+    const result = false;
+    if ((this.userEmailFC.valid && !this.userEmailFC.hasError('email') && this.userEmailFC.value !== undefined && this.userEmailFC.value !== null && this.userEmailFC.value !== '')
+      && (this.usernameFC.valid && !this.usernameFC.hasError('required') && this.usernameFC.value !== undefined && this.usernameFC.value !== null && this.usernameFC.value !== '')
+      && (this.passwordFC.valid && !this.passwordFC.hasError('required') && this.passwordFC.value !== undefined && this.passwordFC.value !== null && this.passwordFC.value !== '')) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   backStep(e: Event) {
@@ -243,7 +295,6 @@ export class RegisterComponent implements OnInit {
     if (!this.showFCError) {
       this.currentActiveStep++;
       this.registrationFlow(this.currentActiveStep, 'next');
-      this.smallSpinner(); //spinner has to be off at next flow
     }
   }
 
@@ -352,13 +403,17 @@ export class RegisterComponent implements OnInit {
     this.formAndButtons();
   }
 
-  smallSpinner() {
-    this.spinnerActivated = !this.spinnerActivated;
-    console.log('turnOnSmallLoader :  ', this.spinnerActivated);
-  }
-
   validateForm() {
     this.showFCError = true;
+    this.userEmailFCError = '';
+    this.usernameFCError = '';
+    this.passwordFCError = '';
+    this.isUserAgreementCheckedFCError = '';
+    this.firstnameFCError = '';
+    this.lastnameFCError = '';
+    this.SellerAccountFCError = '';
+    this.companyFCError = '';
+    this.companyEmailFCError = '';
     //check intital step 1 flow:
     if (this.userRegCurrentFlow == this.usernameAndPassword_Flow && this.currentActiveStep == 1) {
       if (this.userEmailFC.invalid || this.userEmailFC.hasError('email') || this.userEmailFC.value === null || this.userEmailFC.value === '') {
@@ -370,11 +425,18 @@ export class RegisterComponent implements OnInit {
       } else if (this.passwordFC.invalid || this.passwordFC.hasError('required') || this.passwordFC.value === null || this.passwordFC.value === '') {
         this.passwordFCError = 'You must create a new password';
         return;
-      } else {
+      } else if ((this.showSignAgreement) && this.isUserAgreementCheckedFC.invalid || this.isUserAgreementCheckedFC.value === false
+        || this.isUserAgreementCheckedFC.hasError('required') || this.isUserAgreementCheckedFC.value === null || this.isUserAgreementCheckedFC.value === ''
+      ) {
+        this.isUserAgreementCheckedFCError = this.userAgreementCheckbox[0].note;
+        return;
+      }
+      else {
         this.showFCError = false;
         this.userEmailFCError = '';
         this.usernameFCError = '';
         this.passwordFCError = '';
+        this.isUserAgreementCheckedFCError = '';
       }
     }
 
@@ -419,20 +481,17 @@ export class RegisterComponent implements OnInit {
         }
       }
     }
+  }
 
-    if (this.userRegisterForm.valid && (this.currentActiveStep == 5 || (this.currentActiveStep == 4 && !this.isASeller)) && this.userRegCurrentFlow == this.userAgreement_flow) {
-      if (this.userRegisterForm.touched || this.userRegisterForm.dirty) {
-        //check step 5 -final flow check agreement:
-        if (this.isUserAgreementCheckedFC.invalid || this.isUserAgreementCheckedFC.hasError('required') || this.isUserAgreementCheckedFC.value === null || this.isUserAgreementCheckedFC.value === ''
-        ) {
-          this.isUserAgreementCheckedFCError = this.userAgreementCheckbox[0].note;
-          return;
-        } else {
-          this.showFCError = false;
-          this.isUserAgreementCheckedFCError = '';
-        }
-      }
+  smallSpinner() {
+    this.spinnerActivated = !this.spinnerActivated;
+    console.log('turnOnSmallLoader :  ', this.spinnerActivated);
+    if (this.spinnerActivated) {
+      this.spinnerActivated = this.spinnerService.showSpinner_Disabled_sm();
+    } else {
+      this.spinnerActivated = this.spinnerService.disableSpinner_Disabled_sm();
     }
+    this.allButtons();
   }
 
 
@@ -508,7 +567,7 @@ export class RegisterComponent implements OnInit {
     this.showAlertMessages = true;
     this.messageAlerts.alertType = alertType;
     this.messageAlerts.alertMsg = alertMsg;
-    this.messageAlerts.alertBtnLabel="OK";
+    this.messageAlerts.alertBtnLabel = "OK";
     this.messageAlerts.showButton = this.showAlertMessages;
   }
 

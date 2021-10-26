@@ -1,6 +1,7 @@
 export class UserRegister {
     UserDetail: UserRequest = new UserRequest();
     CompanyDetails: CompanyRequest = new CompanyRequest();
+    FieldUpdateRequest: string;
 }
 
 export class UserRequest {
@@ -14,7 +15,7 @@ export class UserRequest {
     PhoneNumber: string;
     ShowPhonenumber: boolean;
     IsUserSeller: boolean;
-    IsUserAgreementChecked:boolean;
+    IsUserAgreementChecked: boolean;
 }
 
 export class CompanyRequest {

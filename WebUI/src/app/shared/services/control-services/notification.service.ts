@@ -11,21 +11,14 @@ import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages"
   providedIn: 'root'
 })
 export class NotificationService {
-  horizontalPosition: MatSnackBarHorizontalPosition = 'start';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  // These are the option horizontalPosition = 'start' | 'center' | 'end' | 'left' | 'right';
+  //verticalPosition = 'top' | 'bottom';
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   durationInSeconds = 5;
 
   constructor(private _snackBar: MatSnackBar, private msgAlert: AlertMessageProperties) { }
-
-  // showNotification(displayMsg: string, buttonText: string) {
-  //   this._snackBar.open(displayMsg, buttonText, {
-  //     duration: this.durationInSeconds * 1000, //5 sec
-  //     horizontalPosition: this.horizontalPosition,
-  //     verticalPosition: this.verticalPosition,
-  //   });
-  // }
-
   //format of alert as of now
   // msgAlert.alertType = alertType;
   // msgAlert.alertMsg = alertMsg;

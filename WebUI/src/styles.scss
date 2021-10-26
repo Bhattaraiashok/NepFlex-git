@@ -14,9 +14,31 @@ body {
   /* width: 100%;
     height:100%; */
 }
+
 html {
   height: 100%;
 }
+
+.txt-ucase_header{
+  color: #17a2b8!important;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 0.5rem;
+}
+
+.txt-info-notes{
+  color: #939393 !important;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+
+.txt-diabled-saving{
+  color: #939393;
+  font-style: italic;
+  font-family: serif;
+}
+
 .home-load-spinner {
   border-left: 16px solid #38b5bb;
   border-right: 16px solid #ce7508;
@@ -38,37 +60,6 @@ html {
   animation: spin 2s linear infinite; */
 }
 
-.loader-lg {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #697b87;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  background: #ffffff;
-  animation: spin 2s linear infinite;
-  top: 50%;
-  /*margin-top: 5em;
-  left: 50%;
-  margin-left: -100px;*/
-  position: relative;
-  text-align: center;
-}
-.loader-sm {
-  width: 43px;
-  height: 42px;
-  background: #ffffff;
-  border: 16px solid #56bbcb; /* Light grey */
-  border-top: 16px solid #d98e05;
-  border-radius: 50%;
-  animation: spin 2s linear infinite;
-  top: 50%;
-  /*margin-top: 5em;
-  left: 50%;
-  margin-left: -100px;*/
-  position: relative;
-  text-align: center;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -78,13 +69,22 @@ html {
   }
 }
 
+.cdk-overlay-container {
+    z-index: 10000;
+}
+
 .error.mat-snack-bar-container{
-  background: #dc3545;
+  background: #f44336;
   color: white;
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
   font-family: ui-sans-serif;
   text-transform: uppercase;
   font-weight: bold;
+  font-size: 0.8rem;
+}
+.error-input{
+  color: #e31414;
+  font-style: italic;
 }
 
 .success.mat-snack-bar-container{
@@ -94,6 +94,7 @@ html {
   font-family: ui-sans-serif;
   text-transform: uppercase;
   font-weight: bold;
+  font-size: 0.8rem;
 }
 
 .info.mat-snack-bar-container{
@@ -103,6 +104,7 @@ html {
   font-family: ui-sans-serif;
   text-transform: uppercase;
   font-weight: bold;
+  font-size: 0.8rem;
 }
 
 .failure.mat-snack-bar-container{
@@ -112,6 +114,7 @@ html {
   font-family: ui-sans-serif;
   text-transform: uppercase;
   font-weight: bold;
+  font-size: 0.8rem;
 }
 
 .warning.mat-snack-bar-container{
@@ -121,4 +124,5 @@ html {
   font-family: ui-sans-serif;
   text-transform: uppercase;
   font-weight: bold;
+  font-size: 0.8rem;
 }

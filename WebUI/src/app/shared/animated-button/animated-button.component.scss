@@ -19,10 +19,15 @@
 .animated-button-container {
   @include display-parent-flex(row, nowrap, flex-start, flex-start, flex-start);
 }
+.disable{
+    background-color: rgba(0, 0, 0, 0.12);
+    cursor: not-allowed;
+    border-radius: 2em;
+  }
 
 //---------------wehen all good with button------------------------------------------------
-div.animBtn,
-div.animBtn:visited {
+button.animBtn,
+button.animBtn:visited {
   @include display-child-flex(1, 1, auto, auto);
   margin-right: 1em;
   position: relative;
@@ -38,6 +43,7 @@ div.animBtn:visited {
   letter-spacing: 0.08em;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  border: none;
   @include display-child-flex(1, 1, auto, auto);
 
   &:after {
@@ -69,15 +75,15 @@ div.animBtn:visited {
   }
 }
 
-div.animBtn {
+button.animBtn {
   &.themeA:after {
     transform: translateX(-50%) translateY(-50%) rotate(-45deg);
   }
 }
 
 //// -------------------when button are disabled-------------------------------------------------------
-div.disBtn,
-div.disBtn:visited {
+button.disBtn,
+button.disBtn:visited {
   @include display-child-flex(1, 1, auto, auto);
   margin-right: 1em;
   position: relative;
@@ -94,6 +100,7 @@ div.disBtn:visited {
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
   cursor: not-allowed;
+  border: none;
   @include display-child-flex(1, 1, auto, auto);
 
   &:after {
@@ -109,7 +116,7 @@ div.disBtn:visited {
   }
 }
 
-div.disBtn {
+button.disBtn {
   &.disA:after {
     transform: translateX(-50%) translateY(-50%) rotate(-45deg);
   }

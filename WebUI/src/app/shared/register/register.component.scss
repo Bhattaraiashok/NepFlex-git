@@ -41,6 +41,26 @@
   }
 
   //////////////
+  .registration-form{
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    margin-bottom: 8em;
+    margin-top: 5em;
+  }
+  .register-form{
+  min-width: 150px;
+  //max-width: 33%;
+  width: 100%;
+  margin-top: 0.5rem;
+  background: '#ffffff57';
+  align-items: center;
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  box-sizing: border-box;
+}
+
   .info-blocks {
   @include display-parent-flex(row,nowrap,flex-start,flex-start,flex-start);
 }

@@ -21,9 +21,9 @@
 
           <div class="form-group">
             <label for="remember-me" class="text-info"><span>Remember me</span> <span>
-              <input id="remember-me" name="remember-me" type="checkbox" formControlName="isRememberMe" (change)="onchangeform($event,'isRememberMe')"></span></label><br>
-          <app-spinner [showSmallLoader]="spinnerActivated"></app-spinner>
-            <app-animated-button *ngIf="!spinnerActivated" 
+              <input id="remember-me" name="remember-me" type="checkbox" formControlName="isRememberMe" (change)="onchangeform($event,'isRememberMe')"></span></label><br>        
+            <!--<app-spinner *ngIf="spinnerActivated"></app-spinner>-->
+            <app-animated-button
             [buttonCollections]="loginComponentButttons" 
             (ParentEmitter)="validateForm($event)"></app-animated-button>
           </div>
@@ -37,7 +37,7 @@
 </div>
 <!--<app-alert *ngIf="showAlertMessages" [messageAlert]="messageAlerts"></app-alert>-->
 
-<app-snackbar-alert *ngIf="showAlertMessages" [snackbarMsg]="messageAlerts"></app-snackbar-alert>
+<!--<app-snackbar-alert *ngIf="showAlertMessages" [snackbarMsg]="messageAlerts"></app-snackbar-alert>-->
 
 <!--<div id="login">
   <h3 class="text-center text-white">Login form</h3>

@@ -13,6 +13,7 @@ namespace NepFlex.Core.Entities.ResourceModels
     {
         public UserRegisterRequest UserDetail { get; set; }
         public CompanyRegisterRequest CompanyDetails { get; set; }
+        public string FieldUpdateRequest { get; set; }
     }
 
     public class UserRegisterRequest : IdentityUser
@@ -89,5 +90,31 @@ namespace NepFlex.Core.Entities.ResourceModels
     public class UID
     {
         public string UserID { get; set; }
+    }
+
+    public class CONST_Update_FormControlName
+    {
+        public readonly static string firstname = "firstname";
+        public readonly static string middlename = "middlename";
+        public readonly static string lastname = "lastname";
+        public readonly static string useremail = "useremail";
+        public readonly static string usercountryCode = "usercountryCode";
+        public readonly static string userphonenumber = "userphonenumber";
+        public readonly static string username = "username";
+        public readonly static string password = "password";
+        public readonly static string userIsSeller = "userIsSeller";
+        public readonly static string showOrHideUserPhonenumber = "showOrHideUserPhonenumber";
+        public readonly static string isUserAgreementChecked = "isUserAgreementChecked";
+        public readonly static string companyname = "companyname";
+        public readonly static string address = "address";
+        public readonly static string address2 = "address2";
+        public readonly static string city = "city";
+        public readonly static string state = "state";
+        public readonly static string zipcode = "zipcode";
+        public readonly static string companyemail = "companyemail";
+        public readonly static string companycountryCode = "companycountryCode";
+        public readonly static string companyphonenumber = "companyphonenumber";
+        public readonly static string isCompanyRegistered = "isCompanyRegistered";
+        public readonly static string showOrHideCompanyPhonenumber = "showOrHideCompanyPhonenumber";
     }
 }

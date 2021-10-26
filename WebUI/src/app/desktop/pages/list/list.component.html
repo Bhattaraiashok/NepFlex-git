@@ -15,16 +15,13 @@
   </div>
 </div>-->
 
-
- 
-
 <div class="global-desktop-container w-100">
   <div class="body-container">
     <div class="adCategory"></div>
     <div class="info-blocks">
       <div class="terms-of-use-info" id="aboutUsInfo">
-         <app-spinner [showLargeLoader]="turnLargeLoader"></app-spinner>
-        <app-tab-layout *ngIf="TotalCount!==0 && !turnLargeLoader" [tabResults]="searchResults"></app-tab-layout>
+        <app-spinner *ngIf="spinner"></app-spinner>
+        <app-tab-layout *ngIf="TotalCount!==0 && !spinner" [tabResults]="searchResults"></app-tab-layout>
       </div>
     </div>
   </div>

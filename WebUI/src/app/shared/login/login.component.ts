@@ -8,16 +8,25 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AlertMessageProperties, CONSTList } from "app/shared/ResourceModels/AlertMessages";
 import { ButtonProperties } from "app/shared/ResourceModels/ButtonProperties";
 import { NotificationService } from "app/shared/services/control-services/notification.service";
+import { SpinnerService } from "app/shared/services/control-services/spinner.service";
+import { IDeactivateComponent } from "app/shared/guards/can-deactivate-guard.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, IDeactivateComponent {
+  canExit() {
+    if (this.loginForm.dirty) {
+      const res = window.confirm('You have not saved changes yet. Are you sure you want to cancel?');
+      return res;
+    }
+    return true;
+  }
   loginRequest: LoginRequest = new LoginRequest();
   loginResponse: LoginResponse = new LoginResponse();
   messageAlerts: AlertMessageProperties = new AlertMessageProperties();
-  CONSTList: CONSTList=new CONSTList();
+  CONSTList: CONSTList = new CONSTList();
   loginComponentButttons: ButtonProperties[] = new Array();
   showAlertMessages: boolean = false;
   showFCError: boolean = false;
@@ -46,9 +55,10 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private routeLink: RouteTo,
     private loginService: LoginService,
+    private spinnerService: SpinnerService,
     private modalService: NgbActiveModal,
     private notificationService: NotificationService) {
-    this.passwordFC.disable(true)
+    this.passwordFC.disable()
     this.createForm();
   }
 
@@ -61,13 +71,14 @@ export class LoginComponent implements OnInit {
       {
         buttonId: 1,
         buttonLabel: 'Login',
-        isDisable: (!this.loginForm.valid && this.disableLoginButton),
+        isDisable: (!this.loginForm.valid && this.disableLoginButton) || this.spinnerActivated,
         tooltip: (!this.loginForm.valid && this.disableLoginButton) ? "Please, provide login info." : " Click here to login.",
         hasPopUp: false,
         buttonRoute: '',
         canRoute: false,
         HasDropDown: false,
-        parentEmit: true
+        parentEmit: true,
+        spinnerActive: this.spinnerActivated
       }
     ];
   }
@@ -83,6 +94,12 @@ export class LoginComponent implements OnInit {
   smallSpinner() {
     this.spinnerActivated = !this.spinnerActivated;
     console.log('turnOnSmallLoader :  ', this.spinnerActivated);
+    if (this.spinnerActivated) {
+      this.spinnerActivated = this.spinnerService.showSpinner_Disabled_sm();
+    } else {
+      this.spinnerActivated = this.spinnerService.disableSpinner_Disabled_sm();
+    }
+    this.allButtons();
   }
 
   validateForm(e: Event) {
@@ -122,7 +139,7 @@ export class LoginComponent implements OnInit {
         this.call_MessageAlertComponent(this.CONSTList.info, this.usernameFCError);
         return;
       } else if (
-        this.passwordFC.invalid && this.passwordFC.enabled==true &&
+        this.passwordFC.invalid && this.passwordFC.enabled == true &&
         this.passwordFC.hasError('required')
       ) {
         this.passwordFCError = "You must enter Password.";
@@ -130,13 +147,13 @@ export class LoginComponent implements OnInit {
         return;
       } else {
         this.passwordFCError = '';
-        this.passwordFC.enable(true);
+        this.passwordFC.enable();
       }
     } else {
       this.showFCError = false;
       this.passwordFCError = '';
       this.usernameFCError = '';
-      this.passwordFC.enable(true);
+      this.passwordFC.enable();
       return;
     }
   }

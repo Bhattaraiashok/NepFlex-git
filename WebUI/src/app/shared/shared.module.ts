@@ -14,7 +14,7 @@ import { SpinnerComponent } from 'app/shared/spinner/spinner.component';
 import { CloudSpinnerComponent } from './spinner/cloud-spinner/cloud-spinner.component';
 import { ModalComponent } from './modal/modal.component';
 import { DetailService } from 'app/shared/services/detail.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CamelCase } from 'app/shared/pipes/camelcase.pipe';
 import { AnimatedButtonComponent } from './animated-button/animated-button.component';
 import { ButtonProperties } from 'app/shared/ResourceModels/ButtonProperties';
@@ -74,6 +74,8 @@ import { TelephoneMaskDirective } from './directives/telephone-mask.directive';
 import { AlertComponent } from './alert/alert.component';
 import { NotifierComponent } from './notifier/notifier.component';
 import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
+// import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
+// import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
 
 @NgModule({
   imports: [
@@ -83,7 +85,6 @@ import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages"
     CommonModule,
     ReactiveFormsModule,
     NgbModule,
-
     // angular -material
     MatAutocompleteModule,
     MatBadgeModule,
@@ -150,6 +151,7 @@ import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages"
     NotifierComponent
   ],
   providers: [
+    NgbActiveModal,
     ReportService,
     SearchService,
     DetailService,
@@ -158,6 +160,7 @@ import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages"
     ButtonProperties,
     SearchStringQuery,
     OverlayComponent,
+    SpinnerComponent,
     CarouselComponent,
     HomeService,
     SearchString,
@@ -196,4 +199,4 @@ import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages"
     RegisterComponent
   ]
 })
-export class SharedModule {}
+export class SharedModule { }
