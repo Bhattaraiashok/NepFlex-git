@@ -69,11 +69,10 @@ namespace Nepflex.ServiceAPI.Controllers
             Console.WriteLine("came here in login");
             try
             {
-                var results = new UserLoginResponse
+                ResponseStatus _status = new ResponseStatus
                 {
                     IsSuccess = false,
-                    StrMessage = new List<string>(),
-                    IsAuthenticated = false
+                    StrMessage = new List<string>()
                 };
                 //put if else to check userID if not use email or phone number, phn number are unique on the table too.
                 var processResult = await signInManager.PasswordSignInAsync(login.UserID, login.UserPSWD, login.IsRememberMe, shouldLockout: false);
@@ -81,25 +80,25 @@ namespace Nepflex.ServiceAPI.Controllers
                 {
                     case SignInStatus.Success:
                         var _userDetail = signInManager.UserManager.Users.Where(x => x.UserName == login.UserID).FirstOrDefault();
-                        results = _loginService.UserLoginProcess(login, _userDetail);
-                        if (results.IsSuccess == false)
+                        _status = _loginService.UserLoginProcess(login, _userDetail);
+                        if (_status.IsSuccess == false)
                         {
                             authenticationManager.SignOut();
                         }
-                        return Ok(results);
+                        return Ok(_status);
                     case SignInStatus.LockedOut:
-                        results.StrMessage.Add("Opps! you are locked out.");
-                        results.IsSuccess = false;
-                        return Ok(results);
+                        _status.StrMessage.Add("Opps! you are locked out.");
+                        _status.IsSuccess = false;
+                        return Ok(_status);
                     case SignInStatus.RequiresVerification:
-                        return Ok(results);
+                        return Ok(_status);
                     // return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                     case SignInStatus.Failure:
-                        results.StrMessage.Add("Login failed. please enter username and password correctly.");
-                        results.IsSuccess = false;
-                        return Ok(results);
+                        _status.StrMessage.Add("Login failed. please enter username and password correctly.");
+                        _status.IsSuccess = false;
+                        return Ok(_status);
                     default:
-                        results.StrMessage.Add("Invalid Login Attempts...");
+                        _status.StrMessage.Add("Invalid Login Attempts...");
                         return BadRequest();
                 }
             }

@@ -87,9 +87,22 @@ namespace NepFlex.Core.Entities.ResourceModels
         public DateTime? TimeStamp { get; set; }
     }
 
-    public class UID
+    public class UID : UserBaseResponse
     {
         public string UserID { get; set; }
+    }
+
+    public class UserBaseResponse
+    {
+        public bool UserIsLoggedIn { get; set; }
+        public bool IsAuthenticated { get; set; }
+        public string IPFound { get; set; }
+        public string LocationFound { get; set; }
+        public string FE_SessionID { get; set; }
+        public string BE_SessionID { get; set; }
+        public List<string> RestrictPages { get; set; }
+        public string AssignedAuthToken { get; set; }
+        public string UserHasSellerAC { get; set; }
     }
 
     public class CONST_Update_FormControlName

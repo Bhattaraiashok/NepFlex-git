@@ -70,10 +70,9 @@ namespace NepFlex.Core.Entities.ResourceModels
             {
                 Messages msg = new Messages();
                 var responseMessage = msg.ResponseMessageList.Find(x => x.Code == code);
-                List<string> responseMsgs = new List<string>
-                                                {
-                                                    responseMessage.Message
-                                                };
+                List<string> responseMsgs = new List<string>();
+
+                responseMsgs.Add(responseMessage.Message);
 
                 if (responseMessage != null)
                 {
@@ -178,6 +177,9 @@ namespace NepFlex.Core.Entities.ResourceModels
 
         public readonly static string USER_PROFILE_CONST_SUCCESS = "USER_PROFILE_CONST_SUCCESS";
         public readonly static string USER_PROFILE_CONST_FAILURE = "USER_PROFILE_CONST_FAILURE";
+
+        public readonly static string COMPANY_UPDATE_CONST_SUCCESS = "COMPANY_UPDATE_CONST_SUCCESS";
+        public readonly static string COMPANY_UPDATE_CONST_FAILURE = "COMPANY_UPDATE_CONST_FAILURE";
 
         //PAGESstatic
         public readonly static string PAGE_SEARCH_CONST = "PAGE_SEARCH_CONST";

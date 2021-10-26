@@ -45,12 +45,14 @@ namespace NepFlex.Core.Entities.ResourceModels
                 new ResponseMessages{Code=ConstList.SYS_OBJ_CONST_FAILURE, Returned=false, Type="error", Message="System Error, Please try again."},
                 //Auth
                 new ResponseMessages{Code=ConstList.ROLE_USER_RES_CONST_FAILURE, Returned=false, Type="error", Message="User is not able to authorize."},
-                //login-register
+                //login-register-update
                 new ResponseMessages{Code=ConstList.USER_LOGIN_CONST_SUCCESS, Returned=true, Type="success", Message="Login successful."},
                 new ResponseMessages{Code=ConstList.USER_LOGIN_CONST_FAILURE, Returned=false, Type="error", Message="Login failed."},
                 new ResponseMessages{Code=ConstList.COMPANY_LOGIN_CONST_FAILURE, Returned=false, Type="error", Message="Login attempt: failed."},
+                new ResponseMessages{Code=ConstList.COMPANY_UPDATE_CONST_SUCCESS, Returned=true, Type="success", Message="Successfully, company profile updated."},
+                new ResponseMessages{Code=ConstList.COMPANY_UPDATE_CONST_FAILURE, Returned=false, Type="error", Message="Failed to update company profile."},
 
-                new ResponseMessages{Code=ConstList.USER_UPDATE_CONST_SUCCESS, Returned=true, Type="success", Message="Successfully, User info updated."},
+                new ResponseMessages{Code=ConstList.USER_UPDATE_CONST_SUCCESS, Returned=true, Type="success", Message="Successfully, user info updated."},
                 new ResponseMessages{Code=ConstList.USER_UPDATE_CONST_FAILURE, Returned=false, Type="error", Message="Issue occured when updating Your changes."},
                 new ResponseMessages{Code=ConstList.USER_PROFILE_CONST_SUCCESS, Returned=true, Type="success", Message="Successfully, your Profile is updated."},
                 new ResponseMessages{Code=ConstList.USER_PROFILE_CONST_FAILURE, Returned=false, Type="error", Message="User profile not found."},

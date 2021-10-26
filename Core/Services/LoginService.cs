@@ -16,7 +16,7 @@ namespace NepFlex.Core.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public UserLoginResponse UserLoginProcess(UserLogin login, ApplicationUser req2)
+        public ResponseStatus UserLoginProcess(UserLogin login, ApplicationUser req2)
         {
             return _unitOfWork.LoginRepository.UserLoginProcess(login, req2);
         }
