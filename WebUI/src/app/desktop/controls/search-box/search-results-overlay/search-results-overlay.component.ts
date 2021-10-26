@@ -14,6 +14,7 @@ import { OrderByPipe } from 'app/shared/pipes/order-by.pipe';
 import { FilterByPipe } from 'app/shared/pipes/filter-by.pipe';
 import { FilteringSearch } from 'app/shared/ResourceModels/FilteringSearch';
 import { SearchService } from '../../../../shared/services/search.service';
+import { SpinnerService } from "app/shared/services/control-services/spinner.service";
 
 @Component({
   selector: 'app-search-results-overlay',
@@ -31,14 +32,16 @@ export class SearchResultsOverlayComponent
 
   constructor(
     private searchService: SearchService,
-    private filtering: FilteringSearch
+    private filtering: FilteringSearch,
+    private spinnerService: SpinnerService
   ) {
     this.turnLargeLoader = true;
+    this.spinnerService.showSpinner_lg();
   }
   ngAfterViewInit(): void {
     this.searching();
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
     this.searching();
@@ -49,6 +52,7 @@ export class SearchResultsOverlayComponent
 
   filterBy() {
     this.turnLargeLoader = true;
+    this.spinnerService.showSpinner_lg();
     const pipe = new FilterByPipe();
     this.searchResults = this.searchResponse; // I have to always pretend fresh copy
     const field: string = this.filtering.field.toLowerCase();
@@ -86,6 +90,7 @@ export class SearchResultsOverlayComponent
         break;
     }
     this.turnLargeLoader = false;
+    this.spinnerService.disableSpinner_lg();
   }
 
   searching() {

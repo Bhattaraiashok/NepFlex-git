@@ -13,7 +13,8 @@
 .left-section {
   @include display-child-flex(0,1,auto,auto);
   @include display-parent-flex(column,nowrap,flex-start,flex-start,flex-start);
-  margin-right: 4em;
+  // margin-right: 4em;
+  float: left;
 }
 .right-section {
   @include display-child-flex(0,1,auto,auto);

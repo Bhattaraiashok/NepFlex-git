@@ -1,6 +1,13 @@
 using System;
+using Microsoft.Owin.Security;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using Nepflex.ServiceAPI.Identity;
+using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Nepflex.ServiceAPI.Models;
+using NepFlex.Core.Entities.ResourceModels;
 
 namespace Nepflex.ServiceAPI.App_Start
 {
@@ -37,6 +44,18 @@ namespace Nepflex.ServiceAPI.App_Start
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<ApplicationDbContext>();
+            container.RegisterType<ApplicationSignInManager>();
+            container.RegisterType<ApplicationUserManager>();
+            container.RegisterType<EmailService>();
+
+            container.RegisterType<IAuthenticationManager>(
+                new InjectionFactory(c => HttpContext.Current.GetOwinContext().Authentication)
+                );
+
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(
+                new InjectionConstructor(typeof(ApplicationDbContext)));
+
             DependencyResolution.UnityConfig.RegisterTypes(container);
         }
     }

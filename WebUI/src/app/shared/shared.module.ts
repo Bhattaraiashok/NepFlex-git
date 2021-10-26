@@ -14,7 +14,7 @@ import { SpinnerComponent } from 'app/shared/spinner/spinner.component';
 import { CloudSpinnerComponent } from './spinner/cloud-spinner/cloud-spinner.component';
 import { ModalComponent } from './modal/modal.component';
 import { DetailService } from 'app/shared/services/detail.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CamelCase } from 'app/shared/pipes/camelcase.pipe';
 import { AnimatedButtonComponent } from './animated-button/animated-button.component';
 import { ButtonProperties } from 'app/shared/ResourceModels/ButtonProperties';
@@ -67,6 +67,15 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { ChildDropdownComponent } from './dropdown/child-dropdown/child-dropdown.component';
 import { AutoCompleteSearchboxComponent, SearchString } from './auto-complete-searchbox/auto-complete-searchbox.component';
 import { TabLayoutComponent } from './tab-layout/tab-layout.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { RouteTo } from './interfaces/local-router';
+import { TelephoneMaskDirective } from './directives/telephone-mask.directive';
+import { AlertComponent } from './alert/alert.component';
+import { NotifierComponent } from './notifier/notifier.component';
+import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
+// import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
+// import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
 
 @NgModule({
   imports: [
@@ -76,7 +85,6 @@ import { TabLayoutComponent } from './tab-layout/tab-layout.component';
     CommonModule,
     ReactiveFormsModule,
     NgbModule,
-
     // angular -material
     MatAutocompleteModule,
     MatBadgeModule,
@@ -135,9 +143,15 @@ import { TabLayoutComponent } from './tab-layout/tab-layout.component';
     ChildDropdownComponent,
     AnimatedButtonComponent,
     AutoCompleteSearchboxComponent,
-    TabLayoutComponent
+    TabLayoutComponent,
+    LoginComponent,
+    RegisterComponent,
+    TelephoneMaskDirective,
+    AlertComponent,
+    NotifierComponent
   ],
   providers: [
+    NgbActiveModal,
     ReportService,
     SearchService,
     DetailService,
@@ -146,9 +160,12 @@ import { TabLayoutComponent } from './tab-layout/tab-layout.component';
     ButtonProperties,
     SearchStringQuery,
     OverlayComponent,
+    SpinnerComponent,
     CarouselComponent,
     HomeService,
     SearchString,
+    RouteTo,
+    AlertMessageProperties,
     HTTPHeader,
     {
       provide: MAT_CHIPS_DEFAULT_OPTIONS,
@@ -177,7 +194,9 @@ import { TabLayoutComponent } from './tab-layout/tab-layout.component';
     ChildDropdownComponent,
     AnimatedButtonComponent,
     AutoCompleteSearchboxComponent,
-    TabLayoutComponent
+    TabLayoutComponent,
+    LoginComponent,
+    RegisterComponent
   ]
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -1,15 +1,19 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 @Injectable()
 export class ButtonProperties {
   buttonId: number;
   buttonLabel?: string;
   buttonRoute?: string;
   canRoute?: boolean;
+  isDisable?: boolean;
+  tooltip?: string;
   HasDropDown?: boolean;
-  DropDownList?: [{ id: number; label: string; url: string }];
+  DropDownList?: DropDownList[];
   hasPopUp?: boolean;
   popUpName?: string;
   parentEmit?: boolean;
+  spinnerActive?: boolean;
+  showButtonLabelWithSpinner?: boolean;
 }
 
 export class HeadersNavigation {
@@ -23,9 +27,7 @@ export class HeadersNavigation {
 
 export class DropDownList {
   id?: number;
-  // label?: string;
-  // url?: string;
-  // children?: DropDownList[];
+  parentLabel?: string;
   displayName: string;
   disabled?: boolean;
   iconName?: string;

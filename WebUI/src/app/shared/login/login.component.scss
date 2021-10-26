@@ -1,0 +1,45 @@
+// @import '../../../Style/styles.scss';
+
+// #login .container #login-row #login-column #login-box {
+//   margin-top: 120px;
+//   max-width: 600px;
+//   height: 320px;
+//   border: 1px solid #9C9C9C;
+//   background-color: #EAEAEA;
+// }
+// #login .container #login-row #login-column #login-box #login-form {
+//   padding: 20px;
+// }
+// #login .container #login-row #login-column #login-box #login-form #register-link {
+//   margin-top: -85px;
+// }
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.pass_show:before {
+  font-family: 'FontAwesome';
+  position: relative;
+  content: "\f06e";
+}
+
+.pass_hide:before {
+  font-family: 'FontAwesome';
+  position: relative;
+  content: "\f070";
+}
+
+.custom-search-glyphicon {
+  width: 1em;
+  margin: 0px;
+  float: right;
+  color: #0404047d;
+  cursor: pointer;
+}

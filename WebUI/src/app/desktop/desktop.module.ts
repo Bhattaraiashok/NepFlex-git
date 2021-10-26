@@ -6,6 +6,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { DesktopPageModule } from 'app/desktop/pages/desktop-page.module';
 import { HomeDesktopComponent } from 'app/desktop/pages/home-desktop/home-desktop.component';
 import { DesktopControlModule } from 'app/desktop/controls/desktop-control.module';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { DesktopControlModule } from 'app/desktop/controls/desktop-control.modul
     DesktopPageModule,
     DesktopControlModule
   ],
-  declarations: [],
+  declarations: [RegisterUserComponent],
   exports: [HomeDesktopComponent],
   providers: []
 })

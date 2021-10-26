@@ -69,7 +69,7 @@ export class AboutUsComponent implements OnInit {
 
       <p>&nbsp;</p>
       <p>
-        <a href="termsofuse"> See Terms and Condition</a>
+        <a href="terms-of-use"> See Terms and Condition</a>
       </p>
       <p>&nbsp;</p>
       <p>GOOD LUCK.</p>

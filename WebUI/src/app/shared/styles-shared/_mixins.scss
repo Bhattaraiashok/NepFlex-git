@@ -31,3 +31,11 @@
     -ms-flex-item-align: $align-self;
     align-self: $align-self;
   }
+
+  @mixin clearfix() {
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+}

@@ -1,0 +1,109 @@
+<div class="registration-form global-desktop-container w-100">
+  <div class="body-container">
+    <form [formGroup]="userRegisterForm" class="form register-form container">
+      <h3 class="text-center text-info txt-ucase_header">Register</h3>
+      <div class="txt-info-notes">Please provide info on below fields in order to register the acount.
+        <br/>You have the option to choose whether or not you want to register as seller.</div>
+      <!--<span *ngIf="preStartSaving" class="spinner-border spinner-border-sm txt-diabled-saving">Saving...</span>-->
+
+      <app-animated-button *ngIf="currentStatus !==null" [buttonCollections]="syncingButton"></app-animated-button>
+      <!--user reg-->
+      <div *ngIf="userRegCurrentFlow == usernameAndPassword_Flow">
+
+        <app-text-area data-test-id="user_email" placeholder='Email' formControlName="useremail" textType='email' (newData)="onchangeform($event,'useremail')"
+          (blur)="onBlurVision()"></app-text-area>
+        <mat-error *ngIf="showFCError" class="error-input">{{emailFCError}}</mat-error>
+
+        <app-text-area data-test-id="user_username" placeholder='Username' formControlName="username" textType='text' (newData)="onchangeform($event,'username')"></app-text-area>
+        <mat-error *ngIf="showFCError" class="error-input">{{usernameFCError}}</mat-error>
+
+        <app-text-area data-test-id="user_Password" placeholder='Password' formControlName="password" [textType]="hide ? 'password' : 'text'"
+          (newData)="onchangeform($event,'password')"></app-text-area>
+        <mat-error *ngIf="showFCError" class="error-input">{{passwordFCError}}</mat-error>
+
+        <div *ngIf="showSignAgreement">
+          <mat-card>
+            <section class="example-section">
+              <h4>Agree to terms and conditions</h4>
+              <div *ngFor="let item of userAgreementCheckbox;  let i = index">
+                <mat-checkbox [checked]="item.isChecked === true" formControlName="isUserAgreementChecked" (change)="onChange_ToUserAgreementCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+                <mat-error *ngIf="showFCError" class="error-input">{{isUserAgreementCheckedFCError}}</mat-error>
+              </div>
+            </section>
+          </mat-card>
+        </div>
+
+        <app-animated-button [buttonCollections]="submitStepButton" (ParentEmitter)="submit($event)"></app-animated-button>
+      </div>
+
+      <!--user detail reg-->
+      <div class="mb-1" *ngIf="userRegCurrentFlow==userDetail_Flow">
+        <h4>To create your profile, we need some info:</h4>
+        <app-text-area data-test-id="user_firstname" placeholder='First Name' formControlName="firstname" textType='text' (newBluredData)="onBlurVision($event,'firstname')"></app-text-area>
+        <mat-error *ngIf="showFCError" class="error-input">{{firstnameFCError}}</mat-error>
+        <app-text-area data-test-id="user_middlename" placeholder='Middle Name' formControlName="middlename" textType='text' (newBluredData)="onBlurVision($event,'middlename')"></app-text-area>
+        <app-text-area data-test-id="user_lastname" placeholder='Last Name' formControlName="lastname" textType='text' (newBluredData)="onBlurVision($event,'lastname')"></app-text-area>
+        <mat-error *ngIf="showFCError" class="error-input">{{lastnameFCError}}</mat-error>
+
+        <section class="example-section">
+          <h4>show or hide your phone number on your profile?</h4>
+          <div *ngFor="let item of userChoiceOnPhonenumber;  let i = index">
+            <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeUserPhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+          </div>
+          <app-text-area data-test-id="user_countryCode" placeholder='Country Code' formControlName="usercountryCode" textType=number
+            (newBluredData)="onBlurVision($event,'usercountryCode')"></app-text-area>
+          <mat-error *ngIf="showFCError" class="error-input">{{countryCodeFCError}}</mat-error>
+          <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="userRegisterForm.value.userphonenumber"
+            formControlName="userphonenumber" maxlength="14" (newBluredData)="onBlurVision($event,'userphonenumber')" />
+          <!--<app-text-area data-test-id="user_phonenumber" placeholder='Phone Number' formControlName="userphonenumber" textType='tel' (newData)="onBlurVision($event,'userphonenumber')"></app-text-area>-->
+        </section>
+        <app-animated-button [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
+      </div>
+
+      <!--user ask if seller reg-->
+      <div class="mb-1" *ngIf="userRegCurrentFlow == askIfSeller_flow">
+        <section class="example-section">
+          <h4>Are you also registering this account as Seller?</h4>
+          <div *ngFor="let item of isUserASellerCheckbox;  let i = index">
+            <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeSellerCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+          </div>
+        </section>
+        <app-animated-button [buttonCollections]="backStepButton" (ParentEmitter)="backStep($event)"></app-animated-button>
+        <app-animated-button *ngIf="isASeller" [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
+      </div>
+
+      <!--company detail reg-->
+      <div *ngIf="isASeller && userRegCurrentFlow==companyDetail_flow">
+        <!--<mat-card class="mb-1">-->
+        <h4>Company Details:</h4>
+        <app-text-area *ngIf="isASeller" data-test-id="user_company" placeholder='Company Name' formControlName="companyname" textType='text'
+          (newBluredData)="onBlurVision($event,'companyname')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{companyFCError}}</mat-error>
+        <app-text-area *ngIf="isASeller" data-test-id="user_address" placeholder='Address' formControlName="address" textType='text'
+          (newBluredData)="onBlurVision($event,'address')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{addressFCError}}</mat-error>
+        <app-text-area data-test-id="company_email" placeholder='Company Email' formControlName="companyemail" textType='email' (newBluredData)="onBlurVision($event,'companyemail')"></app-text-area>
+        <mat-error *ngIf="showFCError">{{companyEmailFCError}}</mat-error>
+        <mat-card>
+          <section class="example-section">
+            <h4>show or hide company phone number on your profile?</h4>
+            <div *ngFor="let item of companyChoiceOnPhonenumber;  let i = index">
+              <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeCompanyPhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+            </div>
+            <app-text-area data-test-id="company_countryCode" placeholder='Country Code' formControlName="companycountryCode" textType=number
+              (newBluredData)="onBlurVision($event,'companycountryCode')"></app-text-area>
+            <mat-error *ngIf="showFCError">{{countryCodeFCError}}</mat-error>
+            <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="userRegisterForm.value.companyphonenumber"
+              formControlName="companyphonenumber" maxlength="14" (newBluredData)="onBlurVision($event,'companyphonenumber')"
+            />
+          </section>
+        </mat-card>
+        <!--</mat-card>-->
+        <!--<app-spinner *ngIf="spinnerActivated"></app-spinner>-->
+        <app-animated-button [buttonCollections]="backStepButton" (ParentEmitter)="backStep($event)"></app-animated-button>
+      </div>
+      <!--<app-animated-button *ngIf="showUpdateProfileButton" [buttonCollections]="registerButtton" (ParentEmitter)="UpdateTheFlow($event)"></app-animated-button>
+      <app-alert *ngIf="showAlertMessages" [messageAlert]="messageAlerts"></app-alert>-->
+    </form>
+  </div>
+</div>

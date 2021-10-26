@@ -41,7 +41,7 @@
   border-radius: 4px !important;
   border: 1px solid #dbdbdb !important;
   box-shadow: 0 5px 30px rgba(156, 160, 171, 0.25) !important;
-  padding: 33px !important;
+  padding: 1rem !important;
   display: table !important;
   table-layout: fixed !important;
   height: $height !important;
@@ -49,6 +49,30 @@
   position: relative !important;
   -webkit-box-shadow: 0 5px 30px rgba(156, 160, 171, 0.25) !important;
   margin: 0 4em 4em 0;
+}
+@mixin body-list-page-container($width,$height,$color,$background-color) {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 24px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  color: $color !important;
+  background-color: $background-color !important;
+  border-radius: 4px !important;
+  border: 1px solid #dbdbdb !important;
+  box-shadow: 0 5px 30px rgba(156, 160, 171, 0.25) !important;
+  padding: 1rem !important;
+  display: table !important;
+  table-layout: fixed !important;
+  height: $height !important;
+  width: $width !important;
+  position: relative !important;
+  -webkit-box-shadow: 0 5px 30px rgba(156, 160, 171, 0.25) !important;
+  margin: 0.5rem;
 }
 @mixin submit-button() {
   height: 2em;
@@ -104,4 +128,12 @@
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
   -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+}
+
+@mixin clearfix() {
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
 }

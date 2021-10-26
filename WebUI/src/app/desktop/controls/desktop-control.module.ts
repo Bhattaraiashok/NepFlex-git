@@ -12,12 +12,13 @@ import { HomeSearchOverlayComponent } from './home-search-overlay/home-search-ov
 import { InfoBoxComponent } from './info-box/info-box.component';
 import { ItemContainerComponent } from './item-container/item-container.component';
 import { NewsItemContainerComponent } from './news-item-container/news-item-container.component';
-
+import { BrowserModule } from '@angular/platform-browser'
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    BrowserModule
   ],
   declarations: [
     DesktopHeaderComponent,

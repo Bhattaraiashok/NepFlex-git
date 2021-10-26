@@ -1,16 +1,27 @@
 @import './_variables.scss';
 @import './_mixins.scss';
+@import '~@angular/material/theming';
 
 .hidden {
   display: none;
 }
+.disable{
+  background-color: rgb(0 0 0 / 12%);
+  cursor: not-allowed;
+}
 
 .fixed-top {
-  background: #f3faff;
+  //background: #f3faff;
+  background-color: '#00000021';
 }
 
 .global-desktop-body {
   @include display-parent-flex(row, nowrap, flex-start, flex-start, flex-start);
+}
+.global-desktop-body-column {
+  @include display-parent-flex(column, nowrap, flex-start, flex-start, flex-start);
+  height: 100% !important;
+  position: absolute;
 }
 
 .global-desktop-header {
@@ -24,6 +35,12 @@
 .global-desktop-footer {
   @include display-child-flex(0, 1, auto, auto);
 }
+
+// @include mat-core();
+
+// $snackbar-theme: mat-palette($mat-indigo);
+
+// $mysnackbar-theme:mat-snack-bar-color($snackbar-theme);
 
 .custom-red-btn {
   color: #fff;
@@ -92,12 +109,14 @@ header.masthead {
 
 header.masthead .overlay {
   position: absolute;
-  background-color: #0098ff29;
+ // background-color: #0098ff29;
+  //background-color: #022346;
+  background-color: #0d0022;
   height: 100%;
   width: 100%;
   top: 0;
   left: 0;
-  opacity: 0.3;
+  //opacity: 0.3;
 }
 
 @media (min-width: 768px) {

@@ -16,6 +16,7 @@ namespace Core.Interfaces
         IReportRepository ReportRepository { get; }
         IDetailRepository DetailRepository { get; }
         ISendEmailRepository SendEmailRepository { get; }
+        ILoginRepository LoginRepository { get; }
         bool Save();
     }
 }

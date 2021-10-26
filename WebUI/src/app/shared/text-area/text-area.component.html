@@ -1,24 +1,43 @@
 <div class="example-container">
-  <mat-form-field *ngIf="textType==='email'">
-    <input matInput placeholder="{{placeholder}}" value="{{selectedValue}}" type="email" (change)="TextChanged($event)" (keyup)="TextChanged($event)" />
-    <span class="fa fa-times-circle text-clear-button"  *ngIf="showClearButton" (click)="clearInput($event)"></span>
-  </mat-form-field>
-
-  <mat-form-field *ngIf="textType==='text'">
-    <input matInput placeholder="{{placeholder}}" value="{{selectedValue}}" type="text" (change)="TextChanged($event)" (keyup)="TextChanged($event)" />
-    <span class="fa fa-times-circle text-clear-button" *ngIf="showClearButton" (click)="clearInput($event)"></span>
-  </mat-form-field>
-
-  <mat-form-field *ngIf="textType==='number'">
-    <input matInput placeholder="{{placeholder}}" value="{{selectedValue}}" type="number" (change)="TextChanged($event)" (keyup)="TextChanged($event)"
+  <span *ngIf="textType==='email'" class="btn-group">
+    <input placeholder="{{placeholder}}" class="custom-form-control form-input" value="{{selectedValue}}" type="email" (change)="TextChanged($event)" (keyup)="TextChanged($event)" (blur)="onBlurChanged($event)"
     />
-    <span class="fa fa-times-circle text-clear-button" *ngIf="showClearButton" (click)="clearInput($event)"></span>
-  </mat-form-field>
+    <span class="fa fa-times-circle text-clear-button searchclear" *ngIf="showClearButton && selectedValue !==''" (click)="clearInput($event)"></span>
+  </span>
 
-  <mat-form-field *ngIf="textType==='textarea'">
-    <textarea matInput placeholder="{{placeholder}}" value="{{selectedValue}}" (change)="TextChanged($event)" (keyup)="TextChanged($event)"></textarea>
-    <span class="fa fa-times-circle text-clear-button" *ngIf="showClearButton" (click)="clearInput($event)"></span>
-  </mat-form-field>
+  <span *ngIf="textType==='text'" class="btn-group">
+    <input placeholder="{{placeholder}}" class="custom-form-control form-input" value="{{selectedValue}}" type="text" (change)="TextChanged($event)" (keyup)="TextChanged($event)" (blur)="onBlurChanged($event)"
+    />
+  <span class="fa fa-times-circle text-clear-button searchclear" *ngIf="showClearButton && selectedValue !==''" (click)="clearInput($event)"></span>
+  </span>
+
+  <span *ngIf="textType==='password'" class="btn-group">
+    <input placeholder="{{placeholder}}" class="custom-form-control form-input" value="{{selectedValue}}" type="{{passwordType}}" (change)="TextChanged($event)" (keyup)="TextChanged($event)" (blur)="onBlurChanged($event)"
+    />
+  <span class="searchclear">
+    <i class="pass_show" (click)="passwordShowField($event)" *ngIf="!hide"></i>
+    <i class="pass_hide" (click)="passwordShowField($event)" *ngIf="hide"></i>
+    <span class="fa fa-times-circle text-clear-button" *ngIf="showClearButton && selectedValue !==''" (click)="clearInput($event)"></span>
+  </span>
+  </span>
+
+  <span *ngIf="textType==='number'" class="btn-group">
+    <input placeholder="{{placeholder}}" class="custom-form-control form-input" value="{{selectedValue}}" type="number" (change)="TextChanged($event)" (keyup)="TextChanged($event)" (blur)="onBlurChanged($event)"
+    />
+  <span class="fa fa-times-circle text-clear-button searchclear" *ngIf="showClearButton && selectedValue !==''" (click)="clearInput($event)"></span>
+  </span>
+
+  <span *ngIf="textType==='textarea'" class="btn-group">
+    <textarea placeholder="{{placeholder}}" class="custom-form-control form-input" value="{{selectedValue}}" (change)="TextChanged($event)" (keyup)="TextChanged($event)" (blur)="onBlurChanged($event)"></textarea>
+  <span class="fa fa-times-circle text-clear-button searchclear" *ngIf="showClearButton && selectedValue !==''" (click)="clearInput($event)"></span>
+  </span>
+
+  <!--<span *ngIf="textType==='tel'">
+      <input  placeholder='{{placeholder}}' class="custom-form-control" value="{{selectedValue}}" type="number" 
+             phoneMask [preValue]="selectedValue" maxlength="14" 
+             (change)="TextChanged($event)" (keyup)="TextChanged($event)"/>
+  </span>-->
+
 
   <mat-form-field *ngIf="textType==='select'">
     <mat-select placeholder="{{placeholder}}">

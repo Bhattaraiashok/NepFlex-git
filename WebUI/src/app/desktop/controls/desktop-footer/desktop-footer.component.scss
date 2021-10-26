@@ -2,6 +2,13 @@
 @import "../../../shared/styles-shared/styles.scss";
 @import '../../../../Style/styles.scss';
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem; 
+  }
+
 .header-body {
   @include displayFlex(nowrap, column, flex-start, stretch, stretch);
   background: black;
@@ -22,4 +29,8 @@
 .list-container{
   @include displayFlexChild(0, 0, auto, 0, auto);
   margin-right: 1em;
+}
+
+.footer{
+  background-color: #022346!important;
 }

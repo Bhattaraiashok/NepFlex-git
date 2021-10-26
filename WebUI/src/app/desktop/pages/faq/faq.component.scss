@@ -9,13 +9,13 @@
 
 .faq-info {
   @include body-page-container(100%, 42px, #484848, #ffffff);
-  @include display-child-flex(0, 1, auto, auto);
+  @include display-child-flex(1, 0, auto, auto);
 }
 
-.terms-of-service-info {
-  @include body-page-container(41%, 42px, #484848, #ffffff);
-  @include display-child-flex(0, 1, auto, auto);
-}
+// .terms-of-service-info {
+//   @include body-page-container(41%, 42px, #484848, #ffffff);
+//   @include display-child-flex(0, 1, auto, auto);
+// }
 
 .imgaboutus {
   background-image: url($nCImageAboutusPage);

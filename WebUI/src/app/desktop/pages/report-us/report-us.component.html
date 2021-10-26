@@ -1,56 +1,49 @@
-<!-- <div class="global-desktop-body">
-  <div class="global-desktop-header"> -->
-    <app-desktop-header></app-desktop-header>
-  <!-- </div> -->
+<app-desktop-header></app-desktop-header>
+<div class="global-desktop-container w-100">
   <form [formGroup]="reportForm" class="global-desktop-container">
-    <!-- <div class="body-container"> -->
-      <!-- <div class="imgaboutus"></div> -->
-      <!-- <div class="info-blocks"> -->
-        <div class="container" id="reportLeftsection">
-          <div *ngIf="!turnSmallLoader" class="report-info" id="aboutUsInfo">
-            <div class="title-text">Report Section</div>
-            <div class="report-input-box" id="aboutUsInfo">
-              Your FullName:
-              <input type="text" formControlName="name" required/>
-            </div>
-            <div class="report-input-box" id="aboutUsInfo">
-              Your Email:
-              <input type="email" formControlName="email" required/>
-            </div>
-            <div class="report-input-box" id="aboutUsInfo">
-              URL:
-              <input type="url" formControlName="url" required/>
-            </div>
-            <div class="report-input-box" id="aboutUsInfo">
-              Please provide Detail:
-              <textarea type="text" formControlName="detail" required>
+    <div class="body-container">
+      <div class="left-section container col-lg-4" id="reportLeftsection">
+        <div *ngIf="!turnSmallLoader" class="report-info" id="aboutUsInfo">
+          <div class="title-text">Report Section</div>
+          <div class="report-input-box" id="aboutUsInfo">
+            Your FullName:
+            <input type="text" formControlName="name" required />
+          </div>
+          <div class="report-input-box" id="aboutUsInfo">
+            Your Email:
+            <input type="email" formControlName="email" required />
+          </div>
+          <div class="report-input-box" id="aboutUsInfo">
+            URL:
+            <input type="url" formControlName="url" required />
+          </div>
+          <div class="report-input-box" id="aboutUsInfo">
+            Please provide Detail:
+            <textarea type="text" formControlName="detail" required>
               </textarea>
-            </div>
-            <div class="report-input-box" id="aboutUsInfo">
-              <div [ngClass]="{'submitBtn':!turnSubmitButtonDisable,'disable-button':turnSubmitButtonDisable}" (click)="saveReport()">Submit</div>
-            </div>
+          </div>
+          <div class="report-input-box" id="aboutUsInfo">
+            <div [ngClass]="{'submitBtn':!turnSubmitButtonDisable,'disable-button':turnSubmitButtonDisable}" (click)="saveReport()">Submit</div>
           </div>
         </div>
-        <div class="right-section container" id="reportRightsection">
-          <div class="contact-us-info">
-            <div class="title-text">Reported: </div>
-            <!-- <app-spinner [showSmallLoader]="turnSmallLoader"></app-spinner> -->
-            <app-cloud-spinner [showCloudSpinner]="turnSmallLoader"></app-cloud-spinner>
-            <div *ngFor="let item of reportedDataList;let i=index;">
-              <ul *ngIf="!showInfoPage">
-                <li class="custom-text-wrap">{{item.dateAdded | date}} Name:{{item.name | defaultValue:'N/A'}}
-                  <br>URL:{{item.url | defaultValue:'N/A'}}
-                  <br>Detail: {{item.detail | defaultValue:'N/A'}}
-                </li>
-              </ul>
-            </div>
-            <label *ngIf="showInfoPage">{{infoPageLabel}}</label>
+      </div>
+      <div class="right-section container col-lg-8" id="reportRightsection">
+        <div class="contact-us-info">
+          <div class="title-text">Reported: </div>
+          <!-- <app-spinner [showSmallLoader]="turnSmallLoader"></app-spinner> -->
+          <app-cloud-spinner [showCloudSpinner]="turnSmallLoader"></app-cloud-spinner>
+          <div *ngFor="let item of reportedDataList;let i=index;">
+            <ul *ngIf="!showInfoPage">
+              <li class="custom-text-wrap">{{item.dateAdded | date}} Name:{{item.name | defaultValue:'N/A'}}
+                <br>URL:{{item.url | defaultValue:'N/A'}}
+                <br>Detail: {{item.detail | defaultValue:'N/A'}}
+              </li>
+            </ul>
           </div>
+          <label *ngIf="showInfoPage">{{infoPageLabel}}</label>
         </div>
-      <!-- </div> -->
-    <!-- </div> -->
+      </div>
+    </div>
   </form>
-  <div class="global-desktop-footer">
-    <app-desktop-footer></app-desktop-footer>
-  </div>
-<!-- </div> -->
+</div>
+<app-desktop-footer></app-desktop-footer>
