@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
 import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
+import { DesktopControlModule } from "app/desktop/controls/desktop-control.module";
 
 @NgModule({
   declarations: [AppComponent, PagenotfoundComponent, HomeComponent],
@@ -30,7 +31,8 @@ import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.se
     SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    DesktopControlModule
   ],
   providers: [
     CanDeactivateGuardService,

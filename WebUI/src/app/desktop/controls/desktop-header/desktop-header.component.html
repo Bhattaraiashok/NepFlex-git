@@ -1,5 +1,5 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
-    <div class="container">
+    <div class="header-container container">
         <a class="navbar-brand" (click)="RouteTo('')">
             <h3 class="my-heading ">Updated<span class="bg-main">Cloud</span></h3>
         </a>
@@ -52,6 +52,3 @@
 
     </div>
 </nav>
-
-<app-modal *ngIf="showLoginPopUpModal || showRegisterationPopUpModal"
-(ParentEmitter)="triggerPopUp($event)"></app-modal>

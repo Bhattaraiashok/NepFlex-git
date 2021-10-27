@@ -1,5 +1,6 @@
 @import './_variables.scss';
 @import './_mixins.scss';
+@import '../styles.scss';
 @import '~@angular/material/theming';
 
 .hidden {
@@ -21,20 +22,66 @@
 .global-desktop-body-column {
   @include display-parent-flex(column, nowrap, flex-start, flex-start, flex-start);
   height: 100% !important;
-  position: absolute;
+  width: 100%;
+  // position: absolute;
 }
 
 .global-desktop-header {
-  @include display-child-flex(0, 1, auto, auto);
+  @include display-child-flex(0, 1, auto, stretch);
+   height: 10% !important;
 }
 
 .global-desktop-container {
-  @include display-child-flex(1, 1, auto, auto);
+  @include display-child-flex(1, 1, auto, stretch);
+  margin-bottom: 8em;
+  margin-top: 4em;
 }
 
 .global-desktop-footer {
-  @include display-child-flex(0, 1, auto, auto);
+  @include display-child-flex(0, 1, auto, stretch);
 }
+
+.info-blocks {
+  @include display-parent-flex(row,nowrap,flex-start,flex-start,flex-start);
+}
+
+.component-holder {
+  @include body-list-page-container(100% ,42px,#484848,#ffffff);
+  @include display-child-flex(0,1,auto,auto);
+}
+
+.imgaboutus {
+  background-image: url($nCImageAboutusPage);
+  width: 13em;
+  height: 8em;
+  content: '';
+  display: block;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 1;
+  margin-left: 35em;
+}
+.title-text {
+  @include custom-font-style(35px,56px,-0.8px,1px,8px,#6f6f6f,normal);
+}
+
+
+@media only screen and (max-width:1200px){
+.body-container {
+  padding: 8em;
+}
+
+}
+@media only screen and (max-width:990px){
+.body-container {
+  padding: 0.1em;
+  margin-top: 5em;
+}
+}
+@media only screen and (max-width:359px){
+  
+  }
+
 
 // @include mat-core();
 

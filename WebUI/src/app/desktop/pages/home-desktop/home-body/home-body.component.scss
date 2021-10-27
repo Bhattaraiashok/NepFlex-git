@@ -13,9 +13,6 @@
   padding-top: 0px !important;
   padding-bottom: 0px !important;
   color: #484848 !important;
-  // background-color: #ffffff !important;
-  // border-radius: 4px !important;
-  // border: 1px solid #DBDBDB !important;
   padding: 0px !important;
   display: table !important;
   table-layout: fixed !important;
@@ -46,7 +43,7 @@
 }
 .wrap {
   display: flex;
-  background: #ffffff57;
+  background: '#ffffff57';
   padding: 1rem 1rem 1rem 1rem;
   border-radius: 0.5rem;
   box-shadow: 7px 7px 30px -5px rgba(0,0,0,0.1);
@@ -58,20 +55,12 @@
   color: white;
 }
 
-.ico-wrap {
-  // margin: auto;
-}
-
 .mbr-iconfont {
   font-size: 4.5rem !important;
   color: #313131;
   margin: 1rem;
   padding-right: 1rem;
 }
-.vcenter {
-  // margin: auto;
-}
-
 .mbr-section-title3 {
   text-align: left;
 }

@@ -1,9 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-//@import '~@angular/material/prebuilt-themes/purple-green.css';
-//@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-//@import '~@angular/material/prebuilt-themes/pink-bluegray.css';
 body {
   width: 100%;
   margin: 0px auto;
@@ -11,12 +8,14 @@ body {
   min-height: 100%;
   top: 0px;
   padding: 0px;
-  /* width: 100%;
-    height:100%; */
 }
 
 html {
   height: 100%;
+}
+
+.header-container  {
+    max-width: 90%;
 }
 
 .txt-ucase_header{
@@ -48,16 +47,6 @@ html {
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
   margin: 26em auto !important;
-  /* margin: 5em 0 0 42em;
-  border: 16px solid #f3f3f3;
-  border-top: 16px solid #697b87;
-  border-bottom: 16px solid #ff3b3b;
-  border-left: 16px solid #38b5bb;
-  border-right: 16px solid #ce7508;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite; */
 }
 
 @keyframes spin {

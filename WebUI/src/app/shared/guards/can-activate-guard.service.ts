@@ -7,10 +7,14 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 export class CanActivateGuardService implements CanActivate {
   constructor(private _router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.cacheChecker()) {
-      return true;
-    }
-    this._router.navigate(['error']);
+
+    return true; //for now in development ZONE
+
+    // if (this.cacheChecker()) {
+    //   return true;
+    // }
+
+    //this._router.navigate(['error']);
   }
 
   cacheChecker(): boolean {
