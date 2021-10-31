@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 body {
   width: 100%;
   margin: 0px auto;
@@ -18,7 +19,7 @@ html {
     max-width: 90%;
 }
 
-.txt-ucase_header{
+.txt-ucase-header{
   color: #17a2b8!important;
   text-transform: uppercase;
   font-weight: bold;
@@ -36,6 +37,11 @@ html {
   color: #939393;
   font-style: italic;
   font-family: serif;
+}
+
+.user-agreement-label{
+    color: #130b7e;
+    font-family: serif;
 }
 
 .home-load-spinner {

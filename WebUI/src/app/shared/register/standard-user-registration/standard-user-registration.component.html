@@ -1,0 +1,137 @@
+<div class="container-fluid">
+    <div class="row justify-content-center sm-background-gradient">
+        <ul id="progressbar">
+            <li *ngIf="currentActiveStep == 1" class="highlight" id="account"><strong>Account</strong>
+            </li>
+            <li *ngIf="currentActiveStep === 2 || currentActiveStep === 3 || currentActiveStep === 4" id="accountopened" class="active">
+                <strong>Account</strong>
+                <i class="fas fa-check"></i>
+            </li>
+
+            <li *ngIf="currentActiveStep == 1 || currentActiveStep === 2" id="personal">
+                <strong>Personal</strong>
+            </li>
+            <li *ngIf="currentActiveStep === 3 || currentActiveStep === 4" id="personal" class="active">
+                <strong>Personal</strong>
+                <i *ngIf="pesonalDetailFilled" class="fas fa-check"></i>
+            </li>
+
+            <li *ngIf="currentActiveStep === 1 || currentActiveStep === 2 || currentActiveStep === 3" id="image">
+                <strong>Image</strong>
+            </li>
+
+            <li *ngIf="currentActiveStep === 4" id="image" class="active">
+                <strong>Image</strong>
+                <i *ngIf="imageUploded" class="fas fa-check"></i>
+            </li>
+            <li id="confirm"><strong>Finish</strong></li>
+        </ul>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        </div> <br>
+        <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2 register-form">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <h2 id="heading" class="txt-ucase-header" *ngIf="currentActiveStep == 1">Sign Up Your User Account</h2>
+                <h2 id="heading" class="txt-ucase-header" *ngIf="currentActiveStep == 2">Set Your User Profile</h2>
+                <h2 id="heading" class="txt-ucase-header" *ngIf="currentActiveStep == 3">Setting Up Your User Profile</h2>
+                <p class="txt-info-notes" *ngIf="currentActiveStep == 1">Please provide info on below fields in order to register the acount.</p>
+                <p class="txt-info-notes" *ngIf="currentActiveStep == 2">Please provide fiew details like name , phonenumber to set up your profile. Also, you can modify it through
+                    your profile page.
+                    <br/> If you would like to set it up later, click on skip.</p>
+                <p class="txt-info-notes" *ngIf="currentActiveStep == 3"> Great! let's set up your profile now. Please, provide info on below fields. none are mandatory though.</p>
+                <form id="msform" [formGroup]="standardUserRegisterForm">
+                    <!-- progressbar -->
+                    <!--
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div> <br>-->
+                    <!-- fieldsets -->
+                    <fieldset *ngIf="currentActiveStep == 1">
+                        <div class="form-card">
+                            <app-text-area data-test-id="user_email" placeholder='Email' formControlName="useremail" textType='email' (newData)="onchangeform($event,'useremail')"
+                                (newBluredData)="onBlurVision($event,'useremail')"></app-text-area>
+                            <mat-error *ngIf="showFCError && userEmailFCError !=''" class="error-input">{{userEmailFCError}}</mat-error>
+
+                            <app-text-area data-test-id="user_username" placeholder='Username' formControlName="username" textType='text' (newData)="onchangeform($event,'username')"
+                                (newBluredData)="onBlurVision($event,'username')"></app-text-area>
+                            <mat-error *ngIf="showFCError && usernameFCError !=''" class="error-input">{{usernameFCError}}</mat-error>
+
+                            <app-text-area data-test-id="user_Password" placeholder='Password' formControlName="password" [textType]="hide ? 'password' : 'text'"
+                                (newData)="onchangeform($event,'password')" (newBluredData)="onBlurVision($event,'password')"></app-text-area>
+                            <mat-error *ngIf="showFCError && passwordFCError !=''" class="error-input">{{passwordFCError}}</mat-error>
+
+                            <app-text-area data-test-id="user_CPassword" placeholder='Confirm Your Password' formControlName="confirmpassword" [textType]="hide ? 'password' : 'text'"
+                                (newData)="onchangeform($event,'confirmpassword')" (newBluredData)="onBlurVision($event,'confirmpassword')"></app-text-area>
+                            <mat-error *ngIf="showFCError && confirmPasswordFCError !=''" class="error-input">{{confirmPasswordFCError}}</mat-error>
+
+                            <div *ngIf="showSignAgreement">
+                                <mat-card>
+                                    <section class="user-agreement-label">
+                                        <h4>Agree to terms and conditions</h4>
+                                        <div *ngFor="let item of userAgreementCheckbox;  let i = index">
+                                            <mat-checkbox [checked]="item.isChecked === true" formControlName="isUserAgreementChecked" (change)="onChange_ToUserAgreementCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+                                            <mat-error *ngIf="showFCError && isUserAgreementCheckedFCError !=''" class="error-input">{{isUserAgreementCheckedFCError}}</mat-error>
+                                        </div>
+                                    </section>
+                                </mat-card>
+                            </div>
+
+                        </div>
+                        <app-animated-button [buttonCollections]="submitStepButton" (ParentEmitter)="submit($event)"></app-animated-button>
+                    </fieldset>
+                    <fieldset *ngIf="currentActiveStep == 2">
+                        <div class="form-card">
+                            <app-text-area data-test-id="user_firstname" placeholder='First Name' formControlName="firstname" textType='text' (newBluredData)="updateOnBlur($event,'firstname')"></app-text-area>
+                            <mat-error *ngIf="showFCError && firstnameFCError !=''" class="error-input">{{firstnameFCError}}</mat-error>
+                            <app-text-area data-test-id="user_middlename" placeholder='Middle Name' formControlName="middlename" textType='text' (newBluredData)="updateOnBlur($event,'middlename')"></app-text-area>
+                            <app-text-area data-test-id="user_lastname" placeholder='Last Name' formControlName="lastname" textType='text' (newBluredData)="updateOnBlur($event,'lastname')"></app-text-area>
+                            <mat-error *ngIf="showFCError && lastnameFCError !=''" class="error-input">{{lastnameFCError}}</mat-error>
+
+                            <section class="example-section">
+                                <h4>show or hide your phone number on your profile?</h4>
+                                <div *ngFor="let item of userChoiceOnPhonenumber;  let i = index">
+                                    <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeUserPhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
+                                </div>
+
+                                <app-text-area data-test-id="user_countryCode" placeholder='Country Code' formControlName="usercountryCode" textType=number
+                                    (newBluredData)="updateOnBlur($event,'usercountryCode')"></app-text-area>
+                                <mat-error *ngIf="showFCError && countryCodeFCError !=''" class="error-input">{{countryCodeFCError}}</mat-error>
+
+                                <input id="tel" class="form-control" class="custom-form-control form-input" placeholder='phonenumber' phoneMask [preValue]="standardUserRegisterForm.value.userphonenumber"
+                                    formControlName="userphonenumber" maxlength="14" (blur)="updateOnBlur($event,'userphonenumber')"
+                                />
+                                <!--<app-text-area data-test-id="user_phonenumber" placeholder='Phone Number' formControlName="userphonenumber" textType='tel' (newData)="onBlurVision($event,'userphonenumber')"></app-text-area>-->
+                            </section>
+                        </div>
+                        <app-animated-button [buttonCollections]="backStepButton" (ParentEmitter)="backStep($event)"></app-animated-button>
+                        <app-animated-button [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
+                    </fieldset>
+                    <fieldset *ngIf="currentActiveStep == 3">
+                        <div class="form-card">
+                            <div class="row">
+                            </div> 
+                            <label class="fieldlabels">Upload Your Profile Photo:</label>
+                            <app-text-area data-test-id="user_profilephoto" placeholder='Upload an image for profile recognization.' formControlName="profilephoto" textType='img' (newData)="onchangeform($event,'profilephoto')"
+                                (newBluredData)="onBlurVision($event,'profilephoto')"></app-text-area>
+                            <mat-error *ngIf="showFCError && profilephotoFCError !=''" class="error-input">{{profilephotoFCError}}</mat-error>
+                        </div>
+                         <app-animated-button [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
+                    </fieldset>
+                    <fieldset *ngIf="currentActiveStep == 4">
+                        <div class="form-card">
+                            <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
+                            <div class="row justify-content-center">
+                                <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
+                            </div> <br><br>
+                            <div class="row justify-content-center">
+                                <div class="col-7 text-center">
+                                    <h5 class="purple-text text-center">You have successfully created your user account. Go to profile page.</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

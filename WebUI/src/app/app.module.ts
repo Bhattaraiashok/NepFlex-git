@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
 import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
 import { DesktopControlModule } from "app/desktop/controls/desktop-control.module";
+import { AngContext } from "app/shared/ResourceModels/AngContext";
 
 @NgModule({
   declarations: [AppComponent, PagenotfoundComponent, HomeComponent],
@@ -35,6 +36,7 @@ import { DesktopControlModule } from "app/desktop/controls/desktop-control.modul
     DesktopControlModule
   ],
   providers: [
+    AngContext,
     CanDeactivateGuardService,
     CanActivateGuardService
   ],

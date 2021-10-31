@@ -2,6 +2,7 @@
 @import './_mixins.scss';
 @import '../styles.scss';
 @import '~@angular/material/theming';
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 .hidden {
   display: none;
@@ -16,14 +17,25 @@
   background-color: '#00000021';
 }
 
+.lg-background-gradient{
+background: linear-gradient(178deg, #008ba3 0%, #ce7508 100%);
+color: #ce7508;
+}
+
+.sm-background-gradient{
+    background: linear-gradient(178deg, #ffffff 86%, #008ba3 93%);
+    color: #ce7508;
+}
+
 .global-desktop-body {
   @include display-parent-flex(row, nowrap, flex-start, flex-start, flex-start);
+  overflow-x: hidden
 }
 .global-desktop-body-column {
   @include display-parent-flex(column, nowrap, flex-start, flex-start, flex-start);
   height: 100% !important;
   width: 100%;
-  // position: absolute;
+  position: absolute;
 }
 
 .global-desktop-header {
@@ -33,7 +45,7 @@
 
 .global-desktop-container {
   @include display-child-flex(1, 1, auto, stretch);
-  margin-bottom: 8em;
+  //margin-bottom: 8em;
   margin-top: 4em;
 }
 
@@ -420,10 +432,10 @@ section#group {
   border-radius: 0.28571429rem;
 }
 
-.card:hover {
-  color: #222 !important;
-  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-}
+// .card:hover {
+//   color: #222 !important;
+//   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+// }
 
 .card-block {
   font-size: 1em;
@@ -658,6 +670,7 @@ li.list-inline-item a {
 /*-------------------responsive-----------------*/
 
 @media screen and (max-width: 520px) {
+
   ::placeholder {
     font-size: 10px;
   }
@@ -1028,3 +1041,12 @@ li.list-inline-item a {
     height: 100%;
   }
 }
+
+// @media only screen and (max-width: 736px) and (orientation: landscape) {}
+// @media only screen and (max-width: 667px) and (orientation: landscape) {}
+// @media only screen and (max-width: 568px) and (orientation: landscape) {}
+// @media only screen and (min-width: 600px) and (max-width: 767px) {}
+// @media only screen and (min-width: 480px) and (max-width: 599px) {}
+// @media only screen and (min-width: 321px) and (max-width: 479px) {}
+// @media only screen and (max-width: 568px) and (orientation: landscape) {}
+// @media only screen and (max-width: 320px) {}

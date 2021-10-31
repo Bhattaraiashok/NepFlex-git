@@ -13,8 +13,10 @@ import { FaqComponent } from './faq/faq.component';
 import { ReportUsComponent } from './report-us/report-us.component';
 import { DetailComponent } from './detail/detail.component';
 import { ListComponent } from './list/list.component';
-import { ProfileComponent } from './profile/profile.component';
 import { LoginPageComponent } from './login/login.component';
+import { RegularProfileComponent } from './profile/regular-profile/regular-profile.component';
+import { SellerProfileComponent } from './profile/seller-profile/seller-profile.component';
+import { RegisterUserComponent } from "app/desktop/pages/register-user/register-user.component";
 
 @NgModule({
     imports: [
@@ -34,8 +36,10 @@ import { LoginPageComponent } from './login/login.component';
         ReportUsComponent,
         DetailComponent,
         ListComponent,
-        ProfileComponent,
-        LoginPageComponent
+        LoginPageComponent,
+        RegisterUserComponent,
+        RegularProfileComponent,
+        SellerProfileComponent
     ],
     exports: [HomeDesktopComponent]
 })

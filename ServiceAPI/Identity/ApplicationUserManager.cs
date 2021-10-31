@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
 using Microsoft.Owin.Security.DataProtection;
-using Nepflex.ServiceAPI.App_Start;
-using Nepflex.ServiceAPI.Models;
 using NepFlex.Core.Entities.ResourceModels;
+using System;
 
 namespace Nepflex.ServiceAPI.Identity
 {

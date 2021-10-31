@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
+import { AngContext, FEDataContext } from "app/shared/ResourceModels/AngContext";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CanActivateGuardService implements CanActivate {
-  constructor(private _router: Router) { }
+  componentData = new FEDataContext();
+  constructor(private _router: Router, private angContext: AngContext) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+
+    console.log('componentData second:  ', this.componentData);
 
     return true; //for now in development ZONE
 

@@ -1,8 +1,7 @@
 ﻿using Core.Interfaces.Repositories;
-using System.Collections.Generic;
-using System.Linq;
-using NepFlex.DataAccess.Context;
 using NepFlex.Core.Entities.ResourceModels;
+using NepFlex.DataAccess.Context;
+using System.Collections.Generic;
 
 namespace DataAccess.Repositories
 {

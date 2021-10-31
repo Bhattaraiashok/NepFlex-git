@@ -74,6 +74,12 @@ namespace Nepflex.ServiceAPI.Controllers
                     IsSuccess = false,
                     StrMessage = new List<string>()
                 };
+                //pre-check
+                if (login == null || login.UserID == null || login.UserID == string.Empty || login.UserPSWD == null || login.UserPSWD == string.Empty)
+                {
+                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_LOGIN_CONST_FAILURE, _status);
+                    return Ok(_status);
+                }
                 //put if else to check userID if not use email or phone number, phn number are unique on the table too.
                 var processResult = await signInManager.PasswordSignInAsync(login.UserID, login.UserPSWD, login.IsRememberMe, shouldLockout: false);
                 switch (processResult)
@@ -115,22 +121,37 @@ namespace Nepflex.ServiceAPI.Controllers
             Console.WriteLine("came here in login");
             try
             {
+                ResponseStatus _status = new ResponseStatus
+                {
+                    IsSuccess = false,
+                    StrMessage = new List<string>()
+                };
+                //pre-check
+                if (req == null || req.UserDetail.Username == null || req.UserDetail.Username == string.Empty
+                    || req.UserDetail.UserEmail == null || req.UserDetail.UserEmail == string.Empty
+                    || req.UserDetail.PSWDHASH == null || req.UserDetail.PSWDHASH == string.Empty)
+                {
+                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_REGISTER_CONST_FAILURE, _status);
+                    return Ok(_status);
+                }
+
                 var user = new ApplicationUser { UserName = req.UserDetail.Username, Email = req.UserDetail.UserEmail };
+                //pre-check II
+                if (user == null)
+                {
+                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_REGISTER_CONST_FAILURE, _status);
+                    return Ok(_status);
+                }
+                //if here...continue
                 var result = await userManager.CreateAsync(user, req.UserDetail.PSWDHASH);
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    var results = _loginService.UserRegistrationProcess(req, user);
-                    return Ok(results);
+                    _status = _loginService.UserRegistrationProcess(req, user);
+                    return Ok(_status);
                 }
                 else
                 {
-                    ResponseStatus _status = new ResponseStatus
-                    {
-                        StrMessage = new List<string>()
-                    };
-
-                    _status.IsSuccess = false;
                     foreach (var item in result.Errors)
                     {
                         _status.StrMessage.Add(item);
@@ -146,25 +167,40 @@ namespace Nepflex.ServiceAPI.Controllers
 
         [Route("update")]
         [HttpPost]
-        public async Task<IHttpActionResult> UserUpdate([FromBody] UserRegister login)
+        public async Task<IHttpActionResult> UserUpdate([FromBody] UserRegister reqUpdate)
         {
             Console.WriteLine("came here in login");
             try
             {
-                var user = await userManager.FindByEmailAsync(login.UserDetail.Email);
+                ResponseStatus _status = new ResponseStatus
+                {
+                    IsSuccess = false,
+                    StrMessage = new List<string>()
+                };
+
+                //pre-check
+                if (reqUpdate == null || reqUpdate.UserDetail.Email == null || reqUpdate.UserDetail.Email == string.Empty)
+                {
+                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_FAILURE, _status);
+                    return Ok(_status);
+                }
+
+                var user = await userManager.FindByEmailAsync(reqUpdate.UserDetail.Email);
+                //pre-check II
+                if (user == null)
+                {
+                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_FAILURE, _status);
+                    return Ok(_status);
+                }
+                //if here...continue
                 var result = await signInManager.UserManager.FindByIdAsync(user.Id);
                 if (!string.IsNullOrEmpty(result.Id))
                 {
-                    var results = _loginService.UpdateUser(login, result);
-                    return Ok(results);
+                    _status = _loginService.UpdateUser(reqUpdate, result);
+                    return Ok(_status);
                 }
                 else
                 {
-                    ResponseStatus _status = new ResponseStatus
-                    {
-                        StrMessage = new List<string>()
-                    };
-
                     Utility.AppendStatus<ResponseStatus>(ConstList.USER_LOGIN_CONST_FAILURE, _status);
                     return Ok(_status);
                 }

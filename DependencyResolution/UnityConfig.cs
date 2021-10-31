@@ -1,18 +1,11 @@
-using System;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
+using Core.Interfaces;
 using Core.Interfaces.Services;
 using Core.Services;
-using Core.Interfaces.Repositories;
-using DataAccess.Repositories;
-using NepFlex.DataAccess.Context;
-using Core.Interfaces;
 using DataAccess;
+using Microsoft.Practices.Unity;
 using NepFlex.Core.Interfaces.Services;
 using NepFlex.Core.Services;
-using Microsoft.AspNet.Identity;
-using NepFlex.Core.Entities.ResourceModels;
-using Microsoft.AspNet.Identity.EntityFramework;
+using NepFlex.DataAccess.Context;
 
 namespace DependencyResolution
 {
