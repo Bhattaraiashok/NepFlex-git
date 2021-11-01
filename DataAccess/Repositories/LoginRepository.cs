@@ -174,6 +174,12 @@ namespace NepFlex.DataAccess.Repositories
                     _dataUserAltered = true;
                 }
 
+                if (_usrInfo.ProfilePicture != req.UserDetail.ProfilePhoto && (!string.IsNullOrWhiteSpace(req.UserDetail.ProfilePhoto)) && req.FieldUpdateRequest == CONST_Update_FormControlName.profilephoto)
+                {
+                    _usrInfo.ProfilePicture = req.UserDetail.ProfilePhoto;
+                    _dataUserAltered = true;
+                }
+
                 if (req.UserDetail.IsUserSeller)
                 {
                     var IsSeller = req.UserDetail.IsUserSeller == true ? "yes" : "no";

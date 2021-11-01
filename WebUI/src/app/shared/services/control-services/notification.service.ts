@@ -27,7 +27,7 @@ export class NotificationService {
   showNotification(msgAlert) {
     this._snackBar.openFromComponent(NotifierComponent, {
       data: msgAlert,
-      //duration: this.durationInSeconds * 1000, //5 sec
+      duration: this.durationInSeconds * 1000, //5 sec
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       panelClass: msgAlert.alertType

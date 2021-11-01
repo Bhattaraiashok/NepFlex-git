@@ -143,9 +143,9 @@ namespace NepFlex.Core.Entities.OnlinePasal
         System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult);
         System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateCompanyReturnModel>> UpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber);
 
-        System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber);
-        System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber);
+        System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image);
+        System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image);
 
         ValidateUserReturnModel ValidateUser(string username, string password, string ui);
         System.Threading.Tasks.Task<ValidateUserReturnModel> ValidateUserAsync(string username, string password, string ui);
@@ -1565,13 +1565,13 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return procResultData;
         }
 
-        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber)
+        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image)
         {
             int procResult;
-            return UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, out procResult);
+            return UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, image, out procResult);
         }
 
-        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, out int procResult)
+        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image, out int procResult)
         {
             var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = -1 };
             if (emailParam.Value == null)
@@ -1649,14 +1649,18 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (!companyShowPhNumber.HasValue)
                 companyShowPhNumberParam.Value = System.DBNull.Value;
 
+            var imageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Image", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = image, Size = -1 };
+            if (imageParam.Value == null)
+                imageParam.Value = System.DBNull.Value;
+
             var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<UpdateUserReturnModel>("EXEC @procResult = [dbo].[UpdateUser] @Email, @username, @userId, @UI, @Firstname, @Middlename, @Lastname, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyEmailID, @CompanyShowPHNumber", emailParam, usernameParam, userIdParam, uiParam, firstnameParam, middlenameParam, lastnameParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyEmailIdParam, companyShowPhNumberParam, procResultParam).ToList();
+            var procResultData = Database.SqlQuery<UpdateUserReturnModel>("EXEC @procResult = [dbo].[UpdateUser] @Email, @username, @userId, @UI, @Firstname, @Middlename, @Lastname, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyEmailID, @CompanyShowPHNumber, @Image", emailParam, usernameParam, userIdParam, uiParam, firstnameParam, middlenameParam, lastnameParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyEmailIdParam, companyShowPhNumberParam, imageParam, procResultParam).ToList();
 
             procResult = (int) procResultParam.Value;
             return procResultData;
         }
 
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image)
         {
             var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = -1 };
             if (emailParam.Value == null)
@@ -1734,7 +1738,11 @@ namespace NepFlex.Core.Entities.OnlinePasal
             if (!companyShowPhNumber.HasValue)
                 companyShowPhNumberParam.Value = System.DBNull.Value;
 
-            var procResultData = await Database.SqlQuery<UpdateUserReturnModel>("EXEC [dbo].[UpdateUser] @Email, @username, @userId, @UI, @Firstname, @Middlename, @Lastname, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyEmailID, @CompanyShowPHNumber", emailParam, usernameParam, userIdParam, uiParam, firstnameParam, middlenameParam, lastnameParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyEmailIdParam, companyShowPhNumberParam).ToListAsync();
+            var imageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Image", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = image, Size = -1 };
+            if (imageParam.Value == null)
+                imageParam.Value = System.DBNull.Value;
+
+            var procResultData = await Database.SqlQuery<UpdateUserReturnModel>("EXEC [dbo].[UpdateUser] @Email, @username, @userId, @UI, @Firstname, @Middlename, @Lastname, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyEmailID, @CompanyShowPHNumber, @Image", emailParam, usernameParam, userIdParam, uiParam, firstnameParam, middlenameParam, lastnameParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyEmailIdParam, companyShowPhNumberParam, imageParam).ToListAsync();
 
             return procResultData;
         }
@@ -2212,23 +2220,23 @@ namespace NepFlex.Core.Entities.OnlinePasal
             return System.Threading.Tasks.Task.FromResult(UpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult));
         }
 
-        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber)
+        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image)
         {
             int procResult;
-            return UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, out procResult);
+            return UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, image, out procResult);
         }
 
-        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, out int procResult)
+        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image, out int procResult)
         {
 
             procResult = 0;
             return new System.Collections.Generic.List<UpdateUserReturnModel>();
         }
 
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber)
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image)
         {
             int procResult;
-            return System.Threading.Tasks.Task.FromResult(UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, out procResult));
+            return System.Threading.Tasks.Task.FromResult(UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, image, out procResult));
         }
 
         public ValidateUserReturnModel ValidateUser(string username, string password, string ui)

@@ -8,6 +8,8 @@ import { ButtonProperties } from "app/shared/ResourceModels/ButtonProperties";
 import { SpinnerService } from "app/shared/services/control-services/spinner.service";
 import { RegisterService } from "app/shared/services/register.service";
 import { NotificationService } from "app/shared/services/control-services/notification.service";
+import { requiredFileType } from "app/shared/validation/required-file-type";
+import { CheckBoxControlProperties } from "app/shared/ResourceModels/controls";
 
 @Component({
   selector: 'app-standard-user-registration',
@@ -23,11 +25,15 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     return true;
   }
 
+  imageURL: string;
+
   submitStepButton: ButtonProperties[] = new Array();
   backStepButton: ButtonProperties[] = new Array();
   nextStepButton: ButtonProperties[] = new Array();
   registerButtton: ButtonProperties[] = new Array();
   syncingButton: ButtonProperties[] = new Array();
+
+  agreementCheckboxDataContent: CheckBoxControlProperties = new CheckBoxControlProperties();
 
   UserRegister: UserRegister = new UserRegister();
   registerResponse: ResponseObjects;
@@ -72,6 +78,7 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
   hideUserPhonenumber = true;
   userPhonenumberFCError: string;
   profilephotoFCSrror: string;
+  profilephotoFCError: string;
 
   userEmailFC: FormControl = new FormControl('', [Validators.required, Validators.email]);
   usernameFC: FormControl = new FormControl('', [Validators.required]);
@@ -86,7 +93,7 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
   userPhonenumberFC: FormControl = new FormControl('');
   showOrHideUserPhonenumberFC: FormControl = new FormControl('');
 
-  profilephotoFC: FormControl = new FormControl('');
+  profilephotoFC: FormControl = new FormControl('', requiredFileType(["jpg", "png",]));
 
 
   //user agreement
@@ -157,6 +164,7 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     }
 
     if (this.currentActiveStep == 1 && this.formInitialUserCheck()) {
+      this.agreementFn();
       this.showSignAgreement = true;
     }
     this.allButtons();
@@ -188,6 +196,10 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     this.formAndButtons();
     //let user submit uname and password first
     this.registerTheFlow(e);
+  }
+
+  backStep(e: Event) {
+    this.currentActiveStep--;
   }
 
   // registrationFlow(steps: number, btnRecognize: string) {
@@ -276,6 +288,23 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     }
   }
 
+  // Image Preview
+  showPreview(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.standardUserRegisterForm.get('profilephoto').patchValue(file)
+    this.standardUserRegisterForm.get('profilephoto').updateValueAndValidity()
+
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    }
+
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+  }
+
   smallSpinner() {
     this.spinnerActivated = !this.spinnerActivated;
     console.log('turnOnSmallLoader :  ', this.spinnerActivated);
@@ -296,12 +325,30 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     this.notificationService.showNotification(this.messageAlerts);
   }
 
-  onChange_ToUserAgreementCheckbox(e: { target; value: string }, id) {
-    this.selected = id;
-    this.userAgreementCheckbox[id].isChecked = !this.userAgreementCheckbox[id].isChecked;
-    this.isUserAgreementCheckedFC.setValue(this.userAgreementCheckbox[id].isChecked);
+  agreementFn() {
+    this.agreementCheckboxDataContent.id = 'agreementcheck';
+    this.agreementCheckboxDataContent.negativeContent = 'NO';
+    this.agreementCheckboxDataContent.positveContent = 'YES',
+    this.agreementCheckboxDataContent.parentEmit = true,
+    this.agreementCheckboxDataContent.formControlName = 'isUserAgreementChecked',
+    this.agreementCheckboxDataContent.label = 'Agree to terms and conditions',
+    this.agreementCheckboxDataContent.displayLabel = true
+    this.agreementCheckboxDataContent.displayValidation = null; //first call do not show validation
+    this.agreementCheckboxDataContent.ValidationMessage = this.isUserAgreementCheckedFCError // is ready when displayValidation turns on
+  }
 
-    this.standardUserRegisterForm.get('isUserAgreementChecked').patchValue(this.userAgreementCheckbox[id].isChecked);
+  // onChange_ToUserAgreementCheckbox(e: { target; value: string }, id) {
+  //   this.selected = id;
+  //   this.userAgreementCheckbox[id].isChecked = !this.userAgreementCheckbox[id].isChecked;
+  //   this.isUserAgreementCheckedFC.setValue(this.userAgreementCheckbox[id].isChecked);
+
+  //   this.standardUserRegisterForm.get('isUserAgreementChecked').patchValue(this.userAgreementCheckbox[id].isChecked);
+  //   this.validateForm();
+  //   this.formAndButtons();
+  // }
+  onChange_ToCheckbox(prop: CheckBoxControlProperties) {
+    const val = prop.responseValue;
+    this.standardUserRegisterForm.get(prop.formControlName).patchValue(val);
     this.validateForm();
     this.formAndButtons();
   }
@@ -347,7 +394,6 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     this.nextStepButton = [{
       buttonId: 3,
       buttonLabel: 'Next or Skip',
-      isDisable: this.disableCurrentButton,
       parentEmit: true,
     }];
 
@@ -374,7 +420,7 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     this.UserRegister.UserDetail.PhoneCountryCode = this.standardUserRegisterForm.get('usercountryCode').value;
     this.UserRegister.UserDetail.PhoneNumber = this.standardUserRegisterForm.get('userphonenumber').value;
     this.UserRegister.UserDetail.ShowPhonenumber = this.standardUserRegisterForm.get('showOrHideUserPhonenumber').value;
-
+    this.UserRegister.UserDetail.ProfilePhoto = this.standardUserRegisterForm.get('profilephoto').value;
     //agreement
     this.UserRegister.UserDetail.IsUserAgreementChecked = this.standardUserRegisterForm.get('isUserAgreementChecked').value;
     //}
@@ -413,19 +459,21 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
       if ((this.showSignAgreement) && (this.isUserAgreementCheckedFC.invalid || this.isUserAgreementCheckedFC.value === false
         || this.isUserAgreementCheckedFC.hasError('required') || this.isUserAgreementCheckedFC.value === null || this.isUserAgreementCheckedFC.value === ''
       )) {
-        this.isUserAgreementCheckedFCError = this.userAgreementCheckbox[0].note;
+        this.isUserAgreementCheckedFCError='You must agree to terms and conditions before submitting.'
+        this.agreementCheckboxDataContent.displayValidation = true;
         return;
       }
       else {
         if (this.showSignAgreement) {
           this.showFCError = false;
+          this.agreementCheckboxDataContent.displayValidation = false;
           this.isUserAgreementCheckedFCError = '';
         }
 
         this.userEmailFCError = '';
         this.usernameFCError = '';
         this.passwordFCError = '';
-        this.confirmPasswordFCError = '';
+        this.confirmPasswordFCError = '';        
       }
     }
 
@@ -444,13 +492,8 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     }
   }
 
-  userAgreementCheckbox = [
-    { id: 0, label: 'Yes', isChecked: false, note: `You must agree to terms and conditions before submitting.` },
-  ]
-
   userChoiceOnPhonenumber = [
     { id: 0, label: 'Show', isChecked: false, note: `you have choosen to show your phone number, this will allow other to see your number when ever you post something or on your profile. ` },
     { id: 1, label: 'Hide', isChecked: true, note: `you have choosen to hide your phone number, we will not show your number on your future post or on your profile unless you change it through profile.` }
   ]
-
 }

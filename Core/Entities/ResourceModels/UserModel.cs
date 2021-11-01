@@ -25,6 +25,7 @@ namespace NepFlex.Core.Entities.ResourceModels
         public string PSWDHASH { get; set; }
         public string PSWDSALT { get; set; }
         public string UserEmail { get; set; }
+        public string ProfilePhoto { get; set; }
         public string Address { get; set; }
         public string UI { get { return CONSTUINAME.UI_NAME; } }
         public bool IsUserSeller { get; set; }
@@ -129,5 +130,6 @@ namespace NepFlex.Core.Entities.ResourceModels
         public readonly static string companyphonenumber = "companyphonenumber";
         public readonly static string isCompanyRegistered = "isCompanyRegistered";
         public readonly static string showOrHideCompanyPhonenumber = "showOrHideCompanyPhonenumber";
+        public readonly static string profilephoto = "profilephoto";
     }
 }

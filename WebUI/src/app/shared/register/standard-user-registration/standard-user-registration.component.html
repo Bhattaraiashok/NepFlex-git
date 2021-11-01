@@ -3,7 +3,7 @@
         <ul id="progressbar">
             <li *ngIf="currentActiveStep == 1" class="highlight" id="account"><strong>Account</strong>
             </li>
-            <li *ngIf="currentActiveStep === 2 || currentActiveStep === 3 || currentActiveStep === 4" id="accountopened" class="active">
+            <li *ngIf="currentActiveStep > 1 " id="accountopened" class="active">
                 <strong>Account</strong>
                 <i class="fas fa-check"></i>
             </li>
@@ -11,7 +11,7 @@
             <li *ngIf="currentActiveStep == 1 || currentActiveStep === 2" id="personal">
                 <strong>Personal</strong>
             </li>
-            <li *ngIf="currentActiveStep === 3 || currentActiveStep === 4" id="personal" class="active">
+            <li *ngIf="currentActiveStep > 2" id="personal" class="active">
                 <strong>Personal</strong>
                 <i *ngIf="pesonalDetailFilled" class="fas fa-check"></i>
             </li>
@@ -20,7 +20,7 @@
                 <strong>Image</strong>
             </li>
 
-            <li *ngIf="currentActiveStep === 4" id="image" class="active">
+            <li *ngIf="currentActiveStep > 3" id="image" class="active">
                 <strong>Image</strong>
                 <i *ngIf="imageUploded" class="fas fa-check"></i>
             </li>
@@ -64,16 +64,16 @@
                                 (newData)="onchangeform($event,'confirmpassword')" (newBluredData)="onBlurVision($event,'confirmpassword')"></app-text-area>
                             <mat-error *ngIf="showFCError && confirmPasswordFCError !=''" class="error-input">{{confirmPasswordFCError}}</mat-error>
 
-                            <div *ngIf="showSignAgreement">
-                                <mat-card>
-                                    <section class="user-agreement-label">
-                                        <h4>Agree to terms and conditions</h4>
+                            <div *ngIf="showSignAgreement" class="agreement-card">
+                                <section class="user-agreement-label">
+                                    <!--<h4>Agree to terms and conditions</h4>
                                         <div *ngFor="let item of userAgreementCheckbox;  let i = index">
                                             <mat-checkbox [checked]="item.isChecked === true" formControlName="isUserAgreementChecked" (change)="onChange_ToUserAgreementCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
-                                            <mat-error *ngIf="showFCError && isUserAgreementCheckedFCError !=''" class="error-input">{{isUserAgreementCheckedFCError}}</mat-error>
-                                        </div>
-                                    </section>
-                                </mat-card>
+                                            
+                                        </div>-->
+                                    <app-check-box-control data-test-id="user_AgreementCheckbox" [dataContent]="agreementCheckboxDataContent" (onChange)="onChange_ToCheckbox($event,'isUserAgreementChecked')"></app-check-box-control>
+                                    <p *ngIf="showFCError && isUserAgreementCheckedFCError !=''" class="error-input">{{agreementCheckboxDataContent.ValidationMessage}}</p>
+                                </section>
                             </div>
 
                         </div>
@@ -103,29 +103,41 @@
                                 <!--<app-text-area data-test-id="user_phonenumber" placeholder='Phone Number' formControlName="userphonenumber" textType='tel' (newData)="onBlurVision($event,'userphonenumber')"></app-text-area>-->
                             </section>
                         </div>
-                        <app-animated-button [buttonCollections]="backStepButton" (ParentEmitter)="backStep($event)"></app-animated-button>
                         <app-animated-button [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
                     </fieldset>
                     <fieldset *ngIf="currentActiveStep == 3">
-                        <div class="form-card">
+                        <!--<div class="form-card">
                             <div class="row">
-                            </div> 
+                            </div>
                             <label class="fieldlabels">Upload Your Profile Photo:</label>
-                            <app-text-area data-test-id="user_profilephoto" placeholder='Upload an image for profile recognization.' formControlName="profilephoto" textType='img' (newData)="onchangeform($event,'profilephoto')"
-                                (newBluredData)="onBlurVision($event,'profilephoto')"></app-text-area>
+                            <app-text-area data-test-id="user_profilephoto" placeholder='Upload an image for profile recognization.' formControlName="profilephoto"
+                                textType='img' (newData)="showPreview($event)" (newBluredData)="onBlurVision($event,'profilephoto')"></app-text-area>
                             <mat-error *ngIf="showFCError && profilephotoFCError !=''" class="error-input">{{profilephotoFCError}}</mat-error>
                         </div>
-                         <app-animated-button [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
+                        <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                            <img [src]="imageURL" [alt]="standardUserRegisterForm.value.profilephoto">
+                        </div>-->
+
+                        <input class="custom-form-control form-input" type="file" accept="image/*" (change)="showPreview($event)" (blur)="updateOnBlur($event,'profilephoto')"
+                        />
+
+                        <!-- Image Preview -->
+                        <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                            <img [src]="imageURL" [alt]="standardUserRegisterForm.value.profilephoto">
+                        </div>
+
+                        <app-animated-button [buttonCollections]="backStepButton" (ParentEmitter)="backStep($event)"></app-animated-button>
+                        <app-animated-button [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
                     </fieldset>
-                    <fieldset *ngIf="currentActiveStep == 4">
-                        <div class="form-card">
-                            <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
-                            <div class="row justify-content-center">
-                                <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
-                            </div> <br><br>
+                    <fieldset *ngIf="currentActiveStep > 3">
+                        <div class="form-card result-registration">
+                            <h2 class="greeny-text text-center">
+                                <strong>SUCCESS !</strong>
+                                <i class="fas fa-check"></i>
+                            </h2>
                             <div class="row justify-content-center">
                                 <div class="col-7 text-center">
-                                    <h5 class="purple-text text-center">You have successfully created your user account. Go to profile page.</h5>
+                                    <h5 class="greeny-text text-center">You have successfully created your user account. Go to profile page.</h5>
                                 </div>
                             </div>
                         </div>
