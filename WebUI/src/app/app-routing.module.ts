@@ -12,26 +12,39 @@ import { ReportUsComponent } from 'app/desktop/pages/report-us/report-us.compone
 import { componentFactoryName } from '@angular/compiler';
 import { DetailComponent } from './desktop/pages/detail/detail.component';
 import { ListComponent } from './desktop/pages/list/list.component';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { RegularProfileComponent } from "app/desktop/pages/profile/regular-profile/regular-profile.component";
+import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
+import { LoginPageComponent } from "app/desktop/pages/login/login.component";
+import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
+import { AngContext } from "app/shared/ResourceModels/AngContext";
+import { RegisterUserComponent } from "app/desktop/pages/register-user/register-user.component";
+import { StandardUserRegistrationComponent } from "app/shared/register/standard-user-registration/standard-user-registration.component";
+import { SellerUserRegistrationComponent } from "app/shared/register/seller-user-registration/seller-user-registration.component";
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'faq', component: FaqComponent , pathMatch: 'full'},
-  { path: 'home', component: HomeComponent , pathMatch: 'full'},
-  { path: 'detail/:itemId', component: DetailComponent, pathMatch: 'full'},
-  { path: 'list', component: ListComponent, pathMatch: 'full'},
-  { path: 'report', component: ReportUsComponent , pathMatch: 'full'},
-  { path: 'aboutus', component: AboutUsComponent , pathMatch: 'full'},
-  { path: 'termsofuse', component: TermsOfUseComponent , pathMatch: 'full'},
-  // { path: 'search/:searchedText', component: SearchComponent , pathMatch: 'full'},
-  // { path: 'search', component: SearchComponent , pathMatch: 'full'},
-  { path: 'home/:windowView', component: HomeComponent , pathMatch: 'full'},
+  { path: '', component: HomeComponent },
+  { path: 'faq', component: FaqComponent, pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, pathMatch: 'full' },
+  { path: 'detail/:itemId', component: DetailComponent, pathMatch: 'full' },
+  { path: 'list', component: ListComponent, pathMatch: 'full' },
+  { path: 'report', component: ReportUsComponent, pathMatch: 'full' },
+  { path: 'about-us', component: AboutUsComponent, pathMatch: 'full' },
+  { path: 'terms-of-use', component: TermsOfUseComponent, pathMatch: 'full' },
+  { path: 'register', component: RegisterUserComponent, pathMatch: 'full'},
+  { path: 'StandardAccount', component: StandardUserRegistrationComponent, pathMatch: 'full', canDeactivate: [CanDeactivateGuardService] },
+  { path: 'SellerAccount', component: SellerUserRegistrationComponent, pathMatch: 'full', canDeactivate: [CanDeactivateGuardService] },
+  { path: 'login', component: LoginPageComponent, pathMatch: 'full', canDeactivate: [CanDeactivateGuardService], data: { AngContext } },
+  { path: 'profile', component: RegularProfileComponent, pathMatch: 'full', canActivate: [CanActivateGuardService] },
+  { path: 'home/:windowView', component: HomeComponent, pathMatch: 'full' },
 
+  { path: 'error', pathMatch: 'full', component: PagenotfoundComponent },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
 ];
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
-  providers: []
+  providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

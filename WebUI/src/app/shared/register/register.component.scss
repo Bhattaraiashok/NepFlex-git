@@ -1,0 +1,33 @@
+@import '../../../Style/styles.scss';
+
+h4{
+    font-family: serif;
+    color: #008ba3;
+  }
+
+.registration-form {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    margin-bottom: 8em;
+    margin-top: 5em;
+  }
+  
+.register-form{
+  min-width: 150px;
+  width: 100%;
+  margin-top: 0.5rem;
+  background: '#ffffff57';
+  align-items: center;
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  box-sizing: border-box;
+}
+
+border-red {
+  border: 1px solid #e4e4e4;
+}
+.custom-text-wrap{
+  word-wrap: break-word;
+}

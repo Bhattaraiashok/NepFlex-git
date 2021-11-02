@@ -13,17 +13,10 @@
   box-shadow: 0 5px 30px rgba(156, 160, 171, 0.25) !important;
   background: #f9f9f9;
 }
-.body-container {
-  padding: 8em;
-}
+
 .terms-of-use-info {
   @include body-page-container(100% ,42px,#484848,#ffffff);
   @include display-child-flex(0,1,auto,auto);
-}
-.terms-of-service-info {
-  //@include body-page-container(41% ,42px,#484848,#ffffff);
-  @include display-child-flex(0,1,auto,auto);
-  @include custom();
 }
 
 .left-section {

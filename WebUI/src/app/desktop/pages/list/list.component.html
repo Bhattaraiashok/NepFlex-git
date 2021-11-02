@@ -1,26 +1,5 @@
-<app-desktop-header></app-desktop-header>
-<div class="container custom-width">
-  <!-- <div class="list-header">
-    <div class="header-field-container">
-      <div class="header-field-title">
-        <div class="all-results">Total Results({{TotalCount}})</div>
-      </div>
-    </div>
-  </div> -->
-  <div class="info-blocks" *ngIf="!turnLargeLoader">
-    <div class="photo-section">
-      <app-spinner [showLargeLoader]="turnLargeLoader"></app-spinner>
-      <div *ngIf="!turnLargeLoader">
-        <div *ngIf="!turnLargeLoader">
-          <!-- <app-item-container *ngIf="TotalCount!==0" [itemResults]="searchResults" [searchText]="searchText">
-          </app-item-container> -->
-          <app-tab-layout *ngIf="TotalCount!==0" [tabResults]="searchResults"></app-tab-layout>
-          <div *ngIf="TotalCount===0" class="try-again-label"> please try again</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="global-desktop-footer">
-  <app-desktop-footer></app-desktop-footer>
+<div class="ad-holder"></div>
+<div class="component-holder" id="list_compo">
+  <app-spinner *ngIf="spinner"></app-spinner>
+  <app-tab-layout *ngIf="TotalCount!==0 && !spinner" [tabResults]="searchResults"></app-tab-layout>
 </div>

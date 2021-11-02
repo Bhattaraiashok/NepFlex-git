@@ -13,11 +13,14 @@ import { CoreModule } from 'app/core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
+import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
+import { DesktopControlModule } from "app/desktop/controls/desktop-control.module";
+import { AngContext } from "app/shared/ResourceModels/AngContext";
 
 @NgModule({
   declarations: [AppComponent, PagenotfoundComponent, HomeComponent],
   imports: [
-    NgbModule.forRoot(),
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -28,9 +31,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DesktopModule,
     SharedModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule,
+    DesktopControlModule
   ],
-  providers: [],
+  providers: [
+    AngContext,
+    CanDeactivateGuardService,
+    CanActivateGuardService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

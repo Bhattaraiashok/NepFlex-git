@@ -12,9 +12,16 @@ export class DropdownComponent implements OnInit {
   // @Input() dropdownLabel: string;
   // @Input() showDropdownLabel: boolean = true;
   // @Input() dropdownLabelRoute: string;
-  constructor(private route: Router) {}
+  constructor(private route: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    //this.dropdownGenerator();
+  }
+
+  // dropdownGenerator() {
+  //   console.log(this.dropdownOptions);
+  // }
+
   routeDropdownTo(val: string) {
     this.route.navigate([val]);
   }

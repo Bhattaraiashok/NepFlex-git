@@ -1,11 +1,8 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, ViewChild, OnInit, Input, Output, EventEmitter, Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {
-  MatAutocompleteSelectedEvent,
-  MatChipInputEvent,
-  MatAutocomplete
-} from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SearchStringQuery } from 'app/shared/ResourceModels/SearchStringQuerys';
@@ -30,8 +27,8 @@ export class AutoCompleteSearchboxComponent implements OnInit {
   allSearchStringOptions: string[];
   searchButtton: ButtonProperties[] = new Array();
   searchString: SearchString[] = [];
-  @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild('searchInput', {static: true}) searchInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', {static: true}) matAutocomplete: MatAutocomplete;
   @Output() ParentButtonEmitter: EventEmitter<SearchString[]> = new EventEmitter<SearchString[]>();
 
   constructor(el: SearchStringQuery, private router: Router) {
@@ -104,23 +101,22 @@ export class AutoCompleteSearchboxComponent implements OnInit {
         buttonRoute: '',
         canRoute: false,
         HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }],
         popUpName: '',
-        parentEmit: false
+        parentEmit: true
       }
     ];
   }
   searchBtnClicked(e: Event) {
     // console.log(this.searchString, this.searchStringOption);
-    if (this.searchStringOption.length < 2) {
+    if (this.searchStringOption.length > 0) {
       this.searchString['name'] = this.searchStringOption;
       this.ParentButtonEmitter.emit(this.searchString['name']);
     }
 
-    if (this.searchStringOption.length > 1) {
-      this.searchString['name'] = this.searchStringOption;
-      this.ParentButtonEmitter.emit(this.searchString['name']);
-    }
+    // if (this.searchStringOption.length > 1) {
+    //   this.searchString['name'] = this.searchStringOption;
+    //   this.ParentButtonEmitter.emit(this.searchString['name']);
+    // }
   }
 }
 

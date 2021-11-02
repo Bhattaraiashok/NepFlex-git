@@ -20,7 +20,7 @@ namespace NepFlex.DataAccess.Repositories
         public List<DetailResponse> GetDetailOfIndividualItem(int id)
         {
             var result = _context.GetData(id, "Detail");
-            var response = result.ResultSet1.Select(a => new DetailResponse()
+            var response = result.Select(a => new DetailResponse()
             {
                 Title = a.Title,
                 Image =  a.Image,

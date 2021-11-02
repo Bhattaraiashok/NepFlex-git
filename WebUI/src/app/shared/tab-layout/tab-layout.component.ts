@@ -39,7 +39,6 @@ export class TabLayoutComponent implements OnInit {
         buttonRoute: 'detail/',
         canRoute: false,
         HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }],
         popUpName: 'clickMoreDetailsButton'
       }
     ];

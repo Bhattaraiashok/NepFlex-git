@@ -1,8 +1,8 @@
-<!-- <div class="custom-dropdown">
+<!--<div class="custom-dropdown">
   <div class="dropdown">
-    <div [hidden]="!showDropdownLabel"  data-toggle="dropdown" style="text-shadow: none">{{dropdownLabel}}</div>
+    <div  data-toggle="dropdown" style="text-shadow: none">acc</div>
     <ul class="dropdown-menu">
-      <li class="list-group-item" *ngFor="let item of dropdownOptions;let i=index" (click)="routeDropdownTo(item.url)">{{item.label}}
+      <li class="list-group-item" *ngFor="let item of dropdownOptions;let i=index" (click)="routeDropdownTo(item.url)">{{item.displayName}}
     </ul>
   </div>
 </div> -->
@@ -14,7 +14,7 @@
     </button>
     <app-child-dropdown #menu [items]="item.children"></app-child-dropdown>
   </span>
-  <span *ngIf="!item.children || item.children.length === 0">
+<span *ngIf="!item.children || item.children.length === 0">
     <button mat-button color="primary" class="btn btn-outline-light" (click)="routeDropdownTo(item.route)">
       {{item.displayName}}
     </button>

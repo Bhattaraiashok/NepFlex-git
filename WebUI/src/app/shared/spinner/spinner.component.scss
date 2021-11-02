@@ -1,1 +1,55 @@
 /* Styles go here, but all in global file */
+
+.loader-lg {
+  border: 16px solid #ce7508; /* Light grey */
+  border-top: 16px solid #022346;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  animation: spin 2s linear infinite;
+  top: 50%;
+  position: relative;
+  text-align: center;
+  left: 50%;
+  background-repeat: no-repeat;
+  background-size: 97%;
+}
+.loader-sm {
+  width: 43px;
+  height: 42px;
+  background: #ffffff;
+  border: 16px solid #ce7508; /* Light grey */
+  border-top: 16px solid #022346;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  top: 50%;
+  position: relative;
+  text-align: center;
+//left: calc(50% - 10%);
+  background-repeat: no-repeat;
+  background-size: 97%;
+}
+
+.disable-loader-sm {
+  width: 43px;
+  height: 42px;
+  animation: spin 2s linear infinite;
+  top: 50%;
+  position: relative;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 97%;
+  background: #ffffff;
+  border: 16px solid rgb(0 0 0 / 38%);
+  border-top: 16px solid rgb(0 0 0 / 20%);
+  border-radius: 50%;
+}
+
+.global-spinner-wrapper{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 1000;
+    background: '#038ca46b';
+}

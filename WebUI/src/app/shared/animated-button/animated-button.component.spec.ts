@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AnimatedButtonComponent } from './animated-button.component';
 
@@ -6,7 +6,7 @@ describe('AnimatedButtonComponent', () => {
   let component: AnimatedButtonComponent;
   let fixture: ComponentFixture<AnimatedButtonComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AnimatedButtonComponent ]
     })

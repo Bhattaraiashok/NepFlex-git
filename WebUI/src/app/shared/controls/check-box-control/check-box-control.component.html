@@ -1,0 +1,28 @@
+<div class="row switches">
+    <input id="{{dataContent.id}}" placeholder="{{dataContent.negativeContent}}" class="custom-form-control form-input" value="{{selectedValue}}"
+        type="checkbox" (change)="valueChanged($event)" (keyup)="valueChanged($event)" />
+    <label for="{{dataContent.id}}" *ngIf="dataContent.displayLabel">
+      <span>{{dataContent.label}}</span>
+      <span *ngIf="dataContent.displayValidation">
+          <p *ngIf="dataContent.ValidationMessage !== null && dataContent.ValidationMessage !== ''">
+              {{dataContent.ValidationMessage}}
+          </p>
+          <p *ngIf="dataContent.ValidationMessage === null || dataContent.ValidationMessage === ''" class="error-input">
+              * required
+          </p>
+      </span>
+    </label>
+</div>
+
+
+<!--
+<ol class="switches">
+    <li>
+        <input type="checkbox" data-content="" id="{{checkboxId}}" (change)="valueChanged($event)" value="{{selectedValue}}" (keyup)="valueChanged($event)"
+        />
+        <label for="{{checkboxId}}">
+      <span *ngIf="label !=='' || label!==null">{{label}}</span>
+      <span></span>
+    </label>
+    </li>
+</ol>-->

@@ -1,14 +1,14 @@
 @import '../../../Style/styles.scss';
 
 .animated-button-body {
-  @include display-parent-flex(column, nowrap, flex-start, flex-start, flex-start);
+  @include display-parent-flex(column, nowrap, flex-end, flex-end, flex-end);
   // background: #f1f1f1;
+  display: inline-flex;
   z-index: 1;
-  width: 92.5em;
   border-radius: 5px;
   min-height: 7em;
   max-height: 29em;
-  width: 100% !important;
+  width: auto !important;
   position: relative;
   overflow: auto;
   padding: 1em;
@@ -19,17 +19,23 @@
 .animated-button-container {
   @include display-parent-flex(row, nowrap, flex-start, flex-start, flex-start);
 }
+.disable{
+    background-color: rgba(0, 0, 0, 0.12);
+    cursor: not-allowed;
+    border-radius: 2em;
+  }
 
-//---------------
-div.animBtn,
-div.animBtn:visited {
+//---------------wehen all good with button------------------------------------------------
+button.animBtn,
+button.animBtn:visited {
   @include display-child-flex(1, 1, auto, auto);
   margin-right: 1em;
   position: relative;
   display: block;
   padding: 14px 15px;
   // background-color: rgba(108, 110, 212, 1);
-  color: #ce7508;
+  color: #ffffff;
+  background: #e67e22;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
@@ -37,6 +43,7 @@ div.animBtn:visited {
   letter-spacing: 0.08em;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  border: none;
   @include display-child-flex(1, 1, auto, auto);
 
   &:after {
@@ -52,9 +59,11 @@ div.animBtn:visited {
   }
 
   &:hover {
-    color: #008ba3;
-    text-shadow: none;
-    background: #ce7508;
+   color: #781313;
+    text-shadow: 0 0 black;
+    font-size: larger;
+    border: 1px solid #105da1;
+    background: #879bb5;
     transition: all 0.3s ease;
     z-index: 1;
     position: relative;
@@ -66,8 +75,49 @@ div.animBtn:visited {
   }
 }
 
-div.animBtn {
+button.animBtn {
   &.themeA:after {
+    transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+  }
+}
+
+//// -------------------when button are disabled-------------------------------------------------------
+button.disBtn,
+button.disBtn:visited {
+  @include display-child-flex(1, 1, auto, auto);
+  margin-right: 1em;
+  position: relative;
+  display: block;
+  padding: 14px 15px;
+  // background-color: rgba(108, 110, 212, 1);
+  color: #ffffff;
+  background: rgb(0 0 0 / 14%);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: not-allowed;
+  border: none;
+  @include display-child-flex(1, 1, auto, auto);
+
+  &:after {
+    content: '';
+    position: absolute;
+    background: none repeat scroll 0 0 #fff;
+    height: 0%;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    z-index: -1;
+    transition: all 0.3s ease 0s;
+  }
+}
+
+button.disBtn {
+  &.disA:after {
     transform: translateX(-50%) translateY(-50%) rotate(-45deg);
   }
 }

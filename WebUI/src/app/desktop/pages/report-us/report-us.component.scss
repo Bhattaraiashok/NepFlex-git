@@ -1,19 +1,14 @@
 @import '../../../../Style/styles.scss';
 
-.info-blocks {
-  @include display-parent-flex(row,nowrap,flex-start,flex-start,flex-start);
-}
-.body-container {
-  padding: 8em;
-}
 .report-info {
-  @include body-page-container(100% ,42px,#484848,#ffffff00);
+  @include body-page-container(100% ,42px,#484848,'#ffffff00');
   @include display-child-flex(0,1,auto,auto);
 }
 .left-section {
   @include display-child-flex(0,1,auto,auto);
   @include display-parent-flex(column,nowrap,flex-start,flex-start,flex-start);
-  margin-right: 4em;
+  // margin-right: 4em;
+  float: left;
 }
 .right-section {
   @include display-child-flex(0,1,auto,auto);
@@ -27,22 +22,7 @@
   @include display-child-flex(0,1,auto,auto);
   min-height: 33em;
 }
-.terms-of-service-info {
-  @include body-page-container(41% ,42px,#484848,#ffffff);
-  @include display-child-flex(0,1,auto,auto);
-}
 
-.imgaboutus {
-  background-image: url($nCImageAboutusPage);
-  width: 13em;
-  height: 8em;
-  content: '';
-  display: block;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  z-index: 1;
-  margin-left: 35em;
-}
 .title-text {
   @include custom-font-style(35px,56px,-0.8px,1px,8px,#6f6f6f,normal);
 }
@@ -78,7 +58,7 @@
   font-size: 2em !important;
   line-height: 56px !important;
   letter-spacing: -0.8px !important;
-  color: #cacaca4d !important;
+  color: '#cacaca4d !important';
   font-weight: normal !important;
   pointer-events: none;
 }

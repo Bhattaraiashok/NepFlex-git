@@ -1,3 +1,8 @@
-<div class="loader-lg" [hidden]="!showLargeLoader"></div>
+<div class="global-spinner-wrapper">
 
-<div class="loader-sm" [hidden]="!showSmallLoader"></div>
+    <div class="loader-lg spin-container" *ngIf="showLargeLoader"></div>
+
+    <div class="loader-sm spin-container" *ngIf="showSmallLoader"></div>
+
+    <div class="disable-loader-sm spin-container" *ngIf="showDisableSmallLoader"></div>
+</div>

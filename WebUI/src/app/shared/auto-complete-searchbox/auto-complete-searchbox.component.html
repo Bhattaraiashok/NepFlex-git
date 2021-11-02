@@ -4,18 +4,15 @@
   </div>
 
   <mat-chip-list #chipList>
-    <mat-chip *ngFor="let item of searchStringOption" [selectable]="selectable" [removable]="removable"
-      (removed)="remove(item)">
+    <mat-chip *ngFor="let item of searchStringOption" [selectable]="selectable" [removable]="removable" (removed)="remove(item)">
       {{item}}
       <mat-icon matChipRemove *ngIf="removable && item">cancel</mat-icon>
     </mat-chip>
 
-    <input id="multiAutoCompleteSearchBox" placeholder="Search keywords:" #searchInput [formControl]="searchStringCtrl"
-      [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
-    <!-- <a *ngIf="!searchButtonOnOff() && multiStringOptions" class="btn btn-primary btn-join" (click)="searchBtnClicked($event, false)">Search</a> -->
-    <a *ngIf="searchButtonOnOff()" class="btn btn-primary btn-join float-right"
-      (click)="searchBtnClicked($event)">Search</a>
+    <input id="multiAutoCompleteSearchBox" placeholder="Search keywords:" #searchInput [formControl]="searchStringCtrl" [matAutocomplete]="auto"
+      [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)">
+    <app-animated-button *ngIf="searchButtonOnOff()" [buttonCollections]="searchButtton" (ParentEmitter)="searchBtnClicked($event)"></app-animated-button>
   </mat-chip-list>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">

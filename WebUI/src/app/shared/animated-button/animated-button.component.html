@@ -1,9 +1,17 @@
 <div class="animated-button-body">
   <div class="animated-button-container">
-    <div class="animBtn themeA" *ngFor="let item of buttonCollections;let i=index;" (click)="functionalButton(item.buttonId)">
-      <div>{{item.buttonLabel}}</div>
-      <app-dropdown *ngIf="item.HasDropDown" [dropdownOptions]="item.DropDownList">
-      </app-dropdown>
+    <div *ngFor="let item of buttonCollections;let i=index;">
+      <button *ngIf="!item.isDisable" class="animBtn themeA" (click)="functionalButton(item.buttonId)">
+        <div>{{item.buttonLabel}}</div>
+        <app-dropdown *ngIf="item.HasDropDown" [dropdownOptions]="item.DropDownList">
+        </app-dropdown>
+      </button>
+      <button *ngIf="item.isDisable && !item.spinnerActive" class="disable disBtn disA" [title]="item.tooltip">
+        <div>{{item.buttonLabel}}</div>
+      </button>
+      <div *ngIf="item.isDisable && item.spinnerActive" class="disable disBtn disA">
+        <app-spinner></app-spinner>
+      </div>
     </div>
   </div>
   <div class="all-results"></div>

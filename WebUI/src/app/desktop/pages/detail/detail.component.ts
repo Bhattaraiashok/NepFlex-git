@@ -38,7 +38,7 @@ export class DetailComponent implements OnInit {
         buttonRoute: '',
         canRoute: false,
         HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }],
+        DropDownList: null,
         popUpName: 'sendEmail'
       },
       {
@@ -48,7 +48,7 @@ export class DetailComponent implements OnInit {
         buttonRoute: '',
         canRoute: false,
         HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }]
+        DropDownList: null
       }
     ];
   }

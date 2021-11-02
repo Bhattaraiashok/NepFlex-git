@@ -1,0 +1,10 @@
+<div class="type">
+    {{data.alertType | titlecase}}
+    <div class="countdown">auto closes on: {{countdownNumber}}</div>
+</div>
+<div class="msg-section">
+    {{data.alertMsg}}
+</div>
+<div *ngIf="data.showButton" class="btn-section">
+    <button mat-flat-button (click)="snackBarRef.dismiss()">{{data.alertBtnLabel}}</button>
+</div>

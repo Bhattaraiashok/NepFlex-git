@@ -8,7 +8,7 @@ import { DropDownList } from 'app/shared/ResourceModels/ButtonProperties';
 })
 export class ChildDropdownComponent implements OnInit {
   @Input() items: DropDownList[];
-  @ViewChild('childMenu') public childMenu;
+  @ViewChild('childMenu', {static: true}) public childMenu;
   constructor() {}
 
   ngOnInit() {}

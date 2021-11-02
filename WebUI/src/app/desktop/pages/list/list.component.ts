@@ -15,6 +15,7 @@ import { SearchService } from 'app/shared/services/search.service';
 import { FilteringSearch } from 'app/shared/ResourceModels/FilteringSearch';
 import { ActivatedRoute } from '@angular/router';
 import { SearchString } from 'app/shared/auto-complete-searchbox/auto-complete-searchbox.component';
+import { SpinnerService } from "app/shared/services/control-services/spinner.service";
 
 @Component({
   selector: 'app-list',
@@ -25,16 +26,17 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
   searchResults: SearchResponse[] = new Array();
   searchResponse: SearchResponse[] = new Array();
   TotalCount: number;
-  turnLargeLoader: boolean = false;
   searchText: string;
+  spinner = true;
 
   constructor(
     private route: ActivatedRoute,
     private searchService: SearchService,
     private filtering: FilteringSearch,
-    private searchStrings: SearchString
+    private searchStrings: SearchString,
+    private spinnerService: SpinnerService
   ) {
-    this.turnLargeLoader = true;
+    this.spinner = this.spinnerService.showSpinner_lg();
     const res = this.searchStrings.name;
     console.log(res);
   }
@@ -42,12 +44,6 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
     // this.searching();
   }
   ngOnInit() {
-    // var pathArray = window.location.pathname.split('/');
-    // var secondLevelLocation = pathArray[-1];
-    // var newPathname = '';
-    // for (let i = 0; i < pathArray.length; i++) {
-    //   newPathname = pathArray[i];
-    // }
     this.route.params.subscribe(params => {
       this.searchText = this.searchStrings.name;
       this.searching();
@@ -61,7 +57,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   filterBy() {
-    this.turnLargeLoader = true;
+    this.spinner = this.spinnerService.showSpinner_lg();
     const pipe = new FilterByPipe();
     this.searchResults = this.searchResponse; // I have to always pretend fresh copy
     const field: string = this.filtering.field.toLowerCase();
@@ -98,7 +94,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
         );
         break;
     }
-    this.turnLargeLoader = false;
+    this.spinner = this.spinnerService.disableSpinner_lg();
   }
 
   searching() {
@@ -114,7 +110,12 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
             this.searchResults.push(e)
           });
           // this.searchResults = x;
-          this.turnLargeLoader = false;
+          if (this.TotalCount == 0) {
+            //keep spining
+            //this.spinner = this.spinnerService.resetSpinner_lg()
+          } else {
+            this.spinner = this.spinnerService.disableSpinner_lg();
+          }
           console.log('this.searchResults first observation:', this.searchResults);
         });
         // });

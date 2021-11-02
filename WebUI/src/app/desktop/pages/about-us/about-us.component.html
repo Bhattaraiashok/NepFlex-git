@@ -1,29 +1,4 @@
-<!-- <div class="global-desktop-body">
-  <div class="global-desktop-header"> -->
-    <app-desktop-header></app-desktop-header>
-  <!-- </div> -->
-  <div class="global-desktop-container">
-    <div class="body-container">
-      <!-- <div class="imgaboutus"></div> -->
-      <!-- <div class="info-blocks"> -->
-        <div class="jumbotron container" id="aboutUsInfo">
-          <div class="title-about-us" [innerHTML]="aboutUsTitle"></div>
-          <div [innerHTML]="aboutUsText"></div>
-        </div>
-        <!-- <div class="right-section container" id="contactUsInfo">
-          <div class="contact-us-info">
-            <div class="title-about-us">Contact Us</div>
-            <label>you need to login to contact..</label>
-          </div>
-          <div class="terms-of-service-info container">
-              <div class="title-about-us">Terms and Condition</div>
-              <label [routerLink]="['../termsofuse']">See Terms and Condition</label>
-            </div>
-        </div> -->
-      <!-- </div> -->
-    </div>
-  </div>
-  <div class="global-desktop-footer">
-    <app-desktop-footer></app-desktop-footer>
-  </div>
-<!-- </div> -->
+<div class="component-holder" id="aboutUsInfo">
+  <div class="title-about-us" [innerHTML]="aboutUsTitle"></div>
+  <div [innerHTML]="aboutUsText"></div>
+</div>

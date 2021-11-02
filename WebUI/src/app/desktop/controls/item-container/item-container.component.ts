@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SearchResponse } from 'app/shared/ResourceModels/SearchResponse';
 import { ButtonProperties } from 'app/shared/ResourceModels/ButtonProperties';
 import { Router } from '@angular/router';
-import { renderComponent } from '@angular/core/src/render3';
 
 
 @Component({
@@ -28,12 +27,6 @@ export class ItemContainerComponent implements OnInit {
   }
   render() {
     console.log('this.itemResults: ', this.itemResults);
-    this.itemResults.forEach(a => {
-   //   a.itemDetail
-    //  a.searchText
-    });
-
-
   }
 
   allButtons() {
@@ -45,7 +38,7 @@ export class ItemContainerComponent implements OnInit {
         buttonRoute: 'detail/',
         canRoute: false,
         HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }],
+        DropDownList:null,
         popUpName: 'clickMoreDetailsButton'
       }
     ];

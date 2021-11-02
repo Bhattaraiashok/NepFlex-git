@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ReportService } from 'app/shared/services/report.service';
 import { ReportGetData } from 'app/shared/ResourceModels/ReportGetData';
-import { window } from 'rxjs/operators';
-import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-report-us',
@@ -23,8 +20,7 @@ export class ReportUsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private reportService: ReportService,
-    private route: Router
+    private reportService: ReportService
   ) {
     this.createReportForm();
     this.turnSmallLoader = true;

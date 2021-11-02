@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HomeSearchOverlayComponent } from './home-search-overlay.component';
 
@@ -6,7 +6,7 @@ describe('HomeSearchOverlayComponent', () => {
   let component: HomeSearchOverlayComponent;
   let fixture: ComponentFixture<HomeSearchOverlayComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ HomeSearchOverlayComponent ]
     })

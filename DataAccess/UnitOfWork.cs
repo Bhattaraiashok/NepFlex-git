@@ -31,6 +31,7 @@ namespace DataAccess
         public IReportRepository ReportRepository { get; private set; }
         public IDetailRepository DetailRepository { get; private set; }
         public ISendEmailRepository SendEmailRepository { get; private set; }
+        public ILoginRepository LoginRepository { get; private set; }
 
         public UnitOfWork(IOnlinePasalContext context)
         {
@@ -47,6 +48,7 @@ namespace DataAccess
             ReportRepository = new ReportRepository(_context);
             DetailRepository = new DetailRepository(_context);
             SendEmailRepository = new SendEmailRepository(_context);
+            LoginRepository = new LoginRepository(_context);
         }
         public List<ValidationResult> GetValidationErrors()
         {

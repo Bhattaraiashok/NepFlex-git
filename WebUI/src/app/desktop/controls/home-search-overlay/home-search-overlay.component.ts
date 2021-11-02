@@ -21,24 +21,21 @@ export class HomeSearchOverlayComponent implements OnInit {
         buttonLabel: 'Search More',
         buttonRoute: `/list`,
         canRoute: true,
-        HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }]
+        HasDropDown: false
       },
       {
         buttonId: 2,
         buttonLabel: 'Mixed Items',
         buttonRoute: `/list/m`,
         canRoute: true,
-        HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }]
+        HasDropDown: false
       },
       {
         buttonId: 3,
         buttonLabel: 'Switch To Classic NC',
         buttonRoute: `/search/m`,
         canRoute: true,
-        HasDropDown: false,
-        DropDownList: [{ id: 1, label: '', url: '' }]
+        HasDropDown: false
       }
     ];
   }
