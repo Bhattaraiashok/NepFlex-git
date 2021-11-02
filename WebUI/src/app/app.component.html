@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<div class="global-desktop-body-column">
+    <div class="global-desktop-header">
+        <app-desktop-header></app-desktop-header>
+    </div>
+    <div class="global-desktop-container">
+        <div class="home-load-spinner" *ngIf="showloadingIndicator"></div>
+        <router-outlet></router-outlet>
+    </div>
+    <div class="global-desktop-footer">
+        <app-desktop-footer></app-desktop-footer>
+    </div>
+</div>

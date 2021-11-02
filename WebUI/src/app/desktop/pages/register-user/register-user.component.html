@@ -1,0 +1,21 @@
+<!--<app-register class="register-form"></app-register>-->
+<div class="container">
+    <div class="row mbr-justify-content-center center-flex-container">
+        <div class="col-lg-6 mbr-col-md-10 center-flex-item" *ngFor="let card of registerCategories; let i=index;">
+            <div class="wrap" (click)="cardOnClick(card.id)">
+                <div class="ico-wrap">
+                    <i class="user-icon mbr-iconfont bi bi-person"></i>
+                </div>
+                <div class="text-wrap vcenter">
+                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5 txt-ucase-header"> {{card.CardTitle}}</h2>
+                    <i *ngIf="card.isChecked" class="bi bi-check2-square check-mark"></i>
+                </div>
+                <div class="foot-note">
+                    <p class="mbr-fonts-style text1 mbr-text display-6 txt-info-notes">
+                        {{card.footnote}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

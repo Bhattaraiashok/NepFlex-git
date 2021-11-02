@@ -1,19 +1,26 @@
 //background
 $backgropund-header-color: black;
-$background-color-red: #d6002a;
+$background-color-red: #ad003b;
+$background-color-white: white;
+
+$color-bluish-greeny: #008ba3;
+$color-orange: #ce7508;
+
+$color-bluish-greeny-gradient:linear-gradient(178deg, #ffffff 86%, #008ba3 93%);
 
 //border:
 $border-gray: 1px solid #e4e4e4;
 
 //font
-$font-color-white: white;
-$font-color-black: black;
-$font-color-red: lighten(red, 15%);
+$color-white: white;
+$color-black: black;
+$color-red: lighten(red, 15%);
+$color-gray:rgb(0 0 0 / 42%);
 
 //font-weight
 $font-wight-bold: bold;
 $font-wight-normal: normal;
-$font-family: sans-serif;
+$font-family-serif: sans-serif;
 
 //images:
 $empty-cart: '/dist/assets/images/empty_cart.png';

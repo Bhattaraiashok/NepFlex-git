@@ -1,14 +1,14 @@
 @import '../../../Style/styles.scss';
 
 .animated-button-body {
-  @include display-parent-flex(column, nowrap, flex-start, flex-start, flex-start);
+  @include display-parent-flex(column, nowrap, flex-end, flex-end, flex-end);
   // background: #f1f1f1;
+  display: inline-flex;
   z-index: 1;
-  width: 92.5em;
   border-radius: 5px;
   min-height: 7em;
   max-height: 29em;
-  width: 100% !important;
+  width: auto !important;
   position: relative;
   overflow: auto;
   padding: 1em;

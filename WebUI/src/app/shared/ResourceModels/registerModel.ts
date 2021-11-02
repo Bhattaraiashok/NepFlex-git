@@ -16,6 +16,7 @@ export class UserRequest {
     ShowPhonenumber: boolean;
     IsUserSeller: boolean;
     IsUserAgreementChecked: boolean;
+    ProfilePhoto:string;
 }
 
 export class CompanyRequest {

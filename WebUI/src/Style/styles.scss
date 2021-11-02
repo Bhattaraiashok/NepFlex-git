@@ -1,6 +1,8 @@
 @import './_variables.scss';
 @import './_mixins.scss';
+@import '../styles.scss';
 @import '~@angular/material/theming';
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 .hidden {
   display: none;
@@ -15,26 +17,103 @@
   background-color: '#00000021';
 }
 
+.lg-background-gradient{
+background: linear-gradient(178deg, #008ba3 0%, #ce7508 100%);
+color: #ce7508;
+}
+
+.sm-background-gradient{
+    background: linear-gradient(178deg, #ffffff 86%, #008ba3 93%);
+    color: #ce7508;
+}
+
 .global-desktop-body {
   @include display-parent-flex(row, nowrap, flex-start, flex-start, flex-start);
+  overflow-x: hidden
 }
 .global-desktop-body-column {
   @include display-parent-flex(column, nowrap, flex-start, flex-start, flex-start);
   height: 100% !important;
+  width: 100%;
   position: absolute;
 }
 
 .global-desktop-header {
-  @include display-child-flex(0, 1, auto, auto);
+  @include display-child-flex(0, 1, auto, stretch);
+   height: 10% !important;
 }
 
 .global-desktop-container {
-  @include display-child-flex(1, 1, auto, auto);
+  @include display-child-flex(1, 1, auto, stretch);
+  //margin-bottom: 8em;
+  margin-top: 4em;
 }
 
 .global-desktop-footer {
-  @include display-child-flex(0, 1, auto, auto);
+  @include display-child-flex(0, 1, auto, stretch);
 }
+
+.info-blocks {
+  @include display-parent-flex(row,nowrap,flex-start,flex-start,flex-start);
+}
+
+.component-holder {
+  @include body-list-page-container(100% ,42px,#484848,#ffffff);
+  @include display-child-flex(0,1,auto,auto);
+}
+
+.card-holder{
+    min-width: 150px;
+    width: 92%;
+    margin-top: 0.5rem;
+    background: white;
+    align-items: center;
+    border: none;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    box-sizing: border-box;
+    padding: 1rem;
+    left: 1em;
+    position: relative;
+    right: 1em;
+}
+
+.card-holder-label{
+  color: #130b7e;
+  font-family:$font-family-serif;
+}
+
+.imgaboutus {
+  background-image: url($nCImageAboutusPage);
+  width: 13em;
+  height: 8em;
+  content: '';
+  display: block;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 1;
+  margin-left: 35em;
+}
+.title-text {
+  @include custom-font-style(35px,56px,-0.8px,1px,8px,#6f6f6f,normal);
+}
+
+
+@media only screen and (max-width:1200px){
+.body-container {
+  padding: 8em;
+}
+
+}
+@media only screen and (max-width:990px){
+.body-container {
+  padding: 0.1em;
+  margin-top: 5em;
+}
+}
+@media only screen and (max-width:359px){
+  
+  }
+
 
 // @include mat-core();
 
@@ -373,10 +452,10 @@ section#group {
   border-radius: 0.28571429rem;
 }
 
-.card:hover {
-  color: #222 !important;
-  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-}
+// .card:hover {
+//   color: #222 !important;
+//   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+// }
 
 .card-block {
   font-size: 1em;
@@ -611,6 +690,7 @@ li.list-inline-item a {
 /*-------------------responsive-----------------*/
 
 @media screen and (max-width: 520px) {
+
   ::placeholder {
     font-size: 10px;
   }
@@ -981,3 +1061,12 @@ li.list-inline-item a {
     height: 100%;
   }
 }
+
+// @media only screen and (max-width: 736px) and (orientation: landscape) {}
+// @media only screen and (max-width: 667px) and (orientation: landscape) {}
+// @media only screen and (max-width: 568px) and (orientation: landscape) {}
+// @media only screen and (min-width: 600px) and (max-width: 767px) {}
+// @media only screen and (min-width: 480px) and (max-width: 599px) {}
+// @media only screen and (min-width: 321px) and (max-width: 479px) {}
+// @media only screen and (max-width: 568px) and (orientation: landscape) {}
+// @media only screen and (max-width: 320px) {}

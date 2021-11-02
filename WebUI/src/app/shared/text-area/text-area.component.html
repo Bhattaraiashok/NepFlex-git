@@ -32,6 +32,12 @@
   <span class="fa fa-times-circle text-clear-button searchclear" *ngIf="showClearButton && selectedValue !==''" (click)="clearInput($event)"></span>
   </span>
 
+  <span *ngIf="textType==='img'" class="btn-group">
+    <input placeholder="{{placeholder}}" class="custom-form-control form-input" value="{{selectedValue}}" type="file" accept="image/*" (change)="TextChanged($event)" (keyup)="TextChanged($event)" (blur)="onBlurChanged($event)"
+    />
+  <span class="fa fa-times-circle text-clear-button searchclear" *ngIf="showClearButton && selectedValue !==''" (click)="clearInput($event)"></span>
+  </span>
+
   <!--<span *ngIf="textType==='tel'">
       <input  placeholder='{{placeholder}}' class="custom-form-control" value="{{selectedValue}}" type="number" 
              phoneMask [preValue]="selectedValue" maxlength="14" 

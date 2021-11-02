@@ -1,3 +1,4 @@
+
 export class LoginRequest {
     UserID: string;
     UserPSWD: string;
@@ -19,5 +20,5 @@ export class LoginResponse {
     timeStamp: Date;
     strMessage: string[];
     isSuccess: boolean;
-    statusType:string;
+    statusType: string;
 }

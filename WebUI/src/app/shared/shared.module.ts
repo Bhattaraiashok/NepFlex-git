@@ -74,6 +74,10 @@ import { TelephoneMaskDirective } from './directives/telephone-mask.directive';
 import { AlertComponent } from './alert/alert.component';
 import { NotifierComponent } from './notifier/notifier.component';
 import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
+import { AngContext } from "app/shared/ResourceModels/AngContext";
+import { StandardUserRegistrationComponent } from './register/standard-user-registration/standard-user-registration.component';
+import { SellerUserRegistrationComponent } from './register/seller-user-registration/seller-user-registration.component';
+import { CheckBoxControlComponent } from './controls/check-box-control/check-box-control.component';
 // import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
 // import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
 
@@ -148,9 +152,13 @@ import { AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages"
     RegisterComponent,
     TelephoneMaskDirective,
     AlertComponent,
-    NotifierComponent
+    NotifierComponent,
+    StandardUserRegistrationComponent,
+    SellerUserRegistrationComponent,
+    CheckBoxControlComponent
   ],
   providers: [
+    AngContext,
     NgbActiveModal,
     ReportService,
     SearchService,

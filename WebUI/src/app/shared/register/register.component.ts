@@ -27,8 +27,6 @@ export class RegisterComponent implements OnInit, IDeactivateComponent {
     return true;
   }
 
-  @Output() PopUpName: string;
-
   UserRegister: UserRegister = new UserRegister();
   registerResponse: ResponseObjects;
 

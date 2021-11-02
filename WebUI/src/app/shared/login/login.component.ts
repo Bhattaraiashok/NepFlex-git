@@ -10,6 +10,7 @@ import { ButtonProperties } from "app/shared/ResourceModels/ButtonProperties";
 import { NotificationService } from "app/shared/services/control-services/notification.service";
 import { SpinnerService } from "app/shared/services/control-services/spinner.service";
 import { IDeactivateComponent } from "app/shared/guards/can-deactivate-guard.service";
+import { AngContext, FEDataContext } from "app/shared/ResourceModels/AngContext";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -57,7 +58,8 @@ export class LoginComponent implements OnInit, IDeactivateComponent {
     private loginService: LoginService,
     private spinnerService: SpinnerService,
     private modalService: NgbActiveModal,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private angContext: AngContext) {
     this.passwordFC.disable()
     this.createForm();
   }
@@ -110,6 +112,13 @@ export class LoginComponent implements OnInit, IDeactivateComponent {
       this.loginService.login(this.loginRequest).subscribe((item: LoginResponse) => {
         if (item.isSuccess == true) {
           this.call_MessageAlertComponent(this.CONSTList.success, item.strMessage[0]);
+          const user = new FEDataContext();
+          user.AngAuthKey = "";
+          user.AngIsAuth = true;
+          user.AngSessionID = "jPTCreationdotcom";
+          user.userHasSellerAC = false;
+          user.userIsLoggedIn = true;
+          this.angContext.feedCntxData(user);
           this.manageLocalStorage(item);
           this.RouteTo('home');
           this.modalService.close('close');

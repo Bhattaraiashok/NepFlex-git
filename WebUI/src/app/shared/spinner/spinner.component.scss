@@ -11,7 +11,7 @@
   top: 50%;
   position: relative;
   text-align: center;
-  left: calc(50% - 10%);
+  left: 50%;
   background-repeat: no-repeat;
   background-size: 97%;
 }
@@ -45,43 +45,6 @@
   border-top: 16px solid rgb(0 0 0 / 20%);
   border-radius: 50%;
 }
-
-
-// .spinner-overlay{
-//     pointer-events: none;
-//     top: 0;
-//     left: 0;
-//     height: 100%;
-//     width: 100%;
-//     position: fixed;
-//     z-index: 1000;
-//     opacity: 0.8;
-// }
-
-// .global-spinner-wrapper{
-//     display: flex;
-//     position: absolute;
-//     z-index: 1000;
-//     justify-content:center;
-//     align-items: center;
-//     pointer-events: none;
-//     top: 0;
-//     left: 0;
-//     height: 100%;
-//     width: 100%;
-// }
-
-// .spin-container{
-//     box-sizing: border-box;
-//     z-index: 1000;
-//     display: flex;
-//     max-width: 100%;
-//     max-height: 100%;
-//     pointer-events: auto;
-//     position: static;
-//     margin-left: 0px;
-//     margin-bottom: 0px;
-// }
 
 .global-spinner-wrapper{
     width: 100%;
