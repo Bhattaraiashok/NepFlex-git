@@ -39,13 +39,7 @@
                     your profile page.
                     <br/> If you would like to set it up later, click on skip.</p>
                 <p class="txt-info-notes" *ngIf="currentActiveStep == 3"> Great! let's set up your profile now. Please, provide info on below fields. none are mandatory though.</p>
-                <form id="msform" [formGroup]="standardUserRegisterForm">
-                    <!-- progressbar -->
-                    <!--
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div> <br>-->
-                    <!-- fieldsets -->
+                <form [formGroup]="standardUserRegisterForm">
                     <fieldset *ngIf="currentActiveStep == 1">
                         <div class="form-card">
                             <app-text-area data-test-id="user_email" placeholder='Email' formControlName="useremail" textType='email' (newData)="onchangeform($event,'useremail')"
@@ -66,11 +60,6 @@
 
                             <div *ngIf="showSignAgreement" class="agreement-card">
                                 <section class="user-agreement-label">
-                                    <!--<h4>Agree to terms and conditions</h4>
-                                        <div *ngFor="let item of userAgreementCheckbox;  let i = index">
-                                            <mat-checkbox [checked]="item.isChecked === true" formControlName="isUserAgreementChecked" (change)="onChange_ToUserAgreementCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
-                                            
-                                        </div>-->
                                     <app-check-box-control data-test-id="user_AgreementCheckbox" [dataContent]="agreementCheckboxDataContent" (onChange)="onChange_ToCheckbox($event,'isUserAgreementChecked')"></app-check-box-control>
                                     <p *ngIf="showFCError && isUserAgreementCheckedFCError !=''" class="error-input">{{agreementCheckboxDataContent.ValidationMessage}}</p>
                                 </section>
@@ -87,21 +76,18 @@
                             <app-text-area data-test-id="user_lastname" placeholder='Last Name' formControlName="lastname" textType='text' (newBluredData)="updateOnBlur($event,'lastname')"></app-text-area>
                             <mat-error *ngIf="showFCError && lastnameFCError !=''" class="error-input">{{lastnameFCError}}</mat-error>
 
-                            <section class="example-section">
-                                <h4>show or hide your phone number on your profile?</h4>
-                                <div *ngFor="let item of userChoiceOnPhonenumber;  let i = index">
-                                    <mat-checkbox [checked]="item.isChecked === true" (change)="onchangeUserPhoneNumberCheckbox($event,item.id)">{{item.label}}</mat-checkbox>
-                                </div>
+                            <div class="card-holder card-holder-label">
+                                <app-check-box-control data-test-id="user_userChoiceOnPhonenumber" [dataContent]="showHidePhoneCheckboxDataContent"
+                                    (onChange)="onChange_ToCheckbox($event,'showOrHideUserPhonenumber')"></app-check-box-control>
+                            </div>
+                            <app-text-area data-test-id="user_countryCode" placeholder='Country Code' formControlName="usercountryCode" textType=number
+                                (newBluredData)="updateOnBlur($event,'usercountryCode')"></app-text-area>
+                            <mat-error *ngIf="showFCError && countryCodeFCError !=''" class="error-input">{{countryCodeFCError}}</mat-error>
 
-                                <app-text-area data-test-id="user_countryCode" placeholder='Country Code' formControlName="usercountryCode" textType=number
-                                    (newBluredData)="updateOnBlur($event,'usercountryCode')"></app-text-area>
-                                <mat-error *ngIf="showFCError && countryCodeFCError !=''" class="error-input">{{countryCodeFCError}}</mat-error>
-
-                                <input id="tel" class="form-control" class="custom-form-control form-input" placeholder='phonenumber' phoneMask [preValue]="standardUserRegisterForm.value.userphonenumber"
-                                    formControlName="userphonenumber" maxlength="14" (blur)="updateOnBlur($event,'userphonenumber')"
-                                />
-                                <!--<app-text-area data-test-id="user_phonenumber" placeholder='Phone Number' formControlName="userphonenumber" textType='tel' (newData)="onBlurVision($event,'userphonenumber')"></app-text-area>-->
-                            </section>
+                            <input id="tel" class="form-control" class="custom-form-control form-input" placeholder='phonenumber' phoneMask [preValue]="standardUserRegisterForm.value.userphonenumber"
+                                formControlName="userphonenumber" maxlength="14" (blur)="updateOnBlur($event,'userphonenumber')"
+                            />
+                            <!--<app-text-area data-test-id="user_phonenumber" placeholder='Phone Number' formControlName="userphonenumber" textType='tel' (newData)="onBlurVision($event,'userphonenumber')"></app-text-area>-->
                         </div>
                         <app-animated-button [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
                     </fieldset>

@@ -34,16 +34,21 @@ export class CheckBoxControlComponent implements OnInit, ControlValueAccessor {
   valueChanged(event: { target; value: string }) {
     const val = event.target.checked;
     this.selectedValue = val;
-    const cssPlay = document.getElementById(this.dataContent.id);
-    if (this.selectedValue) {
-      //asign positve value
-      cssPlay.setAttribute('placeholder', this.dataContent.positveContent);
+    if (this.dataContent !== null) {
+      const cssPlay = document.getElementById(this.dataContent.id);
+      if (this.selectedValue) {
+        //asign positve value
+        cssPlay.setAttribute('placeholder', this.dataContent.positveContent);
+      } else {
+        //asign negative value
+        cssPlay.setAttribute('placeholder', this.dataContent.negativeContent);
+      }
+      this.dataContent.responseValue = this.selectedValue;
+      this.dataContent.event = event;
+      this.onChange.emit(this.dataContent);
     } else {
-      //asign negative value
-      cssPlay.setAttribute('placeholder', this.dataContent.negativeContent);
+      console.log('dataContent is null');
     }
-    this.dataContent.responseValue = this.selectedValue;
-    this.onChange.emit(this.dataContent);
   }
 
   propagateChange = (_: any) => { };

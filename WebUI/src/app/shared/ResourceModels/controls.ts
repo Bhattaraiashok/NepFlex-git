@@ -9,4 +9,5 @@ export class CheckBoxControlProperties {
     responseValue: boolean; //reques:nullable but response : NOT NULLABLE
     displayValidation?: boolean;
     ValidationMessage?: string;
+    event?:{ target; value: string };
 }
