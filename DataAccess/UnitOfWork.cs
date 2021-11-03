@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using NepFlex.DataAccess.Context;
 using NepFlex.DataAccess.Repositories;
 using NepFlex.Core.Interfaces.Repositories;
+using NepFlex.Core.Interfaces.Security;
 
 namespace DataAccess
 {
@@ -49,7 +50,7 @@ namespace DataAccess
             DetailRepository = new DetailRepository(_context);
             SendEmailRepository = new SendEmailRepository(_context);
             LoginRepository = new LoginRepository(_context);
-        }
+    }
         public List<ValidationResult> GetValidationErrors()
         {
             var errors = _context.GetValidationErrors();

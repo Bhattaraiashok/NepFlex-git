@@ -64,7 +64,7 @@
     </Compile>
     <Compile Include="Entities\ResourceModels\ClothingBrands.cs" />
     <Compile Include="Entities\ResourceModels\DetailResponse.cs" />
-    <Compile Include="Entities\ResourceModels\Helper.cs" />
+    <Compile Include="Entities\Utility\Helper.cs" />
     <Compile Include="Entities\ResourceModels\ItemDescription.cs" />
     <Compile Include="Entities\ResourceModels\MenuClearence.cs" />
     <Compile Include="Entities\ResourceModels\MenuFashion.cs" />
@@ -74,9 +74,11 @@
     <Compile Include="Entities\ResourceModels\ResponseMessage.cs" />
     <Compile Include="Entities\ResourceModels\SearchedKeywordResults.cs" />
     <Compile Include="Entities\ResourceModels\SearchResponse.cs" />
+    <Compile Include="Entities\ResourceModels\Security\SecuritySettings.cs" />
     <Compile Include="Entities\ResourceModels\SendEmailRequest.cs" />
     <Compile Include="Entities\ResourceModels\UserModel.cs" />
-    <Compile Include="Entities\ResourceModels\Utility.cs" />
+    <Compile Include="Entities\Utility\RandomNumGenerator.cs" />
+    <Compile Include="Entities\Utility\Utility.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositories\IDetailRepository.cs" />
     <Compile Include="Interfaces\Repositories\IItemDescriptionRepository.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Interfaces\Repositories\IRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISearchRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISendEmailRepository.cs" />
+    <Compile Include="Interfaces\Services\Security\IEncryptionService.cs" />
     <Compile Include="Interfaces\Services\IDetailService.cs" />
     <Compile Include="Interfaces\Services\IItemDescriptionService.cs" />
     <Compile Include="Interfaces\Services\ILoginService.cs" />
@@ -100,11 +103,11 @@
     <Compile Include="Services\MenuTopService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\Security\EncryptionService.cs" />
+    <Compile Include="Services\Security\HashHelper.cs" />
     <Compile Include="Services\SendEmailSevice.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\Utilities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Entities\OnlinePasal\EF.Reverse.POCO.Core.ttinclude" />

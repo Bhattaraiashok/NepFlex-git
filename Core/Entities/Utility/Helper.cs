@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NepFlex.Core.Entities.Utility;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -355,6 +356,22 @@ namespace NepFlex.Core.Entities.ResourceModels
             }
             return tranId;
         }
+        
+        
+        /// <summary>
+        /// Generate random digit code
+        /// </summary>
+        /// <param name="length">Length</param>
+        /// <returns>Result string</returns>
+        public static string GenerateRandomDigitCode(int length)
+        {
+            var random = new RandomNumGenerator();
+            var str = string.Empty;
+            for (var i = 0; i < length; i++)
+                str = string.Concat(str, random.Next(10).ToString());
+            return str;
+        }
+
     }
 }
 
