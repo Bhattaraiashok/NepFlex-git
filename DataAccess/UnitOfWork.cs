@@ -16,6 +16,7 @@ using NepFlex.DataAccess.Context;
 using NepFlex.DataAccess.Repositories;
 using NepFlex.Core.Interfaces.Repositories;
 using NepFlex.Core.Interfaces.Security;
+using NepFlex.Core.Interfaces.Services;
 
 namespace DataAccess
 {
@@ -23,6 +24,7 @@ namespace DataAccess
     {
         private static readonly TraceSource TraceSource = new TraceSource("NepFlex.DataAccess");
         private IOnlinePasalContext _context;
+        private readonly IEncryptionService _encryptionService;
         private bool _disposed;
 
         // TODO: Add Repositories
@@ -34,9 +36,11 @@ namespace DataAccess
         public ISendEmailRepository SendEmailRepository { get; private set; }
         public ILoginRepository LoginRepository { get; private set; }
 
-        public UnitOfWork(IOnlinePasalContext context)
+        public UnitOfWork(IOnlinePasalContext context,
+            IEncryptionService encryptionService)
         {
             _context = context;
+            _encryptionService = encryptionService;
             Initialize();
         }
 
@@ -49,8 +53,8 @@ namespace DataAccess
             ReportRepository = new ReportRepository(_context);
             DetailRepository = new DetailRepository(_context);
             SendEmailRepository = new SendEmailRepository(_context);
-            LoginRepository = new LoginRepository(_context);
-    }
+            LoginRepository = new LoginRepository(_context, _encryptionService);
+        }
         public List<ValidationResult> GetValidationErrors()
         {
             var errors = _context.GetValidationErrors();

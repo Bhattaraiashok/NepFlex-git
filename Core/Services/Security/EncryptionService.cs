@@ -67,7 +67,6 @@ namespace NepFlex.Core.Services.Security
 
             // Return a Base64 string representation of the random number
             return Convert.ToBase64String(buff);
-            //return _unitOfWork //LoginRepository.UserLoginProcess(login, req2);
         }
 
         /// <summary>

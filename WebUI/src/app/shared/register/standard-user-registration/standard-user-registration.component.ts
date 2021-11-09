@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IDeactivateComponent } from "app/shared/guards/can-deactivate-guard.service";
-import { UserRegister } from "app/shared/ResourceModels/registerModel";
+import { UserRegisterRequest, UserUpdateRequest } from "app/shared/ResourceModels/registerModel";
 import { ResponseObjects } from "app/shared/ResourceModels/ResponseStatus";
 import { CONSTList, AlertMessageProperties } from "app/shared/ResourceModels/AlertMessages";
 import { FormGroup, FormControl, Validators, FormBuilder } from "@angular/forms";
@@ -36,7 +36,8 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
   agreementCheckboxDataContent: CheckBoxControlProperties = new CheckBoxControlProperties();
   showHidePhoneCheckboxDataContent: CheckBoxControlProperties = new CheckBoxControlProperties();
 
-  UserRegister: UserRegister = new UserRegister();
+  UserRegister: UserRegisterRequest = new UserRegisterRequest();
+  UserUpdateRegister: UserUpdateRequest = new UserUpdateRequest();
   registerResponse: ResponseObjects;
   CONSTList: CONSTList = new CONSTList();
   standardUserRegisterForm: FormGroup;
@@ -166,7 +167,7 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
     this.validateForm();
     this.formAndButtons();
     if (prop.event.target.type == "checkbox" && prop.formControlName == "showOrHideUserPhonenumber") {
-       this.UserRegister.FieldUpdateRequest = prop.formControlName;
+      this.UserUpdateRegister.FieldUpdateRequest = prop.formControlName;
       this.updateRecord();
     }
   }
@@ -258,14 +259,14 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
 
     if (val != null && val != "") {
       this.standardUserRegisterForm.get(formControlName).patchValue(val);
-      this.UserRegister.FieldUpdateRequest = formControlName;
+      this.UserUpdateRegister.FieldUpdateRequest = formControlName;
       this.updateRecord();
     }
   }
 
   updateRecord() {
     this.mappings();
-    this.registerService.update(this.UserRegister).subscribe((item: ResponseObjects) => {
+    this.registerService.update(this.UserUpdateRegister).subscribe((item: ResponseObjects) => {
       if (item.isSuccess === true) {
         this.smallSpinner();
         this.call_MessageAlertComponent(this.CONSTList.success, item.strMessage[0]);
@@ -375,19 +376,19 @@ export class StandardUserRegistrationComponent implements OnInit, IDeactivateCom
   mappings() {
     //let's map first step and rest seperatly
     // if (this.userRegCurrentFlow == this.usernameAndPassword_Flow && this.currentActiveStep == 1) {
-    this.UserRegister.UserDetail.UserEmail = this.standardUserRegisterForm.get('useremail').value;
-    this.UserRegister.UserDetail.PSWDHASH = this.standardUserRegisterForm.get('password').value;
-    this.UserRegister.UserDetail.Username = this.standardUserRegisterForm.get('username').value;
+    this.UserRegister.Email = this.standardUserRegisterForm.get('useremail').value;
+    this.UserRegister.EnteredPassword = this.standardUserRegisterForm.get('password').value;
+    this.UserRegister.Username = this.standardUserRegisterForm.get('username').value;
     // } else {
-    this.UserRegister.UserDetail.Firstname = this.standardUserRegisterForm.get('firstname').value;
-    this.UserRegister.UserDetail.Lastname = this.standardUserRegisterForm.get('lastname').value;
-    this.UserRegister.UserDetail.Middlename = this.standardUserRegisterForm.get('middlename').value;
-    this.UserRegister.UserDetail.PhoneCountryCode = this.standardUserRegisterForm.get('usercountryCode').value;
-    this.UserRegister.UserDetail.PhoneNumber = this.standardUserRegisterForm.get('userphonenumber').value;
-    this.UserRegister.UserDetail.ShowPhonenumber = this.standardUserRegisterForm.get('showOrHideUserPhonenumber').value;
-    this.UserRegister.UserDetail.ProfilePhoto = this.standardUserRegisterForm.get('profilephoto').value;
+    this.UserUpdateRegister.Firstname = this.standardUserRegisterForm.get('firstname').value;
+    this.UserUpdateRegister.Lastname = this.standardUserRegisterForm.get('lastname').value;
+    this.UserUpdateRegister.Middlename = this.standardUserRegisterForm.get('middlename').value;
+    this.UserUpdateRegister.Country = this.standardUserRegisterForm.get('usercountryCode').value;
+    this.UserUpdateRegister.PhoneNumber = this.standardUserRegisterForm.get('userphonenumber').value;
+    this.UserUpdateRegister.ShowPhonenumber = this.standardUserRegisterForm.get('showOrHideUserPhonenumber').value;
+    this.UserUpdateRegister.ProfileImage = this.standardUserRegisterForm.get('profilephoto').value;
     //agreement
-    this.UserRegister.UserDetail.IsUserAgreementChecked = this.standardUserRegisterForm.get('isUserAgreementChecked').value;
+    this.UserRegister.IsUserAgreementChecked = this.standardUserRegisterForm.get('isUserAgreementChecked').value;
     //}
   }
 

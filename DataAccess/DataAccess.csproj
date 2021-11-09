@@ -189,7 +189,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OnlinePasalContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Identity\CustomUserStore.cs" />
     <Compile Include="Mapping\OnlinePasalMapping.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,6 +204,7 @@
     <Compile Include="Repositories\SearchRepository.cs" />
     <Compile Include="Repositories\Security\EncryptionRepository.cs" />
     <Compile Include="Repositories\SendEmailRepository.cs" />
+    <Compile Include="Repositories\UserSetting\UserInformationSettings.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

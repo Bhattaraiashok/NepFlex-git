@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Interfaces.Services;
+using System.Threading.Tasks;
 
 namespace NepFlex.Core.Services
 {
@@ -11,17 +12,21 @@ namespace NepFlex.Core.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public ResponseStatus UserLoginProcess(UserLogin login, ApplicationUser req2)
+        public SignInStatusResponse UserLoginProcess(UserLoginRequest login)
         {
-            return _unitOfWork.LoginRepository.UserLoginProcess(login, req2);
+            return _unitOfWork.LoginRepository.UserLoginProcess(login);
         }
-        public ResponseStatus UserRegistrationProcess(UserRegister req, ApplicationUser req2)
+        public ResponseStatus UserRegistrationProcess(UserRegisterRequest req)
         {
-            return _unitOfWork.LoginRepository.UserRegistrationProcess(req, req2);
+            return _unitOfWork.LoginRepository.UserRegistrationProcess(req);
         }
-        public ResponseStatus UpdateUser(UserRegister req, ApplicationUser req2)
+        public ResponseStatus UpdateUserProcess(UserUpdateRequest req)
         {
-            return _unitOfWork.LoginRepository.UpdateUser(req, req2);
+            return _unitOfWork.LoginRepository.UpdateUserProcess(req);
+        }
+        public SignInStatusResponse ValidateUserLogin(string usernameOrEmail, string password)
+        {
+            return _unitOfWork.LoginRepository.ValidateUserLogin(usernameOrEmail, password);
         }
     }
 }

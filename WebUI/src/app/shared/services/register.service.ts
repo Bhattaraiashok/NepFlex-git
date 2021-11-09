@@ -10,7 +10,7 @@ import { ReportGetData } from 'app/shared/ResourceModels/ReportGetData';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Headers, RequestOptions } from '@angular/http';
-import { UserRegister } from "app/shared/ResourceModels/registerModel";
+import { UserRegisterRequest, UserUpdateRequest } from "app/shared/ResourceModels/registerModel";
 import { ResponseObjects } from "app/shared/ResourceModels/ResponseStatus";
 
 @Injectable({
@@ -29,7 +29,7 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  register(val: UserRegister): Observable<ResponseObjects> {
+  register(val: UserRegisterRequest): Observable<ResponseObjects> {
     return this.http.post<ResponseObjects>(
       `${this.apiUrl_postRegister}`,
       JSON.stringify(val),
@@ -37,7 +37,7 @@ export class RegisterService {
     );
   }
 
-  update(val: UserRegister): Observable<ResponseObjects> {
+  update(val: UserUpdateRequest): Observable<ResponseObjects> {
     return this.http.post<ResponseObjects>(
       `${this.apiUrl_postUpdate}`,
       JSON.stringify(val),

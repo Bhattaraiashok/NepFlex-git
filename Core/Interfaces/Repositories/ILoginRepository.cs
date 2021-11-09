@@ -1,12 +1,14 @@
 ﻿using Core.Interfaces.Repositories;
 using NepFlex.Core.Entities.ResourceModels;
+using System.Threading.Tasks;
 
 namespace NepFlex.Core.Interfaces.Repositories
 {
     public interface ILoginRepository : IRepository<UserLoginResponse, int>
     {
-        ResponseStatus UserLoginProcess(UserLogin req, ApplicationUser req2);
-        ResponseStatus UserRegistrationProcess(UserRegister req, ApplicationUser req2);
-        ResponseStatus UpdateUser(UserRegister req, ApplicationUser req2);
+        SignInStatusResponse UserLoginProcess(UserLoginRequest req);
+        ResponseStatus UserRegistrationProcess(UserRegisterRequest req);
+        ResponseStatus UpdateUserProcess(UserUpdateRequest req);
+        SignInStatusResponse ValidateUserLogin(string usernameOrEmail, string password);
     }
 }

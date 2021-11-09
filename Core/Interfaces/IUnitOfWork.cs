@@ -18,6 +18,7 @@ namespace Core.Interfaces
         IDetailRepository DetailRepository { get; }
         ISendEmailRepository SendEmailRepository { get; }
         ILoginRepository LoginRepository { get; }
+
         bool Save();
     }
 }

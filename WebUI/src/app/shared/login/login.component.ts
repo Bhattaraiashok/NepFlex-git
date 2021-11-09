@@ -180,14 +180,14 @@ export class LoginComponent implements OnInit, IDeactivateComponent {
   }
 
   userValidation(): boolean {
-    const valResult = ((this.loginRequest.UserID != null && this.loginRequest.UserID != undefined && this.loginRequest.UserID != '')
+    const valResult = ((this.loginRequest.UserName != null && this.loginRequest.UserName != undefined && this.loginRequest.UserName != '')
       && (this.loginRequest.UserPSWD != null && this.loginRequest.UserPSWD != undefined && this.loginRequest.UserPSWD != ''));
     this.allButtons();
     return valResult;
   }
 
   mapping() {
-    this.loginRequest.UserID = this.loginForm.get('username').value;
+    this.loginRequest.UserName = this.loginForm.get('username').value;
     this.loginRequest.UserPSWD = this.loginForm.get('password').value;
     this.loginRequest.IsRememberMe = this.loginForm.get('isRememberMe').value;
   }

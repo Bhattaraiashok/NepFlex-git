@@ -1,22 +1,26 @@
-export class UserRegister {
-    UserDetail: UserRequest = new UserRequest();
-    CompanyDetails: CompanyRequest = new CompanyRequest();
-    FieldUpdateRequest: string;
+// export class UserRegister {
+//     UserDetail: UserRequest = new UserRequest();
+//     FieldUpdateRequest: string;
+// }
+
+export class UserRegisterRequest {
+    Email: string;
+    Username: string;
+    EnteredPassword: string;
+    IsUserAgreementChecked: boolean;
 }
 
-export class UserRequest {
-    Username: string;
+export class UserUpdateRequest {
     Firstname: string;
     Middlename: string;
     Lastname: string;
-    PSWDHASH: string;
-    UserEmail: string;
-    PhoneCountryCode: string;
+    ProfileImage: string;
+    Address: string;
+    Country: string;
     PhoneNumber: string;
     ShowPhonenumber: boolean;
     IsUserSeller: boolean;
-    IsUserAgreementChecked: boolean;
-    ProfilePhoto:string;
+    FieldUpdateRequest: string;
 }
 
 export class CompanyRequest {
@@ -28,3 +32,4 @@ export class CompanyRequest {
     IsGOVRegisteredCompany: boolean;
     CompanyEmailID: string;
 }
+

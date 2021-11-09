@@ -1,74 +1,52 @@
 ﻿using DataAccess.Repositories;
 using NepFlex.Core.Entities.ResourceModels;
+using NepFlex.Core.Entities.ResourceModels.Security;
 using NepFlex.Core.Interfaces.Repositories;
+using NepFlex.Core.Interfaces.Security;
+using NepFlex.Core.Interfaces.Services;
 using NepFlex.DataAccess.Context;
-using NepFlex.DataAccess.Identity;
+using NepFlex.DataAccess.Repositories.UserSetting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.SessionState;
 
 namespace NepFlex.DataAccess.Repositories
 {
+
     public class LoginRepository : Repository<UserLoginResponse, int>, ILoginRepository
     {
         private readonly IOnlinePasalContext _context;
+        private readonly IEncryptionService _encryptionService;
 
-        public LoginRepository(IOnlinePasalContext context) : base(context)
+        public UserInformationSettings _userInformationSettings { get { return new UserInformationSettings(_context, _encryptionService); } }
+
+        public LoginRepository(IOnlinePasalContext context, IEncryptionService encryptionService) : base(context)
         {
             _context = context;
+            _encryptionService = encryptionService;
         }
-        public ResponseStatus UserLoginProcess(UserLogin login, ApplicationUser identityVerifiedUser)
+
+        public SignInStatusResponse UserLoginProcess(UserLoginRequest login)
         {
-            ResponseStatus _status = new ResponseStatus
+            SignInStatusResponse _signInStatus = new SignInStatusResponse()
             {
                 IsSuccess = false,
-                StrMessage = new List<string>()
+                StrMessage = new List<string>(),
+                SignInStatus = SignInStatus.FAILURE
             };
 
-            if (login == null || string.IsNullOrWhiteSpace(login.UserPSWD) || string.IsNullOrWhiteSpace(login.UserID) || identityVerifiedUser == null)
+            if (login == null || string.IsNullOrWhiteSpace(login.UserPSWD) || string.IsNullOrWhiteSpace(login.UserName))
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_LOGIN_CONST_FAILURE, _status);
-                return _status;
+                _signInStatus = Utility.AppendStatus(ConstList.USER_LOGIN_CONST_FAILURE, _signInStatus);
+                return _signInStatus;
             }
 
-            login.UserPSWD = identityVerifiedUser.PasswordHash;
-            login.UserID = identityVerifiedUser.UserName;
+            _signInStatus = ValidateUserLogin(login.UserName, login.UserPSWD);
 
-            var _login = new UserLoginResponse();
-
-            ValidateUserReturnModel _login2 = new ValidateUserReturnModel();
-
-            _login2 = _context.ValidateUser(login.UserID, login.UserPSWD, login.UI);
-
-            if (_login2.ResultSet1.Count > 0 && _login2.ResultSet1[0].UserID != null && _login2.ResultSet1[0].Username != null)
-            {
-                _login.Email = _login2.ResultSet1.Select(x => x.Email).FirstOrDefault();
-                _login.UserGuid = _login2.ResultSet1.Select(x => x.GUID).FirstOrDefault();
-                _login._Auth = _login2.ResultSet1.Select(x => x.Lastname).FirstOrDefault(); // need to modify this
-                _login.Firstname = _login2.ResultSet1.Select(x => x.Firstname).FirstOrDefault();
-                SessionIDManager manager = new SessionIDManager();
-                string newSessionId = manager.CreateSessionID(HttpContext.Current);
-                _login.SessionID = newSessionId;
-
-                //append status
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.RES_OBJ_CONST_SUCCESS, _login);
-            }
-            else
-            {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_LOGIN_CONST_FAILURE, _login);
-            }
-
-            return _status;
+            return _signInStatus;
         }
 
-
-
-        public ResponseStatus UserRegistrationProcess(UserRegister req, ApplicationUser req2)
+        public ResponseStatus UserRegistrationProcess(UserRegisterRequest req)
         {
             ResponseStatus _status = new ResponseStatus
             {
@@ -77,25 +55,29 @@ namespace NepFlex.DataAccess.Repositories
             };
 
             //check
-            if (req == null || req.UserDetail == null || string.IsNullOrWhiteSpace(req2.PasswordHash) || string.IsNullOrWhiteSpace(req2.SecurityStamp)
-                || string.IsNullOrWhiteSpace(req.UserDetail.Email) || string.IsNullOrWhiteSpace((req.UserDetail.Username)))
+            if (req == null || string.IsNullOrWhiteSpace(req.EnteredPassword)
+                || string.IsNullOrWhiteSpace(req.Email) || string.IsNullOrWhiteSpace((req.Username)))
             {
                 _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_REGISTER_CONST_FAILURE, _status);
                 return _status;
             }
 
-            var result = new List<RegisterUserReturnModel>();
+            var result = new List<SpRegisterUserReturnModel>();
 
-            req.UserDetail.PSWDHASH = req2.PasswordHash;
+            //req.PasswordHash = _encryptionService.CreatePasswordHash(req.EnteredPassword, "", PasswordFormat.HASHED.ToString());
+            UserPassword userpassword = new UserPassword();
+            userpassword = _userInformationSettings.SetPasswordHash(req.EnteredPassword);
 
             //saves user initial registration
-            result = _context.RegisterUser(
-               req.UserDetail.Email,
-               req.UserDetail.Username,
-               req.UserDetail.PhoneNumber,
-               req.UserDetail.PSWDHASH,
-               req.UserDetail.PSWDSALT,
-               req.UserDetail.UI);
+            result = _context.SpRegisterUser(
+               req.Email,
+               req.Username,
+               userpassword.PasswordHash,
+               userpassword.PasswordSalt,
+               userpassword.PasswordFormat.ToString(), //passwordtype,
+               BaseEntity.DefaultHashedPasswordFormat, //pswdalgorithm
+               BaseEntity.DBEncryptionKey,//dbkey
+               req.UI);
 
 
             _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
@@ -104,7 +86,7 @@ namespace NepFlex.DataAccess.Repositories
             return _status;
         }
 
-        public ResponseStatus UpdateUser(UserRegister req, ApplicationUser req2)
+        public ResponseStatus UpdateUserProcess(UserUpdateRequest req)
         {
             bool _dataUserAltered = false;
 
@@ -115,112 +97,153 @@ namespace NepFlex.DataAccess.Repositories
             };
 
             //first check
-            if (req.UserDetail == null || req == null || string.IsNullOrWhiteSpace(req2.SecurityStamp))
+            if (req == null || req?.UID == null || req?.UserEmail == null)
             {
                 _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_FAILURE, _status);
                 return _status;
             }
 
-            var _usrInfo = (from _usr in _context.Users
-                            where _usr.UserName == req.UserDetail.Username &&
-                             _usr.Email == req.UserDetail.Email && _usr.Ui.ToLower() == CONSTUINAME.UI_NAME
+            var _usrInfo = (from _usr in _context.MasterUsers
+                            where _usr.UserId == req.UID &&
+                             _usr.Email == req.UserEmail && _usr.Ui.ToLower() == CONSTUINAME.UI_NAME
                             select _usr).FirstOrDefault();
 
-            //second check
-            if (_usrInfo == null || string.IsNullOrWhiteSpace(_usrInfo.UserId))
+            //second checks
+            if (_usrInfo == null || string.IsNullOrEmpty(_usrInfo?.UserId))
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_FAILURE, _status);
+                _status = Utility.AppendStatus(ConstList.USER_PROFILE_CONST_FAILURE, _status);
                 return _status;
             }
 
-            req.CompanyDetails.UserID = _usrInfo.UserId;
-
-            if (_usrInfo != null)
+            //user
+            if (_usrInfo.FirstName != req.Firstname && (!string.IsNullOrWhiteSpace(req.Firstname)) && req.FieldUpdateRequest == CONST_Update_FormControlName.firstname)
             {
-                //user
-                if (_usrInfo.FirstName != req.UserDetail.Firstname && (!string.IsNullOrWhiteSpace(req.UserDetail.Firstname)) && req.FieldUpdateRequest == CONST_Update_FormControlName.firstname)
+                _usrInfo.FirstName = req.Firstname;
+                _dataUserAltered = true;
+            }
+            if (_usrInfo.MiddleName != req.Middlename && (!string.IsNullOrWhiteSpace(req.Middlename)) && req.FieldUpdateRequest == CONST_Update_FormControlName.middlename)
+            {
+                _usrInfo.MiddleName = req.Middlename;
+                _dataUserAltered = true;
+            }
+            if (_usrInfo.LastName != req.Lastname && (!string.IsNullOrWhiteSpace(req.Lastname)) && req.FieldUpdateRequest == CONST_Update_FormControlName.lastname)
+            {
+                _usrInfo.LastName = req.Lastname;
+                _dataUserAltered = true;
+            }
+            if (_usrInfo.PhNumber != req.PhoneNumber && (!string.IsNullOrWhiteSpace(req.PhoneNumber)) && req.FieldUpdateRequest == CONST_Update_FormControlName.userphonenumber)
+            {
+                _usrInfo.PhNumber = req.PhoneNumber;
+                _dataUserAltered = true;
+            }
+            if (_usrInfo.Email != req.UserEmail && (!string.IsNullOrWhiteSpace(req.UserEmail)) && req.FieldUpdateRequest == CONST_Update_FormControlName.useremail)
+            {
+                _usrInfo.Email = req.UserEmail;
+                _dataUserAltered = true;
+            }
+            if (_usrInfo.ShowPhNumber != req.ShowPhonenumber && req.ShowPhonenumber != null && req.FieldUpdateRequest == CONST_Update_FormControlName.showOrHideUserPhonenumber)
+            {
+                _usrInfo.ShowPhNumber = req.ShowPhonenumber;
+                _dataUserAltered = true;
+            }
+
+            //ToDO:change to country
+            if (_usrInfo.Country != req.Country && (!string.IsNullOrWhiteSpace(req.Country)) && req.FieldUpdateRequest == CONST_Update_FormControlName.usercountryCode)
+            {
+                _usrInfo.Country = req.Country;
+                _dataUserAltered = true;
+            }
+
+            if (_usrInfo.ProfilePicture != req.ProfileImage && (!string.IsNullOrWhiteSpace(req.ProfileImage)) && req.FieldUpdateRequest == CONST_Update_FormControlName.profilephoto)
+            {
+                _usrInfo.ProfilePicture = req.ProfileImage;
+                _dataUserAltered = true;
+            }
+
+            if (req.IsUserSeller.Equals(true))
+            {
+                var IsSeller = req.IsUserSeller == true ? 1 : 0;
+                if (_usrInfo.IsUserSeller != IsSeller && req.FieldUpdateRequest == CONST_Update_FormControlName.userIsSeller)
                 {
-                    _usrInfo.FirstName = req.UserDetail.Firstname;
+                    _usrInfo.IsUserSeller = IsSeller;
                     _dataUserAltered = true;
                 }
-                if (_usrInfo.MiddleName != req.UserDetail.Middlename && (!string.IsNullOrWhiteSpace(req.UserDetail.Middlename)) && req.FieldUpdateRequest == CONST_Update_FormControlName.middlename)
-                {
-                    _usrInfo.MiddleName = req.UserDetail.Middlename;
-                    _dataUserAltered = true;
-                }
-                if (_usrInfo.LastName != req.UserDetail.Lastname && (!string.IsNullOrWhiteSpace(req.UserDetail.Lastname)) && req.FieldUpdateRequest == CONST_Update_FormControlName.lastname)
-                {
-                    _usrInfo.LastName = req.UserDetail.Lastname;
-                    _dataUserAltered = true;
-                }
-                if (_usrInfo.PhNumber != req.UserDetail.PhoneNumber && (!string.IsNullOrWhiteSpace(req.UserDetail.PhoneNumber)) && req.FieldUpdateRequest == CONST_Update_FormControlName.userphonenumber)
-                {
-                    _usrInfo.PhNumber = req.UserDetail.PhoneNumber;
-                    _dataUserAltered = true;
-                }
-                if (_usrInfo.Email != req.UserDetail.Email && (!string.IsNullOrWhiteSpace(req.UserDetail.Email)) && req.FieldUpdateRequest == CONST_Update_FormControlName.useremail)
-                {
-                    _usrInfo.Email = req.UserDetail.Email;
-                    _dataUserAltered = true;
-                }
-                if (_usrInfo.ShowPhNumber != req.UserDetail.ShowPhonenumber && req.UserDetail.ShowPhonenumber != null && req.FieldUpdateRequest == CONST_Update_FormControlName.showOrHideUserPhonenumber)
-                {
-                    _usrInfo.ShowPhNumber = req.UserDetail.ShowPhonenumber;
-                    _dataUserAltered = true;
-                }
-                if (_usrInfo.UserPhnCode != req.UserDetail.PhoneCountryCode && (!string.IsNullOrWhiteSpace(req.UserDetail.PhoneCountryCode)) && req.FieldUpdateRequest == CONST_Update_FormControlName.usercountryCode)
-                {
-                    _usrInfo.UserPhnCode = req.UserDetail.PhoneCountryCode;
-                    _dataUserAltered = true;
-                }
+            }
 
-                if (_usrInfo.ProfilePicture != req.UserDetail.ProfilePhoto && (!string.IsNullOrWhiteSpace(req.UserDetail.ProfilePhoto)) && req.FieldUpdateRequest == CONST_Update_FormControlName.profilephoto)
+            var returnRes = 0;
+
+            if (_dataUserAltered)
+            {
+                _usrInfo.UpdatedDate = DateTime.Now;
+
+                returnRes = _context.SaveChanges();
+            }
+
+            //company info
+            if (_usrInfo.IsUserSeller == 1)
+            {
+                CompanyUpdateRequest _compRequest = new CompanyUpdateRequest()
                 {
-                    _usrInfo.ProfilePicture = req.UserDetail.ProfilePhoto;
-                    _dataUserAltered = true;
-                }
+                    UID = req.UID
+                };
 
-                if (req.UserDetail.IsUserSeller)
-                {
-                    var IsSeller = req.UserDetail.IsUserSeller == true ? "yes" : "no";
-                    if (_usrInfo.IsUserSeller != IsSeller && req.FieldUpdateRequest == CONST_Update_FormControlName.userIsSeller)
-                    {
-                        _usrInfo.IsUserSeller = IsSeller;
-                        _dataUserAltered = true;
-                    }
-                }
+                UpdateCompany(_compRequest);
+            }
 
-                var returnRes = 0;
+            if (returnRes == CONSTResponse.INT_CONST_SUCCESS)
+            {
+                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_SUCCESS, _status);
+            }
 
-                if (_dataUserAltered)
-                {
-                    _usrInfo.UpdatedDate = DateTime.Now;
+            return _status;
 
-                    returnRes = _context.SaveChanges();
-                }
+        }
 
-                //company info
-                if (_usrInfo.IsUserSeller == "yes")
-                {
-                    UpdateCompany(req, _usrInfo);
-                }
+        public ResponseStatus RegisterCompanyProcess(CompanyRegisterRequest req)
+        {
+            ResponseStatus _status = new ResponseStatus
+            {
+                IsSuccess = false,
+                StrMessage = new List<string>()
+            };
 
-                if (returnRes == CONSTResponse.INT_CONST_SUCCESS)
-                {
-                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_SUCCESS, _status);
-                }
+            //ToDo: validate company if already exist on time of registration
 
-                return _status;
+
+            int returnResults = -1; //failure
+
+            MasterCompany _companyInfo = new MasterCompany
+            {
+                UserId = req.UID,
+                CompanyName = req.CompanyName,
+                EmailId = req.CompanyEmailID,
+                Address = req.Address,
+                IsActive = req.IsCompanyActive,
+                IsGovRegistered = req.IsGOVRegisteredCompany,
+                PhnCountryCode = req.PhoneCountryCode,
+                PhNumber = req.PhoneNumber,
+                ShowPhNumber = req.ShowPhonenumber == true ? true : false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            _context.MasterCompanies.Add(_companyInfo);
+            returnResults = _context.SaveChanges();
+
+
+            if (returnResults == CONSTResponse.INT_CONST_SUCCESS)
+            {
+                _status = Utility.AppendStatus<ResponseStatus>(ConstList.COMPANY_REGISTER_CONST_SUCCESS, _status);
             }
             else
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_PROFILE_CONST_FAILURE, _status);
+                _status = Utility.AppendStatus<ResponseStatus>(ConstList.COMPANY_REGISTER_CONST_FAILURE, _status);
             }
 
             return _status;
         }
 
-        public ResponseStatus UpdateCompany(UserRegister req, User _userInfo)
+        public ResponseStatus UpdateCompany(CompanyUpdateRequest req)
         {
             ResponseStatus _status = new ResponseStatus
             {
@@ -229,7 +252,7 @@ namespace NepFlex.DataAccess.Repositories
             };
 
 
-            if (_userInfo.UserId == null || req == null || req.CompanyDetails == null || !req.UserDetail.IsUserSeller)
+            if (req == null || string.IsNullOrWhiteSpace(req?.UID))
             {
                 _status = Utility.AppendStatus<ResponseStatus>(ConstList.COMPANY_UPDATE_CONST_FAILURE, _status);
                 return _status;
@@ -238,46 +261,46 @@ namespace NepFlex.DataAccess.Repositories
             bool _dataCompanyAltered = false;
 
             var _companyInfo = (from _comp in _context.MasterCompanies
-                                where _comp.UserId == req.CompanyDetails.UserID
+                                where _comp.UserId == req.UID
                                 select _comp).FirstOrDefault();
 
             int returnResults = -1; //failure
 
             if (_companyInfo != null)
             {
-                if (_companyInfo.CompanyName != req.CompanyDetails.CompanyName && (!string.IsNullOrWhiteSpace(req.CompanyDetails.CompanyName)) && req.FieldUpdateRequest == CONST_Update_FormControlName.companyname)
+                if (_companyInfo.CompanyName != req.CompanyName && (!string.IsNullOrWhiteSpace(req.CompanyName)) && req.FieldUpdateRequest == CONST_Update_FormControlName.companyname)
                 {
-                    _companyInfo.CompanyName = req.CompanyDetails.CompanyName;
+                    _companyInfo.CompanyName = req.CompanyName;
                     _dataCompanyAltered = true;
                 }
-                if (_companyInfo.EmailId != req.CompanyDetails.CompanyEmailID && req.FieldUpdateRequest == CONST_Update_FormControlName.companyemail)
+                if (_companyInfo.EmailId != req.CompanyEmailID && req.FieldUpdateRequest == CONST_Update_FormControlName.companyemail)
                 {
                     //_companyInfo.EmailId = req.CompanyDetails.CompanyEmailID; //do not do this since on modify user has to look up using existing email
                 }
-                if (_companyInfo.IsActive != req.CompanyDetails.IsCompanyActive && req.CompanyDetails.IsCompanyActive != null && req.FieldUpdateRequest == CONST_Update_FormControlName.isCompanyRegistered) //TODO: need to change
+                if (_companyInfo.IsActive != req.IsCompanyActive && req.IsCompanyActive != null && req.FieldUpdateRequest == CONST_Update_FormControlName.isCompanyRegistered) //TODO: need to change
                 {
-                    _companyInfo.IsActive = req.CompanyDetails.IsCompanyActive;
+                    _companyInfo.IsActive = req.IsCompanyActive;
                     _dataCompanyAltered = true;
                 }
-                if (_companyInfo.IsGovRegistered != req.CompanyDetails.IsGOVRegisteredCompany && req.CompanyDetails.IsGOVRegisteredCompany != null && req.FieldUpdateRequest == CONST_Update_FormControlName.isCompanyRegistered)
+                if (_companyInfo.IsGovRegistered != req.IsGOVRegisteredCompany && req.IsGOVRegisteredCompany != null && req.FieldUpdateRequest == CONST_Update_FormControlName.isCompanyRegistered)
                 {
-                    _companyInfo.IsGovRegistered = req.CompanyDetails.IsGOVRegisteredCompany;
+                    _companyInfo.IsGovRegistered = req.IsGOVRegisteredCompany;
                     _dataCompanyAltered = true;
                 }
-                if (_companyInfo.PhnCountryCode != req.CompanyDetails.PhoneCountryCode && (!string.IsNullOrWhiteSpace(req.CompanyDetails.PhoneCountryCode)) && req.FieldUpdateRequest == CONST_Update_FormControlName.companycountryCode)
+                if (_companyInfo.PhnCountryCode != req.PhoneCountryCode && (!string.IsNullOrWhiteSpace(req.PhoneCountryCode)) && req.FieldUpdateRequest == CONST_Update_FormControlName.companycountryCode)
                 {
-                    _companyInfo.PhnCountryCode = req.CompanyDetails.PhoneCountryCode;
+                    _companyInfo.PhnCountryCode = req.PhoneCountryCode;
                     _dataCompanyAltered = true;
                 }
-                if (_companyInfo.PhNumber != req.CompanyDetails.PhoneNumber && (!string.IsNullOrWhiteSpace(req.CompanyDetails.PhoneNumber)) && req.FieldUpdateRequest == CONST_Update_FormControlName.companyphonenumber)
+                if (_companyInfo.PhNumber != req.PhoneNumber && (!string.IsNullOrWhiteSpace(req.PhoneNumber)) && req.FieldUpdateRequest == CONST_Update_FormControlName.companyphonenumber)
                 {
-                    _companyInfo.PhNumber = req.CompanyDetails.PhoneNumber;
+                    _companyInfo.PhNumber = req.PhoneNumber;
                     _dataCompanyAltered = true;
                 }
 
-                if (_companyInfo.ShowPhNumber != req.CompanyDetails.ShowPhonenumber && req.CompanyDetails.ShowPhonenumber != null && req.FieldUpdateRequest == CONST_Update_FormControlName.showOrHideCompanyPhonenumber)
+                if (_companyInfo.ShowPhNumber != req.ShowPhonenumber && req.ShowPhonenumber != null && req.FieldUpdateRequest == CONST_Update_FormControlName.showOrHideCompanyPhonenumber)
                 {
-                    _companyInfo.ShowPhNumber = req.CompanyDetails.ShowPhonenumber == true ? true : false;
+                    _companyInfo.ShowPhNumber = req.ShowPhonenumber == true ? true : false;
                     _dataCompanyAltered = true;
                 }
 
@@ -286,8 +309,8 @@ namespace NepFlex.DataAccess.Repositories
                     _companyInfo.UpdatedDate = DateTime.Now;
 
                     // have to insert through DB due to primary keys on various fields.
-                    var result = new List<UpdateCompanyReturnModel>();
-                    result = _context.UpdateCompany(
+                    var result = new List<SpUpdateCompanyReturnModel>();
+                    result = _context.SpUpdateCompany(
                                       _companyInfo.EmailId,
                                       _companyInfo.UserId,
                                       "yes",
@@ -297,7 +320,7 @@ namespace NepFlex.DataAccess.Repositories
                                       _companyInfo.PhNumber,
                                       _companyInfo.IsGovRegistered,
                                       _companyInfo.IsActive,
-                                       req.CompanyDetails.CompanyEmailID,
+                                       req.CompanyEmailID,
                                       _companyInfo.ShowPhNumber
                                     );
 
@@ -307,41 +330,212 @@ namespace NepFlex.DataAccess.Repositories
                     return _status;
                 }
             }
-            else
-            {
-                if (req.UserDetail.IsUserSeller == true)
-                {
-                    _companyInfo = new MasterCompany
-                    {
-                        User = _userInfo,
-                        UserId = _userInfo.UserId,
-                        CompanyName = req.CompanyDetails.CompanyName,
-                        EmailId = req.CompanyDetails.CompanyEmailID,
-                        Address = req.CompanyDetails.Address,
-                        IsActive = req.CompanyDetails.IsCompanyActive,
-                        IsGovRegistered = req.CompanyDetails.IsGOVRegisteredCompany,
-                        PhnCountryCode = req.CompanyDetails.PhoneCountryCode,
-                        PhNumber = req.CompanyDetails.PhoneNumber,
-                        ShowPhNumber = req.CompanyDetails.ShowPhonenumber == true ? true : false,
-                        CreatedDate = DateTime.Now,
-                        UpdatedDate = DateTime.Now
-                    };
-
-                    _context.MasterCompanies.Add(_companyInfo);
-                    returnResults = _context.SaveChanges();
-                }
-
-                if (returnResults == CONSTResponse.INT_CONST_SUCCESS)
-                {
-                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.COMPANY_REGISTER_CONST_SUCCESS, _status);
-                }
-                else
-                {
-                    _status = Utility.AppendStatus<ResponseStatus>(ConstList.COMPANY_REGISTER_CONST_FAILURE, _status);
-                }
-            }
 
             return _status;
+        }
+
+        public SignInStatusResponse ValidateUserLogin(string usernameOrEmail, string password)
+        {
+            SignInStatusResponse _signInStatus = new SignInStatusResponse()
+            {
+                IsSuccess = false,
+                StrMessage = new List<string>(),
+                SignInStatus = SignInStatus.FAILURE
+            };
+
+            MasterUser customer = new MasterUser();
+            var selectionUsingEmail = usernameOrEmail.Contains("@");
+            if (!selectionUsingEmail)
+            {
+                customer = _userInformationSettings.GetUserByUserName(usernameOrEmail);
+            }
+            else
+            {
+                customer = _userInformationSettings.GetUserByEmail(usernameOrEmail);
+            }
+
+            //pre-check
+            if (customer == null)
+            {
+                _signInStatus.SignInStatus = SignInStatus.FAILURE;
+                _signInStatus = Utility.AppendStatus(ConstList.USER_INVALID_FAILURE, _signInStatus);
+                return _signInStatus;
+            }
+            if (!customer.IsActiveAccount)
+            {
+                _signInStatus.SignInStatus = SignInStatus.INACTIVE;
+                _signInStatus = Utility.AppendStatus(ConstList.USER_INACTIVE_FAILURE, _signInStatus);
+                return _signInStatus;
+            }
+
+            //var getUserPasswordsAsync = GetUserPassword(customerPassword);
+            UserPassword uPassword = new UserPassword();
+            if (!_userInformationSettings.PasswordsMatch(customer.UserId, password))
+            {
+                uPassword.PasswordWrongAttemptPerSession++;
+                if (uPassword.PasswordWrongAttemptPerSession >= int.Parse(BaseEntity.MaxPasswordAttemptAllowed))
+                {
+                    // retun msg- saying left over attempts
+                    _signInStatus = Utility.AppendStatus(ConstList.MULTIPLE_PASSWORD_ATTEMPT_FAILURE, _signInStatus);
+                }
+                return _signInStatus;
+            }
+
+            //if (result.RequiresVerification)
+            //    _signInStatus.SignInStatus = SignInStatus.RequiresVerification;
+
+            _signInStatus = Utility.AppendStatus(ConstList.USER_VALID_SUCCESS, _signInStatus);
+            _signInStatus.SignInStatus = SignInStatus.SUCCESS;
+
+            return _signInStatus;
+        }
+
+        public ResponseStatus ValidateUserRegestration(UserRegisterRequest userRegisterObject)
+        {
+            ResponseStatus _status = new ResponseStatus
+            {
+                IsSuccess = false,
+                StrMessage = new List<string>()
+            };
+
+            if (userRegisterObject == null)
+            {
+                return _status;
+            }
+            else if (userRegisterObject == null)
+            {
+                return _status;
+            }
+
+            MasterUser customer = new MasterUser();
+
+            //negative check
+            var validationCheckFailed = (
+                   (string.IsNullOrWhiteSpace(userRegisterObject.Username))
+                || (string.IsNullOrWhiteSpace(userRegisterObject.Email))
+                || (string.IsNullOrWhiteSpace(userRegisterObject.EnteredPassword))
+                || (userRegisterObject.IsUserAgreementChecked == false)
+                );
+
+            if (validationCheckFailed)
+            {
+                return _status;
+            }
+
+            //check if email already registered
+            bool registetrationUsingEmail = _userInformationSettings.ValidateEmailExist(userRegisterObject.Email);
+
+            if (registetrationUsingEmail)
+            {
+                _status = Utility.AppendStatus(ConstList.RES_USER_EMAIL_EXISTS_CONST_FAILURE, _status);
+                return _status;
+            }
+
+            //check if usrname already taken
+            bool registetrationUsingUserName = _userInformationSettings.ValidateUsernameExist(userRegisterObject.Username);
+
+
+            if (registetrationUsingUserName)
+            {
+                _status = Utility.AppendStatus(ConstList.RES_USERNAME_EXISTS_CONST_FAILURE, _status);
+                return _status;
+            }
+
+            _status = Utility.AppendStatus(ConstList.USER_VALID_SUCCESS, _status);
+            return _status;
+        }
+
+        //protected bool PasswordsMatch(UserPassword customerPassword, string enteredPassword)
+        //{
+        //    if (customerPassword == null || string.IsNullOrEmpty(enteredPassword))
+        //        return false;
+
+        //    var savedPassword = string.Empty;
+        //    switch (customerPassword.PasswordFormat)
+        //    {
+        //        case PasswordFormat.CLEAR:
+        //            savedPassword = enteredPassword;
+        //            break;
+        //        case PasswordFormat.ENCRYPTED:
+        //            savedPassword = _encryptionService.EncryptText(enteredPassword);
+        //            break;
+        //        case PasswordFormat.HASHED:
+        //            savedPassword = _encryptionService.CreatePasswordHash(enteredPassword, customerPassword.PasswordSalt, BaseEntity.DefaultHashedPasswordFormat);
+        //            break;
+        //    }
+
+        //    if (customerPassword.Password == null)
+        //        return false;
+
+        //    return customerPassword.Password.Equals(savedPassword);
+        //}
+
+        //public UserPassword GetUserPassword(UserPassword currentUserInfo)
+        //{
+        //    if (currentUserInfo == null)
+        //    {
+        //        return null;
+        //    }
+
+        //    UserPassword _localBind = new UserPassword();
+        //    //filter by customer
+        //    if (!string.IsNullOrWhiteSpace(currentUserInfo.UserID))
+        //    {
+        //        //var query = (from _pswd in _context.MasterSaltyPasswords
+        //        //             where _pswd.Usrid == currentUserInfo.UserID
+        //        //             select _pswd).FirstOrDefault();
+        //        var query=_userInformationSettings.get
+
+        //        //_localBind = new UserPassword()
+        //        //{
+        //        //    PasswordHash = query.Pswdhash,
+        //        //    PasswordFormat = query.Passwordtype.ToLower() == "en" ? PasswordFormat.Encrypted : PasswordFormat.Hashed,
+        //        //    PasswordSalt = query.Pswdsalt,
+        //        //    CreatedOn = Convert.ToDateTime(query.Pswdchangedon),
+        //        //    PasswordExpiresOn = Convert.ToDateTime(query.Pswdexpireson),
+        //        //    PasswordIsActive = query.Pswdisactive,
+        //        //    PasswordSaltKey = query.Pswdsaltkey,
+        //        //    PasswordIsCompromised = query.Pswdcompromised == true ? true : false,
+        //        //    PasswordWrongAttemptPerSession = query.Pswdwrongattempt > 0 ? query.Pswdwrongattempt.Value : 0, //never sending back to db unless session expires. circulate and count from code itself
+        //        //    UserID = query.Usrid
+        //        //};
+
+        //        currentUserInfo = _localBind;
+
+        //        return currentUserInfo;
+        //    }
+
+        //    return _localBind;
+        //}
+
+        public UserLoginResponse GetCustomerByUsernameAsync(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return null;
+
+            var query = (from c in _context.MasterUsers
+                         where c.UserName == username
+                         select c).FirstOrDefault();
+
+            if (query != null)
+            {
+                UserLoginResponse userModel = new UserLoginResponse()
+                {
+                    Email = query.Email,
+                    Firstname = query.FirstName,
+                    Middlename = query.MiddleName,
+                    Lastname = query.LastName,
+                    ProfilePicture = query.ProfilePicture,
+                    DateJoined = query.CreatedDate,
+                    UserGuid = query.Guid
+                };
+
+
+
+                return userModel;
+            }
+
+            return null;
         }
     }
 }

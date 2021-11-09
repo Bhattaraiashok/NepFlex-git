@@ -1,6 +1,6 @@
 
 export class LoginRequest {
-    UserID: string;
+    UserName: string;
     UserPSWD: string;
     IsRememberMe: boolean;
     IsUserSeller: boolean;

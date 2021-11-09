@@ -172,39 +172,17 @@
        
 			//NOTE: make sure this list consistent across all three T4 files(i.e OnlinePasal.tt,OnlinePasalMapping.tt , OnlinePasalModels.tt)
 			List<string>includedTables=new List<string>{
-				//tables name here
-				"MenuNavigation",
-				"BlockedIP",
-				"BrowserViewed",
-				"Craig_Articles",
-				"Craig_Coupons",
-				"Craig_Discussion",
-				"Craig_Event",
-				"Craig_Inquiry",
-				"Error_Log",
-				"Item_Description",
-				"Master_DiscussionForumCategory",
-				"Master_EducationMaterialCategory",
-				"Master_JOBSCategory",
-				"Master_OurCommunityCategory",
-				"Master_PersonalCategory",
-				"Master_RealEstateCategory",
-				"Master_RentalCategory",
-				"Master_SaleCategory",
-				"Master_ServicesCategory",
-				"Master_TravelsandToursCategory",
-				"MasterTable",
+				//tables name here				
+				"DBEncryptKey",
+				"Master_Verbiage",
+				"Master_Users",
+				"Master_SaltyPassword",
+				"Master_Company",
+				"DBEncryptKey",
+				"ContactUs",
 				"PostMyData",
-				"SelectTopCategory",
-				"TrackEmail",
-				"User_NCERROR_Windows",
-				"UserActivity",
-				"Users",
-				"ViewsCount",
-				"ViewsCount_Articles",
-				"ViewsCount_Coupon",
-				"ViewsCount_Event",
-				"Master_Company"
+				"Item_Description",
+				"Craig_Inquiry"
 		};
 
         // Example: Exclude any table in dbo schema with "order" in its name.
@@ -230,29 +208,14 @@
     {
        List<string> includedStoredProcs=new List<string>{
 			//all stored procs here
+				"GetData",
 				"BlockThisIP",
 				"button_SearchOnClick",
-				"ChangePassword",
-				"ChangeProfilePicture",
-				"Contact_Us",
-				"CountPageViews",
-				"Craig_DiscussionForum",
-				"CreateUserActivity",
-				"GetData",
-				"GetGuid",
-				"Insert_CraigArticles",
-				"Insert_CraigCoupons",
-				"Insert_CraigEvent",
-				"Insert_ErrorLog",
-				"Postdata",
-				"SendEmail_ChangePassword",
-				"Sp_BrowserViewed",
 				"sp_Craig_Inquiry",
-				"Sp_TrackEmail",
-				"Validate_User",
-				"UpdateUser",
-				"RegisterUser",
-				"UpdateCompany"
+				"Sp_DbEncryptKey",
+				"Sp_Validate_User",
+				"Sp_RegisterUser",
+				"Sp_UpdateCompany"
 			};
        
 	   // Example: Exclude any stored procedure in dbo schema with "order" in its name.

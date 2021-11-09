@@ -1,13 +1,12 @@
-<div class="registration-form global-desktop-container w-100">
+<!--<div class="registration-form global-desktop-container w-100">
   <div class="body-container">
     <form [formGroup]="userRegisterForm" class="form register-form container">
       <h3 class="text-center text-info txt-ucase-header">Register</h3>
       <div class="txt-info-notes">Please provide info on below fields in order to register the acount.
         <br/>You have the option to choose whether or not you want to register as seller.</div>
-      <!--<span *ngIf="preStartSaving" class="spinner-border spinner-border-sm txt-diabled-saving">Saving...</span>-->
 
       <app-animated-button *ngIf="currentStatus !==null" [buttonCollections]="syncingButton"></app-animated-button>
-      <!--user reg-->
+
       <div *ngIf="userRegCurrentFlow == usernameAndPassword_Flow">
 
         <app-text-area data-test-id="user_email" placeholder='Email' formControlName="useremail" textType='email' (newData)="onchangeform($event,'useremail')"
@@ -36,7 +35,6 @@
         <app-animated-button [buttonCollections]="submitStepButton" (ParentEmitter)="submit($event)"></app-animated-button>
       </div>
 
-      <!--user detail reg-->
       <div class="mb-1" *ngIf="userRegCurrentFlow==userDetail_Flow">
         <h4>To create your profile, we need some info:</h4>
         <app-text-area data-test-id="user_firstname" placeholder='First Name' formControlName="firstname" textType='text' (newBluredData)="onBlurVision($event,'firstname')"></app-text-area>
@@ -55,12 +53,10 @@
           <mat-error *ngIf="showFCError" class="error-input">{{countryCodeFCError}}</mat-error>
           <input id="tel" class="form-control" placeholder='phonenumber' phoneMask [preValue]="userRegisterForm.value.userphonenumber"
             formControlName="userphonenumber" maxlength="14" (newBluredData)="onBlurVision($event,'userphonenumber')" />
-          <!--<app-text-area data-test-id="user_phonenumber" placeholder='Phone Number' formControlName="userphonenumber" textType='tel' (newData)="onBlurVision($event,'userphonenumber')"></app-text-area>-->
-        </section>
+          </section>
         <app-animated-button [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
       </div>
 
-      <!--user ask if seller reg-->
       <div class="mb-1" *ngIf="userRegCurrentFlow == askIfSeller_flow">
         <section class="example-section">
           <h4>Are you also registering this account as Seller?</h4>
@@ -72,9 +68,7 @@
         <app-animated-button *ngIf="isASeller" [buttonCollections]="nextStepButton" (ParentEmitter)="nextStep($event)"></app-animated-button>
       </div>
 
-      <!--company detail reg-->
       <div *ngIf="isASeller && userRegCurrentFlow==companyDetail_flow">
-        <!--<mat-card class="mb-1">-->
         <h4>Company Details:</h4>
         <app-text-area *ngIf="isASeller" data-test-id="user_company" placeholder='Company Name' formControlName="companyname" textType='text'
           (newBluredData)="onBlurVision($event,'companyname')"></app-text-area>
@@ -98,12 +92,8 @@
             />
           </section>
         </mat-card>
-        <!--</mat-card>-->
-        <!--<app-spinner *ngIf="spinnerActivated"></app-spinner>-->
         <app-animated-button [buttonCollections]="backStepButton" (ParentEmitter)="backStep($event)"></app-animated-button>
       </div>
-      <!--<app-animated-button *ngIf="showUpdateProfileButton" [buttonCollections]="registerButtton" (ParentEmitter)="UpdateTheFlow($event)"></app-animated-button>
-      <app-alert *ngIf="showAlertMessages" [messageAlert]="messageAlerts"></app-alert>-->
     </form>
   </div>
-</div>
+</div>-->

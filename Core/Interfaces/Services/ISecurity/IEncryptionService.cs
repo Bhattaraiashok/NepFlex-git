@@ -19,7 +19,7 @@ namespace NepFlex.Core.Interfaces.Security
         /// Create a password hash
         /// </summary>
         /// <param name="password">Password</param>
-        /// <param name="saltKey">Salk key</param>
+        /// <param name="saltKey">Salt key</param>
         /// <param name="passwordFormat">Password format (hash algorithm)</param>
         /// <returns>Password hash</returns>
         string CreatePasswordHash(string password, string saltKey, string passwordFormat);

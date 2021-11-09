@@ -152,6 +152,13 @@ namespace NepFlex.Core.Entities.ResourceModels
         public readonly static string SYS_OBJ_CONST_FAILURE = "RES_OBJ_CONST_FAILURE";
 
         //SPECIFIC-REQ && RES
+        public readonly static string RES_USER_EMAIL_EXISTS_CONST_FAILURE = "RES_USER_EMAIL_EXISTS_CONST_FAILURE";
+        public readonly static string RES_USERNAME_EXISTS_CONST_FAILURE = "RES_USERNAME_EXISTS_CONST_FAILURE";
+
+        public readonly static string USER_INACTIVE_FAILURE = "USER_INACTIVE_FAILURE"; //added 11/3 todo-add resposnemsg
+        public readonly static string USER_INVALID_FAILURE = "USER_INVALID_FAILURE"; //added 11/3 todo-add resposnemsg
+        public readonly static string USER_VALID_SUCCESS = "USER_VALID_SUCCESS"; //added 11/3
+
         public readonly static string USER_LOGIN_CONST_SUCCESS = "USER_LOGIN_CONST_SUCCESS";
         public readonly static string USER_LOGIN_CONST_FAILURE = "USER_LOGIN_CONST_FAILURE";
 
@@ -190,11 +197,14 @@ namespace NepFlex.Core.Entities.ResourceModels
         public readonly static string ROLE_USER_RES_CONST_FAILURE = "ROLE_USER_RES_CONST_FAILURE";
 
         //DB   
+        public readonly static string DB_ACCESS_RESTRICTED_FAILURE = "DB_ACCESS_RESTRICTED_FAILURE"; //added 11/3
         public readonly static string DB_CONNECT_CONST_SUCCESS = "DB_CONNECT_CONST_SUCCESS";
         public readonly static string DB_CONNECT_CONST_FAILURE = "DB_CONNECT_CONST_FAILURE";
         public readonly static string DB_EXECUTE_CONST_SUCCESS = "DB_EXECUTE_CONST_SUCCESS";
         public readonly static string DB_EXECUTE_CONST_FAILURE = "DB_EXECUTE_CONST_FAILURE";
 
+        //PSWD MULTIPLE WRONG ATEMPT
+        public readonly static string MULTIPLE_PASSWORD_ATTEMPT_FAILURE = "MULTIPLE_PASSWORD_ATTEMPT_FAILURE"; //added 11/3
 
 
 

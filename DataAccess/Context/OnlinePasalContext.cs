@@ -35,35 +35,15 @@ namespace NepFlex.DataAccess.Context
 
     public interface IOnlinePasalContext : System.IDisposable
     {
-        System.Data.Entity.DbSet<BrowserViewed> BrowserVieweds { get; set; } // BrowserViewed
-        System.Data.Entity.DbSet<CraigArticle> CraigArticles { get; set; } // Craig_Articles
-        System.Data.Entity.DbSet<CraigCoupon> CraigCoupons { get; set; } // Craig_Coupons
-        System.Data.Entity.DbSet<CraigDiscussion> CraigDiscussions { get; set; } // Craig_Discussion
-        System.Data.Entity.DbSet<CraigEvent> CraigEvents { get; set; } // Craig_Event
+        System.Data.Entity.DbSet<ContactU> ContactUs { get; set; } // ContactUs
         System.Data.Entity.DbSet<CraigInquiry> CraigInquiries { get; set; } // Craig_Inquiry
-        System.Data.Entity.DbSet<ErrorLog> ErrorLogs { get; set; } // Error_Log
+        System.Data.Entity.DbSet<DbEncryptKey> DbEncryptKeys { get; set; } // DBEncryptKey
         System.Data.Entity.DbSet<ItemDescription> ItemDescriptions { get; set; } // Item_Description
         System.Data.Entity.DbSet<MasterCompany> MasterCompanies { get; set; } // Master_Company
-        System.Data.Entity.DbSet<MasterDiscussionForumCategory> MasterDiscussionForumCategories { get; set; } // Master_DiscussionForumCategory
-        System.Data.Entity.DbSet<MasterEducationMaterialCategory> MasterEducationMaterialCategories { get; set; } // Master_EducationMaterialCategory
-        System.Data.Entity.DbSet<MasterJobsCategory> MasterJobsCategories { get; set; } // Master_JOBSCategory
-        System.Data.Entity.DbSet<MasterOurCommunityCategory> MasterOurCommunityCategories { get; set; } // Master_OurCommunityCategory
-        System.Data.Entity.DbSet<MasterPersonalCategory> MasterPersonalCategories { get; set; } // Master_PersonalCategory
-        System.Data.Entity.DbSet<MasterRealEstateCategory> MasterRealEstateCategories { get; set; } // Master_RealEstateCategory
-        System.Data.Entity.DbSet<MasterRentalCategory> MasterRentalCategories { get; set; } // Master_RentalCategory
-        System.Data.Entity.DbSet<MasterSaleCategory> MasterSaleCategories { get; set; } // Master_SaleCategory
-        System.Data.Entity.DbSet<MasterServicesCategory> MasterServicesCategories { get; set; } // Master_ServicesCategory
-        System.Data.Entity.DbSet<MasterTable> MasterTables { get; set; } // MasterTable
-        System.Data.Entity.DbSet<MasterTravelsandToursCategory> MasterTravelsandToursCategories { get; set; } // Master_TravelsandToursCategory
+        System.Data.Entity.DbSet<MasterSaltyPassword> MasterSaltyPasswords { get; set; } // Master_SaltyPassword
+        System.Data.Entity.DbSet<MasterUser> MasterUsers { get; set; } // Master_Users
+        System.Data.Entity.DbSet<MasterVerbiage> MasterVerbiages { get; set; } // Master_Verbiage
         System.Data.Entity.DbSet<PostMyData> PostMyDatas { get; set; } // PostMyData
-        System.Data.Entity.DbSet<SelectTopCategory> SelectTopCategories { get; set; } // SelectTopCategory
-        System.Data.Entity.DbSet<TrackEmail> TrackEmails { get; set; } // TrackEmail
-        System.Data.Entity.DbSet<User> Users { get; set; } // Users
-        System.Data.Entity.DbSet<UserNcerrorWindow> UserNcerrorWindows { get; set; } // User_NCERROR_Windows
-        System.Data.Entity.DbSet<ViewsCount> ViewsCounts { get; set; } // ViewsCount
-        System.Data.Entity.DbSet<ViewsCountArticle> ViewsCountArticles { get; set; } // ViewsCount_Articles
-        System.Data.Entity.DbSet<ViewsCountCoupon> ViewsCountCoupons { get; set; } // ViewsCount_Coupon
-        System.Data.Entity.DbSet<ViewsCountEvent> ViewsCountEvents { get; set; } // ViewsCount_Event
 
         int SaveChanges();
         System.Threading.Tasks.Task<int> SaveChangesAsync();
@@ -83,72 +63,26 @@ namespace NepFlex.DataAccess.Context
         System.Collections.Generic.List<ButtonSearchOnClickReturnModel> ButtonSearchOnClick(string text, out int procResult);
         System.Threading.Tasks.Task<System.Collections.Generic.List<ButtonSearchOnClickReturnModel>> ButtonSearchOnClickAsync(string text);
 
-        int ChangePassword(long? userid, string password, string passwordConfirm);
-        // ChangePasswordAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
-
-        ChangeProfilePictureReturnModel ChangeProfilePicture(string email, long? userId, string image);
-        System.Threading.Tasks.Task<ChangeProfilePictureReturnModel> ChangeProfilePictureAsync(string email, long? userId, string image);
-
-        int ContactUs(string userName, string email, string comment, string website);
-        // ContactUsAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
-
-        CountPageViewsReturnModel CountPageViews(int? id, string section, string action);
-        System.Threading.Tasks.Task<CountPageViewsReturnModel> CountPageViewsAsync(int? id, string section, string action);
-
-        System.Collections.Generic.List<CraigDiscussionForumReturnModel> CraigDiscussionForum(string topic, string detail, string emailId, string ipAddress, string fullname);
-        System.Collections.Generic.List<CraigDiscussionForumReturnModel> CraigDiscussionForum(string topic, string detail, string emailId, string ipAddress, string fullname, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<CraigDiscussionForumReturnModel>> CraigDiscussionForumAsync(string topic, string detail, string emailId, string ipAddress, string fullname);
-
         System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage);
         System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage, out int procResult);
         System.Threading.Tasks.Task<System.Collections.Generic.List<GetDataReturnModel>> GetDataAsync(long? id, string fromPage);
 
-        System.Collections.Generic.List<GetGuidReturnModel> GetGuid(string email);
-        System.Collections.Generic.List<GetGuidReturnModel> GetGuid(string email, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<GetGuidReturnModel>> GetGuidAsync(string email);
-
-        InsertCraigArticlesReturnModel InsertCraigArticles(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, string category, string source);
-        System.Threading.Tasks.Task<InsertCraigArticlesReturnModel> InsertCraigArticlesAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, string category, string source);
-
-        InsertCraigCouponsReturnModel InsertCraigCoupons(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images);
-        System.Threading.Tasks.Task<InsertCraigCouponsReturnModel> InsertCraigCouponsAsync(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images);
-
-        System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily);
-        System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<InsertCraigEventReturnModel>> InsertCraigEventAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily);
-
-        int InsertErrorLog(string ipAddress, string city, string country, string errorDetail, string others);
-        // InsertErrorLogAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
-
-        int Postdata(string title, string image, string detail, string username, string name, string email, string contact, string showPhoneNumber, string address, string other, string topCategory, string subCategory, decimal? price, string condition, string brand, string modal, string mileKmph, string warranty, string extraWarranty);
-        // PostdataAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
-
-        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui);
-        System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui);
-
-        int SendEmailChangePassword(string username, string email);
-        // SendEmailChangePasswordAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
-
-        int SpBrowserViewed(string browserName, string ipAddress, string city, string country);
-        // SpBrowserViewedAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
-
         int SpCraigInquiry(string name, string email, string url, string detail, string username, string ui);
         // SpCraigInquiryAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
-        int SpTrackEmail(string sender, string receiver, string detail, string attachments, string ipAddress, bool? status);
-        // SpTrackEmailAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
+        SpDbEncryptKeyReturnModel SpDbEncryptKey(string dbEncryptKey, System.DateTime? keyExpireDate, string keyCreatedBy, string remarksOnKey);
+        System.Threading.Tasks.Task<SpDbEncryptKeyReturnModel> SpDbEncryptKeyAsync(string dbEncryptKey, System.DateTime? keyExpireDate, string keyCreatedBy, string remarksOnKey);
 
-        System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber);
-        System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateCompanyReturnModel>> UpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber);
+        System.Collections.Generic.List<SpRegisterUserReturnModel> SpRegisterUser(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui);
+        System.Collections.Generic.List<SpRegisterUserReturnModel> SpRegisterUser(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<SpRegisterUserReturnModel>> SpRegisterUserAsync(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui);
 
-        System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image);
-        System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image, out int procResult);
-        System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image);
+        System.Collections.Generic.List<SpUpdateCompanyReturnModel> SpUpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber);
+        System.Collections.Generic.List<SpUpdateCompanyReturnModel> SpUpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<SpUpdateCompanyReturnModel>> SpUpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber);
 
-        ValidateUserReturnModel ValidateUser(string username, string password, string ui);
-        System.Threading.Tasks.Task<ValidateUserReturnModel> ValidateUserAsync(string username, string password, string ui);
+        int SpValidateUser(bool? validateUsingEmail, string username, string password, string dBeKey, string ui);
+        // SpValidateUserAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
     }
 
@@ -159,35 +93,15 @@ namespace NepFlex.DataAccess.Context
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class OnlinePasalContext : System.Data.Entity.DbContext, IOnlinePasalContext
     {
-        public System.Data.Entity.DbSet<BrowserViewed> BrowserVieweds { get; set; } // BrowserViewed
-        public System.Data.Entity.DbSet<CraigArticle> CraigArticles { get; set; } // Craig_Articles
-        public System.Data.Entity.DbSet<CraigCoupon> CraigCoupons { get; set; } // Craig_Coupons
-        public System.Data.Entity.DbSet<CraigDiscussion> CraigDiscussions { get; set; } // Craig_Discussion
-        public System.Data.Entity.DbSet<CraigEvent> CraigEvents { get; set; } // Craig_Event
+        public System.Data.Entity.DbSet<ContactU> ContactUs { get; set; } // ContactUs
         public System.Data.Entity.DbSet<CraigInquiry> CraigInquiries { get; set; } // Craig_Inquiry
-        public System.Data.Entity.DbSet<ErrorLog> ErrorLogs { get; set; } // Error_Log
+        public System.Data.Entity.DbSet<DbEncryptKey> DbEncryptKeys { get; set; } // DBEncryptKey
         public System.Data.Entity.DbSet<ItemDescription> ItemDescriptions { get; set; } // Item_Description
         public System.Data.Entity.DbSet<MasterCompany> MasterCompanies { get; set; } // Master_Company
-        public System.Data.Entity.DbSet<MasterDiscussionForumCategory> MasterDiscussionForumCategories { get; set; } // Master_DiscussionForumCategory
-        public System.Data.Entity.DbSet<MasterEducationMaterialCategory> MasterEducationMaterialCategories { get; set; } // Master_EducationMaterialCategory
-        public System.Data.Entity.DbSet<MasterJobsCategory> MasterJobsCategories { get; set; } // Master_JOBSCategory
-        public System.Data.Entity.DbSet<MasterOurCommunityCategory> MasterOurCommunityCategories { get; set; } // Master_OurCommunityCategory
-        public System.Data.Entity.DbSet<MasterPersonalCategory> MasterPersonalCategories { get; set; } // Master_PersonalCategory
-        public System.Data.Entity.DbSet<MasterRealEstateCategory> MasterRealEstateCategories { get; set; } // Master_RealEstateCategory
-        public System.Data.Entity.DbSet<MasterRentalCategory> MasterRentalCategories { get; set; } // Master_RentalCategory
-        public System.Data.Entity.DbSet<MasterSaleCategory> MasterSaleCategories { get; set; } // Master_SaleCategory
-        public System.Data.Entity.DbSet<MasterServicesCategory> MasterServicesCategories { get; set; } // Master_ServicesCategory
-        public System.Data.Entity.DbSet<MasterTable> MasterTables { get; set; } // MasterTable
-        public System.Data.Entity.DbSet<MasterTravelsandToursCategory> MasterTravelsandToursCategories { get; set; } // Master_TravelsandToursCategory
+        public System.Data.Entity.DbSet<MasterSaltyPassword> MasterSaltyPasswords { get; set; } // Master_SaltyPassword
+        public System.Data.Entity.DbSet<MasterUser> MasterUsers { get; set; } // Master_Users
+        public System.Data.Entity.DbSet<MasterVerbiage> MasterVerbiages { get; set; } // Master_Verbiage
         public System.Data.Entity.DbSet<PostMyData> PostMyDatas { get; set; } // PostMyData
-        public System.Data.Entity.DbSet<SelectTopCategory> SelectTopCategories { get; set; } // SelectTopCategory
-        public System.Data.Entity.DbSet<TrackEmail> TrackEmails { get; set; } // TrackEmail
-        public System.Data.Entity.DbSet<User> Users { get; set; } // Users
-        public System.Data.Entity.DbSet<UserNcerrorWindow> UserNcerrorWindows { get; set; } // User_NCERROR_Windows
-        public System.Data.Entity.DbSet<ViewsCount> ViewsCounts { get; set; } // ViewsCount
-        public System.Data.Entity.DbSet<ViewsCountArticle> ViewsCountArticles { get; set; } // ViewsCount_Articles
-        public System.Data.Entity.DbSet<ViewsCountCoupon> ViewsCountCoupons { get; set; } // ViewsCount_Coupon
-        public System.Data.Entity.DbSet<ViewsCountEvent> ViewsCountEvents { get; set; } // ViewsCount_Event
 
         static OnlinePasalContext()
         {
@@ -237,68 +151,28 @@ namespace NepFlex.DataAccess.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Configurations.Add(new BrowserViewedConfiguration());
-            modelBuilder.Configurations.Add(new CraigArticleConfiguration());
-            modelBuilder.Configurations.Add(new CraigCouponConfiguration());
-            modelBuilder.Configurations.Add(new CraigDiscussionConfiguration());
-            modelBuilder.Configurations.Add(new CraigEventConfiguration());
+            modelBuilder.Configurations.Add(new ContactUConfiguration());
             modelBuilder.Configurations.Add(new CraigInquiryConfiguration());
-            modelBuilder.Configurations.Add(new ErrorLogConfiguration());
+            modelBuilder.Configurations.Add(new DbEncryptKeyConfiguration());
             modelBuilder.Configurations.Add(new ItemDescriptionConfiguration());
             modelBuilder.Configurations.Add(new MasterCompanyConfiguration());
-            modelBuilder.Configurations.Add(new MasterDiscussionForumCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterEducationMaterialCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterJobsCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterOurCommunityCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterPersonalCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterRealEstateCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterRentalCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterSaleCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterServicesCategoryConfiguration());
-            modelBuilder.Configurations.Add(new MasterTableConfiguration());
-            modelBuilder.Configurations.Add(new MasterTravelsandToursCategoryConfiguration());
+            modelBuilder.Configurations.Add(new MasterSaltyPasswordConfiguration());
+            modelBuilder.Configurations.Add(new MasterUserConfiguration());
+            modelBuilder.Configurations.Add(new MasterVerbiageConfiguration());
             modelBuilder.Configurations.Add(new PostMyDataConfiguration());
-            modelBuilder.Configurations.Add(new SelectTopCategoryConfiguration());
-            modelBuilder.Configurations.Add(new TrackEmailConfiguration());
-            modelBuilder.Configurations.Add(new UserConfiguration());
-            modelBuilder.Configurations.Add(new UserNcerrorWindowConfiguration());
-            modelBuilder.Configurations.Add(new ViewsCountConfiguration());
-            modelBuilder.Configurations.Add(new ViewsCountArticleConfiguration());
-            modelBuilder.Configurations.Add(new ViewsCountCouponConfiguration());
-            modelBuilder.Configurations.Add(new ViewsCountEventConfiguration());
         }
 
         public static System.Data.Entity.DbModelBuilder CreateModel(System.Data.Entity.DbModelBuilder modelBuilder, string schema)
         {
-            modelBuilder.Configurations.Add(new BrowserViewedConfiguration(schema));
-            modelBuilder.Configurations.Add(new CraigArticleConfiguration(schema));
-            modelBuilder.Configurations.Add(new CraigCouponConfiguration(schema));
-            modelBuilder.Configurations.Add(new CraigDiscussionConfiguration(schema));
-            modelBuilder.Configurations.Add(new CraigEventConfiguration(schema));
+            modelBuilder.Configurations.Add(new ContactUConfiguration(schema));
             modelBuilder.Configurations.Add(new CraigInquiryConfiguration(schema));
-            modelBuilder.Configurations.Add(new ErrorLogConfiguration(schema));
+            modelBuilder.Configurations.Add(new DbEncryptKeyConfiguration(schema));
             modelBuilder.Configurations.Add(new ItemDescriptionConfiguration(schema));
             modelBuilder.Configurations.Add(new MasterCompanyConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterDiscussionForumCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterEducationMaterialCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterJobsCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterOurCommunityCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterPersonalCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterRealEstateCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterRentalCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterSaleCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterServicesCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterTableConfiguration(schema));
-            modelBuilder.Configurations.Add(new MasterTravelsandToursCategoryConfiguration(schema));
+            modelBuilder.Configurations.Add(new MasterSaltyPasswordConfiguration(schema));
+            modelBuilder.Configurations.Add(new MasterUserConfiguration(schema));
+            modelBuilder.Configurations.Add(new MasterVerbiageConfiguration(schema));
             modelBuilder.Configurations.Add(new PostMyDataConfiguration(schema));
-            modelBuilder.Configurations.Add(new SelectTopCategoryConfiguration(schema));
-            modelBuilder.Configurations.Add(new TrackEmailConfiguration(schema));
-            modelBuilder.Configurations.Add(new UserConfiguration(schema));
-            modelBuilder.Configurations.Add(new UserNcerrorWindowConfiguration(schema));
-            modelBuilder.Configurations.Add(new ViewsCountConfiguration(schema));
-            modelBuilder.Configurations.Add(new ViewsCountArticleConfiguration(schema));
-            modelBuilder.Configurations.Add(new ViewsCountCouponConfiguration(schema));
-            modelBuilder.Configurations.Add(new ViewsCountEventConfiguration(schema));
             return modelBuilder;
         }
 
@@ -329,294 +203,6 @@ namespace NepFlex.DataAccess.Context
                 textParam.Value = System.DBNull.Value;
 
             var procResultData = await Database.SqlQuery<ButtonSearchOnClickReturnModel>("EXEC [dbo].[button_SearchOnClick] @text", textParam).ToListAsync();
-
-            return procResultData;
-        }
-
-        public int ChangePassword(long? userid, string password, string passwordConfirm)
-        {
-            var useridParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userid", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = userid.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!userid.HasValue)
-                useridParam.Value = System.DBNull.Value;
-
-            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = 35 };
-            if (passwordParam.Value == null)
-                passwordParam.Value = System.DBNull.Value;
-
-            var passwordConfirmParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@password_confirm", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = passwordConfirm, Size = 35 };
-            if (passwordConfirmParam.Value == null)
-                passwordConfirmParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[ChangePassword] @userid, @password, @password_confirm", useridParam, passwordParam, passwordConfirmParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public ChangeProfilePictureReturnModel ChangeProfilePicture(string email, long? userId, string image)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserId", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = userId.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!userId.HasValue)
-                userIdParam.Value = System.DBNull.Value;
-
-            var imageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Image", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = image, Size = -1 };
-            if (imageParam.Value == null)
-                imageParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new ChangeProfilePictureReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[ChangeProfilePicture]";
-            cmd.Parameters.Add(emailParam);
-            cmd.Parameters.Add(userIdParam);
-            cmd.Parameters.Add(imageParam);
-
-            try
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Open(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-                var reader = cmd.ExecuteReader();
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<ChangeProfilePictureReturnModel.ResultSetModel1>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet2 = objectContext.Translate<ChangeProfilePictureReturnModel.ResultSetModel2>(reader).ToList();
-                reader.Close();
-
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<ChangeProfilePictureReturnModel> ChangeProfilePictureAsync(string email, long? userId, string image)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserId", SqlDbType = System.Data.SqlDbType.BigInt, Direction = System.Data.ParameterDirection.Input, Value = userId.GetValueOrDefault(), Precision = 19, Scale = 0 };
-            if (!userId.HasValue)
-                userIdParam.Value = System.DBNull.Value;
-
-            var imageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Image", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = image, Size = -1 };
-            if (imageParam.Value == null)
-                imageParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new ChangeProfilePictureReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[ChangeProfilePicture]";
-            cmd.Parameters.Add(emailParam);
-            cmd.Parameters.Add(userIdParam);
-            cmd.Parameters.Add(imageParam);
-
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<ChangeProfilePictureReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<ChangeProfilePictureReturnModel.ResultSetModel2>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public int ContactUs(string userName, string email, string comment, string website)
-        {
-            var userNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userName, Size = 50 };
-            if (userNameParam.Value == null)
-                userNameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 100 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var commentParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Comment", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = comment, Size = -1 };
-            if (commentParam.Value == null)
-                commentParam.Value = System.DBNull.Value;
-
-            var websiteParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@website", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = website, Size = 1000 };
-            if (websiteParam.Value == null)
-                websiteParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Contact_Us] @UserName, @Email, @Comment, @website", userNameParam, emailParam, commentParam, websiteParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public CountPageViewsReturnModel CountPageViews(int? id, string section, string action)
-        {
-            var idParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ID", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Input, Value = id.GetValueOrDefault(), Precision = 10, Scale = 0 };
-            if (!id.HasValue)
-                idParam.Value = System.DBNull.Value;
-
-            var sectionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Section", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = section, Size = 15 };
-            if (sectionParam.Value == null)
-                sectionParam.Value = System.DBNull.Value;
-
-            var actionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Action", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = action, Size = 20 };
-            if (actionParam.Value == null)
-                actionParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new CountPageViewsReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[CountPageViews]";
-            cmd.Parameters.Add(idParam);
-            cmd.Parameters.Add(sectionParam);
-            cmd.Parameters.Add(actionParam);
-
-            try
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Open(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-                var reader = cmd.ExecuteReader();
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<CountPageViewsReturnModel.ResultSetModel1>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet2 = objectContext.Translate<CountPageViewsReturnModel.ResultSetModel2>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet3 = objectContext.Translate<CountPageViewsReturnModel.ResultSetModel3>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet4 = objectContext.Translate<CountPageViewsReturnModel.ResultSetModel4>(reader).ToList();
-                reader.Close();
-
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<CountPageViewsReturnModel> CountPageViewsAsync(int? id, string section, string action)
-        {
-            var idParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ID", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Input, Value = id.GetValueOrDefault(), Precision = 10, Scale = 0 };
-            if (!id.HasValue)
-                idParam.Value = System.DBNull.Value;
-
-            var sectionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Section", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = section, Size = 15 };
-            if (sectionParam.Value == null)
-                sectionParam.Value = System.DBNull.Value;
-
-            var actionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Action", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = action, Size = 20 };
-            if (actionParam.Value == null)
-                actionParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new CountPageViewsReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[CountPageViews]";
-            cmd.Parameters.Add(idParam);
-            cmd.Parameters.Add(sectionParam);
-            cmd.Parameters.Add(actionParam);
-
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<CountPageViewsReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<CountPageViewsReturnModel.ResultSetModel2>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet3 = objectContext.Translate<CountPageViewsReturnModel.ResultSetModel3>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet4 = objectContext.Translate<CountPageViewsReturnModel.ResultSetModel4>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public System.Collections.Generic.List<CraigDiscussionForumReturnModel> CraigDiscussionForum(string topic, string detail, string emailId, string ipAddress, string fullname)
-        {
-            int procResult;
-            return CraigDiscussionForum(topic, detail, emailId, ipAddress, fullname, out procResult);
-        }
-
-        public System.Collections.Generic.List<CraigDiscussionForumReturnModel> CraigDiscussionForum(string topic, string detail, string emailId, string ipAddress, string fullname, out int procResult)
-        {
-            var topicParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Topic", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = topic, Size = 50 };
-            if (topicParam.Value == null)
-                topicParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = 3500 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var emailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@EmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = emailId, Size = 150 };
-            if (emailIdParam.Value == null)
-                emailIdParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 30 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var fullnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Fullname", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullname, Size = 150 };
-            if (fullnameParam.Value == null)
-                fullnameParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<CraigDiscussionForumReturnModel>("EXEC @procResult = [dbo].[Craig_DiscussionForum] @Topic, @Detail, @EmailID, @IPAddress, @Fullname", topicParam, detailParam, emailIdParam, ipAddressParam, fullnameParam, procResultParam).ToList();
-
-            procResult = (int) procResultParam.Value;
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<CraigDiscussionForumReturnModel>> CraigDiscussionForumAsync(string topic, string detail, string emailId, string ipAddress, string fullname)
-        {
-            var topicParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Topic", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = topic, Size = 50 };
-            if (topicParam.Value == null)
-                topicParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = 3500 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var emailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@EmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = emailId, Size = 150 };
-            if (emailIdParam.Value == null)
-                emailIdParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 30 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var fullnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Fullname", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullname, Size = 150 };
-            if (fullnameParam.Value == null)
-                fullnameParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<CraigDiscussionForumReturnModel>("EXEC [dbo].[Craig_DiscussionForum] @Topic, @Detail, @EmailID, @IPAddress, @Fullname", topicParam, detailParam, emailIdParam, ipAddressParam, fullnameParam).ToListAsync();
 
             return procResultData;
         }
@@ -659,736 +245,6 @@ namespace NepFlex.DataAccess.Context
             return procResultData;
         }
 
-        public System.Collections.Generic.List<GetGuidReturnModel> GetGuid(string email)
-        {
-            int procResult;
-            return GetGuid(email, out procResult);
-        }
-
-        public System.Collections.Generic.List<GetGuidReturnModel> GetGuid(string email, out int procResult)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<GetGuidReturnModel>("EXEC @procResult = [dbo].[GetGuid] @Email", emailParam, procResultParam).ToList();
-
-            procResult = (int) procResultParam.Value;
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<GetGuidReturnModel>> GetGuidAsync(string email)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<GetGuidReturnModel>("EXEC [dbo].[GetGuid] @Email", emailParam).ToListAsync();
-
-            return procResultData;
-        }
-
-        public InsertCraigArticlesReturnModel InsertCraigArticles(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, string category, string source)
-        {
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var fullNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fullName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullName, Size = 70 };
-            if (fullNameParam.Value == null)
-                fullNameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 100 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var titleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Title", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = title, Size = 150 };
-            if (titleParam.Value == null)
-                titleParam.Value = System.DBNull.Value;
-
-            var descriptionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Description", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = description, Size = 250 };
-            if (descriptionParam.Value == null)
-                descriptionParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = -1 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var imagesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Images", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = images, Size = -1 };
-            if (imagesParam.Value == null)
-                imagesParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var categoryParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Category", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = category, Size = 50 };
-            if (categoryParam.Value == null)
-                categoryParam.Value = System.DBNull.Value;
-
-            var sourceParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Source", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = source, Size = 500 };
-            if (sourceParam.Value == null)
-                sourceParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new InsertCraigArticlesReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[Insert_CraigArticles]";
-            cmd.Parameters.Add(usernameParam);
-            cmd.Parameters.Add(fullNameParam);
-            cmd.Parameters.Add(emailParam);
-            cmd.Parameters.Add(titleParam);
-            cmd.Parameters.Add(descriptionParam);
-            cmd.Parameters.Add(detailParam);
-            cmd.Parameters.Add(imagesParam);
-            cmd.Parameters.Add(ipAddressParam);
-            cmd.Parameters.Add(categoryParam);
-            cmd.Parameters.Add(sourceParam);
-
-            try
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Open(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-                var reader = cmd.ExecuteReader();
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<InsertCraigArticlesReturnModel.ResultSetModel1>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet2 = objectContext.Translate<InsertCraigArticlesReturnModel.ResultSetModel2>(reader).ToList();
-                reader.Close();
-
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<InsertCraigArticlesReturnModel> InsertCraigArticlesAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, string category, string source)
-        {
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var fullNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fullName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullName, Size = 70 };
-            if (fullNameParam.Value == null)
-                fullNameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 100 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var titleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Title", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = title, Size = 150 };
-            if (titleParam.Value == null)
-                titleParam.Value = System.DBNull.Value;
-
-            var descriptionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Description", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = description, Size = 250 };
-            if (descriptionParam.Value == null)
-                descriptionParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = -1 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var imagesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Images", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = images, Size = -1 };
-            if (imagesParam.Value == null)
-                imagesParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var categoryParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Category", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = category, Size = 50 };
-            if (categoryParam.Value == null)
-                categoryParam.Value = System.DBNull.Value;
-
-            var sourceParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Source", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = source, Size = 500 };
-            if (sourceParam.Value == null)
-                sourceParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new InsertCraigArticlesReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[Insert_CraigArticles]";
-            cmd.Parameters.Add(usernameParam);
-            cmd.Parameters.Add(fullNameParam);
-            cmd.Parameters.Add(emailParam);
-            cmd.Parameters.Add(titleParam);
-            cmd.Parameters.Add(descriptionParam);
-            cmd.Parameters.Add(detailParam);
-            cmd.Parameters.Add(imagesParam);
-            cmd.Parameters.Add(ipAddressParam);
-            cmd.Parameters.Add(categoryParam);
-            cmd.Parameters.Add(sourceParam);
-
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<InsertCraigArticlesReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<InsertCraigArticlesReturnModel.ResultSetModel2>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public InsertCraigCouponsReturnModel InsertCraigCoupons(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 100 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 50 };
-            if (userIdParam.Value == null)
-                userIdParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var fullNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fullName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullName, Size = 70 };
-            if (fullNameParam.Value == null)
-                fullNameParam.Value = System.DBNull.Value;
-
-            var titleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Title", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = title, Size = 150 };
-            if (titleParam.Value == null)
-                titleParam.Value = System.DBNull.Value;
-
-            var descriptionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Description", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = description, Size = 250 };
-            if (descriptionParam.Value == null)
-                descriptionParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = -1 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var discountParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Discount", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = discount, Size = 50 };
-            if (discountParam.Value == null)
-                discountParam.Value = System.DBNull.Value;
-
-            var moneyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Money", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = money, Size = 20 };
-            if (moneyParam.Value == null)
-                moneyParam.Value = System.DBNull.Value;
-
-            var currencyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Currency", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = currency, Size = 20 };
-            if (currencyParam.Value == null)
-                currencyParam.Value = System.DBNull.Value;
-
-            var appliedfromParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Appliedfrom", SqlDbType = System.Data.SqlDbType.DateTime, Direction = System.Data.ParameterDirection.Input, Value = appliedfrom.GetValueOrDefault() };
-            if (!appliedfrom.HasValue)
-                appliedfromParam.Value = System.DBNull.Value;
-
-            var expiresParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Expires", SqlDbType = System.Data.SqlDbType.DateTime, Direction = System.Data.ParameterDirection.Input, Value = expires.GetValueOrDefault() };
-            if (!expires.HasValue)
-                expiresParam.Value = System.DBNull.Value;
-
-            var logoParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Logo", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = logo, Size = -1 };
-            if (logoParam.Value == null)
-                logoParam.Value = System.DBNull.Value;
-
-            var imagesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Images", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = images, Size = -1 };
-            if (imagesParam.Value == null)
-                imagesParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new InsertCraigCouponsReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[Insert_CraigCoupons]";
-            cmd.Parameters.Add(emailParam);
-            cmd.Parameters.Add(userIdParam);
-            cmd.Parameters.Add(ipAddressParam);
-            cmd.Parameters.Add(fullNameParam);
-            cmd.Parameters.Add(titleParam);
-            cmd.Parameters.Add(descriptionParam);
-            cmd.Parameters.Add(detailParam);
-            cmd.Parameters.Add(discountParam);
-            cmd.Parameters.Add(moneyParam);
-            cmd.Parameters.Add(currencyParam);
-            cmd.Parameters.Add(appliedfromParam);
-            cmd.Parameters.Add(expiresParam);
-            cmd.Parameters.Add(logoParam);
-            cmd.Parameters.Add(imagesParam);
-
-            try
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Open(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-                var reader = cmd.ExecuteReader();
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<InsertCraigCouponsReturnModel.ResultSetModel1>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet2 = objectContext.Translate<InsertCraigCouponsReturnModel.ResultSetModel2>(reader).ToList();
-                reader.Close();
-
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<InsertCraigCouponsReturnModel> InsertCraigCouponsAsync(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 100 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 50 };
-            if (userIdParam.Value == null)
-                userIdParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var fullNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fullName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullName, Size = 70 };
-            if (fullNameParam.Value == null)
-                fullNameParam.Value = System.DBNull.Value;
-
-            var titleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Title", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = title, Size = 150 };
-            if (titleParam.Value == null)
-                titleParam.Value = System.DBNull.Value;
-
-            var descriptionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Description", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = description, Size = 250 };
-            if (descriptionParam.Value == null)
-                descriptionParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = -1 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var discountParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Discount", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = discount, Size = 50 };
-            if (discountParam.Value == null)
-                discountParam.Value = System.DBNull.Value;
-
-            var moneyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Money", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = money, Size = 20 };
-            if (moneyParam.Value == null)
-                moneyParam.Value = System.DBNull.Value;
-
-            var currencyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Currency", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = currency, Size = 20 };
-            if (currencyParam.Value == null)
-                currencyParam.Value = System.DBNull.Value;
-
-            var appliedfromParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Appliedfrom", SqlDbType = System.Data.SqlDbType.DateTime, Direction = System.Data.ParameterDirection.Input, Value = appliedfrom.GetValueOrDefault() };
-            if (!appliedfrom.HasValue)
-                appliedfromParam.Value = System.DBNull.Value;
-
-            var expiresParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Expires", SqlDbType = System.Data.SqlDbType.DateTime, Direction = System.Data.ParameterDirection.Input, Value = expires.GetValueOrDefault() };
-            if (!expires.HasValue)
-                expiresParam.Value = System.DBNull.Value;
-
-            var logoParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Logo", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = logo, Size = -1 };
-            if (logoParam.Value == null)
-                logoParam.Value = System.DBNull.Value;
-
-            var imagesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Images", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = images, Size = -1 };
-            if (imagesParam.Value == null)
-                imagesParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new InsertCraigCouponsReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[Insert_CraigCoupons]";
-            cmd.Parameters.Add(emailParam);
-            cmd.Parameters.Add(userIdParam);
-            cmd.Parameters.Add(ipAddressParam);
-            cmd.Parameters.Add(fullNameParam);
-            cmd.Parameters.Add(titleParam);
-            cmd.Parameters.Add(descriptionParam);
-            cmd.Parameters.Add(detailParam);
-            cmd.Parameters.Add(discountParam);
-            cmd.Parameters.Add(moneyParam);
-            cmd.Parameters.Add(currencyParam);
-            cmd.Parameters.Add(appliedfromParam);
-            cmd.Parameters.Add(expiresParam);
-            cmd.Parameters.Add(logoParam);
-            cmd.Parameters.Add(imagesParam);
-
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<InsertCraigCouponsReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<InsertCraigCouponsReturnModel.ResultSetModel2>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
-        {
-            int procResult;
-            return InsertCraigEvent(username, fullName, email, title, description, detail, images, ipAddress, fulldate, time, location, cost, friendsandFamily, out procResult);
-        }
-
-        public System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily, out int procResult)
-        {
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var fullNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fullName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullName, Size = 70 };
-            if (fullNameParam.Value == null)
-                fullNameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 100 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var titleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Title", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = title, Size = 150 };
-            if (titleParam.Value == null)
-                titleParam.Value = System.DBNull.Value;
-
-            var descriptionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Description", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = description, Size = 250 };
-            if (descriptionParam.Value == null)
-                descriptionParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = -1 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var imagesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Images", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = images, Size = -1 };
-            if (imagesParam.Value == null)
-                imagesParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var fulldateParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fulldate", SqlDbType = System.Data.SqlDbType.Date, Direction = System.Data.ParameterDirection.Input, Value = fulldate.GetValueOrDefault() };
-            if (!fulldate.HasValue)
-                fulldateParam.Value = System.DBNull.Value;
-
-            var timeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@time", SqlDbType = System.Data.SqlDbType.Time, Direction = System.Data.ParameterDirection.Input, Value = time.GetValueOrDefault() };
-            if (!time.HasValue)
-                timeParam.Value = System.DBNull.Value;
-
-            var locationParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Location", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = location, Size = 500 };
-            if (locationParam.Value == null)
-                locationParam.Value = System.DBNull.Value;
-
-            var costParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Cost", SqlDbType = System.Data.SqlDbType.Money, Direction = System.Data.ParameterDirection.Input, Value = cost.GetValueOrDefault(), Precision = 19, Scale = 4 };
-            if (!cost.HasValue)
-                costParam.Value = System.DBNull.Value;
-
-            var friendsandFamilyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@FriendsandFamily", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = friendsandFamily, Size = 15 };
-            if (friendsandFamilyParam.Value == null)
-                friendsandFamilyParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<InsertCraigEventReturnModel>("EXEC @procResult = [dbo].[Insert_CraigEvent] @Username, @fullName, @Email, @Title, @Description, @Detail, @Images, @IPAddress, @fulldate, @time, @Location, @Cost, @FriendsandFamily", usernameParam, fullNameParam, emailParam, titleParam, descriptionParam, detailParam, imagesParam, ipAddressParam, fulldateParam, timeParam, locationParam, costParam, friendsandFamilyParam, procResultParam).ToList();
-
-            procResult = (int) procResultParam.Value;
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<InsertCraigEventReturnModel>> InsertCraigEventAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
-        {
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var fullNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fullName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = fullName, Size = 70 };
-            if (fullNameParam.Value == null)
-                fullNameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 100 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var titleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Title", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = title, Size = 150 };
-            if (titleParam.Value == null)
-                titleParam.Value = System.DBNull.Value;
-
-            var descriptionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Description", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = description, Size = 250 };
-            if (descriptionParam.Value == null)
-                descriptionParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = -1 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var imagesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Images", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = images, Size = -1 };
-            if (imagesParam.Value == null)
-                imagesParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var fulldateParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@fulldate", SqlDbType = System.Data.SqlDbType.Date, Direction = System.Data.ParameterDirection.Input, Value = fulldate.GetValueOrDefault() };
-            if (!fulldate.HasValue)
-                fulldateParam.Value = System.DBNull.Value;
-
-            var timeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@time", SqlDbType = System.Data.SqlDbType.Time, Direction = System.Data.ParameterDirection.Input, Value = time.GetValueOrDefault() };
-            if (!time.HasValue)
-                timeParam.Value = System.DBNull.Value;
-
-            var locationParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Location", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = location, Size = 500 };
-            if (locationParam.Value == null)
-                locationParam.Value = System.DBNull.Value;
-
-            var costParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Cost", SqlDbType = System.Data.SqlDbType.Money, Direction = System.Data.ParameterDirection.Input, Value = cost.GetValueOrDefault(), Precision = 19, Scale = 4 };
-            if (!cost.HasValue)
-                costParam.Value = System.DBNull.Value;
-
-            var friendsandFamilyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@FriendsandFamily", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = friendsandFamily, Size = 15 };
-            if (friendsandFamilyParam.Value == null)
-                friendsandFamilyParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<InsertCraigEventReturnModel>("EXEC [dbo].[Insert_CraigEvent] @Username, @fullName, @Email, @Title, @Description, @Detail, @Images, @IPAddress, @fulldate, @time, @Location, @Cost, @FriendsandFamily", usernameParam, fullNameParam, emailParam, titleParam, descriptionParam, detailParam, imagesParam, ipAddressParam, fulldateParam, timeParam, locationParam, costParam, friendsandFamilyParam).ToListAsync();
-
-            return procResultData;
-        }
-
-        public int InsertErrorLog(string ipAddress, string city, string country, string errorDetail, string others)
-        {
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var cityParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@City", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = city, Size = 30 };
-            if (cityParam.Value == null)
-                cityParam.Value = System.DBNull.Value;
-
-            var countryParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Country", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = country, Size = 30 };
-            if (countryParam.Value == null)
-                countryParam.Value = System.DBNull.Value;
-
-            var errorDetailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Error_Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = errorDetail, Size = -1 };
-            if (errorDetailParam.Value == null)
-                errorDetailParam.Value = System.DBNull.Value;
-
-            var othersParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@others", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = others, Size = 300 };
-            if (othersParam.Value == null)
-                othersParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Insert_ErrorLog] @IPAddress, @City, @Country, @Error_Detail, @others", ipAddressParam, cityParam, countryParam, errorDetailParam, othersParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public int Postdata(string title, string image, string detail, string username, string name, string email, string contact, string showPhoneNumber, string address, string other, string topCategory, string subCategory, decimal? price, string condition, string brand, string modal, string mileKmph, string warranty, string extraWarranty)
-        {
-            var titleParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Title", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = title, Size = 200 };
-            if (titleParam.Value == null)
-                titleParam.Value = System.DBNull.Value;
-
-            var imageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Image", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = image, Size = -1 };
-            if (imageParam.Value == null)
-                imageParam.Value = System.DBNull.Value;
-
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = 500 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
-
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 150 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var nameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Name", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = name, Size = 150 };
-            if (nameParam.Value == null)
-                nameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var contactParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Contact", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = contact, Size = 10 };
-            if (contactParam.Value == null)
-                contactParam.Value = System.DBNull.Value;
-
-            var showPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ShowPhoneNumber", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = showPhoneNumber, Size = 5 };
-            if (showPhoneNumberParam.Value == null)
-                showPhoneNumberParam.Value = System.DBNull.Value;
-
-            var addressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Address", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = address, Size = 250 };
-            if (addressParam.Value == null)
-                addressParam.Value = System.DBNull.Value;
-
-            var otherParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Other", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = other, Size = -1 };
-            if (otherParam.Value == null)
-                otherParam.Value = System.DBNull.Value;
-
-            var topCategoryParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@TopCategory", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = topCategory, Size = 50 };
-            if (topCategoryParam.Value == null)
-                topCategoryParam.Value = System.DBNull.Value;
-
-            var subCategoryParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@SubCategory", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = subCategory, Size = 50 };
-            if (subCategoryParam.Value == null)
-                subCategoryParam.Value = System.DBNull.Value;
-
-            var priceParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@price", SqlDbType = System.Data.SqlDbType.Money, Direction = System.Data.ParameterDirection.Input, Value = price.GetValueOrDefault(), Precision = 19, Scale = 4 };
-            if (!price.HasValue)
-                priceParam.Value = System.DBNull.Value;
-
-            var conditionParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Condition", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = condition, Size = 25 };
-            if (conditionParam.Value == null)
-                conditionParam.Value = System.DBNull.Value;
-
-            var brandParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Brand", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = brand, Size = 30 };
-            if (brandParam.Value == null)
-                brandParam.Value = System.DBNull.Value;
-
-            var modalParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Modal", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = modal, Size = 50 };
-            if (modalParam.Value == null)
-                modalParam.Value = System.DBNull.Value;
-
-            var mileKmphParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Mile_KMPH", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = mileKmph, Size = 25 };
-            if (mileKmphParam.Value == null)
-                mileKmphParam.Value = System.DBNull.Value;
-
-            var warrantyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Warranty", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = warranty, Size = 10 };
-            if (warrantyParam.Value == null)
-                warrantyParam.Value = System.DBNull.Value;
-
-            var extraWarrantyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@extra_Warranty", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = extraWarranty, Size = 25 };
-            if (extraWarrantyParam.Value == null)
-                extraWarrantyParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Postdata] @Title, @Image, @Detail, @username, @Name, @Email, @Contact, @ShowPhoneNumber, @Address, @Other, @TopCategory, @SubCategory, @price, @Condition, @Brand, @Modal, @Mile_KMPH, @Warranty, @extra_Warranty", titleParam, imageParam, detailParam, usernameParam, nameParam, emailParam, contactParam, showPhoneNumberParam, addressParam, otherParam, topCategoryParam, subCategoryParam, priceParam, conditionParam, brandParam, modalParam, mileKmphParam, warrantyParam, extraWarrantyParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui)
-        {
-            int procResult;
-            return RegisterUser(email, username, userPhNumber, pswdHash, pswdSalt, ui, out procResult);
-        }
-
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui, out int procResult)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 50 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 20 };
-            if (userPhNumberParam.Value == null)
-                userPhNumberParam.Value = System.DBNull.Value;
-
-            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = -1 };
-            if (pswdHashParam.Value == null)
-                pswdHashParam.Value = System.DBNull.Value;
-
-            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = -1 };
-            if (pswdSaltParam.Value == null)
-                pswdSaltParam.Value = System.DBNull.Value;
-
-            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
-            if (uiParam.Value == null)
-                uiParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<RegisterUserReturnModel>("EXEC @procResult = [dbo].[RegisterUser] @Email, @username, @userPHNumber, @pswdHASH, @pswdSALT, @UI", emailParam, usernameParam, userPhNumberParam, pswdHashParam, pswdSaltParam, uiParam, procResultParam).ToList();
-
-            procResult = (int) procResultParam.Value;
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 50 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 20 };
-            if (userPhNumberParam.Value == null)
-                userPhNumberParam.Value = System.DBNull.Value;
-
-            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = -1 };
-            if (pswdHashParam.Value == null)
-                pswdHashParam.Value = System.DBNull.Value;
-
-            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@pswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = -1 };
-            if (pswdSaltParam.Value == null)
-                pswdSaltParam.Value = System.DBNull.Value;
-
-            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
-            if (uiParam.Value == null)
-                uiParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<RegisterUserReturnModel>("EXEC [dbo].[RegisterUser] @Email, @username, @userPHNumber, @pswdHASH, @pswdSALT, @UI", emailParam, usernameParam, userPhNumberParam, pswdHashParam, pswdSaltParam, uiParam).ToListAsync();
-
-            return procResultData;
-        }
-
-        public int SendEmailChangePassword(string username, string email)
-        {
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 35 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[SendEmail_ChangePassword] @username, @email", usernameParam, emailParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public int SpBrowserViewed(string browserName, string ipAddress, string city, string country)
-        {
-            var browserNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@BrowserName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = browserName, Size = 35 };
-            if (browserNameParam.Value == null)
-                browserNameParam.Value = System.DBNull.Value;
-
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IPAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
-
-            var cityParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@City", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = city, Size = 75 };
-            if (cityParam.Value == null)
-                cityParam.Value = System.DBNull.Value;
-
-            var countryParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Country", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = country, Size = 50 };
-            if (countryParam.Value == null)
-                countryParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Sp_BrowserViewed] @BrowserName, @IPAddress, @City, @Country", browserNameParam, ipAddressParam, cityParam, countryParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
         public int SpCraigInquiry(string name, string email, string url, string detail, string username, string ui)
         {
             var nameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Name", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = name, Size = 50 };
@@ -1422,353 +278,33 @@ namespace NepFlex.DataAccess.Context
             return (int) procResultParam.Value;
         }
 
-        public int SpTrackEmail(string sender, string receiver, string detail, string attachments, string ipAddress, bool? status)
+        public SpDbEncryptKeyReturnModel SpDbEncryptKey(string dbEncryptKey, System.DateTime? keyExpireDate, string keyCreatedBy, string remarksOnKey)
         {
-            var senderParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Sender", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = sender, Size = 100 };
-            if (senderParam.Value == null)
-                senderParam.Value = System.DBNull.Value;
+            var dbEncryptKeyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@DBEncryptKey", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = dbEncryptKey, Size = -1 };
+            if (dbEncryptKeyParam.Value == null)
+                dbEncryptKeyParam.Value = System.DBNull.Value;
 
-            var receiverParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Receiver", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = receiver, Size = 100 };
-            if (receiverParam.Value == null)
-                receiverParam.Value = System.DBNull.Value;
+            var keyExpireDateParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@KeyExpireDate", SqlDbType = System.Data.SqlDbType.DateTime, Direction = System.Data.ParameterDirection.Input, Value = keyExpireDate.GetValueOrDefault() };
+            if (!keyExpireDate.HasValue)
+                keyExpireDateParam.Value = System.DBNull.Value;
 
-            var detailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Detail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = detail, Size = -1 };
-            if (detailParam.Value == null)
-                detailParam.Value = System.DBNull.Value;
+            var keyCreatedByParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@keyCreatedBy", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = keyCreatedBy, Size = 50 };
+            if (keyCreatedByParam.Value == null)
+                keyCreatedByParam.Value = System.DBNull.Value;
 
-            var attachmentsParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Attachments", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = attachments, Size = -1 };
-            if (attachmentsParam.Value == null)
-                attachmentsParam.Value = System.DBNull.Value;
+            var remarksOnKeyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@RemarksOnKey", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = remarksOnKey, Size = 50 };
+            if (remarksOnKeyParam.Value == null)
+                remarksOnKeyParam.Value = System.DBNull.Value;
 
-            var ipAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IpAddress", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ipAddress, Size = 25 };
-            if (ipAddressParam.Value == null)
-                ipAddressParam.Value = System.DBNull.Value;
 
-            var statusParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Status", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = status.GetValueOrDefault() };
-            if (!status.HasValue)
-                statusParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Sp_TrackEmail] @Sender, @Receiver, @Detail, @Attachments, @IpAddress, @Status", senderParam, receiverParam, detailParam, attachmentsParam, ipAddressParam, statusParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
-        {
-            int procResult;
-            return UpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult);
-        }
-
-        public System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult)
-        {
-            var existingEmailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ExistingEmail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = existingEmail, Size = -1 };
-            if (existingEmailParam.Value == null)
-                existingEmailParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
-            if (userIdParam.Value == null)
-                userIdParam.Value = System.DBNull.Value;
-
-            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
-            if (isUserSellerParam.Value == null)
-                isUserSellerParam.Value = System.DBNull.Value;
-
-            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
-            if (companyNameParam.Value == null)
-                companyNameParam.Value = System.DBNull.Value;
-
-            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
-            if (companyAddressParam.Value == null)
-                companyAddressParam.Value = System.DBNull.Value;
-
-            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
-            if (companyPhnCountryCodeParam.Value == null)
-                companyPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
-            if (companyPhoneNumberParam.Value == null)
-                companyPhoneNumberParam.Value = System.DBNull.Value;
-
-            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
-            if (!isGovRegisteredCompany.HasValue)
-                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
-
-            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
-            if (!isCompanyActive.HasValue)
-                isCompanyActiveParam.Value = System.DBNull.Value;
-
-            var companyNewEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyNewEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyNewEmailId, Size = 200 };
-            if (companyNewEmailIdParam.Value == null)
-                companyNewEmailIdParam.Value = System.DBNull.Value;
-
-            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
-            if (!companyShowPhNumber.HasValue)
-                companyShowPhNumberParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<UpdateCompanyReturnModel>("EXEC @procResult = [dbo].[UpdateCompany] @ExistingEmail, @userId, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyNewEmailID, @CompanyShowPHNumber", existingEmailParam, userIdParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyNewEmailIdParam, companyShowPhNumberParam, procResultParam).ToList();
-
-            procResult = (int) procResultParam.Value;
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateCompanyReturnModel>> UpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
-        {
-            var existingEmailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ExistingEmail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = existingEmail, Size = -1 };
-            if (existingEmailParam.Value == null)
-                existingEmailParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
-            if (userIdParam.Value == null)
-                userIdParam.Value = System.DBNull.Value;
-
-            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
-            if (isUserSellerParam.Value == null)
-                isUserSellerParam.Value = System.DBNull.Value;
-
-            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
-            if (companyNameParam.Value == null)
-                companyNameParam.Value = System.DBNull.Value;
-
-            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
-            if (companyAddressParam.Value == null)
-                companyAddressParam.Value = System.DBNull.Value;
-
-            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
-            if (companyPhnCountryCodeParam.Value == null)
-                companyPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
-            if (companyPhoneNumberParam.Value == null)
-                companyPhoneNumberParam.Value = System.DBNull.Value;
-
-            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
-            if (!isGovRegisteredCompany.HasValue)
-                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
-
-            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
-            if (!isCompanyActive.HasValue)
-                isCompanyActiveParam.Value = System.DBNull.Value;
-
-            var companyNewEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyNewEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyNewEmailId, Size = 200 };
-            if (companyNewEmailIdParam.Value == null)
-                companyNewEmailIdParam.Value = System.DBNull.Value;
-
-            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
-            if (!companyShowPhNumber.HasValue)
-                companyShowPhNumberParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<UpdateCompanyReturnModel>("EXEC [dbo].[UpdateCompany] @ExistingEmail, @userId, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyNewEmailID, @CompanyShowPHNumber", existingEmailParam, userIdParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyNewEmailIdParam, companyShowPhNumberParam).ToListAsync();
-
-            return procResultData;
-        }
-
-        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image)
-        {
-            int procResult;
-            return UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, image, out procResult);
-        }
-
-        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image, out int procResult)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = -1 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
-            if (userIdParam.Value == null)
-                userIdParam.Value = System.DBNull.Value;
-
-            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
-            if (uiParam.Value == null)
-                uiParam.Value = System.DBNull.Value;
-
-            var firstnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Firstname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = firstname, Size = 20 };
-            if (firstnameParam.Value == null)
-                firstnameParam.Value = System.DBNull.Value;
-
-            var middlenameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Middlename", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = middlename, Size = 15 };
-            if (middlenameParam.Value == null)
-                middlenameParam.Value = System.DBNull.Value;
-
-            var lastnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Lastname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = lastname, Size = 30 };
-            if (lastnameParam.Value == null)
-                lastnameParam.Value = System.DBNull.Value;
-
-            var userPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhnCountryCode, Size = 10 };
-            if (userPhnCountryCodeParam.Value == null)
-                userPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 14 };
-            if (userPhNumberParam.Value == null)
-                userPhNumberParam.Value = System.DBNull.Value;
-
-            var userShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = userShowPhNumber.GetValueOrDefault() };
-            if (!userShowPhNumber.HasValue)
-                userShowPhNumberParam.Value = System.DBNull.Value;
-
-            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
-            if (isUserSellerParam.Value == null)
-                isUserSellerParam.Value = System.DBNull.Value;
-
-            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
-            if (companyNameParam.Value == null)
-                companyNameParam.Value = System.DBNull.Value;
-
-            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
-            if (companyAddressParam.Value == null)
-                companyAddressParam.Value = System.DBNull.Value;
-
-            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
-            if (companyPhnCountryCodeParam.Value == null)
-                companyPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
-            if (companyPhoneNumberParam.Value == null)
-                companyPhoneNumberParam.Value = System.DBNull.Value;
-
-            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
-            if (!isGovRegisteredCompany.HasValue)
-                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
-
-            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
-            if (!isCompanyActive.HasValue)
-                isCompanyActiveParam.Value = System.DBNull.Value;
-
-            var companyEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyEmailId, Size = 200 };
-            if (companyEmailIdParam.Value == null)
-                companyEmailIdParam.Value = System.DBNull.Value;
-
-            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
-            if (!companyShowPhNumber.HasValue)
-                companyShowPhNumberParam.Value = System.DBNull.Value;
-
-            var imageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Image", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = image, Size = -1 };
-            if (imageParam.Value == null)
-                imageParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<UpdateUserReturnModel>("EXEC @procResult = [dbo].[UpdateUser] @Email, @username, @userId, @UI, @Firstname, @Middlename, @Lastname, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyEmailID, @CompanyShowPHNumber, @Image", emailParam, usernameParam, userIdParam, uiParam, firstnameParam, middlenameParam, lastnameParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyEmailIdParam, companyShowPhNumberParam, imageParam, procResultParam).ToList();
-
-            procResult = (int) procResultParam.Value;
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image)
-        {
-            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = -1 };
-            if (emailParam.Value == null)
-                emailParam.Value = System.DBNull.Value;
-
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
-            if (userIdParam.Value == null)
-                userIdParam.Value = System.DBNull.Value;
-
-            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
-            if (uiParam.Value == null)
-                uiParam.Value = System.DBNull.Value;
-
-            var firstnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Firstname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = firstname, Size = 20 };
-            if (firstnameParam.Value == null)
-                firstnameParam.Value = System.DBNull.Value;
-
-            var middlenameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Middlename", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = middlename, Size = 15 };
-            if (middlenameParam.Value == null)
-                middlenameParam.Value = System.DBNull.Value;
-
-            var lastnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Lastname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = lastname, Size = 30 };
-            if (lastnameParam.Value == null)
-                lastnameParam.Value = System.DBNull.Value;
-
-            var userPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhnCountryCode, Size = 10 };
-            if (userPhnCountryCodeParam.Value == null)
-                userPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var userPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserPHNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userPhNumber, Size = 14 };
-            if (userPhNumberParam.Value == null)
-                userPhNumberParam.Value = System.DBNull.Value;
-
-            var userShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UserShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = userShowPhNumber.GetValueOrDefault() };
-            if (!userShowPhNumber.HasValue)
-                userShowPhNumberParam.Value = System.DBNull.Value;
-
-            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
-            if (isUserSellerParam.Value == null)
-                isUserSellerParam.Value = System.DBNull.Value;
-
-            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
-            if (companyNameParam.Value == null)
-                companyNameParam.Value = System.DBNull.Value;
-
-            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
-            if (companyAddressParam.Value == null)
-                companyAddressParam.Value = System.DBNull.Value;
-
-            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
-            if (companyPhnCountryCodeParam.Value == null)
-                companyPhnCountryCodeParam.Value = System.DBNull.Value;
-
-            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
-            if (companyPhoneNumberParam.Value == null)
-                companyPhoneNumberParam.Value = System.DBNull.Value;
-
-            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
-            if (!isGovRegisteredCompany.HasValue)
-                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
-
-            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
-            if (!isCompanyActive.HasValue)
-                isCompanyActiveParam.Value = System.DBNull.Value;
-
-            var companyEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyEmailId, Size = 200 };
-            if (companyEmailIdParam.Value == null)
-                companyEmailIdParam.Value = System.DBNull.Value;
-
-            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
-            if (!companyShowPhNumber.HasValue)
-                companyShowPhNumberParam.Value = System.DBNull.Value;
-
-            var imageParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Image", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = image, Size = -1 };
-            if (imageParam.Value == null)
-                imageParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<UpdateUserReturnModel>("EXEC [dbo].[UpdateUser] @Email, @username, @userId, @UI, @Firstname, @Middlename, @Lastname, @UserPHNCountryCode, @UserPHNumber, @UserShowPHNumber, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyEmailID, @CompanyShowPHNumber, @Image", emailParam, usernameParam, userIdParam, uiParam, firstnameParam, middlenameParam, lastnameParam, userPhnCountryCodeParam, userPhNumberParam, userShowPhNumberParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyEmailIdParam, companyShowPhNumberParam, imageParam).ToListAsync();
-
-            return procResultData;
-        }
-
-        public ValidateUserReturnModel ValidateUser(string username, string password, string ui)
-        {
-            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 40 };
-            if (usernameParam.Value == null)
-                usernameParam.Value = System.DBNull.Value;
-
-            var passwordParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Password", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = password, Size = -1 };
-            if (passwordParam.Value == null)
-                passwordParam.Value = System.DBNull.Value;
-
-            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
-            if (uiParam.Value == null)
-                uiParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new ValidateUserReturnModel();
+            var procResultData = new SpDbEncryptKeyReturnModel();
             var cmd = Database.Connection.CreateCommand();
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[Validate_User]";
-            cmd.Parameters.Add(usernameParam);
-            cmd.Parameters.Add(passwordParam);
-            cmd.Parameters.Add(uiParam);
+            cmd.CommandText = "[dbo].[Sp_DbEncryptKey]";
+            cmd.Parameters.Add(dbEncryptKeyParam);
+            cmd.Parameters.Add(keyExpireDateParam);
+            cmd.Parameters.Add(keyCreatedByParam);
+            cmd.Parameters.Add(remarksOnKeyParam);
 
             try
             {
@@ -1776,10 +312,13 @@ namespace NepFlex.DataAccess.Context
                 var reader = cmd.ExecuteReader();
                 var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
 
-                procResultData.ResultSet1 = objectContext.Translate<ValidateUserReturnModel.ResultSetModel1>(reader).ToList();
+                procResultData.ResultSet1 = objectContext.Translate<SpDbEncryptKeyReturnModel.ResultSetModel1>(reader).ToList();
                 reader.NextResult();
 
-                procResultData.ResultSet2 = objectContext.Translate<ValidateUserReturnModel.ResultSetModel2>(reader).ToList();
+                procResultData.ResultSet2 = objectContext.Translate<SpDbEncryptKeyReturnModel.ResultSetModel2>(reader).ToList();
+                reader.NextResult();
+
+                procResultData.ResultSet3 = objectContext.Translate<SpDbEncryptKeyReturnModel.ResultSetModel3>(reader).ToList();
                 reader.Close();
 
             }
@@ -1790,8 +329,257 @@ namespace NepFlex.DataAccess.Context
             return procResultData;
         }
 
-        public async System.Threading.Tasks.Task<ValidateUserReturnModel> ValidateUserAsync(string username, string password, string ui)
+        public async System.Threading.Tasks.Task<SpDbEncryptKeyReturnModel> SpDbEncryptKeyAsync(string dbEncryptKey, System.DateTime? keyExpireDate, string keyCreatedBy, string remarksOnKey)
         {
+            var dbEncryptKeyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@DBEncryptKey", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = dbEncryptKey, Size = -1 };
+            if (dbEncryptKeyParam.Value == null)
+                dbEncryptKeyParam.Value = System.DBNull.Value;
+
+            var keyExpireDateParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@KeyExpireDate", SqlDbType = System.Data.SqlDbType.DateTime, Direction = System.Data.ParameterDirection.Input, Value = keyExpireDate.GetValueOrDefault() };
+            if (!keyExpireDate.HasValue)
+                keyExpireDateParam.Value = System.DBNull.Value;
+
+            var keyCreatedByParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@keyCreatedBy", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = keyCreatedBy, Size = 50 };
+            if (keyCreatedByParam.Value == null)
+                keyCreatedByParam.Value = System.DBNull.Value;
+
+            var remarksOnKeyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@RemarksOnKey", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = remarksOnKey, Size = 50 };
+            if (remarksOnKeyParam.Value == null)
+                remarksOnKeyParam.Value = System.DBNull.Value;
+
+
+            var procResultData = new SpDbEncryptKeyReturnModel();
+            var cmd = Database.Connection.CreateCommand();
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = "[dbo].[Sp_DbEncryptKey]";
+            cmd.Parameters.Add(dbEncryptKeyParam);
+            cmd.Parameters.Add(keyExpireDateParam);
+            cmd.Parameters.Add(keyCreatedByParam);
+            cmd.Parameters.Add(remarksOnKeyParam);
+
+            try
+            {
+                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
+                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
+
+                procResultData.ResultSet1 = objectContext.Translate<SpDbEncryptKeyReturnModel.ResultSetModel1>(reader).ToList();
+                await reader.NextResultAsync().ConfigureAwait(false);
+
+                procResultData.ResultSet2 = objectContext.Translate<SpDbEncryptKeyReturnModel.ResultSetModel2>(reader).ToList();
+                await reader.NextResultAsync().ConfigureAwait(false);
+
+                procResultData.ResultSet3 = objectContext.Translate<SpDbEncryptKeyReturnModel.ResultSetModel3>(reader).ToList();
+            }
+            finally
+            {
+                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
+            }
+            return procResultData;
+        }
+
+        public System.Collections.Generic.List<SpRegisterUserReturnModel> SpRegisterUser(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui)
+        {
+            int procResult;
+            return SpRegisterUser(email, username, pswdHash, pswdSalt, pswdType, pswdUsedAlgorithm, dBeKey, ui, out procResult);
+        }
+
+        public System.Collections.Generic.List<SpRegisterUserReturnModel> SpRegisterUser(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui, out int procResult)
+        {
+            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
+            if (emailParam.Value == null)
+                emailParam.Value = System.DBNull.Value;
+
+            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
+            if (usernameParam.Value == null)
+                usernameParam.Value = System.DBNull.Value;
+
+            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@PswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = -1 };
+            if (pswdHashParam.Value == null)
+                pswdHashParam.Value = System.DBNull.Value;
+
+            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@PswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = -1 };
+            if (pswdSaltParam.Value == null)
+                pswdSaltParam.Value = System.DBNull.Value;
+
+            var pswdTypeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@PswdType", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdType, Size = 2 };
+            if (pswdTypeParam.Value == null)
+                pswdTypeParam.Value = System.DBNull.Value;
+
+            var pswdUsedAlgorithmParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@PswdUsedAlgorithm", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdUsedAlgorithm, Size = 10 };
+            if (pswdUsedAlgorithmParam.Value == null)
+                pswdUsedAlgorithmParam.Value = System.DBNull.Value;
+
+            var dBeKeyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@DBeKey", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = dBeKey, Size = -1 };
+            if (dBeKeyParam.Value == null)
+                dBeKeyParam.Value = System.DBNull.Value;
+
+            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
+            if (uiParam.Value == null)
+                uiParam.Value = System.DBNull.Value;
+
+            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
+            var procResultData = Database.SqlQuery<SpRegisterUserReturnModel>("EXEC @procResult = [dbo].[Sp_RegisterUser] @Email, @Username, @PswdHASH, @PswdSALT, @PswdType, @PswdUsedAlgorithm, @DBeKey, @UI", emailParam, usernameParam, pswdHashParam, pswdSaltParam, pswdTypeParam, pswdUsedAlgorithmParam, dBeKeyParam, uiParam, procResultParam).ToList();
+
+            procResult = (int) procResultParam.Value;
+            return procResultData;
+        }
+
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<SpRegisterUserReturnModel>> SpRegisterUserAsync(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui)
+        {
+            var emailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Email", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = email, Size = 150 };
+            if (emailParam.Value == null)
+                emailParam.Value = System.DBNull.Value;
+
+            var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 50 };
+            if (usernameParam.Value == null)
+                usernameParam.Value = System.DBNull.Value;
+
+            var pswdHashParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@PswdHASH", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdHash, Size = -1 };
+            if (pswdHashParam.Value == null)
+                pswdHashParam.Value = System.DBNull.Value;
+
+            var pswdSaltParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@PswdSALT", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdSalt, Size = -1 };
+            if (pswdSaltParam.Value == null)
+                pswdSaltParam.Value = System.DBNull.Value;
+
+            var pswdTypeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@PswdType", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdType, Size = 2 };
+            if (pswdTypeParam.Value == null)
+                pswdTypeParam.Value = System.DBNull.Value;
+
+            var pswdUsedAlgorithmParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@PswdUsedAlgorithm", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = pswdUsedAlgorithm, Size = 10 };
+            if (pswdUsedAlgorithmParam.Value == null)
+                pswdUsedAlgorithmParam.Value = System.DBNull.Value;
+
+            var dBeKeyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@DBeKey", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = dBeKey, Size = -1 };
+            if (dBeKeyParam.Value == null)
+                dBeKeyParam.Value = System.DBNull.Value;
+
+            var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
+            if (uiParam.Value == null)
+                uiParam.Value = System.DBNull.Value;
+
+            var procResultData = await Database.SqlQuery<SpRegisterUserReturnModel>("EXEC [dbo].[Sp_RegisterUser] @Email, @Username, @PswdHASH, @PswdSALT, @PswdType, @PswdUsedAlgorithm, @DBeKey, @UI", emailParam, usernameParam, pswdHashParam, pswdSaltParam, pswdTypeParam, pswdUsedAlgorithmParam, dBeKeyParam, uiParam).ToListAsync();
+
+            return procResultData;
+        }
+
+        public System.Collections.Generic.List<SpUpdateCompanyReturnModel> SpUpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return SpUpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult);
+        }
+
+        public System.Collections.Generic.List<SpUpdateCompanyReturnModel> SpUpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult)
+        {
+            var existingEmailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ExistingEmail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = existingEmail, Size = -1 };
+            if (existingEmailParam.Value == null)
+                existingEmailParam.Value = System.DBNull.Value;
+
+            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
+            if (userIdParam.Value == null)
+                userIdParam.Value = System.DBNull.Value;
+
+            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
+            if (isUserSellerParam.Value == null)
+                isUserSellerParam.Value = System.DBNull.Value;
+
+            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
+            if (companyNameParam.Value == null)
+                companyNameParam.Value = System.DBNull.Value;
+
+            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
+            if (companyAddressParam.Value == null)
+                companyAddressParam.Value = System.DBNull.Value;
+
+            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
+            if (companyPhnCountryCodeParam.Value == null)
+                companyPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
+            if (companyPhoneNumberParam.Value == null)
+                companyPhoneNumberParam.Value = System.DBNull.Value;
+
+            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
+            if (!isGovRegisteredCompany.HasValue)
+                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
+
+            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
+            if (!isCompanyActive.HasValue)
+                isCompanyActiveParam.Value = System.DBNull.Value;
+
+            var companyNewEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyNewEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyNewEmailId, Size = 200 };
+            if (companyNewEmailIdParam.Value == null)
+                companyNewEmailIdParam.Value = System.DBNull.Value;
+
+            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
+            if (!companyShowPhNumber.HasValue)
+                companyShowPhNumberParam.Value = System.DBNull.Value;
+
+            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
+            var procResultData = Database.SqlQuery<SpUpdateCompanyReturnModel>("EXEC @procResult = [dbo].[Sp_UpdateCompany] @ExistingEmail, @userId, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyNewEmailID, @CompanyShowPHNumber", existingEmailParam, userIdParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyNewEmailIdParam, companyShowPhNumberParam, procResultParam).ToList();
+
+            procResult = (int) procResultParam.Value;
+            return procResultData;
+        }
+
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<SpUpdateCompanyReturnModel>> SpUpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
+        {
+            var existingEmailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ExistingEmail", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = existingEmail, Size = -1 };
+            if (existingEmailParam.Value == null)
+                existingEmailParam.Value = System.DBNull.Value;
+
+            var userIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@userId", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = userId, Size = 150 };
+            if (userIdParam.Value == null)
+                userIdParam.Value = System.DBNull.Value;
+
+            var isUserSellerParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsUserSeller", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = isUserSeller, Size = 50 };
+            if (isUserSellerParam.Value == null)
+                isUserSellerParam.Value = System.DBNull.Value;
+
+            var companyNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyName, Size = 200 };
+            if (companyNameParam.Value == null)
+                companyNameParam.Value = System.DBNull.Value;
+
+            var companyAddressParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyAddress", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyAddress, Size = 200 };
+            if (companyAddressParam.Value == null)
+                companyAddressParam.Value = System.DBNull.Value;
+
+            var companyPhnCountryCodeParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPHNCountryCode", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhnCountryCode, Size = 4 };
+            if (companyPhnCountryCodeParam.Value == null)
+                companyPhnCountryCodeParam.Value = System.DBNull.Value;
+
+            var companyPhoneNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyPhoneNumber", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyPhoneNumber, Size = 14 };
+            if (companyPhoneNumberParam.Value == null)
+                companyPhoneNumberParam.Value = System.DBNull.Value;
+
+            var isGovRegisteredCompanyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsGOVRegisteredCompany", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isGovRegisteredCompany.GetValueOrDefault() };
+            if (!isGovRegisteredCompany.HasValue)
+                isGovRegisteredCompanyParam.Value = System.DBNull.Value;
+
+            var isCompanyActiveParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@IsCompanyActive", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = isCompanyActive.GetValueOrDefault() };
+            if (!isCompanyActive.HasValue)
+                isCompanyActiveParam.Value = System.DBNull.Value;
+
+            var companyNewEmailIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyNewEmailID", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = companyNewEmailId, Size = 200 };
+            if (companyNewEmailIdParam.Value == null)
+                companyNewEmailIdParam.Value = System.DBNull.Value;
+
+            var companyShowPhNumberParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@CompanyShowPHNumber", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = companyShowPhNumber.GetValueOrDefault() };
+            if (!companyShowPhNumber.HasValue)
+                companyShowPhNumberParam.Value = System.DBNull.Value;
+
+            var procResultData = await Database.SqlQuery<SpUpdateCompanyReturnModel>("EXEC [dbo].[Sp_UpdateCompany] @ExistingEmail, @userId, @IsUserSeller, @CompanyName, @CompanyAddress, @CompanyPHNCountryCode, @CompanyPhoneNumber, @IsGOVRegisteredCompany, @IsCompanyActive, @CompanyNewEmailID, @CompanyShowPHNumber", existingEmailParam, userIdParam, isUserSellerParam, companyNameParam, companyAddressParam, companyPhnCountryCodeParam, companyPhoneNumberParam, isGovRegisteredCompanyParam, isCompanyActiveParam, companyNewEmailIdParam, companyShowPhNumberParam).ToListAsync();
+
+            return procResultData;
+        }
+
+        public int SpValidateUser(bool? validateUsingEmail, string username, string password, string dBeKey, string ui)
+        {
+            var validateUsingEmailParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@ValidateUsingEmail", SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input, Value = validateUsingEmail.GetValueOrDefault() };
+            if (!validateUsingEmail.HasValue)
+                validateUsingEmailParam.Value = System.DBNull.Value;
+
             var usernameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@Username", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = username, Size = 40 };
             if (usernameParam.Value == null)
                 usernameParam.Value = System.DBNull.Value;
@@ -1800,35 +588,19 @@ namespace NepFlex.DataAccess.Context
             if (passwordParam.Value == null)
                 passwordParam.Value = System.DBNull.Value;
 
+            var dBeKeyParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@DBeKey", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = dBeKey, Size = -1 };
+            if (dBeKeyParam.Value == null)
+                dBeKeyParam.Value = System.DBNull.Value;
+
             var uiParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@UI", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = ui, Size = 5 };
             if (uiParam.Value == null)
                 uiParam.Value = System.DBNull.Value;
 
+            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
 
-            var procResultData = new ValidateUserReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[Validate_User]";
-            cmd.Parameters.Add(usernameParam);
-            cmd.Parameters.Add(passwordParam);
-            cmd.Parameters.Add(uiParam);
+            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[Sp_Validate_User] @ValidateUsingEmail, @Username, @Password, @DBeKey, @UI", validateUsingEmailParam, usernameParam, passwordParam, dBeKeyParam, uiParam, procResultParam);
 
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<ValidateUserReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<ValidateUserReturnModel.ResultSetModel2>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
+            return (int) procResultParam.Value;
         }
 
     }
@@ -1839,67 +611,27 @@ namespace NepFlex.DataAccess.Context
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class FakeOnlinePasalContext : IOnlinePasalContext
     {
-        public System.Data.Entity.DbSet<BrowserViewed> BrowserVieweds { get; set; }
-        public System.Data.Entity.DbSet<CraigArticle> CraigArticles { get; set; }
-        public System.Data.Entity.DbSet<CraigCoupon> CraigCoupons { get; set; }
-        public System.Data.Entity.DbSet<CraigDiscussion> CraigDiscussions { get; set; }
-        public System.Data.Entity.DbSet<CraigEvent> CraigEvents { get; set; }
+        public System.Data.Entity.DbSet<ContactU> ContactUs { get; set; }
         public System.Data.Entity.DbSet<CraigInquiry> CraigInquiries { get; set; }
-        public System.Data.Entity.DbSet<ErrorLog> ErrorLogs { get; set; }
+        public System.Data.Entity.DbSet<DbEncryptKey> DbEncryptKeys { get; set; }
         public System.Data.Entity.DbSet<ItemDescription> ItemDescriptions { get; set; }
         public System.Data.Entity.DbSet<MasterCompany> MasterCompanies { get; set; }
-        public System.Data.Entity.DbSet<MasterDiscussionForumCategory> MasterDiscussionForumCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterEducationMaterialCategory> MasterEducationMaterialCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterJobsCategory> MasterJobsCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterOurCommunityCategory> MasterOurCommunityCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterPersonalCategory> MasterPersonalCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterRealEstateCategory> MasterRealEstateCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterRentalCategory> MasterRentalCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterSaleCategory> MasterSaleCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterServicesCategory> MasterServicesCategories { get; set; }
-        public System.Data.Entity.DbSet<MasterTable> MasterTables { get; set; }
-        public System.Data.Entity.DbSet<MasterTravelsandToursCategory> MasterTravelsandToursCategories { get; set; }
+        public System.Data.Entity.DbSet<MasterSaltyPassword> MasterSaltyPasswords { get; set; }
+        public System.Data.Entity.DbSet<MasterUser> MasterUsers { get; set; }
+        public System.Data.Entity.DbSet<MasterVerbiage> MasterVerbiages { get; set; }
         public System.Data.Entity.DbSet<PostMyData> PostMyDatas { get; set; }
-        public System.Data.Entity.DbSet<SelectTopCategory> SelectTopCategories { get; set; }
-        public System.Data.Entity.DbSet<TrackEmail> TrackEmails { get; set; }
-        public System.Data.Entity.DbSet<User> Users { get; set; }
-        public System.Data.Entity.DbSet<UserNcerrorWindow> UserNcerrorWindows { get; set; }
-        public System.Data.Entity.DbSet<ViewsCount> ViewsCounts { get; set; }
-        public System.Data.Entity.DbSet<ViewsCountArticle> ViewsCountArticles { get; set; }
-        public System.Data.Entity.DbSet<ViewsCountCoupon> ViewsCountCoupons { get; set; }
-        public System.Data.Entity.DbSet<ViewsCountEvent> ViewsCountEvents { get; set; }
 
         public FakeOnlinePasalContext()
         {
-            BrowserVieweds = new FakeDbSet<BrowserViewed>("ViewId");
-            CraigArticles = new FakeDbSet<CraigArticle>("NewsId");
-            CraigCoupons = new FakeDbSet<CraigCoupon>("CouponId");
-            CraigDiscussions = new FakeDbSet<CraigDiscussion>("DiscId");
-            CraigEvents = new FakeDbSet<CraigEvent>("EventId");
+            ContactUs = new FakeDbSet<ContactU>("Id", "Username", "Email", "Comment", "Ui");
             CraigInquiries = new FakeDbSet<CraigInquiry>("Id", "Name", "Email", "Detail", "DateAdded");
-            ErrorLogs = new FakeDbSet<ErrorLog>("Id");
+            DbEncryptKeys = new FakeDbSet<DbEncryptKey>("KeyId");
             ItemDescriptions = new FakeDbSet<ItemDescription>("Id");
             MasterCompanies = new FakeDbSet<MasterCompany>("CompanyId", "UserId", "CompanyName", "Address", "PhnCountryCode", "PhNumber", "ShowPhNumber");
-            MasterDiscussionForumCategories = new FakeDbSet<MasterDiscussionForumCategory>("DiscussionForumId");
-            MasterEducationMaterialCategories = new FakeDbSet<MasterEducationMaterialCategory>("EduId");
-            MasterJobsCategories = new FakeDbSet<MasterJobsCategory>("JobsId");
-            MasterOurCommunityCategories = new FakeDbSet<MasterOurCommunityCategory>("OurCommunityId");
-            MasterPersonalCategories = new FakeDbSet<MasterPersonalCategory>("PersonalId");
-            MasterRealEstateCategories = new FakeDbSet<MasterRealEstateCategory>("RealEStateId");
-            MasterRentalCategories = new FakeDbSet<MasterRentalCategory>("RentalId");
-            MasterSaleCategories = new FakeDbSet<MasterSaleCategory>("MasterCatId");
-            MasterServicesCategories = new FakeDbSet<MasterServicesCategory>("ServiceId");
-            MasterTables = new FakeDbSet<MasterTable>("Id");
-            MasterTravelsandToursCategories = new FakeDbSet<MasterTravelsandToursCategory>("TravelsandToursId");
+            MasterSaltyPasswords = new FakeDbSet<MasterSaltyPassword>("Pswdid");
+            MasterUsers = new FakeDbSet<MasterUser>("UserId");
+            MasterVerbiages = new FakeDbSet<MasterVerbiage>("VerId");
             PostMyDatas = new FakeDbSet<PostMyData>("PostId");
-            SelectTopCategories = new FakeDbSet<SelectTopCategory>("Id");
-            TrackEmails = new FakeDbSet<TrackEmail>("Id");
-            Users = new FakeDbSet<User>("UserId");
-            UserNcerrorWindows = new FakeDbSet<UserNcerrorWindow>("Id", "UserName", "Password", "Email", "DateAdded");
-            ViewsCounts = new FakeDbSet<ViewsCount>("Id", "TotalViews");
-            ViewsCountArticles = new FakeDbSet<ViewsCountArticle>("Id", "TotalViews");
-            ViewsCountCoupons = new FakeDbSet<ViewsCountCoupon>("Id", "TotalViews");
-            ViewsCountEvents = new FakeDbSet<ViewsCountEvent>("Id", "TotalViews");
         }
 
         public int SaveChangesCount { get; private set; }
@@ -1982,75 +714,6 @@ namespace NepFlex.DataAccess.Context
             return System.Threading.Tasks.Task.FromResult(ButtonSearchOnClick(text, out procResult));
         }
 
-        public int ChangePassword(long? userid, string password, string passwordConfirm)
-        {
-
-            return 0;
-        }
-
-        public ChangeProfilePictureReturnModel ChangeProfilePicture(string email, long? userId, string image)
-        {
-            int procResult;
-            return ChangeProfilePicture(email, userId, image, out procResult);
-        }
-
-        public ChangeProfilePictureReturnModel ChangeProfilePicture(string email, long? userId, string image, out int procResult)
-        {
-
-            procResult = 0;
-            return new ChangeProfilePictureReturnModel();
-        }
-
-        public System.Threading.Tasks.Task<ChangeProfilePictureReturnModel> ChangeProfilePictureAsync(string email, long? userId, string image)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(ChangeProfilePicture(email, userId, image, out procResult));
-        }
-
-        public int ContactUs(string userName, string email, string comment, string website)
-        {
-
-            return 0;
-        }
-
-        public CountPageViewsReturnModel CountPageViews(int? id, string section, string action)
-        {
-            int procResult;
-            return CountPageViews(id, section, action, out procResult);
-        }
-
-        public CountPageViewsReturnModel CountPageViews(int? id, string section, string action, out int procResult)
-        {
-
-            procResult = 0;
-            return new CountPageViewsReturnModel();
-        }
-
-        public System.Threading.Tasks.Task<CountPageViewsReturnModel> CountPageViewsAsync(int? id, string section, string action)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(CountPageViews(id, section, action, out procResult));
-        }
-
-        public System.Collections.Generic.List<CraigDiscussionForumReturnModel> CraigDiscussionForum(string topic, string detail, string emailId, string ipAddress, string fullname)
-        {
-            int procResult;
-            return CraigDiscussionForum(topic, detail, emailId, ipAddress, fullname, out procResult);
-        }
-
-        public System.Collections.Generic.List<CraigDiscussionForumReturnModel> CraigDiscussionForum(string topic, string detail, string emailId, string ipAddress, string fullname, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<CraigDiscussionForumReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<CraigDiscussionForumReturnModel>> CraigDiscussionForumAsync(string topic, string detail, string emailId, string ipAddress, string fullname)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(CraigDiscussionForum(topic, detail, emailId, ipAddress, fullname, out procResult));
-        }
-
         public System.Collections.Generic.List<GetDataReturnModel> GetData(long? id, string fromPage)
         {
             int procResult;
@@ -2070,192 +733,73 @@ namespace NepFlex.DataAccess.Context
             return System.Threading.Tasks.Task.FromResult(GetData(id, fromPage, out procResult));
         }
 
-        public System.Collections.Generic.List<GetGuidReturnModel> GetGuid(string email)
-        {
-            int procResult;
-            return GetGuid(email, out procResult);
-        }
-
-        public System.Collections.Generic.List<GetGuidReturnModel> GetGuid(string email, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<GetGuidReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<GetGuidReturnModel>> GetGuidAsync(string email)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(GetGuid(email, out procResult));
-        }
-
-        public InsertCraigArticlesReturnModel InsertCraigArticles(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, string category, string source)
-        {
-            int procResult;
-            return InsertCraigArticles(username, fullName, email, title, description, detail, images, ipAddress, category, source, out procResult);
-        }
-
-        public InsertCraigArticlesReturnModel InsertCraigArticles(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, string category, string source, out int procResult)
-        {
-
-            procResult = 0;
-            return new InsertCraigArticlesReturnModel();
-        }
-
-        public System.Threading.Tasks.Task<InsertCraigArticlesReturnModel> InsertCraigArticlesAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, string category, string source)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(InsertCraigArticles(username, fullName, email, title, description, detail, images, ipAddress, category, source, out procResult));
-        }
-
-        public InsertCraigCouponsReturnModel InsertCraigCoupons(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images)
-        {
-            int procResult;
-            return InsertCraigCoupons(email, userId, ipAddress, fullName, title, description, detail, discount, money, currency, appliedfrom, expires, logo, images, out procResult);
-        }
-
-        public InsertCraigCouponsReturnModel InsertCraigCoupons(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images, out int procResult)
-        {
-
-            procResult = 0;
-            return new InsertCraigCouponsReturnModel();
-        }
-
-        public System.Threading.Tasks.Task<InsertCraigCouponsReturnModel> InsertCraigCouponsAsync(string email, string userId, string ipAddress, string fullName, string title, string description, string detail, string discount, string money, string currency, System.DateTime? appliedfrom, System.DateTime? expires, string logo, string images)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(InsertCraigCoupons(email, userId, ipAddress, fullName, title, description, detail, discount, money, currency, appliedfrom, expires, logo, images, out procResult));
-        }
-
-        public System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
-        {
-            int procResult;
-            return InsertCraigEvent(username, fullName, email, title, description, detail, images, ipAddress, fulldate, time, location, cost, friendsandFamily, out procResult);
-        }
-
-        public System.Collections.Generic.List<InsertCraigEventReturnModel> InsertCraigEvent(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<InsertCraigEventReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<InsertCraigEventReturnModel>> InsertCraigEventAsync(string username, string fullName, string email, string title, string description, string detail, string images, string ipAddress, System.DateTime? fulldate, System.TimeSpan? time, string location, decimal? cost, string friendsandFamily)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(InsertCraigEvent(username, fullName, email, title, description, detail, images, ipAddress, fulldate, time, location, cost, friendsandFamily, out procResult));
-        }
-
-        public int InsertErrorLog(string ipAddress, string city, string country, string errorDetail, string others)
-        {
-
-            return 0;
-        }
-
-        public int Postdata(string title, string image, string detail, string username, string name, string email, string contact, string showPhoneNumber, string address, string other, string topCategory, string subCategory, decimal? price, string condition, string brand, string modal, string mileKmph, string warranty, string extraWarranty)
-        {
-
-            return 0;
-        }
-
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui)
-        {
-            int procResult;
-            return RegisterUser(email, username, userPhNumber, pswdHash, pswdSalt, ui, out procResult);
-        }
-
-        public System.Collections.Generic.List<RegisterUserReturnModel> RegisterUser(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<RegisterUserReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<RegisterUserReturnModel>> RegisterUserAsync(string email, string username, string userPhNumber, string pswdHash, string pswdSalt, string ui)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(RegisterUser(email, username, userPhNumber, pswdHash, pswdSalt, ui, out procResult));
-        }
-
-        public int SendEmailChangePassword(string username, string email)
-        {
-
-            return 0;
-        }
-
-        public int SpBrowserViewed(string browserName, string ipAddress, string city, string country)
-        {
-
-            return 0;
-        }
-
         public int SpCraigInquiry(string name, string email, string url, string detail, string username, string ui)
         {
 
             return 0;
         }
 
-        public int SpTrackEmail(string sender, string receiver, string detail, string attachments, string ipAddress, bool? status)
+        public SpDbEncryptKeyReturnModel SpDbEncryptKey(string dbEncryptKey, System.DateTime? keyExpireDate, string keyCreatedBy, string remarksOnKey)
+        {
+            int procResult;
+            return SpDbEncryptKey(dbEncryptKey, keyExpireDate, keyCreatedBy, remarksOnKey, out procResult);
+        }
+
+        public SpDbEncryptKeyReturnModel SpDbEncryptKey(string dbEncryptKey, System.DateTime? keyExpireDate, string keyCreatedBy, string remarksOnKey, out int procResult)
+        {
+
+            procResult = 0;
+            return new SpDbEncryptKeyReturnModel();
+        }
+
+        public System.Threading.Tasks.Task<SpDbEncryptKeyReturnModel> SpDbEncryptKeyAsync(string dbEncryptKey, System.DateTime? keyExpireDate, string keyCreatedBy, string remarksOnKey)
+        {
+            int procResult;
+            return System.Threading.Tasks.Task.FromResult(SpDbEncryptKey(dbEncryptKey, keyExpireDate, keyCreatedBy, remarksOnKey, out procResult));
+        }
+
+        public System.Collections.Generic.List<SpRegisterUserReturnModel> SpRegisterUser(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui)
+        {
+            int procResult;
+            return SpRegisterUser(email, username, pswdHash, pswdSalt, pswdType, pswdUsedAlgorithm, dBeKey, ui, out procResult);
+        }
+
+        public System.Collections.Generic.List<SpRegisterUserReturnModel> SpRegisterUser(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui, out int procResult)
+        {
+
+            procResult = 0;
+            return new System.Collections.Generic.List<SpRegisterUserReturnModel>();
+        }
+
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<SpRegisterUserReturnModel>> SpRegisterUserAsync(string email, string username, string pswdHash, string pswdSalt, string pswdType, string pswdUsedAlgorithm, string dBeKey, string ui)
+        {
+            int procResult;
+            return System.Threading.Tasks.Task.FromResult(SpRegisterUser(email, username, pswdHash, pswdSalt, pswdType, pswdUsedAlgorithm, dBeKey, ui, out procResult));
+        }
+
+        public System.Collections.Generic.List<SpUpdateCompanyReturnModel> SpUpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return SpUpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult);
+        }
+
+        public System.Collections.Generic.List<SpUpdateCompanyReturnModel> SpUpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult)
+        {
+
+            procResult = 0;
+            return new System.Collections.Generic.List<SpUpdateCompanyReturnModel>();
+        }
+
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<SpUpdateCompanyReturnModel>> SpUpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
+        {
+            int procResult;
+            return System.Threading.Tasks.Task.FromResult(SpUpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult));
+        }
+
+        public int SpValidateUser(bool? validateUsingEmail, string username, string password, string dBeKey, string ui)
         {
 
             return 0;
-        }
-
-        public System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
-        {
-            int procResult;
-            return UpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult);
-        }
-
-        public System.Collections.Generic.List<UpdateCompanyReturnModel> UpdateCompany(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<UpdateCompanyReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateCompanyReturnModel>> UpdateCompanyAsync(string existingEmail, string userId, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyNewEmailId, bool? companyShowPhNumber)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(UpdateCompany(existingEmail, userId, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyNewEmailId, companyShowPhNumber, out procResult));
-        }
-
-        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image)
-        {
-            int procResult;
-            return UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, image, out procResult);
-        }
-
-        public System.Collections.Generic.List<UpdateUserReturnModel> UpdateUser(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<UpdateUserReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<UpdateUserReturnModel>> UpdateUserAsync(string email, string username, string userId, string ui, string firstname, string middlename, string lastname, string userPhnCountryCode, string userPhNumber, bool? userShowPhNumber, string isUserSeller, string companyName, string companyAddress, string companyPhnCountryCode, string companyPhoneNumber, bool? isGovRegisteredCompany, bool? isCompanyActive, string companyEmailId, bool? companyShowPhNumber, string image)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(UpdateUser(email, username, userId, ui, firstname, middlename, lastname, userPhnCountryCode, userPhNumber, userShowPhNumber, isUserSeller, companyName, companyAddress, companyPhnCountryCode, companyPhoneNumber, isGovRegisteredCompany, isCompanyActive, companyEmailId, companyShowPhNumber, image, out procResult));
-        }
-
-        public ValidateUserReturnModel ValidateUser(string username, string password, string ui)
-        {
-            int procResult;
-            return ValidateUser(username, password, ui, out procResult);
-        }
-
-        public ValidateUserReturnModel ValidateUser(string username, string password, string ui, out int procResult)
-        {
-
-            procResult = 0;
-            return new ValidateUserReturnModel();
-        }
-
-        public System.Threading.Tasks.Task<ValidateUserReturnModel> ValidateUserAsync(string username, string password, string ui)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(ValidateUser(username, password, ui, out procResult));
         }
 
     }
@@ -2516,105 +1060,17 @@ namespace NepFlex.DataAccess.Context
 
     #region POCO classes
 
-    // BrowserViewed
+    // ContactUs
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class BrowserViewed
+    public class ContactU
     {
-        public long ViewId { get; set; } // ViewID (Primary key)
-        public long? TotalCountViews { get; set; } // TotalCountViews
-        public string BrowserViewed_ { get; set; } // BrowserViewed (length: 35)
-        public string IpAddress { get; set; } // IPAddress (length: 25)
-        public string City { get; set; } // City (length: 75)
-        public string Country { get; set; } // Country (length: 50)
-    }
-
-    // Craig_Articles
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigArticle
-    {
-        public long NewsId { get; set; } // NewsID (Primary key)
-        public string Username { get; set; } // Username (length: 50)
-        public string FullName { get; set; } // FullName (length: 120)
-        public string Email { get; set; } // Email (length: 100)
-        public string Title { get; set; } // Title (length: 150)
-        public string Description { get; set; } // Description (length: 250)
-        public string Detail { get; set; } // Detail
-        public string Images { get; set; } // Images
-        public string IpAddress { get; set; } // IPAddress (length: 25)
-        public string Guid { get; set; } // Guid (length: 84)
-        public System.DateTime DatePosted { get; set; } // DatePosted
-        public bool? Active { get; set; } // Active
-        public string Category { get; set; } // Category (length: 50)
-        public string Source { get; set; } // Source (length: 500)
-
-        public CraigArticle()
-        {
-            DatePosted = System.DateTime.Now;
-        }
-    }
-
-    // Craig_Coupons
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigCoupon
-    {
-        public long CouponId { get; set; } // CouponID (Primary key)
-        public string Email { get; set; } // Email (length: 150)
-        public long UserId { get; set; } // UserId
-        public string IpAddress { get; set; } // IPAddress (length: 30)
-        public string Fullname { get; set; } // Fullname (length: 150)
-        public string Title { get; set; } // Title (length: 150)
-        public string Discription { get; set; } // Discription (length: 250)
-        public string Detail { get; set; } // Detail
-        public string Discount { get; set; } // Discount (length: 50)
-        public string Money { get; set; } // Money (length: 20)
-        public string Currency { get; set; } // Currency (length: 20)
-        public string CouponCode { get; set; } // CouponCode (length: 80)
-        public System.DateTime? AppliedFrom { get; set; } // AppliedFrom
-        public System.DateTime? Expires { get; set; } // Expires
-        public string Logo { get; set; } // Logo
-        public string Image { get; set; } // Image
-        public System.DateTime DateCreated { get; set; } // DateCreated
-        public bool Active { get; set; } // Active
-    }
-
-    // Craig_Discussion
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigDiscussion
-    {
-        public long DiscId { get; set; } // DiscID (Primary key)
-        public string Topic { get; set; } // Topic (length: 50)
-        public string Detail { get; set; } // Detail (length: 3500)
-        public string EmailId { get; set; } // EmailID (length: 150)
-        public string UserId { get; set; } // UserID (length: 50)
-        public string IpAddress { get; set; } // IPAddress (length: 30)
-        public System.DateTime DateDiscussion { get; set; } // DateDiscussion
-        public string Fullname { get; set; } // Fullname (length: 150)
-        public bool? Active { get; set; } // Active
-    }
-
-    // Craig_Event
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigEvent
-    {
-        public long EventId { get; set; } // EventID (Primary key)
-        public string Username { get; set; } // Username (length: 50)
-        public string FullName { get; set; } // FullName (length: 100)
-        public string Email { get; set; } // Email (length: 100)
-        public string Title { get; set; } // Title (length: 100)
-        public string Description { get; set; } // Description (length: 200)
-        public string Detail { get; set; } // Detail
-        public string Images { get; set; } // Images
-        public string IpAddress { get; set; } // IPAddress (length: 25)
-        public string Guid { get; set; } // Guid (length: 84)
-        public System.DateTime DatePosted { get; set; } // DatePosted
-        public bool? Active { get; set; } // Active
-        public string Location { get; set; } // Location (length: 500)
-        public decimal? Cost { get; set; } // Cost
-        public string FriendsandFamily { get; set; } // FriendsandFamily (length: 15)
-        public string EventMonth { get; set; } // EventMonth (length: 30)
-        public string EventDay { get; set; } // EventDay (length: 20)
-        public string EventYear { get; set; } // EventYear (length: 4)
-        public System.TimeSpan? EventTime { get; set; } // EventTime
+        public long Id { get; set; } // ID (Primary key)
+        public string Username { get; set; } // Username (Primary key) (length: 50)
+        public string Email { get; set; } // Email (Primary key) (length: 100)
+        public string Comment { get; set; } // Comment (Primary key) (length: 550)
+        public string Website { get; set; } // website (length: 250)
+        public System.DateTime? DateAdded { get; set; } // DateAdded
+        public string Ui { get; set; } // UI (Primary key) (length: 5)
     }
 
     // Craig_Inquiry
@@ -2631,18 +1087,17 @@ namespace NepFlex.DataAccess.Context
         public string Ui { get; set; } // UI (length: 5)
     }
 
-    // Error_Log
+    // DBEncryptKey
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ErrorLog
+    public class DbEncryptKey
     {
-        public long Id { get; set; } // ID (Primary key)
-        public string DateReceived { get; set; } // DateReceived (length: 10)
-        public string TimeReceived { get; set; } // TimeReceived (length: 10)
-        public string IpAddress { get; set; } // IPAddress (length: 25)
-        public string City { get; set; } // City (length: 30)
-        public string Country { get; set; } // Country (length: 30)
-        public string ErrorDetail { get; set; } // Error_Detail
-        public string Others { get; set; } // others (length: 300)
+        public string KeyId { get; set; } // KeyId (Primary key) (length: 100)
+        public string DbEncryptKey_ { get; set; } // DBEncryptKey
+        public bool IsKeyActive { get; set; } // IsKeyActive
+        public System.DateTime KeyCreateDate { get; set; } // KeyCreateDate
+        public System.DateTime KeyExpireDate { get; set; } // KeyExpireDate
+        public string RemarksOnKey { get; set; } // RemarksOnKey (length: 50)
+        public string KeyCreatedBy { get; set; } // KeyCreatedBy (length: 25)
     }
 
     // Item_Description
@@ -2681,106 +1136,95 @@ namespace NepFlex.DataAccess.Context
         // Foreign keys
 
         /// <summary>
-        /// Parent User pointed by [Master_Company].([UserId]) (FK_Master_Company_Users)
+        /// Parent MasterUser pointed by [Master_Company].([UserId]) (FK_Master_Company_Users)
         /// </summary>
-        public virtual User User { get; set; } // FK_Master_Company_Users
+        public virtual MasterUser MasterUser { get; set; } // FK_Master_Company_Users
     }
 
-    // Master_DiscussionForumCategory
+    // Master_SaltyPassword
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterDiscussionForumCategory
+    public class MasterSaltyPassword
     {
-        public long DiscussionForumId { get; set; } // DiscussionForum_ID (Primary key)
-        public string DiscussionForum { get; set; } // DiscussionForum (length: 50)
+        public long Pswdid { get; set; } // PSWDID (Primary key)
+        public string Usrid { get; set; } // USRID (length: 150)
+        public string Usrguid { get; set; } // USRGUID (length: 100)
+        public string Pswdhash { get; set; } // PSWDHASH
+        public string Pswdsalt { get; set; } // PSWDSALT
+        public string Pswdguid { get; set; } // PSWDGUID (length: 100)
+        public bool? Pswdcompromised { get; set; } // PSWDCOMPROMISED
+        public System.DateTime? Pswdchangedon { get; set; } // PSWDCHANGEDON
+        public bool Pswdisactive { get; set; } // PSWDISACTIVE
+        public int? Pswdwrongattempt { get; set; } // PSWDWRONGATTEMPT
+        public System.DateTime? Pswdexpireson { get; set; } // PSWDEXPIRESON
+        public System.DateTime Createdondate { get; set; } // CREATEDONDATE
+        public string Passwordtype { get; set; } // PASSWORDTYPE (length: 2)
+        public string Usedalgorithm { get; set; } // USEDALGORITHM (length: 10)
+        public string Pswdsaltkey { get; set; } // PSWDSALTKEY (length: 30)
+
+        // Foreign keys
+
+        /// <summary>
+        /// Parent MasterUser pointed by [Master_SaltyPassword].([Usrid]) (FK_Master_SaltyPassword_Users)
+        /// </summary>
+        public virtual MasterUser MasterUser { get; set; } // FK_Master_SaltyPassword_Users
     }
 
-    // Master_EducationMaterialCategory
+    // Master_Users
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterEducationMaterialCategory
+    public class MasterUser
     {
-        public long EduId { get; set; } // Edu_ID (Primary key)
-        public string EducationMaterial { get; set; } // EducationMaterial (length: 50)
+        public string UserId { get; set; } // UserID (Primary key) (length: 150)
+        public string UserName { get; set; } // UserName (length: 50)
+        public string FirstName { get; set; } // FirstName (length: 100)
+        public string MiddleName { get; set; } // MiddleName (length: 50)
+        public string LastName { get; set; } // LastName (length: 100)
+        public string Email { get; set; } // Email (length: 150)
+        public System.DateTime CreatedDate { get; set; } // Created Date
+        public System.DateTime? UpdatedDate { get; set; } // Updated Date
+        public System.DateTime? LastLoginDate { get; set; } // LastLoginDate
+        public string Guid { get; set; } // GUID (length: 100)
+        public string Emailguid { get; set; } // EMAILGUID (length: 100)
+        public string ProfilePicture { get; set; } // ProfilePicture
+        public int? IsUserSeller { get; set; } // IsUserSeller
+        public string PhNumber { get; set; } // PHNumber (length: 14)
+        public bool? ShowPhNumber { get; set; } // ShowPHNumber
+        public string Country { get; set; } // Country (length: 50)
+        public bool IsActiveAccount { get; set; } // IsActiveAccount
+        public string NonActiveReason { get; set; } // NonActiveReason (length: 25)
+        public int? FkRoleId { get; set; } // FK_RoleId
+        public string Ui { get; set; } // UI (length: 5)
+
+        // Reverse navigation
+
+        /// <summary>
+        /// Child MasterCompanies where [Master_Company].[UserID] point to this entity (FK_Master_Company_Users)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<MasterCompany> MasterCompanies { get; set; } // Master_Company.FK_Master_Company_Users
+        /// <summary>
+        /// Child MasterSaltyPasswords where [Master_SaltyPassword].[USRID] point to this entity (FK_Master_SaltyPassword_Users)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<MasterSaltyPassword> MasterSaltyPasswords { get; set; } // Master_SaltyPassword.FK_Master_SaltyPassword_Users
+
+        public MasterUser()
+        {
+            CreatedDate = System.DateTime.Now;
+            MasterCompanies = new System.Collections.Generic.List<MasterCompany>();
+            MasterSaltyPasswords = new System.Collections.Generic.List<MasterSaltyPassword>();
+        }
     }
 
-    // Master_JOBSCategory
+    // Master_Verbiage
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterJobsCategory
+    public class MasterVerbiage
     {
-        public long JobsId { get; set; } // JOBS_ID (Primary key)
-        public string Jobs { get; set; } // JOBS (length: 50)
-    }
-
-    // Master_OurCommunityCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterOurCommunityCategory
-    {
-        public long OurCommunityId { get; set; } // OurCommunity_ID (Primary key)
-        public string OurCommunity { get; set; } // OurCommunity (length: 50)
-    }
-
-    // Master_PersonalCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterPersonalCategory
-    {
-        public long PersonalId { get; set; } // Personal_ID (Primary key)
-        public string Personal { get; set; } // Personal (length: 50)
-    }
-
-    // Master_RealEstateCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterRealEstateCategory
-    {
-        public long RealEStateId { get; set; } // RealEState_ID (Primary key)
-        public string RealEstate { get; set; } // RealEstate (length: 50)
-    }
-
-    // Master_RentalCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterRentalCategory
-    {
-        public long RentalId { get; set; } // Rental_ID (Primary key)
-        public string Rentals { get; set; } // Rentals (length: 50)
-    }
-
-    // Master_SaleCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterSaleCategory
-    {
-        public long MasterCatId { get; set; } // MasterCat_Id (Primary key)
-        public string Sale { get; set; } // sale (length: 50)
-    }
-
-    // Master_ServicesCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterServicesCategory
-    {
-        public long ServiceId { get; set; } // Service_ID (Primary key)
-        public string Services { get; set; } // Services (length: 50)
-    }
-
-    // MasterTable
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterTable
-    {
-        public long Id { get; set; } // ID (Primary key)
-        public string Sale { get; set; } // Sale (length: 50)
-        public string EducationMaterial { get; set; } // EducationMaterial (length: 50)
-        public string Services { get; set; } // Services (length: 50)
-        public string Rentals { get; set; } // Rentals (length: 50)
-        public string RealEstate { get; set; } // Real Estate (length: 50)
-        public string TravelsAndTours { get; set; } // TravelsAndTours (length: 50)
-        public string OurCommunity { get; set; } // OurCommunity (length: 50)
-        public string Personal { get; set; } // Personal (length: 50)
-        public string Jobs { get; set; } // Jobs (length: 50)
-        public string DiscussionForum { get; set; } // DiscussionForum (length: 50)
-    }
-
-    // Master_TravelsandToursCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterTravelsandToursCategory
-    {
-        public long TravelsandToursId { get; set; } // TravelsandTours_ID (Primary key)
-        public string TravelsandTours { get; set; } // TravelsandTours (length: 50)
+        public long VerId { get; set; } // VER_ID (Primary key)
+        public string VerCode { get; set; } // VER_Code (length: 20)
+        public string VerTitle { get; set; } // VER_Title (length: 150)
+        public string VerDetail { get; set; } // VER_Detail (length: 500)
+        public string VerStatus { get; set; } // VER_Status (length: 10)
+        public string VerAbbr { get; set; } // VER_Abbr (length: 150)
+        public string VerUi { get; set; } // VER_UI (length: 25)
+        public bool? VerIsActive { get; set; } // VER_IsActive
     }
 
     // PostMyData
@@ -2812,286 +1256,31 @@ namespace NepFlex.DataAccess.Context
         public string ShowEmailId { get; set; } // showEmailID (length: 5)
     }
 
-    // SelectTopCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class SelectTopCategory
-    {
-        public long Id { get; set; } // ID (Primary key)
-        public string TopCategoryMenu { get; set; } // TopCategoryMenu (length: 20)
-    }
-
-    // TrackEmail
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class TrackEmail
-    {
-        public long Id { get; set; } // ID (Primary key)
-        public string Sender { get; set; } // Sender (length: 100)
-        public string Receiver { get; set; } // Receiver (length: 100)
-        public System.DateTime? DateSend { get; set; } // DateSend
-        public string Detail { get; set; } // Detail
-        public bool? Status { get; set; } // Status
-        public string Attachments { get; set; } // Attachments
-        public string IpAddress { get; set; } // IpAddress (length: 25)
-    }
-
-    // Users
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class User
-    {
-        public string UserId { get; set; } // UserID (Primary key) (length: 150)
-        public string UserName { get; set; } // UserName (length: 50)
-        public string FirstName { get; set; } // FirstName (length: 20)
-        public string MiddleName { get; set; } // MiddleName (length: 15)
-        public string LastName { get; set; } // LastName (length: 30)
-        public int? FkRoleId { get; set; } // FK_RoleId
-        public string Email { get; set; } // Email (length: 100)
-        public System.DateTime CreatedDate { get; set; } // Created Date
-        public System.DateTime? UpdatedDate { get; set; } // Updated Date
-        public System.DateTime? LastLoginDate { get; set; } // LastLoginDate
-        public string Ui { get; set; } // UI (length: 5)
-        public string Guid { get; set; } // GUID (length: 100)
-        public string Emailguid { get; set; } // EMAILGUID (length: 100)
-        public string ProfilePicture { get; set; } // ProfilePicture
-        public string Images { get; set; } // Images
-        public string IsUserSeller { get; set; } // IsUserSeller (length: 12)
-        public string PhNumber { get; set; } // PHNumber (length: 14)
-        public bool? ShowPhNumber { get; set; } // ShowPHNumber
-        public string UserPhnCode { get; set; } // UserPHNCode (length: 10)
-
-        // Reverse navigation
-
-        /// <summary>
-        /// Child MasterCompanies where [Master_Company].[UserID] point to this entity (FK_Master_Company_Users)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<MasterCompany> MasterCompanies { get; set; } // Master_Company.FK_Master_Company_Users
-
-        public User()
-        {
-            CreatedDate = System.DateTime.Now;
-            MasterCompanies = new System.Collections.Generic.List<MasterCompany>();
-        }
-    }
-
-    // User_NCERROR_Windows
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class UserNcerrorWindow
-    {
-        public int Id { get; set; } // ID (Primary key)
-        public string UserName { get; set; } // UserName (Primary key) (length: 25)
-        public string Password { get; set; } // Password (Primary key) (length: 50)
-        public string Email { get; set; } // Email (Primary key) (length: 50)
-        public string Ui { get; set; } // UI (length: 50)
-        public string Comment { get; set; } // Comment (length: 100)
-        public System.DateTime DateAdded { get; set; } // DateAdded (Primary key)
-        public System.DateTime? UpdateDdate { get; set; } // UpdateDdate
-        public string Image { get; set; } // Image
-    }
-
-    // ViewsCount
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ViewsCount
-    {
-        public int Id { get; set; } // ID (Primary key)
-        public long? PostId { get; set; } // PostID
-        public int TotalViews { get; set; } // TotalViews (Primary key)
-        public int? Likes { get; set; } // Likes
-        public int? Dislikes { get; set; } // Dislikes
-        public int? Loved { get; set; } // Loved
-        public string IpViewed { get; set; } // IPViewed (length: 25)
-    }
-
-    // ViewsCount_Articles
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ViewsCountArticle
-    {
-        public int Id { get; set; } // ID (Primary key)
-        public long? NewsId { get; set; } // NewsID
-        public int TotalViews { get; set; } // TotalViews (Primary key)
-        public int? Likes { get; set; } // Likes
-        public int? Dislikes { get; set; } // Dislikes
-        public int? Loved { get; set; } // Loved
-        public string IpViewed { get; set; } // IPViewed (length: 25)
-    }
-
-    // ViewsCount_Coupon
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ViewsCountCoupon
-    {
-        public int Id { get; set; } // ID (Primary key)
-        public long? CouponId { get; set; } // CouponID
-        public int? TotalPrint { get; set; } // TotalPrint
-        public int TotalViews { get; set; } // TotalViews (Primary key)
-        public int? Likes { get; set; } // Likes
-        public int? Dislikes { get; set; } // Dislikes
-        public int? Loved { get; set; } // Loved
-        public string IpViewed { get; set; } // IPViewed (length: 25)
-    }
-
-    // ViewsCount_Event
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ViewsCountEvent
-    {
-        public int Id { get; set; } // ID (Primary key)
-        public long? EventId { get; set; } // EventID
-        public int TotalViews { get; set; } // TotalViews (Primary key)
-        public int? Likes { get; set; } // Likes
-        public int? Dislikes { get; set; } // Dislikes
-        public int? Loved { get; set; } // Loved
-        public string IpViewed { get; set; } // IPViewed (length: 25)
-    }
-
     #endregion
 
     #region POCO Configuration
 
-    // BrowserViewed
+    // ContactUs
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class BrowserViewedConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<BrowserViewed>
+    public class ContactUConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ContactU>
     {
-        public BrowserViewedConfiguration()
+        public ContactUConfiguration()
             : this("dbo")
         {
         }
 
-        public BrowserViewedConfiguration(string schema)
+        public ContactUConfiguration(string schema)
         {
-            ToTable("BrowserViewed", schema);
-            HasKey(x => x.ViewId);
+            ToTable("ContactUs", schema);
+            HasKey(x => new { x.Id, x.Username, x.Email, x.Comment, x.Ui });
 
-            Property(x => x.ViewId).HasColumnName(@"ViewID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.TotalCountViews).HasColumnName(@"TotalCountViews").HasColumnType("bigint").IsOptional();
-            Property(x => x.BrowserViewed_).HasColumnName(@"BrowserViewed").HasColumnType("nvarchar").IsOptional().HasMaxLength(35);
-            Property(x => x.IpAddress).HasColumnName(@"IPAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-            Property(x => x.City).HasColumnName(@"City").HasColumnType("nvarchar").IsOptional().HasMaxLength(75);
-            Property(x => x.Country).HasColumnName(@"Country").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // Craig_Articles
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigArticleConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CraigArticle>
-    {
-        public CraigArticleConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public CraigArticleConfiguration(string schema)
-        {
-            ToTable("Craig_Articles", schema);
-            HasKey(x => x.NewsId);
-
-            Property(x => x.NewsId).HasColumnName(@"NewsID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Username).HasColumnName(@"Username").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
-            Property(x => x.FullName).HasColumnName(@"FullName").HasColumnType("nvarchar").IsRequired().HasMaxLength(120);
-            Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsRequired().HasMaxLength(100);
-            Property(x => x.Title).HasColumnName(@"Title").HasColumnType("nvarchar").IsRequired().HasMaxLength(150);
-            Property(x => x.Description).HasColumnName(@"Description").HasColumnType("nvarchar").IsRequired().HasMaxLength(250);
-            Property(x => x.Detail).HasColumnName(@"Detail").HasColumnType("nvarchar(max)").IsRequired();
-            Property(x => x.Images).HasColumnName(@"Images").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.IpAddress).HasColumnName(@"IPAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-            Property(x => x.Guid).HasColumnName(@"Guid").HasColumnType("nvarchar").IsOptional().HasMaxLength(84);
-            Property(x => x.DatePosted).HasColumnName(@"DatePosted").HasColumnType("datetime").IsRequired();
-            Property(x => x.Active).HasColumnName(@"Active").HasColumnType("bit").IsOptional();
-            Property(x => x.Category).HasColumnName(@"Category").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50);
-            Property(x => x.Source).HasColumnName(@"Source").HasColumnType("nvarchar").IsOptional().HasMaxLength(500);
-        }
-    }
-
-    // Craig_Coupons
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigCouponConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CraigCoupon>
-    {
-        public CraigCouponConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public CraigCouponConfiguration(string schema)
-        {
-            ToTable("Craig_Coupons", schema);
-            HasKey(x => x.CouponId);
-
-            Property(x => x.CouponId).HasColumnName(@"CouponID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsRequired().HasMaxLength(150);
-            Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("bigint").IsRequired();
-            Property(x => x.IpAddress).HasColumnName(@"IPAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(30);
-            Property(x => x.Fullname).HasColumnName(@"Fullname").HasColumnType("nvarchar").IsOptional().HasMaxLength(150);
-            Property(x => x.Title).HasColumnName(@"Title").HasColumnType("nvarchar").IsRequired().HasMaxLength(150);
-            Property(x => x.Discription).HasColumnName(@"Discription").HasColumnType("nvarchar").IsOptional().HasMaxLength(250);
-            Property(x => x.Detail).HasColumnName(@"Detail").HasColumnType("nvarchar(max)").IsRequired();
-            Property(x => x.Discount).HasColumnName(@"Discount").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.Money).HasColumnName(@"Money").HasColumnType("nvarchar").IsOptional().HasMaxLength(20);
-            Property(x => x.Currency).HasColumnName(@"Currency").HasColumnType("nvarchar").IsOptional().HasMaxLength(20);
-            Property(x => x.CouponCode).HasColumnName(@"CouponCode").HasColumnType("nvarchar").IsRequired().HasMaxLength(80);
-            Property(x => x.AppliedFrom).HasColumnName(@"AppliedFrom").HasColumnType("datetime").IsOptional();
-            Property(x => x.Expires).HasColumnName(@"Expires").HasColumnType("datetime").IsOptional();
-            Property(x => x.Logo).HasColumnName(@"Logo").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.Image).HasColumnName(@"Image").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.DateCreated).HasColumnName(@"DateCreated").HasColumnType("datetime").IsRequired();
-            Property(x => x.Active).HasColumnName(@"Active").HasColumnType("bit").IsRequired();
-        }
-    }
-
-    // Craig_Discussion
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigDiscussionConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CraigDiscussion>
-    {
-        public CraigDiscussionConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public CraigDiscussionConfiguration(string schema)
-        {
-            ToTable("Craig_Discussion", schema);
-            HasKey(x => x.DiscId);
-
-            Property(x => x.DiscId).HasColumnName(@"DiscID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Topic).HasColumnName(@"Topic").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
-            Property(x => x.Detail).HasColumnName(@"Detail").HasColumnType("nvarchar").IsRequired().HasMaxLength(3500);
-            Property(x => x.EmailId).HasColumnName(@"EmailID").HasColumnType("nvarchar").IsRequired().HasMaxLength(150);
-            Property(x => x.UserId).HasColumnName(@"UserID").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.IpAddress).HasColumnName(@"IPAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(30);
-            Property(x => x.DateDiscussion).HasColumnName(@"DateDiscussion").HasColumnType("datetime").IsRequired();
-            Property(x => x.Fullname).HasColumnName(@"Fullname").HasColumnType("nvarchar").IsOptional().HasMaxLength(150);
-            Property(x => x.Active).HasColumnName(@"Active").HasColumnType("bit").IsOptional();
-        }
-    }
-
-    // Craig_Event
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigEventConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CraigEvent>
-    {
-        public CraigEventConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public CraigEventConfiguration(string schema)
-        {
-            ToTable("Craig_Event", schema);
-            HasKey(x => x.EventId);
-
-            Property(x => x.EventId).HasColumnName(@"EventID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Username).HasColumnName(@"Username").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.FullName).HasColumnName(@"FullName").HasColumnType("nvarchar").IsRequired().HasMaxLength(100);
-            Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsRequired().HasMaxLength(100);
-            Property(x => x.Title).HasColumnName(@"Title").HasColumnType("nvarchar").IsRequired().HasMaxLength(100);
-            Property(x => x.Description).HasColumnName(@"Description").HasColumnType("nvarchar").IsOptional().HasMaxLength(200);
-            Property(x => x.Detail).HasColumnName(@"Detail").HasColumnType("nvarchar(max)").IsRequired();
-            Property(x => x.Images).HasColumnName(@"Images").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.IpAddress).HasColumnName(@"IPAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-            Property(x => x.Guid).HasColumnName(@"Guid").HasColumnType("nvarchar").IsOptional().HasMaxLength(84);
-            Property(x => x.DatePosted).HasColumnName(@"DatePosted").HasColumnType("datetime").IsRequired();
-            Property(x => x.Active).HasColumnName(@"Active").HasColumnType("bit").IsOptional();
-            Property(x => x.Location).HasColumnName(@"Location").HasColumnType("nvarchar").IsOptional().HasMaxLength(500);
-            Property(x => x.Cost).HasColumnName(@"Cost").HasColumnType("money").IsOptional().HasPrecision(19,4);
-            Property(x => x.FriendsandFamily).HasColumnName(@"FriendsandFamily").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(15);
-            Property(x => x.EventMonth).HasColumnName(@"EventMonth").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(30);
-            Property(x => x.EventDay).HasColumnName(@"EventDay").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(20);
-            Property(x => x.EventYear).HasColumnName(@"EventYear").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(4);
-            Property(x => x.EventTime).HasColumnName(@"EventTime").HasColumnType("time").IsOptional();
+            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.Username).HasColumnName(@"Username").HasColumnType("nvarchar").IsRequired().HasMaxLength(50).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsRequired().HasMaxLength(100).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Comment).HasColumnName(@"Comment").HasColumnType("nvarchar").IsRequired().HasMaxLength(550).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Website).HasColumnName(@"website").HasColumnType("nvarchar").IsOptional().HasMaxLength(250);
+            Property(x => x.DateAdded).HasColumnName(@"DateAdded").HasColumnType("date").IsOptional();
+            Property(x => x.Ui).HasColumnName(@"UI").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(5).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
         }
     }
 
@@ -3120,28 +1309,27 @@ namespace NepFlex.DataAccess.Context
         }
     }
 
-    // Error_Log
+    // DBEncryptKey
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ErrorLogConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ErrorLog>
+    public class DbEncryptKeyConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<DbEncryptKey>
     {
-        public ErrorLogConfiguration()
+        public DbEncryptKeyConfiguration()
             : this("dbo")
         {
         }
 
-        public ErrorLogConfiguration(string schema)
+        public DbEncryptKeyConfiguration(string schema)
         {
-            ToTable("Error_Log", schema);
-            HasKey(x => x.Id);
+            ToTable("DBEncryptKey", schema);
+            HasKey(x => x.KeyId);
 
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.DateReceived).HasColumnName(@"DateReceived").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
-            Property(x => x.TimeReceived).HasColumnName(@"TimeReceived").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
-            Property(x => x.IpAddress).HasColumnName(@"IPAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-            Property(x => x.City).HasColumnName(@"City").HasColumnType("nvarchar").IsOptional().HasMaxLength(30);
-            Property(x => x.Country).HasColumnName(@"Country").HasColumnType("nvarchar").IsOptional().HasMaxLength(30);
-            Property(x => x.ErrorDetail).HasColumnName(@"Error_Detail").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.Others).HasColumnName(@"others").HasColumnType("nvarchar").IsOptional().HasMaxLength(300);
+            Property(x => x.KeyId).HasColumnName(@"KeyId").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.DbEncryptKey_).HasColumnName(@"DBEncryptKey").HasColumnType("nvarchar(max)").IsRequired();
+            Property(x => x.IsKeyActive).HasColumnName(@"IsKeyActive").HasColumnType("bit").IsRequired();
+            Property(x => x.KeyCreateDate).HasColumnName(@"KeyCreateDate").HasColumnType("datetime").IsRequired();
+            Property(x => x.KeyExpireDate).HasColumnName(@"KeyExpireDate").HasColumnType("datetime").IsRequired();
+            Property(x => x.RemarksOnKey).HasColumnName(@"RemarksOnKey").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.KeyCreatedBy).HasColumnName(@"KeyCreatedBy").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(25);
         }
     }
 
@@ -3200,225 +1388,104 @@ namespace NepFlex.DataAccess.Context
             Property(x => x.UpdatedDate).HasColumnName(@"Updated Date").HasColumnType("datetime").IsOptional();
 
             // Foreign keys
-            HasRequired(a => a.User).WithMany(b => b.MasterCompanies).HasForeignKey(c => c.UserId).WillCascadeOnDelete(false); // FK_Master_Company_Users
+            HasRequired(a => a.MasterUser).WithMany(b => b.MasterCompanies).HasForeignKey(c => c.UserId).WillCascadeOnDelete(false); // FK_Master_Company_Users
         }
     }
 
-    // Master_DiscussionForumCategory
+    // Master_SaltyPassword
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterDiscussionForumCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterDiscussionForumCategory>
+    public class MasterSaltyPasswordConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterSaltyPassword>
     {
-        public MasterDiscussionForumCategoryConfiguration()
+        public MasterSaltyPasswordConfiguration()
             : this("dbo")
         {
         }
 
-        public MasterDiscussionForumCategoryConfiguration(string schema)
+        public MasterSaltyPasswordConfiguration(string schema)
         {
-            ToTable("Master_DiscussionForumCategory", schema);
-            HasKey(x => x.DiscussionForumId);
+            ToTable("Master_SaltyPassword", schema);
+            HasKey(x => x.Pswdid);
 
-            Property(x => x.DiscussionForumId).HasColumnName(@"DiscussionForum_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.DiscussionForum).HasColumnName(@"DiscussionForum").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
+            Property(x => x.Pswdid).HasColumnName(@"PSWDID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.Usrid).HasColumnName(@"USRID").HasColumnType("nvarchar").IsRequired().HasMaxLength(150);
+            Property(x => x.Usrguid).HasColumnName(@"USRGUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
+            Property(x => x.Pswdhash).HasColumnName(@"PSWDHASH").HasColumnType("nvarchar(max)").IsRequired();
+            Property(x => x.Pswdsalt).HasColumnName(@"PSWDSALT").HasColumnType("nvarchar(max)").IsOptional();
+            Property(x => x.Pswdguid).HasColumnName(@"PSWDGUID").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(100);
+            Property(x => x.Pswdcompromised).HasColumnName(@"PSWDCOMPROMISED").HasColumnType("bit").IsOptional();
+            Property(x => x.Pswdchangedon).HasColumnName(@"PSWDCHANGEDON").HasColumnType("smalldatetime").IsOptional();
+            Property(x => x.Pswdisactive).HasColumnName(@"PSWDISACTIVE").HasColumnType("bit").IsRequired();
+            Property(x => x.Pswdwrongattempt).HasColumnName(@"PSWDWRONGATTEMPT").HasColumnType("int").IsOptional();
+            Property(x => x.Pswdexpireson).HasColumnName(@"PSWDEXPIRESON").HasColumnType("datetime").IsOptional();
+            Property(x => x.Createdondate).HasColumnName(@"CREATEDONDATE").HasColumnType("datetime").IsRequired();
+            Property(x => x.Passwordtype).HasColumnName(@"PASSWORDTYPE").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(2);
+            Property(x => x.Usedalgorithm).HasColumnName(@"USEDALGORITHM").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10);
+            Property(x => x.Pswdsaltkey).HasColumnName(@"PSWDSALTKEY").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(30);
+
+            // Foreign keys
+            HasRequired(a => a.MasterUser).WithMany(b => b.MasterSaltyPasswords).HasForeignKey(c => c.Usrid).WillCascadeOnDelete(false); // FK_Master_SaltyPassword_Users
         }
     }
 
-    // Master_EducationMaterialCategory
+    // Master_Users
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterEducationMaterialCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterEducationMaterialCategory>
+    public class MasterUserConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterUser>
     {
-        public MasterEducationMaterialCategoryConfiguration()
+        public MasterUserConfiguration()
             : this("dbo")
         {
         }
 
-        public MasterEducationMaterialCategoryConfiguration(string schema)
+        public MasterUserConfiguration(string schema)
         {
-            ToTable("Master_EducationMaterialCategory", schema);
-            HasKey(x => x.EduId);
+            ToTable("Master_Users", schema);
+            HasKey(x => x.UserId);
 
-            Property(x => x.EduId).HasColumnName(@"Edu_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.EducationMaterial).HasColumnName(@"EducationMaterial").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
+            Property(x => x.UserId).HasColumnName(@"UserID").HasColumnType("nvarchar").IsRequired().HasMaxLength(150).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.UserName).HasColumnName(@"UserName").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
+            Property(x => x.FirstName).HasColumnName(@"FirstName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(100);
+            Property(x => x.MiddleName).HasColumnName(@"MiddleName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.LastName).HasColumnName(@"LastName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(100);
+            Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsRequired().HasMaxLength(150);
+            Property(x => x.CreatedDate).HasColumnName(@"Created Date").HasColumnType("datetime").IsRequired();
+            Property(x => x.UpdatedDate).HasColumnName(@"Updated Date").HasColumnType("datetime").IsOptional();
+            Property(x => x.LastLoginDate).HasColumnName(@"LastLoginDate").HasColumnType("datetime").IsOptional();
+            Property(x => x.Guid).HasColumnName(@"GUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
+            Property(x => x.Emailguid).HasColumnName(@"EMAILGUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
+            Property(x => x.ProfilePicture).HasColumnName(@"ProfilePicture").HasColumnType("nvarchar(max)").IsOptional();
+            Property(x => x.IsUserSeller).HasColumnName(@"IsUserSeller").HasColumnType("int").IsOptional();
+            Property(x => x.PhNumber).HasColumnName(@"PHNumber").HasColumnType("nvarchar").IsOptional().HasMaxLength(14);
+            Property(x => x.ShowPhNumber).HasColumnName(@"ShowPHNumber").HasColumnType("bit").IsOptional();
+            Property(x => x.Country).HasColumnName(@"Country").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
+            Property(x => x.IsActiveAccount).HasColumnName(@"IsActiveAccount").HasColumnType("bit").IsRequired();
+            Property(x => x.NonActiveReason).HasColumnName(@"NonActiveReason").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
+            Property(x => x.FkRoleId).HasColumnName(@"FK_RoleId").HasColumnType("int").IsOptional();
+            Property(x => x.Ui).HasColumnName(@"UI").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(5);
         }
     }
 
-    // Master_JOBSCategory
+    // Master_Verbiage
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterJobsCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterJobsCategory>
+    public class MasterVerbiageConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterVerbiage>
     {
-        public MasterJobsCategoryConfiguration()
+        public MasterVerbiageConfiguration()
             : this("dbo")
         {
         }
 
-        public MasterJobsCategoryConfiguration(string schema)
+        public MasterVerbiageConfiguration(string schema)
         {
-            ToTable("Master_JOBSCategory", schema);
-            HasKey(x => x.JobsId);
+            ToTable("Master_Verbiage", schema);
+            HasKey(x => x.VerId);
 
-            Property(x => x.JobsId).HasColumnName(@"JOBS_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Jobs).HasColumnName(@"JOBS").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // Master_OurCommunityCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterOurCommunityCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterOurCommunityCategory>
-    {
-        public MasterOurCommunityCategoryConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MasterOurCommunityCategoryConfiguration(string schema)
-        {
-            ToTable("Master_OurCommunityCategory", schema);
-            HasKey(x => x.OurCommunityId);
-
-            Property(x => x.OurCommunityId).HasColumnName(@"OurCommunity_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.OurCommunity).HasColumnName(@"OurCommunity").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // Master_PersonalCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterPersonalCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterPersonalCategory>
-    {
-        public MasterPersonalCategoryConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MasterPersonalCategoryConfiguration(string schema)
-        {
-            ToTable("Master_PersonalCategory", schema);
-            HasKey(x => x.PersonalId);
-
-            Property(x => x.PersonalId).HasColumnName(@"Personal_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Personal).HasColumnName(@"Personal").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // Master_RealEstateCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterRealEstateCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterRealEstateCategory>
-    {
-        public MasterRealEstateCategoryConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MasterRealEstateCategoryConfiguration(string schema)
-        {
-            ToTable("Master_RealEstateCategory", schema);
-            HasKey(x => x.RealEStateId);
-
-            Property(x => x.RealEStateId).HasColumnName(@"RealEState_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.RealEstate).HasColumnName(@"RealEstate").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // Master_RentalCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterRentalCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterRentalCategory>
-    {
-        public MasterRentalCategoryConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MasterRentalCategoryConfiguration(string schema)
-        {
-            ToTable("Master_RentalCategory", schema);
-            HasKey(x => x.RentalId);
-
-            Property(x => x.RentalId).HasColumnName(@"Rental_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Rentals).HasColumnName(@"Rentals").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // Master_SaleCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterSaleCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterSaleCategory>
-    {
-        public MasterSaleCategoryConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MasterSaleCategoryConfiguration(string schema)
-        {
-            ToTable("Master_SaleCategory", schema);
-            HasKey(x => x.MasterCatId);
-
-            Property(x => x.MasterCatId).HasColumnName(@"MasterCat_Id").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Sale).HasColumnName(@"sale").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // Master_ServicesCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterServicesCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterServicesCategory>
-    {
-        public MasterServicesCategoryConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MasterServicesCategoryConfiguration(string schema)
-        {
-            ToTable("Master_ServicesCategory", schema);
-            HasKey(x => x.ServiceId);
-
-            Property(x => x.ServiceId).HasColumnName(@"Service_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Services).HasColumnName(@"Services").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // MasterTable
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterTableConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterTable>
-    {
-        public MasterTableConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MasterTableConfiguration(string schema)
-        {
-            ToTable("MasterTable", schema);
-            HasKey(x => x.Id);
-
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Sale).HasColumnName(@"Sale").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.EducationMaterial).HasColumnName(@"EducationMaterial").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.Services).HasColumnName(@"Services").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.Rentals).HasColumnName(@"Rentals").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.RealEstate).HasColumnName(@"Real Estate").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.TravelsAndTours).HasColumnName(@"TravelsAndTours").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.OurCommunity).HasColumnName(@"OurCommunity").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.Personal).HasColumnName(@"Personal").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.Jobs).HasColumnName(@"Jobs").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-            Property(x => x.DiscussionForum).HasColumnName(@"DiscussionForum").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
-        }
-    }
-
-    // Master_TravelsandToursCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class MasterTravelsandToursCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MasterTravelsandToursCategory>
-    {
-        public MasterTravelsandToursCategoryConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public MasterTravelsandToursCategoryConfiguration(string schema)
-        {
-            ToTable("Master_TravelsandToursCategory", schema);
-            HasKey(x => x.TravelsandToursId);
-
-            Property(x => x.TravelsandToursId).HasColumnName(@"TravelsandTours_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.TravelsandTours).HasColumnName(@"TravelsandTours").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
+            Property(x => x.VerId).HasColumnName(@"VER_ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.VerCode).HasColumnName(@"VER_Code").HasColumnType("nvarchar").IsRequired().HasMaxLength(20);
+            Property(x => x.VerTitle).HasColumnName(@"VER_Title").HasColumnType("nvarchar").IsRequired().HasMaxLength(150);
+            Property(x => x.VerDetail).HasColumnName(@"VER_Detail").HasColumnType("nvarchar").IsRequired().HasMaxLength(500);
+            Property(x => x.VerStatus).HasColumnName(@"VER_Status").HasColumnType("nvarchar").IsRequired().HasMaxLength(10);
+            Property(x => x.VerAbbr).HasColumnName(@"VER_Abbr").HasColumnType("nvarchar").IsOptional().HasMaxLength(150);
+            Property(x => x.VerUi).HasColumnName(@"VER_UI").HasColumnType("nvarchar").IsRequired().HasMaxLength(25);
+            Property(x => x.VerIsActive).HasColumnName(@"VER_IsActive").HasColumnType("bit").IsOptional();
         }
     }
 
@@ -3462,209 +1529,6 @@ namespace NepFlex.DataAccess.Context
         }
     }
 
-    // SelectTopCategory
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class SelectTopCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SelectTopCategory>
-    {
-        public SelectTopCategoryConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public SelectTopCategoryConfiguration(string schema)
-        {
-            ToTable("SelectTopCategory", schema);
-            HasKey(x => x.Id);
-
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.TopCategoryMenu).HasColumnName(@"TopCategoryMenu").HasColumnType("nvarchar").IsOptional().HasMaxLength(20);
-        }
-    }
-
-    // TrackEmail
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class TrackEmailConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<TrackEmail>
-    {
-        public TrackEmailConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public TrackEmailConfiguration(string schema)
-        {
-            ToTable("TrackEmail", schema);
-            HasKey(x => x.Id);
-
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("bigint").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Sender).HasColumnName(@"Sender").HasColumnType("nvarchar").IsOptional().HasMaxLength(100);
-            Property(x => x.Receiver).HasColumnName(@"Receiver").HasColumnType("nvarchar").IsOptional().HasMaxLength(100);
-            Property(x => x.DateSend).HasColumnName(@"DateSend").HasColumnType("datetime").IsOptional();
-            Property(x => x.Detail).HasColumnName(@"Detail").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.Status).HasColumnName(@"Status").HasColumnType("bit").IsOptional();
-            Property(x => x.Attachments).HasColumnName(@"Attachments").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.IpAddress).HasColumnName(@"IpAddress").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-        }
-    }
-
-    // Users
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class UserConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<User>
-    {
-        public UserConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public UserConfiguration(string schema)
-        {
-            ToTable("Users", schema);
-            HasKey(x => x.UserId);
-
-            Property(x => x.UserId).HasColumnName(@"UserID").HasColumnType("nvarchar").IsRequired().HasMaxLength(150).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.UserName).HasColumnName(@"UserName").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
-            Property(x => x.FirstName).HasColumnName(@"FirstName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(20);
-            Property(x => x.MiddleName).HasColumnName(@"MiddleName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(15);
-            Property(x => x.LastName).HasColumnName(@"LastName").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(30);
-            Property(x => x.FkRoleId).HasColumnName(@"FK_RoleId").HasColumnType("int").IsOptional();
-            Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsRequired().HasMaxLength(100);
-            Property(x => x.CreatedDate).HasColumnName(@"Created Date").HasColumnType("datetime").IsRequired();
-            Property(x => x.UpdatedDate).HasColumnName(@"Updated Date").HasColumnType("datetime").IsOptional();
-            Property(x => x.LastLoginDate).HasColumnName(@"LastLoginDate").HasColumnType("datetime").IsOptional();
-            Property(x => x.Ui).HasColumnName(@"UI").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(5);
-            Property(x => x.Guid).HasColumnName(@"GUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
-            Property(x => x.Emailguid).HasColumnName(@"EMAILGUID").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(100);
-            Property(x => x.ProfilePicture).HasColumnName(@"ProfilePicture").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.Images).HasColumnName(@"Images").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.IsUserSeller).HasColumnName(@"IsUserSeller").HasColumnType("nvarchar").IsOptional().HasMaxLength(12);
-            Property(x => x.PhNumber).HasColumnName(@"PHNumber").HasColumnType("nvarchar").IsOptional().HasMaxLength(14);
-            Property(x => x.ShowPhNumber).HasColumnName(@"ShowPHNumber").HasColumnType("bit").IsOptional();
-            Property(x => x.UserPhnCode).HasColumnName(@"UserPHNCode").HasColumnType("nvarchar").IsOptional().HasMaxLength(10);
-        }
-    }
-
-    // User_NCERROR_Windows
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class UserNcerrorWindowConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<UserNcerrorWindow>
-    {
-        public UserNcerrorWindowConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public UserNcerrorWindowConfiguration(string schema)
-        {
-            ToTable("User_NCERROR_Windows", schema);
-            HasKey(x => new { x.Id, x.UserName, x.Password, x.Email, x.DateAdded });
-
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.UserName).HasColumnName(@"UserName").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(25).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Password).HasColumnName(@"Password").HasColumnType("nvarchar").IsRequired().HasMaxLength(50).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Email).HasColumnName(@"Email").HasColumnType("nvarchar").IsRequired().HasMaxLength(50).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Ui).HasColumnName(@"UI").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
-            Property(x => x.Comment).HasColumnName(@"Comment").HasColumnType("nvarchar").IsOptional().HasMaxLength(100);
-            Property(x => x.DateAdded).HasColumnName(@"DateAdded").HasColumnType("datetime").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.UpdateDdate).HasColumnName(@"UpdateDdate").HasColumnType("datetime").IsOptional();
-            Property(x => x.Image).HasColumnName(@"Image").HasColumnType("nvarchar(max)").IsOptional();
-        }
-    }
-
-    // ViewsCount
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ViewsCountConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ViewsCount>
-    {
-        public ViewsCountConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public ViewsCountConfiguration(string schema)
-        {
-            ToTable("ViewsCount", schema);
-            HasKey(x => new { x.Id, x.TotalViews });
-
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.PostId).HasColumnName(@"PostID").HasColumnType("bigint").IsOptional();
-            Property(x => x.TotalViews).HasColumnName(@"TotalViews").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Likes).HasColumnName(@"Likes").HasColumnType("int").IsOptional();
-            Property(x => x.Dislikes).HasColumnName(@"Dislikes").HasColumnType("int").IsOptional();
-            Property(x => x.Loved).HasColumnName(@"Loved").HasColumnType("int").IsOptional();
-            Property(x => x.IpViewed).HasColumnName(@"IPViewed").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-        }
-    }
-
-    // ViewsCount_Articles
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ViewsCountArticleConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ViewsCountArticle>
-    {
-        public ViewsCountArticleConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public ViewsCountArticleConfiguration(string schema)
-        {
-            ToTable("ViewsCount_Articles", schema);
-            HasKey(x => new { x.Id, x.TotalViews });
-
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.NewsId).HasColumnName(@"NewsID").HasColumnType("bigint").IsOptional();
-            Property(x => x.TotalViews).HasColumnName(@"TotalViews").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Likes).HasColumnName(@"Likes").HasColumnType("int").IsOptional();
-            Property(x => x.Dislikes).HasColumnName(@"Dislikes").HasColumnType("int").IsOptional();
-            Property(x => x.Loved).HasColumnName(@"Loved").HasColumnType("int").IsOptional();
-            Property(x => x.IpViewed).HasColumnName(@"IPViewed").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-        }
-    }
-
-    // ViewsCount_Coupon
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ViewsCountCouponConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ViewsCountCoupon>
-    {
-        public ViewsCountCouponConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public ViewsCountCouponConfiguration(string schema)
-        {
-            ToTable("ViewsCount_Coupon", schema);
-            HasKey(x => new { x.Id, x.TotalViews });
-
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.CouponId).HasColumnName(@"CouponID").HasColumnType("bigint").IsOptional();
-            Property(x => x.TotalPrint).HasColumnName(@"TotalPrint").HasColumnType("int").IsOptional();
-            Property(x => x.TotalViews).HasColumnName(@"TotalViews").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Likes).HasColumnName(@"Likes").HasColumnType("int").IsOptional();
-            Property(x => x.Dislikes).HasColumnName(@"Dislikes").HasColumnType("int").IsOptional();
-            Property(x => x.Loved).HasColumnName(@"Loved").HasColumnType("int").IsOptional();
-            Property(x => x.IpViewed).HasColumnName(@"IPViewed").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-        }
-    }
-
-    // ViewsCount_Event
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ViewsCountEventConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ViewsCountEvent>
-    {
-        public ViewsCountEventConfiguration()
-            : this("dbo")
-        {
-        }
-
-        public ViewsCountEventConfiguration(string schema)
-        {
-            ToTable("ViewsCount_Event", schema);
-            HasKey(x => new { x.Id, x.TotalViews });
-
-            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.EventId).HasColumnName(@"EventID").HasColumnType("bigint").IsOptional();
-            Property(x => x.TotalViews).HasColumnName(@"TotalViews").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Likes).HasColumnName(@"Likes").HasColumnType("int").IsOptional();
-            Property(x => x.Dislikes).HasColumnName(@"Dislikes").HasColumnType("int").IsOptional();
-            Property(x => x.Loved).HasColumnName(@"Loved").HasColumnType("int").IsOptional();
-            Property(x => x.IpViewed).HasColumnName(@"IPViewed").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(25);
-        }
-    }
-
     #endregion
 
     #region Stored procedure return models
@@ -3694,76 +1558,6 @@ namespace NepFlex.DataAccess.Context
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ChangeProfilePictureReturnModel
-    {
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel1
-        {
-            public System.Int32? Result { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel2
-        {
-            public System.Int32? Result { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CountPageViewsReturnModel
-    {
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel1
-        {
-            public System.Int32 TotalPageViews { get; set; }
-            public System.Int32? Likes { get; set; }
-            public System.Int32? Dislikes { get; set; }
-            public System.Int32? Loved { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel2
-        {
-            public System.Int32 TotalPageViews { get; set; }
-            public System.Int32? Likes { get; set; }
-            public System.Int32? Dislikes { get; set; }
-            public System.Int32? Loved { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel3
-        {
-            public System.Int32 TotalPageViews { get; set; }
-            public System.Int32? Likes { get; set; }
-            public System.Int32? Dislikes { get; set; }
-            public System.Int32? Loved { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel3> ResultSet3;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel4
-        {
-            public System.Int32 TotalPageViews { get; set; }
-            public System.Int32? Likes { get; set; }
-            public System.Int32? Dislikes { get; set; }
-            public System.Int32? Loved { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel4> ResultSet4;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class CraigDiscussionForumReturnModel
-    {
-        public System.String Column1 { get; set; }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
     public class GetDataReturnModel
     {
         public System.String Title { get; set; }
@@ -3790,103 +1584,43 @@ namespace NepFlex.DataAccess.Context
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class GetGuidReturnModel
-    {
-        public System.String Firstname { get; set; }
-        public System.String Lastname { get; set; }
-        public System.String Guid { get; set; }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class InsertCraigArticlesReturnModel
+    public class SpDbEncryptKeyReturnModel
     {
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
         public class ResultSetModel1
         {
-            public System.Int32? Column1 { get; set; }
+            public System.String RESULT { get; set; }
         }
         public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
         public class ResultSetModel2
         {
-            public System.Int32? Result { get; set; }
+            public System.Int32? RESULT { get; set; }
         }
         public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
 
-    }
-
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class InsertCraigCouponsReturnModel
-    {
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel1
+        public class ResultSetModel3
         {
-            public System.String Column1 { get; set; }
+            public System.Int32? RESULT { get; set; }
         }
-        public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel2
-        {
-            public System.Int32? Result { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
+        public System.Collections.Generic.List<ResultSetModel3> ResultSet3;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class InsertCraigEventReturnModel
-    {
-        public System.Int32? Result { get; set; }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class RegisterUserReturnModel
+    public class SpRegisterUserReturnModel
     {
         public System.String Ver_Status { get; set; }
         public System.String VER_Detail { get; set; }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class UpdateCompanyReturnModel
+    public class SpUpdateCompanyReturnModel
     {
         public System.String Ver_Status { get; set; }
         public System.String VER_Detail { get; set; }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class UpdateUserReturnModel
-    {
-        public System.String Ver_Status { get; set; }
-        public System.String VER_Detail { get; set; }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-    public class ValidateUserReturnModel
-    {
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel1
-        {
-            public System.String UserID { get; set; }
-            public System.String Username { get; set; }
-            public System.String Email { get; set; }
-            public System.String GUID { get; set; }
-            public System.String Firstname { get; set; }
-            public System.String Middlename { get; set; }
-            public System.String Lastname { get; set; }
-            public System.String ProfilePicture { get; set; }
-            public System.DateTime DateJoined { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel1> ResultSet1;
-
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.31.1.0")]
-        public class ResultSetModel2
-        {
-            public System.Int32? Column1 { get; set; }
-        }
-        public System.Collections.Generic.List<ResultSetModel2> ResultSet2;
-
     }
 
     #endregion
