@@ -236,3 +236,7 @@ E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
 E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.dll
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.pdb
+E:\GITHUB\DataAccess\bin\Debug\PlatformCommon.dll
+E:\GITHUB\DataAccess\bin\Debug\PlatformCommon.pdb
+E:\GITHUB\DataAccess\bin\Debug\PlatformTypes.dll
+E:\GITHUB\DataAccess\bin\Debug\PlatformTypes.pdb

@@ -1,10 +1,6 @@
-﻿using NepFlex.Core.Entities.ResourceModels;
-using NepFlex.Core.Interfaces.Security;
+﻿using PlatformCommon.Service;
+using PlatformTypes.NepFlexTypes.Password;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Nepflex.ServiceAPI.Controllers
@@ -12,12 +8,12 @@ namespace Nepflex.ServiceAPI.Controllers
     [RoutePrefix("api/customer")]
     public class CustomerController : ApiController
     {
-        public IEncryptionService _encryptionService;
+        //public IEncryptionService _encryptionService;
 
-        public CustomerController(IEncryptionService encryptionService)
-        {
-            _encryptionService = encryptionService;
-        }
+        //public CustomerController(IEncryptionService encryptionService)
+        //{
+        //    _encryptionService = encryptionService;
+        //}
 
         [HttpGet]
         [Route("phash")]
@@ -42,13 +38,13 @@ namespace Nepflex.ServiceAPI.Controllers
 
                 UserPassword userPassword = new UserPassword();
 
-                var saltKey = _encryptionService.CreateSaltKey(5);
+                var saltKey = EncryptionService.CreateSaltKey(5);
                 userPassword.PasswordSalt = saltKey;
-                userPassword.Password = _encryptionService.CreatePasswordHash(password, saltKey, "SHA512");
+                userPassword.Password = EncryptionService.CreatePasswordHash(password, saltKey, "SHA512");
 
                 var lastResult = PasswordsMatch(userPassword, password);
 
-                return Ok(lastResult);
+                return Ok(userPassword);
             }
             catch (Exception ex)
             {
@@ -64,7 +60,7 @@ namespace Nepflex.ServiceAPI.Controllers
 
             //savedPassword = _encryptionService.EncryptText(plainText);
 
-            savedPassword = _encryptionService.CreatePasswordHash(plainText, customerPassword.PasswordSalt, "SHA512");
+            savedPassword = EncryptionService.CreatePasswordHash(plainText, customerPassword.PasswordSalt, "SHA512");
 
             if (customerPassword.Password == null)
                 return false;

@@ -1,8 +1,9 @@
 ﻿using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Entities.ResourceModels.Security;
-using NepFlex.Core.Interfaces.Security;
-using NepFlex.Core.Interfaces.Services;
 using NepFlex.DataAccess.Context;
+using PlatformCommon.Service;
+using PlatformTypes.NepFlexTypes.Constant;
+using PlatformTypes.NepFlexTypes.Password;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,12 +13,10 @@ namespace NepFlex.DataAccess.Repositories.UserSetting
     public class UserInformationSettings
     {
         private readonly IOnlinePasalContext _context;
-        private readonly IEncryptionService _encryptionService;
 
-        public UserInformationSettings(IOnlinePasalContext context, IEncryptionService encryptionService) //: base(context, encryptionService)
+        public UserInformationSettings(IOnlinePasalContext context) //: base(context, encryptionService)
         {
             _context = context;
-            _encryptionService = encryptionService;
         }
 
         public void Dispose()
@@ -145,16 +144,16 @@ namespace NepFlex.DataAccess.Repositories.UserSetting
         public UserPassword SetPasswordHash(string _text)                     //HASHES THE USER ENTERED PASSWORD
         {
             UserPassword userPassword = new UserPassword();
-            var saltKey = _encryptionService.CreateSaltKey(BaseEntity.PasswordSaltKeySize);
+            var saltKey = EncryptionService.CreateSaltKey(BaseEntity.PasswordSaltKeySize);
             userPassword.PasswordSalt = saltKey;
             userPassword.PasswordFormat = PasswordFormat.HASHED;
-            userPassword.PasswordHash = _encryptionService.CreatePasswordHash(_text, saltKey, BaseEntity.DefaultHashedPasswordFormat);
+            userPassword.PasswordHash = EncryptionService.CreatePasswordHash(_text, saltKey, BaseEntity.DefaultHashedPasswordFormat);
             return userPassword;
         }
 
         public string EncryptUserProvidedPlainPassword(string _text)              //ENCRYPTS THE ENTERED TEXTS
         {
-            var strObj = _encryptionService.EncryptText(_text);
+            var strObj = EncryptionService.EncryptText(_text);
             return strObj;
         }
 
@@ -179,10 +178,10 @@ namespace NepFlex.DataAccess.Repositories.UserSetting
                     newPasswordCreation = enteredPassword;
                     break;
                 case PasswordFormat.ENCRYPTED:
-                    newPasswordCreation = _encryptionService.EncryptText(enteredPassword);
+                    newPasswordCreation = EncryptionService.EncryptText(enteredPassword);
                     break;
                 case PasswordFormat.HASHED:
-                    newPasswordCreation = _encryptionService.CreatePasswordHash(enteredPassword, _userPasswordSaltKey, BaseEntity.DefaultHashedPasswordFormat);
+                    newPasswordCreation = EncryptionService.CreatePasswordHash(enteredPassword, _userPasswordSaltKey, BaseEntity.DefaultHashedPasswordFormat);
                     break;
             }
 

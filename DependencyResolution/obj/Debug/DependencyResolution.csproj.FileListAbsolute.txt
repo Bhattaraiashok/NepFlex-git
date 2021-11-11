@@ -221,3 +221,7 @@ E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.dll
 E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.pdb
 E:\GITHUB\DependencyResolution\bin\Debug\Microsoft.AspNet.Identity.Core.dll
 E:\GITHUB\DependencyResolution\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+E:\GITHUB\DependencyResolution\bin\Debug\PlatformCommon.dll
+E:\GITHUB\DependencyResolution\bin\Debug\PlatformTypes.dll
+E:\GITHUB\DependencyResolution\bin\Debug\PlatformCommon.pdb
+E:\GITHUB\DependencyResolution\bin\Debug\PlatformTypes.pdb

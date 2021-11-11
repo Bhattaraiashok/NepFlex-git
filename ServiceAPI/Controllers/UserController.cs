@@ -2,6 +2,11 @@
 using Nepflex.ServiceAPI.Identity;
 using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Interfaces.Services;
+using NepFlex.DataAccess.Repositories.UserSetting;
+using PlatformCommon;
+using PlatformTypes.NepFlexTypes.Base;
+using PlatformTypes.NepFlexTypes.Constant;
+using PlatformTypes.NepFlexTypes.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +42,9 @@ namespace Nepflex.ServiceAPI.Controllers
                     IsSuccess = false,
                     StrMessage = new List<string>()
                 };
+                UserSession userCntx = UserSessionContext.Current;
                 // authenticationManager.SignOut();
-                _loginOut = Utility.AppendStatus<UserLoginResponse>(ConstList.REQ_OBJ_CONST_SUCCESS, _loginOut);
+                _loginOut = Helper.AppendStatus(ConstList.REQ_OBJ_CONST_SUCCESS, _loginOut);
                 return Ok(_loginOut);
             }
             catch (Exception ex)
@@ -55,7 +61,7 @@ namespace Nepflex.ServiceAPI.Controllers
             Console.WriteLine("came here in login");
             try
             {
-                ResponseStatus _status = new ResponseStatus
+                SignInStatusResponse _status = new SignInStatusResponse
                 {
                     IsSuccess = false,
                     StrMessage = new List<string>()
@@ -64,54 +70,26 @@ namespace Nepflex.ServiceAPI.Controllers
                 var validationCheckFailed = (login == null || string.IsNullOrWhiteSpace(login.UserName?.Trim()) || string.IsNullOrWhiteSpace(login.UserPSWD));
                 if (validationCheckFailed)
                 {
-                    _status = Utility.AppendStatus(ConstList.USER_LOGIN_CONST_FAILURE, _status);
+                    _status = Helper.AppendStatus(ConstList.USER_LOGIN_CONST_FAILURE, _status);
                     return Ok(_status);
                 }
 
                 //put if else to check userID if not use email or phone number, phn number are unique on the table too.
-                var processResult = _loginService.UserLoginProcess(login);
-                switch (processResult.SignInStatus)
+                _status = _loginService.UserLoginProcess(login);
+                switch (_status.SignInStatus)
                 {
                     case SignInStatus.SUCCESS:
-                        if (processResult.IsSuccess == false)
-                        {
-                            //authenticationManager.SignOut();
-                        }
-                        return Ok(processResult);
+                        return Ok(_status);
                     case SignInStatus.INACTIVE:
-                        foreach (var item in processResult.StrMessage)
-                        {
-                            _status.StrMessage.Add(item);
-                        }
-                        _status.IsSuccess = false;
                         return Ok(_status);
                     case SignInStatus.LOCKEDOUT:
-                        foreach (var item in processResult.StrMessage)
-                        {
-                            _status.StrMessage.Add(item);
-                        }
-                        _status.IsSuccess = false;
                         return Ok(_status);
                     case SignInStatus.REQUIRESVERIFICATIONS:
-                        foreach (var item in processResult.StrMessage)
-                        {
-                            _status.StrMessage.Add(item);
-                        }
                         return Ok(_status);
                     // return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                     case SignInStatus.FAILURE:
-
-                        foreach (var item in processResult.StrMessage)
-                        {
-                            _status.StrMessage.Add(item);
-                        }
-                        _status.IsSuccess = false;
                         return Ok(_status);
                     default:
-                        foreach (var item in processResult.StrMessage)
-                        {
-                            _status.StrMessage.Add(item);
-                        }
                         return BadRequest();
                 }
             }
@@ -127,7 +105,7 @@ namespace Nepflex.ServiceAPI.Controllers
         {
             try
             {
-                ResponseStatus _status = new ResponseStatus
+                ResponseBase _status = new ResponseBase
                 {
                     IsSuccess = false,
                     StrMessage = new List<string>()
@@ -138,7 +116,7 @@ namespace Nepflex.ServiceAPI.Controllers
 
                 if (validtionFailed)
                 {
-                    _status = Utility.AppendStatus(ConstList.USER_REGISTER_CONST_FAILURE, _status);
+                    _status = Helper.AppendStatus(ConstList.USER_REGISTER_CONST_FAILURE, _status);
                     return Ok(_status);
                 }
 
@@ -146,7 +124,7 @@ namespace Nepflex.ServiceAPI.Controllers
                 //pre-check II
                 if (!user)
                 {
-                    _status = Utility.AppendStatus(ConstList.USER_REGISTER_CONST_FAILURE, _status);
+                    _status = Helper.AppendStatus(ConstList.USER_REGISTER_CONST_FAILURE, _status);
                     return Ok(_status);
                 }
                 //if here...continue
@@ -175,7 +153,7 @@ namespace Nepflex.ServiceAPI.Controllers
             Console.WriteLine("came here in login");
             try
             {
-                ResponseStatus _status = new ResponseStatus
+                ResponseBase _status = new ResponseBase
                 {
                     IsSuccess = false,
                     StrMessage = new List<string>()
@@ -184,7 +162,7 @@ namespace Nepflex.ServiceAPI.Controllers
                 //pre-check
                 if (reqUpdate == null || string.IsNullOrWhiteSpace(reqUpdate.UserEmail) || string.IsNullOrWhiteSpace(reqUpdate.UID))
                 {
-                    _status = Utility.AppendStatus(ConstList.USER_UPDATE_CONST_FAILURE, _status);
+                    _status = Helper.AppendStatus(ConstList.USER_UPDATE_CONST_FAILURE, _status);
                     return Ok(_status);
                 }
 
@@ -195,7 +173,7 @@ namespace Nepflex.ServiceAPI.Controllers
                 }
                 else
                 {
-                    Utility.AppendStatus(ConstList.USER_LOGIN_CONST_FAILURE, _status);
+                    Helper.AppendStatus(ConstList.USER_LOGIN_CONST_FAILURE, _status);
                     return Ok(_status);
                 }
 

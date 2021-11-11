@@ -651,3 +651,7 @@ E:\GITHUB\ServiceAPI\bin\System.Web.Http.WebHost.xml
 E:\GITHUB\ServiceAPI\obj\Debug\ServiceAPI.csproj.CopyComplete
 E:\GITHUB\ServiceAPI\obj\Debug\Nepflex.ServiceAPI.dll
 E:\GITHUB\ServiceAPI\obj\Debug\Nepflex.ServiceAPI.pdb
+E:\GITHUB\ServiceAPI\bin\PlatformCommon.dll
+E:\GITHUB\ServiceAPI\bin\PlatformTypes.dll
+E:\GITHUB\ServiceAPI\bin\PlatformCommon.pdb
+E:\GITHUB\ServiceAPI\bin\PlatformTypes.pdb

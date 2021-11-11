@@ -1,22 +1,15 @@
 ﻿using Core.Interfaces;
-using NepFlex.Core.Entities.OnlinePasal;
 using Core.Interfaces.Repositories;
 using DataAccess.Repositories;
+using NepFlex.Core.Interfaces.Repositories;
+using NepFlex.DataAccess.Context;
+using NepFlex.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Transactions;
-using System.EnterpriseServices;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NepFlex.DataAccess.Context;
-using NepFlex.DataAccess.Repositories;
-using NepFlex.Core.Interfaces.Repositories;
-using NepFlex.Core.Interfaces.Security;
-using NepFlex.Core.Interfaces.Services;
 
 namespace DataAccess
 {
@@ -24,7 +17,7 @@ namespace DataAccess
     {
         private static readonly TraceSource TraceSource = new TraceSource("NepFlex.DataAccess");
         private IOnlinePasalContext _context;
-        private readonly IEncryptionService _encryptionService;
+        //private readonly IEncryptionService _encryptionService;
         private bool _disposed;
 
         // TODO: Add Repositories
@@ -36,11 +29,12 @@ namespace DataAccess
         public ISendEmailRepository SendEmailRepository { get; private set; }
         public ILoginRepository LoginRepository { get; private set; }
 
-        public UnitOfWork(IOnlinePasalContext context,
-            IEncryptionService encryptionService)
+        public UnitOfWork(IOnlinePasalContext context
+           // IEncryptionService encryptionService
+           )
         {
             _context = context;
-            _encryptionService = encryptionService;
+            // _encryptionService = encryptionService;
             Initialize();
         }
 
@@ -53,7 +47,7 @@ namespace DataAccess
             ReportRepository = new ReportRepository(_context);
             DetailRepository = new DetailRepository(_context);
             SendEmailRepository = new SendEmailRepository(_context);
-            LoginRepository = new LoginRepository(_context, _encryptionService);
+            LoginRepository = new LoginRepository(_context);
         }
         public List<ValidationResult> GetValidationErrors()
         {

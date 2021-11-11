@@ -2,10 +2,15 @@
 using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Entities.ResourceModels.Security;
 using NepFlex.Core.Interfaces.Repositories;
-using NepFlex.Core.Interfaces.Security;
-using NepFlex.Core.Interfaces.Services;
 using NepFlex.DataAccess.Context;
 using NepFlex.DataAccess.Repositories.UserSetting;
+using PlatformCommon;
+using PlatformCommon.Service;
+using PlatformTypes.NepFlexTypes.Base;
+using PlatformTypes.NepFlexTypes.Company;
+using PlatformTypes.NepFlexTypes.Constant;
+using PlatformTypes.NepFlexTypes.Password;
+using PlatformTypes.NepFlexTypes.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +21,13 @@ namespace NepFlex.DataAccess.Repositories
     public class LoginRepository : Repository<UserLoginResponse, int>, ILoginRepository
     {
         private readonly IOnlinePasalContext _context;
-        private readonly IEncryptionService _encryptionService;
+        // private readonly IEncryptionService _encryptionService;
 
-        public UserInformationSettings _userInformationSettings { get { return new UserInformationSettings(_context, _encryptionService); } }
+        public UserInformationSettings _userInformationSettings { get { return new UserInformationSettings(_context); } }
 
-        public LoginRepository(IOnlinePasalContext context, IEncryptionService encryptionService) : base(context)
+        public LoginRepository(IOnlinePasalContext context) : base(context)
         {
             _context = context;
-            _encryptionService = encryptionService;
         }
 
         public SignInStatusResponse UserLoginProcess(UserLoginRequest login)
@@ -37,7 +41,7 @@ namespace NepFlex.DataAccess.Repositories
 
             if (login == null || string.IsNullOrWhiteSpace(login.UserPSWD) || string.IsNullOrWhiteSpace(login.UserName))
             {
-                _signInStatus = Utility.AppendStatus(ConstList.USER_LOGIN_CONST_FAILURE, _signInStatus);
+                _signInStatus = Helper.AppendStatus(ConstList.USER_LOGIN_CONST_FAILURE, _signInStatus);
                 return _signInStatus;
             }
 
@@ -46,9 +50,9 @@ namespace NepFlex.DataAccess.Repositories
             return _signInStatus;
         }
 
-        public ResponseStatus UserRegistrationProcess(UserRegisterRequest req)
+        public ResponseBase UserRegistrationProcess(UserRegisterRequest req)
         {
-            ResponseStatus _status = new ResponseStatus
+            ResponseBase _status = new ResponseBase
             {
                 IsSuccess = false,
                 StrMessage = new List<string>()
@@ -58,7 +62,7 @@ namespace NepFlex.DataAccess.Repositories
             if (req == null || string.IsNullOrWhiteSpace(req.EnteredPassword)
                 || string.IsNullOrWhiteSpace(req.Email) || string.IsNullOrWhiteSpace((req.Username)))
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_REGISTER_CONST_FAILURE, _status);
+                _status = Helper.AppendStatus<ResponseBase>(ConstList.USER_REGISTER_CONST_FAILURE, _status);
                 return _status;
             }
 
@@ -77,7 +81,7 @@ namespace NepFlex.DataAccess.Repositories
                userpassword.PasswordFormat.ToString(), //passwordtype,
                BaseEntity.DefaultHashedPasswordFormat, //pswdalgorithm
                BaseEntity.DBEncryptionKey,//dbkey
-               req.UI);
+               PlatformTypes.NepFlexTypes.Base.SiteName.Site);
 
 
             _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
@@ -86,20 +90,22 @@ namespace NepFlex.DataAccess.Repositories
             return _status;
         }
 
-        public ResponseStatus UpdateUserProcess(UserUpdateRequest req)
+        public ResponseBase UpdateUserProcess(UserUpdateRequest req)
         {
             bool _dataUserAltered = false;
 
-            ResponseStatus _status = new ResponseStatus
+            ResponseBase _status = new ResponseBase
             {
                 IsSuccess = false,
                 StrMessage = new List<string>()
             };
 
+            UserSession userCntx = UserSessionContext.Current;
+
             //first check
             if (req == null || req?.UID == null || req?.UserEmail == null)
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_FAILURE, _status);
+                _status = Helper.AppendStatus<ResponseBase>(ConstList.USER_UPDATE_CONST_FAILURE, _status);
                 return _status;
             }
 
@@ -111,7 +117,7 @@ namespace NepFlex.DataAccess.Repositories
             //second checks
             if (_usrInfo == null || string.IsNullOrEmpty(_usrInfo?.UserId))
             {
-                _status = Utility.AppendStatus(ConstList.USER_PROFILE_CONST_FAILURE, _status);
+                _status = Helper.AppendStatus(ConstList.USER_PROFILE_CONST_FAILURE, _status);
                 return _status;
             }
 
@@ -192,16 +198,16 @@ namespace NepFlex.DataAccess.Repositories
 
             if (returnRes == CONSTResponse.INT_CONST_SUCCESS)
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.USER_UPDATE_CONST_SUCCESS, _status);
+                _status = Helper.AppendStatus<ResponseBase>(ConstList.USER_UPDATE_CONST_SUCCESS, _status);
             }
 
             return _status;
 
         }
 
-        public ResponseStatus RegisterCompanyProcess(CompanyRegisterRequest req)
+        public ResponseBase RegisterCompanyProcess(CompanyRegisterRequest req)
         {
-            ResponseStatus _status = new ResponseStatus
+            ResponseBase _status = new ResponseBase
             {
                 IsSuccess = false,
                 StrMessage = new List<string>()
@@ -233,19 +239,19 @@ namespace NepFlex.DataAccess.Repositories
 
             if (returnResults == CONSTResponse.INT_CONST_SUCCESS)
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.COMPANY_REGISTER_CONST_SUCCESS, _status);
+                _status = Helper.AppendStatus<ResponseBase>(ConstList.COMPANY_REGISTER_CONST_SUCCESS, _status);
             }
             else
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.COMPANY_REGISTER_CONST_FAILURE, _status);
+                _status = Helper.AppendStatus<ResponseBase>(ConstList.COMPANY_REGISTER_CONST_FAILURE, _status);
             }
 
             return _status;
         }
 
-        public ResponseStatus UpdateCompany(CompanyUpdateRequest req)
+        public ResponseBase UpdateCompany(CompanyUpdateRequest req)
         {
-            ResponseStatus _status = new ResponseStatus
+            ResponseBase _status = new ResponseBase
             {
                 IsSuccess = false,
                 StrMessage = new List<string>()
@@ -254,7 +260,7 @@ namespace NepFlex.DataAccess.Repositories
 
             if (req == null || string.IsNullOrWhiteSpace(req?.UID))
             {
-                _status = Utility.AppendStatus<ResponseStatus>(ConstList.COMPANY_UPDATE_CONST_FAILURE, _status);
+                _status = Helper.AppendStatus<ResponseBase>(ConstList.COMPANY_UPDATE_CONST_FAILURE, _status);
                 return _status;
             }
 
@@ -263,6 +269,8 @@ namespace NepFlex.DataAccess.Repositories
             var _companyInfo = (from _comp in _context.MasterCompanies
                                 where _comp.UserId == req.UID
                                 select _comp).FirstOrDefault();
+
+            UserSession userCntx = UserSessionContext.Current;
 
             int returnResults = -1; //failure
 
@@ -358,13 +366,13 @@ namespace NepFlex.DataAccess.Repositories
             if (customer == null)
             {
                 _signInStatus.SignInStatus = SignInStatus.FAILURE;
-                _signInStatus = Utility.AppendStatus(ConstList.USER_INVALID_FAILURE, _signInStatus);
+                _signInStatus = Helper.AppendStatus(ConstList.USER_INVALID_FAILURE, _signInStatus);
                 return _signInStatus;
             }
             if (!customer.IsActiveAccount)
             {
                 _signInStatus.SignInStatus = SignInStatus.INACTIVE;
-                _signInStatus = Utility.AppendStatus(ConstList.USER_INACTIVE_FAILURE, _signInStatus);
+                _signInStatus = Helper.AppendStatus(ConstList.USER_INACTIVE_FAILURE, _signInStatus);
                 return _signInStatus;
             }
 
@@ -376,7 +384,7 @@ namespace NepFlex.DataAccess.Repositories
                 if (uPassword.PasswordWrongAttemptPerSession >= int.Parse(BaseEntity.MaxPasswordAttemptAllowed))
                 {
                     // retun msg- saying left over attempts
-                    _signInStatus = Utility.AppendStatus(ConstList.MULTIPLE_PASSWORD_ATTEMPT_FAILURE, _signInStatus);
+                    _signInStatus = Helper.AppendStatus(ConstList.MULTIPLE_PASSWORD_ATTEMPT_FAILURE, _signInStatus);
                 }
                 return _signInStatus;
             }
@@ -384,15 +392,24 @@ namespace NepFlex.DataAccess.Repositories
             //if (result.RequiresVerification)
             //    _signInStatus.SignInStatus = SignInStatus.RequiresVerification;
 
-            _signInStatus = Utility.AppendStatus(ConstList.USER_VALID_SUCCESS, _signInStatus);
+            UserSession userCntx = new UserSession();
+            userCntx.UserID = customer.UserId;
+            userCntx.IsAuthenticated = true;
+            userCntx.FE_SessionID = Guid.NewGuid().ToString();
+            userCntx.BE_SessionID = Guid.NewGuid().ToString();
+            var salt = EncryptionService.CreateSaltKey(2);
+            userCntx.AssignedAuthToken = EncryptionService.CreatePasswordHash("CurrentXAuthYTokenUSERZ", salt, "SHA1");
+            UserSessionContext.Current = userCntx;
+
+            _signInStatus = Helper.AppendStatus(ConstList.USER_VALID_SUCCESS, _signInStatus);
             _signInStatus.SignInStatus = SignInStatus.SUCCESS;
 
             return _signInStatus;
         }
 
-        public ResponseStatus ValidateUserRegestration(UserRegisterRequest userRegisterObject)
+        public ResponseBase ValidateUserRegestration(UserRegisterRequest userRegisterObject)
         {
-            ResponseStatus _status = new ResponseStatus
+            ResponseBase _status = new ResponseBase
             {
                 IsSuccess = false,
                 StrMessage = new List<string>()
@@ -427,7 +444,7 @@ namespace NepFlex.DataAccess.Repositories
 
             if (registetrationUsingEmail)
             {
-                _status = Utility.AppendStatus(ConstList.RES_USER_EMAIL_EXISTS_CONST_FAILURE, _status);
+                _status = Helper.AppendStatus(ConstList.RES_USER_EMAIL_EXISTS_CONST_FAILURE, _status);
                 return _status;
             }
 
@@ -437,11 +454,11 @@ namespace NepFlex.DataAccess.Repositories
 
             if (registetrationUsingUserName)
             {
-                _status = Utility.AppendStatus(ConstList.RES_USERNAME_EXISTS_CONST_FAILURE, _status);
+                _status = Helper.AppendStatus(ConstList.RES_USERNAME_EXISTS_CONST_FAILURE, _status);
                 return _status;
             }
 
-            _status = Utility.AppendStatus(ConstList.USER_VALID_SUCCESS, _status);
+            _status = Helper.AppendStatus(ConstList.USER_VALID_SUCCESS, _status);
             return _status;
         }
 

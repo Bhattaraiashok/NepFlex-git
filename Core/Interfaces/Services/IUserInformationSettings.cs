@@ -1,5 +1,6 @@
 ﻿using NepFlex.Core.Entities.OnlinePasal;
 using NepFlex.Core.Entities.ResourceModels;
+using PlatformTypes.NepFlexTypes.Password;
 using System.Threading.Tasks;
 
 namespace NepFlex.Core.Interfaces.Services

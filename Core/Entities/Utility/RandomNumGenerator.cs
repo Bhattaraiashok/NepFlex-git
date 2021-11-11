@@ -1,90 +1,90 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿//using System;
+//using System.Security.Cryptography;
 
-namespace NepFlex.Core.Entities.Utility
-{
-    public class RandomNumGenerator
-    {
-        #region Field
+//namespace NepFlex.Core.Entities.Utility
+//{
+//    public class RandomNumGenerator
+//    {
+//        #region Field
 
-        private bool _disposed = false;
-        private readonly RandomNumberGenerator _rng;
+//        private bool _disposed = false;
+//        private readonly RandomNumberGenerator _rng;
 
-        #endregion
+//        #endregion
 
-        #region Ctor
+//        #region Ctor
 
-        public RandomNumGenerator()
-        {
-            _rng = new RNGCryptoServiceProvider();
-        }
+//        public RandomNumGenerator()
+//        {
+//            _rng = new RNGCryptoServiceProvider();
+//        }
 
-        #endregion
+//        #endregion
 
-        #region Methods
+//        #region Methods
 
-        public int Next()
-        {
-            var data = new byte[sizeof(int)];
-            _rng.GetBytes(data);
-            return BitConverter.ToInt32(data, 0) & (int.MaxValue - 1);
-        }
+//        public int Next()
+//        {
+//            var data = new byte[sizeof(int)];
+//            _rng.GetBytes(data);
+//            return BitConverter.ToInt32(data, 0) & (int.MaxValue - 1);
+//        }
 
-        public int Next(int maxValue)
-        {
-            return Next(0, maxValue);
-        }
+//        public int Next(int maxValue)
+//        {
+//            return Next(0, maxValue);
+//        }
 
-        public int Next(int minValue, int maxValue)
-        {
-            if (minValue > maxValue)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-            return (int)Math.Floor(minValue + ((double)maxValue - minValue) * NextDouble());
-        }
+//        public int Next(int minValue, int maxValue)
+//        {
+//            if (minValue > maxValue)
+//            {
+//                throw new ArgumentOutOfRangeException();
+//            }
+//            return (int)Math.Floor(minValue + ((double)maxValue - minValue) * NextDouble());
+//        }
 
-        public double NextDouble()
-        {
-            var data = new byte[sizeof(uint)];
-            _rng.GetBytes(data);
-            var randUint = BitConverter.ToUInt32(data, 0);
-            return randUint / (uint.MaxValue + 1.0);
-        }
+//        public double NextDouble()
+//        {
+//            var data = new byte[sizeof(uint)];
+//            _rng.GetBytes(data);
+//            var randUint = BitConverter.ToUInt32(data, 0);
+//            return randUint / (uint.MaxValue + 1.0);
+//        }
 
-        public void GetBytes(byte[] data)
-        {
-            _rng.GetBytes(data);
-        }
+//        public void GetBytes(byte[] data)
+//        {
+//            _rng.GetBytes(data);
+//        }
 
-        public void GetNonZeroBytes(byte[] data)
-        {
-            _rng.GetNonZeroBytes(data);
-        }
+//        public void GetNonZeroBytes(byte[] data)
+//        {
+//            _rng.GetNonZeroBytes(data);
+//        }
 
-        /// <summary>
-        /// Dispose secure random
-        /// </summary>
-        public new void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+//        /// <summary>
+//        /// Dispose secure random
+//        /// </summary>
+//        public new void Dispose()
+//        {
+//            Dispose(true);
+//            GC.SuppressFinalize(this);
+//        }
 
-        // Protected implementation of Dispose pattern.
-        protected void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
+//        // Protected implementation of Dispose pattern.
+//        protected void Dispose(bool disposing)
+//        {
+//            if (_disposed)
+//                return;
 
-            if (disposing)
-            {
-                _rng?.Dispose();
-            }
+//            if (disposing)
+//            {
+//                _rng?.Dispose();
+//            }
 
-            _disposed = true;
-        }
+//            _disposed = true;
+//        }
 
-        #endregion
-    }
-}
+//        #endregion
+//    }
+//}

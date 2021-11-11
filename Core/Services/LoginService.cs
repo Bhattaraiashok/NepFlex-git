@@ -1,7 +1,8 @@
 ﻿using Core.Interfaces;
 using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Interfaces.Services;
-using System.Threading.Tasks;
+using PlatformTypes.NepFlexTypes.Base;
+using PlatformTypes.NepFlexTypes.User;
 
 namespace NepFlex.Core.Services
 {
@@ -16,11 +17,11 @@ namespace NepFlex.Core.Services
         {
             return _unitOfWork.LoginRepository.UserLoginProcess(login);
         }
-        public ResponseStatus UserRegistrationProcess(UserRegisterRequest req)
+        public ResponseBase UserRegistrationProcess(UserRegisterRequest req)
         {
             return _unitOfWork.LoginRepository.UserRegistrationProcess(req);
         }
-        public ResponseStatus UpdateUserProcess(UserUpdateRequest req)
+        public ResponseBase UpdateUserProcess(UserUpdateRequest req)
         {
             return _unitOfWork.LoginRepository.UpdateUserProcess(req);
         }

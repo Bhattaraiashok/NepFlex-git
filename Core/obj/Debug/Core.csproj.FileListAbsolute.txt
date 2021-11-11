@@ -45,3 +45,7 @@ E:\GITHUB\Core\obj\Debug\Core.csproj.CoreCompileInputs.cache
 E:\GITHUB\Core\obj\Debug\Core.csproj.CopyComplete
 E:\GITHUB\Core\obj\Debug\NepFlex.Core.dll
 E:\GITHUB\Core\obj\Debug\NepFlex.Core.pdb
+E:\GITHUB\Core\bin\Debug\PlatformCommon.dll
+E:\GITHUB\Core\bin\Debug\PlatformTypes.dll
+E:\GITHUB\Core\bin\Debug\PlatformCommon.pdb
+E:\GITHUB\Core\bin\Debug\PlatformTypes.pdb
