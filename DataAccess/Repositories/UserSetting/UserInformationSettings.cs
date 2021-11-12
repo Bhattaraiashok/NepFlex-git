@@ -1,6 +1,5 @@
-﻿using NepFlex.Core.Entities.ResourceModels;
-using NepFlex.Core.Entities.ResourceModels.Security;
-using NepFlex.DataAccess.Context;
+﻿using NepFlex.DataAccess.Context;
+using PlatformCommon.Configuration;
 using PlatformCommon.Service;
 using PlatformTypes.NepFlexTypes.Constant;
 using PlatformTypes.NepFlexTypes.Password;
@@ -144,10 +143,10 @@ namespace NepFlex.DataAccess.Repositories.UserSetting
         public UserPassword SetPasswordHash(string _text)                     //HASHES THE USER ENTERED PASSWORD
         {
             UserPassword userPassword = new UserPassword();
-            var saltKey = EncryptionService.CreateSaltKey(BaseEntity.PasswordSaltKeySize);
+            var saltKey = EncryptionService.CreateSaltKey(ConfigBase.PasswordSaltKeySize);
             userPassword.PasswordSalt = saltKey;
             userPassword.PasswordFormat = PasswordFormat.HASHED;
-            userPassword.PasswordHash = EncryptionService.CreatePasswordHash(_text, saltKey, BaseEntity.DefaultHashedPasswordFormat);
+            userPassword.PasswordHash = EncryptionService.CreatePasswordHash(_text, saltKey, ConfigBase.DefaultHashedPasswordFormat);
             return userPassword;
         }
 
@@ -181,7 +180,7 @@ namespace NepFlex.DataAccess.Repositories.UserSetting
                     newPasswordCreation = EncryptionService.EncryptText(enteredPassword);
                     break;
                 case PasswordFormat.HASHED:
-                    newPasswordCreation = EncryptionService.CreatePasswordHash(enteredPassword, _userPasswordSaltKey, BaseEntity.DefaultHashedPasswordFormat);
+                    newPasswordCreation = EncryptionService.CreatePasswordHash(enteredPassword, _userPasswordSaltKey, ConfigBase.DefaultHashedPasswordFormat);
                     break;
             }
 

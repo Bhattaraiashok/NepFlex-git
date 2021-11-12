@@ -208,7 +208,6 @@
     <Compile Include="Repositories\ReportRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\SearchRepository.cs" />
-    <Compile Include="Repositories\Security\EncryptionRepository.cs" />
     <Compile Include="Repositories\SendEmailRepository.cs" />
     <Compile Include="Repositories\UserSetting\UserInformationSettings.cs" />
     <Compile Include="Repositories\UserSetting\UserSessionContext.cs" />

@@ -1,10 +1,9 @@
 ﻿using DataAccess.Repositories;
-using NepFlex.Core.Entities.ResourceModels;
-using NepFlex.Core.Entities.ResourceModels.Security;
 using NepFlex.Core.Interfaces.Repositories;
 using NepFlex.DataAccess.Context;
 using NepFlex.DataAccess.Repositories.UserSetting;
 using PlatformCommon;
+using PlatformCommon.Configuration;
 using PlatformCommon.Service;
 using PlatformTypes.NepFlexTypes.Base;
 using PlatformTypes.NepFlexTypes.Company;
@@ -79,8 +78,8 @@ namespace NepFlex.DataAccess.Repositories
                userpassword.PasswordHash,
                userpassword.PasswordSalt,
                userpassword.PasswordFormat.ToString(), //passwordtype,
-               BaseEntity.DefaultHashedPasswordFormat, //pswdalgorithm
-               BaseEntity.DBEncryptionKey,//dbkey
+               ConfigBase.DefaultHashedPasswordFormat, //pswdalgorithm
+               ConfigBase.DBEncryptionKey,//dbkey
                PlatformTypes.NepFlexTypes.Base.SiteName.Site);
 
 
@@ -271,9 +270,7 @@ namespace NepFlex.DataAccess.Repositories
                                 select _comp).FirstOrDefault();
 
             UserSession userCntx = UserSessionContext.Current;
-
-            int returnResults = -1; //failure
-
+            
             if (_companyInfo != null)
             {
                 if (_companyInfo.CompanyName != req.CompanyName && (!string.IsNullOrWhiteSpace(req.CompanyName)) && req.FieldUpdateRequest == CONST_Update_FormControlName.companyname)
@@ -366,7 +363,7 @@ namespace NepFlex.DataAccess.Repositories
             if (customer == null)
             {
                 _signInStatus.SignInStatus = SignInStatus.FAILURE;
-                _signInStatus = Helper.AppendStatus(ConstList.USER_INVALID_FAILURE, _signInStatus);
+                _signInStatus = Helper.AppendStatus<SignInStatusResponse>(ConstList.USER_INVALID_FAILURE, _signInStatus);
                 return _signInStatus;
             }
             if (!customer.IsActiveAccount)
@@ -381,7 +378,7 @@ namespace NepFlex.DataAccess.Repositories
             if (!_userInformationSettings.PasswordsMatch(customer.UserId, password))
             {
                 uPassword.PasswordWrongAttemptPerSession++;
-                if (uPassword.PasswordWrongAttemptPerSession >= int.Parse(BaseEntity.MaxPasswordAttemptAllowed))
+                if (uPassword.PasswordWrongAttemptPerSession >= int.Parse(ConfigBase.MaxPasswordAttemptAllowed))
                 {
                     // retun msg- saying left over attempts
                     _signInStatus = Helper.AppendStatus(ConstList.MULTIPLE_PASSWORD_ATTEMPT_FAILURE, _signInStatus);
@@ -461,69 +458,6 @@ namespace NepFlex.DataAccess.Repositories
             _status = Helper.AppendStatus(ConstList.USER_VALID_SUCCESS, _status);
             return _status;
         }
-
-        //protected bool PasswordsMatch(UserPassword customerPassword, string enteredPassword)
-        //{
-        //    if (customerPassword == null || string.IsNullOrEmpty(enteredPassword))
-        //        return false;
-
-        //    var savedPassword = string.Empty;
-        //    switch (customerPassword.PasswordFormat)
-        //    {
-        //        case PasswordFormat.CLEAR:
-        //            savedPassword = enteredPassword;
-        //            break;
-        //        case PasswordFormat.ENCRYPTED:
-        //            savedPassword = _encryptionService.EncryptText(enteredPassword);
-        //            break;
-        //        case PasswordFormat.HASHED:
-        //            savedPassword = _encryptionService.CreatePasswordHash(enteredPassword, customerPassword.PasswordSalt, BaseEntity.DefaultHashedPasswordFormat);
-        //            break;
-        //    }
-
-        //    if (customerPassword.Password == null)
-        //        return false;
-
-        //    return customerPassword.Password.Equals(savedPassword);
-        //}
-
-        //public UserPassword GetUserPassword(UserPassword currentUserInfo)
-        //{
-        //    if (currentUserInfo == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    UserPassword _localBind = new UserPassword();
-        //    //filter by customer
-        //    if (!string.IsNullOrWhiteSpace(currentUserInfo.UserID))
-        //    {
-        //        //var query = (from _pswd in _context.MasterSaltyPasswords
-        //        //             where _pswd.Usrid == currentUserInfo.UserID
-        //        //             select _pswd).FirstOrDefault();
-        //        var query=_userInformationSettings.get
-
-        //        //_localBind = new UserPassword()
-        //        //{
-        //        //    PasswordHash = query.Pswdhash,
-        //        //    PasswordFormat = query.Passwordtype.ToLower() == "en" ? PasswordFormat.Encrypted : PasswordFormat.Hashed,
-        //        //    PasswordSalt = query.Pswdsalt,
-        //        //    CreatedOn = Convert.ToDateTime(query.Pswdchangedon),
-        //        //    PasswordExpiresOn = Convert.ToDateTime(query.Pswdexpireson),
-        //        //    PasswordIsActive = query.Pswdisactive,
-        //        //    PasswordSaltKey = query.Pswdsaltkey,
-        //        //    PasswordIsCompromised = query.Pswdcompromised == true ? true : false,
-        //        //    PasswordWrongAttemptPerSession = query.Pswdwrongattempt > 0 ? query.Pswdwrongattempt.Value : 0, //never sending back to db unless session expires. circulate and count from code itself
-        //        //    UserID = query.Usrid
-        //        //};
-
-        //        currentUserInfo = _localBind;
-
-        //        return currentUserInfo;
-        //    }
-
-        //    return _localBind;
-        //}
 
         public UserLoginResponse GetCustomerByUsernameAsync(string username)
         {

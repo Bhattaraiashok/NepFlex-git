@@ -73,7 +73,6 @@
     <Compile Include="Entities\ResourceModels\ClothingBrands.cs" />
     <Compile Include="Entities\ResourceModels\DetailResponse.cs" />
     <Compile Include="Entities\ResourceModels\Security\BaseEntity.cs" />
-    <Compile Include="Entities\Utility\Helper.cs" />
     <Compile Include="Entities\ResourceModels\ItemDescription.cs" />
     <Compile Include="Entities\ResourceModels\MenuClearence.cs" />
     <Compile Include="Entities\ResourceModels\MenuFashion.cs" />
@@ -83,11 +82,8 @@
     <Compile Include="Entities\ResourceModels\ResponseMessage.cs" />
     <Compile Include="Entities\ResourceModels\SearchedKeywordResults.cs" />
     <Compile Include="Entities\ResourceModels\SearchResponse.cs" />
-    <Compile Include="Entities\ResourceModels\Security\SecuritySettings.cs" />
     <Compile Include="Entities\ResourceModels\SendEmailRequest.cs" />
     <Compile Include="Entities\ResourceModels\UserModel.cs" />
-    <Compile Include="Entities\Utility\RandomNumGenerator.cs" />
-    <Compile Include="Entities\Utility\Utility.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositories\IDetailRepository.cs" />
     <Compile Include="Interfaces\Repositories\IItemDescriptionRepository.cs" />
@@ -113,11 +109,11 @@
     <Compile Include="Services\MenuTopService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SearchService.cs" />
-    <Compile Include="Services\Security\EncryptionService.cs" />
-    <Compile Include="Services\Security\HashHelper.cs" />
     <Compile Include="Services\SendEmailSevice.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entities\Utility\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Entities\OnlinePasal\EF.Reverse.POCO.Core.ttinclude" />

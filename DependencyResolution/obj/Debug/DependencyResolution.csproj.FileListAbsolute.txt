@@ -176,6 +176,8 @@ E:\GITHUB\DependencyResolution\bin\Debug\Microsoft.Web.Infrastructure.dll
 E:\GITHUB\DependencyResolution\bin\Debug\NepFlex.Core.dll
 E:\GITHUB\DependencyResolution\bin\Debug\NepFlex.DataAccess.dll
 E:\GITHUB\DependencyResolution\bin\Debug\Newtonsoft.Json.dll
+E:\GITHUB\DependencyResolution\bin\Debug\PlatformCommon.dll
+E:\GITHUB\DependencyResolution\bin\Debug\PlatformTypes.dll
 E:\GITHUB\DependencyResolution\bin\Debug\System.Net.Http.Extensions.dll
 E:\GITHUB\DependencyResolution\bin\Debug\System.Net.Http.Formatting.dll
 E:\GITHUB\DependencyResolution\bin\Debug\System.Net.Http.Primitives.dll
@@ -202,6 +204,8 @@ E:\GITHUB\DependencyResolution\bin\Debug\Microsoft.Practices.Unity.Mvc.xml
 E:\GITHUB\DependencyResolution\bin\Debug\Microsoft.Practices.Unity.RegistrationByConvention.xml
 E:\GITHUB\DependencyResolution\bin\Debug\Microsoft.Practices.Unity.WebApi.xml
 E:\GITHUB\DependencyResolution\bin\Debug\Newtonsoft.Json.xml
+E:\GITHUB\DependencyResolution\bin\Debug\PlatformCommon.pdb
+E:\GITHUB\DependencyResolution\bin\Debug\PlatformTypes.pdb
 E:\GITHUB\DependencyResolution\bin\Debug\System.Net.Http.Extensions.xml
 E:\GITHUB\DependencyResolution\bin\Debug\System.Net.Http.Formatting.xml
 E:\GITHUB\DependencyResolution\bin\Debug\System.Net.Http.Primitives.xml
@@ -221,7 +225,3 @@ E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.dll
 E:\GITHUB\DependencyResolution\obj\Debug\DependencyResolution.pdb
 E:\GITHUB\DependencyResolution\bin\Debug\Microsoft.AspNet.Identity.Core.dll
 E:\GITHUB\DependencyResolution\bin\Debug\Microsoft.AspNet.Identity.Core.xml
-E:\GITHUB\DependencyResolution\bin\Debug\PlatformCommon.dll
-E:\GITHUB\DependencyResolution\bin\Debug\PlatformTypes.dll
-E:\GITHUB\DependencyResolution\bin\Debug\PlatformCommon.pdb
-E:\GITHUB\DependencyResolution\bin\Debug\PlatformTypes.pdb

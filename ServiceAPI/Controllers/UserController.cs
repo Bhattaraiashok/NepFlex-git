@@ -183,9 +183,5 @@ namespace Nepflex.ServiceAPI.Controllers
                 return InternalServerError(ex);
             }
         }
-
-        #region Helpers
-        //still not added
-        #endregion
     }
 }

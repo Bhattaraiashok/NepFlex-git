@@ -354,8 +354,6 @@ E:\Git_Nepflex\ServiceAPI\obj\Debug\ServiceAPI.csproj.CoreCompileInputs.cache
 E:\Git_Nepflex\ServiceAPI\obj\Debug\ServiceAPI.csproj.CopyComplete
 E:\Git_Nepflex\ServiceAPI\obj\Debug\Nepflex.ServiceAPI.dll
 E:\Git_Nepflex\ServiceAPI\obj\Debug\Nepflex.ServiceAPI.pdb
-E:\GITHUB\ServiceAPI\obj\Debug\ServiceAPI.csprojAssemblyReference.cache
-E:\GITHUB\ServiceAPI\obj\Debug\ServiceAPI.csproj.CoreCompileInputs.cache
 E:\GITHUB\ServiceAPI\bin\roslyn\csc.exe
 E:\GITHUB\ServiceAPI\bin\roslyn\csc.exe.config
 E:\GITHUB\ServiceAPI\bin\roslyn\csc.rsp
@@ -557,6 +555,8 @@ E:\GITHUB\ServiceAPI\bin\NepFlex.Core.dll
 E:\GITHUB\ServiceAPI\bin\NepFlex.DataAccess.dll
 E:\GITHUB\ServiceAPI\bin\Newtonsoft.Json.dll
 E:\GITHUB\ServiceAPI\bin\Owin.dll
+E:\GITHUB\ServiceAPI\bin\PlatformCommon.dll
+E:\GITHUB\ServiceAPI\bin\PlatformTypes.dll
 E:\GITHUB\ServiceAPI\bin\System.Buffers.dll
 E:\GITHUB\ServiceAPI\bin\System.ComponentModel.Annotations.dll
 E:\GITHUB\ServiceAPI\bin\System.Memory.dll
@@ -633,6 +633,8 @@ E:\GITHUB\ServiceAPI\bin\Microsoft.Practices.Unity.Mvc.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.Practices.Unity.RegistrationByConvention.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.Practices.Unity.WebApi.xml
 E:\GITHUB\ServiceAPI\bin\Newtonsoft.Json.xml
+E:\GITHUB\ServiceAPI\bin\PlatformCommon.pdb
+E:\GITHUB\ServiceAPI\bin\PlatformTypes.pdb
 E:\GITHUB\ServiceAPI\bin\System.Buffers.xml
 E:\GITHUB\ServiceAPI\bin\System.Memory.xml
 E:\GITHUB\ServiceAPI\bin\System.Numerics.Vectors.xml
@@ -648,10 +650,8 @@ E:\GITHUB\ServiceAPI\bin\System.Web.Mvc.xml
 E:\GITHUB\ServiceAPI\bin\System.Net.Http.Formatting.xml
 E:\GITHUB\ServiceAPI\bin\System.Web.Http.xml
 E:\GITHUB\ServiceAPI\bin\System.Web.Http.WebHost.xml
+E:\GITHUB\ServiceAPI\obj\Debug\ServiceAPI.csprojAssemblyReference.cache
+E:\GITHUB\ServiceAPI\obj\Debug\ServiceAPI.csproj.CoreCompileInputs.cache
 E:\GITHUB\ServiceAPI\obj\Debug\ServiceAPI.csproj.CopyComplete
 E:\GITHUB\ServiceAPI\obj\Debug\Nepflex.ServiceAPI.dll
 E:\GITHUB\ServiceAPI\obj\Debug\Nepflex.ServiceAPI.pdb
-E:\GITHUB\ServiceAPI\bin\PlatformCommon.dll
-E:\GITHUB\ServiceAPI\bin\PlatformTypes.dll
-E:\GITHUB\ServiceAPI\bin\PlatformCommon.pdb
-E:\GITHUB\ServiceAPI\bin\PlatformTypes.pdb

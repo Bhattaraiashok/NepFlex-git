@@ -179,6 +179,8 @@ E:\GITHUB\DataAccess\bin\Debug\Microsoft.Net.Http.Headers.dll
 E:\GITHUB\DataAccess\bin\Debug\Microsoft.Win32.Registry.dll
 E:\GITHUB\DataAccess\bin\Debug\NepFlex.Core.dll
 E:\GITHUB\DataAccess\bin\Debug\Newtonsoft.Json.dll
+E:\GITHUB\DataAccess\bin\Debug\PlatformCommon.dll
+E:\GITHUB\DataAccess\bin\Debug\PlatformTypes.dll
 E:\GITHUB\DataAccess\bin\Debug\System.Buffers.dll
 E:\GITHUB\DataAccess\bin\Debug\System.ComponentModel.Annotations.dll
 E:\GITHUB\DataAccess\bin\Debug\System.Memory.dll
@@ -225,6 +227,8 @@ E:\GITHUB\DataAccess\bin\Debug\Microsoft.Extensions.Primitives.xml
 E:\GITHUB\DataAccess\bin\Debug\Microsoft.Extensions.WebEncoders.xml
 E:\GITHUB\DataAccess\bin\Debug\Microsoft.Net.Http.Headers.xml
 E:\GITHUB\DataAccess\bin\Debug\Newtonsoft.Json.xml
+E:\GITHUB\DataAccess\bin\Debug\PlatformCommon.pdb
+E:\GITHUB\DataAccess\bin\Debug\PlatformTypes.pdb
 E:\GITHUB\DataAccess\bin\Debug\System.Buffers.xml
 E:\GITHUB\DataAccess\bin\Debug\System.Memory.xml
 E:\GITHUB\DataAccess\bin\Debug\System.Numerics.Vectors.xml
@@ -236,7 +240,3 @@ E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
 E:\GITHUB\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.dll
 E:\GITHUB\DataAccess\obj\Debug\NepFlex.DataAccess.pdb
-E:\GITHUB\DataAccess\bin\Debug\PlatformCommon.dll
-E:\GITHUB\DataAccess\bin\Debug\PlatformCommon.pdb
-E:\GITHUB\DataAccess\bin\Debug\PlatformTypes.dll
-E:\GITHUB\DataAccess\bin\Debug\PlatformTypes.pdb
