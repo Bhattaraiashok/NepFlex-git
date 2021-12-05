@@ -522,8 +522,10 @@ E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Http.dll
 E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Http.Extensions.dll
 E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Http.Features.dll
 E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Identity.dll
+E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Session.dll
 E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.WebUtilities.dll
 E:\GITHUB\ServiceAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\GITHUB\ServiceAPI\bin\Microsoft.Extensions.Caching.Abstractions.dll
 E:\GITHUB\ServiceAPI\bin\Microsoft.Extensions.Configuration.Abstractions.dll
 E:\GITHUB\ServiceAPI\bin\Microsoft.Extensions.Configuration.Binder.dll
 E:\GITHUB\ServiceAPI\bin\Microsoft.Extensions.Configuration.dll
@@ -604,8 +606,10 @@ E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Http.Abstractions.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Http.Extensions.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Http.Features.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Identity.xml
+E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.Session.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.AspNetCore.WebUtilities.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\GITHUB\ServiceAPI\bin\Microsoft.Extensions.Caching.Abstractions.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.Extensions.Configuration.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.Extensions.Configuration.Abstractions.xml
 E:\GITHUB\ServiceAPI\bin\Microsoft.Extensions.Configuration.Binder.xml

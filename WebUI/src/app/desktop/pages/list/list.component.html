@@ -1,5 +1,21 @@
 <div class="ad-holder"></div>
 <div class="component-holder" id="list_compo">
-  <app-spinner *ngIf="spinner"></app-spinner>
-  <app-tab-layout *ngIf="TotalCount!==0 && !spinner" [tabResults]="searchResults"></app-tab-layout>
+  <div class="parent-row-flex">
+    <div class="child-left-flex">
+      <h3>Filter</h3>
+      <ul>
+        <li>Amount</li>
+        <li>Rating</li>
+        <li>Location</li>
+        <li>Seller</li>
+        <li>Most Viewed</li>
+        <li>NepFlex Reccommended</li>
+      </ul>
+    </div>
+    <div class="child-right-flex-stretched">
+      <app-spinner *ngIf="spinner"></app-spinner>
+      <app-filter-search class="filter-bar" (filteredBy)="filterBy()"></app-filter-search>
+      <app-tab-layout *ngIf="TotalCount!==0 && !spinner" [tabResults]="searchResults"></app-tab-layout>
+    </div>
+  </div>
 </div>

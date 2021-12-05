@@ -7,6 +7,7 @@ namespace NepFlex.Core.Interfaces.Services
 {
     public interface ILoginService
     {
+        LocalObjectStore GetSession();
         SignInStatusResponse UserLoginProcess(UserLoginRequest req);
         ResponseBase UserRegistrationProcess(UserRegisterRequest req);
         ResponseBase UpdateUserProcess(UserUpdateRequest req);

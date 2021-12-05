@@ -1,4 +1,4 @@
-@import '../../../../../Style/styles.scss';
+@import '../../../../Style/styles.scss';
 .filter-body {
   @include display-parent-flex(row,nowrap,flex-start,flex-start,flex-start);
 }

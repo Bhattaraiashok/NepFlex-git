@@ -1,21 +1,49 @@
-﻿using Microsoft.Owin;
-using Owin;
-using Nepflex.ServiceAPI.App_Start;
-using Nepflex.ServiceAPI.Identity;
-using Nepflex.ServiceAPI.Models;
-using Microsoft.Owin.Security.DataProtection;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security.Cookies;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.DataProtection;
+using Nepflex.ServiceAPI.Identity;
 using NepFlex.Core.Entities.ResourceModels;
+using Owin;
+using System;
+using System.Web.Mvc;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
 
 [assembly: OwinStartupAttribute(typeof(Nepflex.ServiceAPI.Startup))]
 namespace Nepflex.ServiceAPI
 {
     public partial class Startup
     {
+        //public IConfiguration Configuration { get; }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            //services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "NepFlex.Session";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+            });
+        }
+
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseAuthentication();
+            //app.UseAuthorization();
+
+            app.UseSession();
+        }
+
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
@@ -23,7 +51,7 @@ namespace Nepflex.ServiceAPI
 
         internal static IDataProtectionProvider DataProtectionProvider { get; private set; }
 
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+        ////// For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
             DataProtectionProvider = app.GetDataProtectionProvider();
@@ -36,8 +64,9 @@ namespace Nepflex.ServiceAPI
             // Configure the sign in cookie
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                CookieName = "NepFlex.Session",
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/api/User/Login"),
+                LoginPath = new Microsoft.Owin.PathString("/api/User/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.

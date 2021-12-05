@@ -16,6 +16,8 @@ import { FilteringSearch } from 'app/shared/ResourceModels/FilteringSearch';
 import { ActivatedRoute } from '@angular/router';
 import { SearchString } from 'app/shared/auto-complete-searchbox/auto-complete-searchbox.component';
 import { SpinnerService } from "app/shared/services/control-services/spinner.service";
+import { ContextManagerService } from "app/shared/services/provider/context-manager.service";
+import { ContextKeys } from "app/shared/ResourceModels/AlertMessages";
 
 @Component({
   selector: 'app-list',
@@ -28,17 +30,17 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
   TotalCount: number;
   searchText: string;
   spinner = true;
+  contextKeys = new ContextKeys();
 
   constructor(
     private route: ActivatedRoute,
     private searchService: SearchService,
     private filtering: FilteringSearch,
     private searchStrings: SearchString,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private contextManager: ContextManagerService
   ) {
     this.spinner = this.spinnerService.showSpinner_lg();
-    const res = this.searchStrings.name;
-    console.log(res);
   }
   ngAfterViewInit(): void {
     // this.searching();
@@ -49,7 +51,6 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
       this.searching();
     });
     console.log('this.searchText: ', this.searchText);
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -98,18 +99,21 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   searching() {
-    const res = this.searchStrings.name;
-    console.log(res);
     if (this.searchText) {
+      this.contextManager.Set(this.contextKeys.searchText, this.searchText);
+    } else if (this.searchText == null || this.searchText == '') {
+      this.searchText = this.contextManager.Get(this.contextKeys.searchText);
+    }
+
+    if (this.searchText) {
+      this.contextManager.Set(this.contextKeys.searchText, this.searchText);
       if (this.searchText.length >= 1) {
-        // this.searchText.forEach(e => {
         this.searchService.getSearchResponse(this.searchText).subscribe(x => {
           this.TotalCount = x.length;
           this.searchResponse = x;
           x.forEach(e => {
             this.searchResults.push(e)
           });
-          // this.searchResults = x;
           if (this.TotalCount == 0) {
             //keep spining
             //this.spinner = this.spinnerService.resetSpinner_lg()

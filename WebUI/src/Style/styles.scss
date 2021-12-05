@@ -62,6 +62,13 @@ color: #ce7508;
   @include display-child-flex(0,1,auto,auto);
 }
 
+.parent-row-flex{
+  @include display-parent-flex(row,nowrap,flex-start,flex-start,flex-start);
+}
+.parent-column-flex{
+  @include display-parent-flex(column, nowrap, flex-start, flex-start, flex-start);
+}
+
 .card-holder{
     min-width: 150px;
     width: 92%;

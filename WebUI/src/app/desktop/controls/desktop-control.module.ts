@@ -7,7 +7,6 @@ import { DesktopHeaderComponent } from 'app/desktop/controls/desktop-header/desk
 import { DesktopFooterComponent } from 'app/desktop/controls/desktop-footer/desktop-footer.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { SearchResultsOverlayComponent } from './search-box/search-results-overlay/search-results-overlay.component';
-import { FilterBoxComponent } from './search-box/filter-box/filter-box.component';
 import { HomeSearchOverlayComponent } from './home-search-overlay/home-search-overlay.component';
 import { InfoBoxComponent } from './info-box/info-box.component';
 import { ItemContainerComponent } from './item-container/item-container.component';
@@ -25,7 +24,6 @@ import { BrowserModule } from '@angular/platform-browser'
     DesktopFooterComponent,
     SearchBoxComponent,
     SearchResultsOverlayComponent,
-    FilterBoxComponent,
     HomeSearchOverlayComponent,
     InfoBoxComponent,
     ItemContainerComponent,

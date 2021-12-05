@@ -12,3 +12,7 @@ export class CONSTList {
     success: string = 'success';
     info: string = 'info';
 }
+
+export class ContextKeys {
+    searchText: string = 'USERLISTSEARCHED';
+}

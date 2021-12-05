@@ -78,6 +78,7 @@ import { AngContext } from "app/shared/ResourceModels/AngContext";
 import { StandardUserRegistrationComponent } from './register/standard-user-registration/standard-user-registration.component';
 import { SellerUserRegistrationComponent } from './register/seller-user-registration/seller-user-registration.component';
 import { CheckBoxControlComponent } from './controls/check-box-control/check-box-control.component';
+import { FilterSearchComponent } from './controls/filter-search/filter-search.component';
 // import { CanDeactivateGuardService } from "app/shared/guards/can-deactivate-guard.service";
 // import { CanActivateGuardService } from "app/shared/guards/can-activate-guard.service";
 
@@ -155,7 +156,8 @@ import { CheckBoxControlComponent } from './controls/check-box-control/check-box
     NotifierComponent,
     StandardUserRegistrationComponent,
     SellerUserRegistrationComponent,
-    CheckBoxControlComponent
+    CheckBoxControlComponent,
+    FilterSearchComponent
   ],
   providers: [
     AngContext,
@@ -204,7 +206,8 @@ import { CheckBoxControlComponent } from './controls/check-box-control/check-box
     AutoCompleteSearchboxComponent,
     TabLayoutComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    FilterSearchComponent
   ]
 })
 export class SharedModule { }

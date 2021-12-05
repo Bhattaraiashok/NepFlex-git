@@ -3,11 +3,10 @@ using Core.Interfaces.Services;
 using Core.Services;
 using DataAccess;
 using Microsoft.Practices.Unity;
+using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Interfaces.Services;
 using NepFlex.Core.Services;
 using NepFlex.DataAccess.Context;
-//using PlatformCommon.Interface;
-//using PlatformCommon.Service;
 
 namespace DependencyResolution
 {
@@ -24,8 +23,8 @@ namespace DependencyResolution
             container.RegisterType<IDetailService, DetailService>();
             container.RegisterType<ISendEmailService, SendEmailSevice>();
             container.RegisterType<ILoginService, LoginService>();
-
             //container.RegisterType<IEncryptionService, EncryptionService>();
+            container.RegisterType<ISessionManager, SessionManager>();
         }
     }
 }

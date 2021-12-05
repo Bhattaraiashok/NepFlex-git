@@ -72,7 +72,6 @@
     </Compile>
     <Compile Include="Entities\ResourceModels\ClothingBrands.cs" />
     <Compile Include="Entities\ResourceModels\DetailResponse.cs" />
-    <Compile Include="Entities\ResourceModels\Security\BaseEntity.cs" />
     <Compile Include="Entities\ResourceModels\ItemDescription.cs" />
     <Compile Include="Entities\ResourceModels\MenuClearence.cs" />
     <Compile Include="Entities\ResourceModels\MenuFashion.cs" />

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  https://go.microsoft.com/fwlink/?LinkId=301880
+  -->
+<configuration>
+  <configSections>
+  </configSections>
+  <appSettings>
+    <add key="FROMADDR" value="nepalicraig@gmail.com" />
+    <add key="DELIVERYMETHOD" value="nepalicraig@gmail.com" />
+    <add key="EMAILGATEWAY" value="smtp.gmail.com" />
+    <add key="PORT" value="587" />  
+    <add key="EnP" value="" />  
+  </appSettings>
+</configuration>
+

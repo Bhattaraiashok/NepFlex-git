@@ -1,4 +1,4 @@
-﻿using NepFlex.WebUI;
+using NepFlex.WebUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +10,17 @@ using System.Web.Routing;
 
 namespace WebUI
 {
-    public class MvcApplication : System.Web.HttpApplication
+  public class MvcApplication : System.Web.HttpApplication
+  {
+    protected void Application_Start()
     {
-        protected void Application_Start()
-        {
-            AreaRegistration.RegisterAllAreas();
+      AreaRegistration.RegisterAllAreas();
 
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+      FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+      RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-        }
+      BundleConfig.RegisterBundles(BundleTable.Bundles);
     }
+  }
 }

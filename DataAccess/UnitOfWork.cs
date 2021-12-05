@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using Core.Interfaces.Repositories;
 using DataAccess.Repositories;
+using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Interfaces.Repositories;
 using NepFlex.DataAccess.Context;
 using NepFlex.DataAccess.Repositories;
@@ -17,7 +18,7 @@ namespace DataAccess
     {
         private static readonly TraceSource TraceSource = new TraceSource("NepFlex.DataAccess");
         private IOnlinePasalContext _context;
-        //private readonly IEncryptionService _encryptionService;
+        private ISessionManager _sessionManager;
         private bool _disposed;
 
         // TODO: Add Repositories
@@ -29,12 +30,10 @@ namespace DataAccess
         public ISendEmailRepository SendEmailRepository { get; private set; }
         public ILoginRepository LoginRepository { get; private set; }
 
-        public UnitOfWork(IOnlinePasalContext context
-           // IEncryptionService encryptionService
-           )
+        public UnitOfWork(IOnlinePasalContext context, ISessionManager sessionManager)
         {
             _context = context;
-            // _encryptionService = encryptionService;
+            _sessionManager = sessionManager;
             Initialize();
         }
 
@@ -47,7 +46,7 @@ namespace DataAccess
             ReportRepository = new ReportRepository(_context);
             DetailRepository = new DetailRepository(_context);
             SendEmailRepository = new SendEmailRepository(_context);
-            LoginRepository = new LoginRepository(_context);
+            LoginRepository = new LoginRepository(_context, _sessionManager);
         }
         public List<ValidationResult> GetValidationErrors()
         {

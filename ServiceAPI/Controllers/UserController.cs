@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using System.Web.Http;
 
 namespace Nepflex.ServiceAPI.Controllers
@@ -21,14 +22,15 @@ namespace Nepflex.ServiceAPI.Controllers
     {
         public ILoginService _loginService;
         private IUnitOfWork _unitOfWork { get; set; }
+        private ISessionManager _sessionManager;
 
         public UserController(
             ILoginService loginService,
-           ApplicationUserManager userManager,
-           ApplicationSignInManager signInManager
+            ISessionManager sessionManager
             )
         {
             _loginService = loginService;
+            _sessionManager = sessionManager;
         }
         [HttpPost]
         [Route("logoff")]
@@ -42,7 +44,7 @@ namespace Nepflex.ServiceAPI.Controllers
                     IsSuccess = false,
                     StrMessage = new List<string>()
                 };
-                UserSession userCntx = UserSessionContext.Current;
+                var cntx = GetUserSessionContext.GetCurrentUser;
                 // authenticationManager.SignOut();
                 _loginOut = Helper.AppendStatus(ConstList.REQ_OBJ_CONST_SUCCESS, _loginOut);
                 return Ok(_loginOut);
@@ -159,8 +161,9 @@ namespace Nepflex.ServiceAPI.Controllers
                     StrMessage = new List<string>()
                 };
 
+                var cntx = _sessionManager.Get<LocalObjectStore>("UserSessionContext");
                 //pre-check
-                if (reqUpdate == null || string.IsNullOrWhiteSpace(reqUpdate.UserEmail) || string.IsNullOrWhiteSpace(reqUpdate.UID))
+                if (reqUpdate == null || string.IsNullOrWhiteSpace(cntx.UserID))
                 {
                     _status = Helper.AppendStatus(ConstList.USER_UPDATE_CONST_FAILURE, _status);
                     return Ok(_status);
@@ -183,5 +186,36 @@ namespace Nepflex.ServiceAPI.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [Route("getContext")]
+        [HttpGet]
+        public IHttpActionResult GetJson()
+        {
+            var result = _loginService.GetSession();
+            return Ok(result);
+        }
+
+        [Route("setContext")]
+        [HttpPost]
+        public IHttpActionResult SetJson()
+        {
+            LocalObjectStore _storeObj = new LocalObjectStore
+            {
+                UserID = "DUMMY USERID 222",
+                UserGuid = "DUMMY GUID",
+                UserRole = "DUMMY ROLE",
+                AssignedAuthToken = Guid.NewGuid().ToString(),
+                IsAuthenticated = true,
+                FE_SessionID = Guid.NewGuid().ToString(),
+                BE_SessionID = Guid.NewGuid().ToString(),
+                RestrictPages = new List<string> { "DUMMY Admin" }
+            };
+
+            _sessionManager.Set<LocalObjectStore>("UserSessionContext", _storeObj);
+
+            return Ok("Updated");
+        }
+
+
     }
 }

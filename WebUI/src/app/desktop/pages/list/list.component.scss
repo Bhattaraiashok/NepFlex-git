@@ -1,1 +1,21 @@
 @import '../../../../Style/styles.scss';
+.child-left-flex{
+    @include display-child-flex(0, 1, auto, auto);
+    border-right: 1px solid gray;
+}
+.child-left-flex ul{
+    padding: 1em;
+}
+.child-left-flex li{
+    border-bottom: 1px solid #f5f0f0;
+    line-height: 3em;
+    list-style: none;
+}
+.child-left-flex li:active{
+    background-color: #008ba3;
+    color: #ffffff;
+}
+
+.child-right-flex-stretched{
+    @include display-child-flex(1, 1, auto, stretch);
+}

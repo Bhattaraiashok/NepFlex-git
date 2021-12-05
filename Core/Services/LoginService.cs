@@ -13,6 +13,10 @@ namespace NepFlex.Core.Services
         {
             _unitOfWork = unitOfWork;
         }
+        public LocalObjectStore GetSession()
+        {
+            return _unitOfWork.LoginRepository.GetSession();
+        }
         public SignInStatusResponse UserLoginProcess(UserLoginRequest login)
         {
             return _unitOfWork.LoginRepository.UserLoginProcess(login);

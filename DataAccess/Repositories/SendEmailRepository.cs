@@ -36,7 +36,7 @@ namespace NepFlex.DataAccess.Repositories
 
             //smtpClient.Send(mail);
 
-
+             
             //MailMessage msg = new MailMessage();
 
             //msg.From = new MailAddress("nepalicraig@gmail.com");

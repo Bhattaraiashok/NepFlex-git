@@ -4,12 +4,13 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Http;
 using Newtonsoft.Json;
-
+using NepFlex.Core.Entities.ResourceModels;
 
 namespace ServiceAPI
 {
     public class Global : System.Web.HttpApplication
     {
+        private SessionManager _sessionManager { get; set; } = new SessionManager();
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup

@@ -53,6 +53,10 @@ namespace Nepflex.ServiceAPI.App_Start
                 new InjectionFactory(c => HttpContext.Current.GetOwinContext().Authentication)
                 );
 
+            //container.RegisterType<ISessionManager>(
+            //    new InjectionFactory(c => HttpContext.Current.Session)
+            //    );
+
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(
                 new InjectionConstructor(typeof(ApplicationDbContext)));
 

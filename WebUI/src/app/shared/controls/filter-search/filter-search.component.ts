@@ -1,16 +1,14 @@
-import { SearchResponse } from 'app/shared/ResourceModels/SearchResponse';
-import { FilteringSearch } from 'app/shared/ResourceModels/FilteringSearch';
-import { ItemDescription } from 'app/shared/ResourceModels/ItemDescription';
-import { SearchService } from 'app/shared/services/search.service';
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { ItemDescription } from "app/shared/ResourceModels/ItemDescription";
+import { FilteringSearch } from "app/shared/ResourceModels/FilteringSearch";
+import { SearchService } from "app/shared/services/search.service";
+
 @Component({
-  selector: 'app-filter-box',
-  templateUrl: './filter-box.component.html',
-  styleUrls: ['./filter-box.component.scss']
+  selector: 'app-filter-search',
+  templateUrl: './filter-search.component.html',
+  styleUrls: ['./filter-search.component.scss']
 })
-export class FilterBoxComponent implements OnInit {
+export class FilterSearchComponent implements OnInit {
   @Input() itemDescriptions: ItemDescription[] = new Array();
   @Input() _selectedValue: string;
   @Output() filteredBy: EventEmitter<any> = new EventEmitter();
@@ -63,4 +61,5 @@ export class FilterBoxComponent implements OnInit {
   registerOnTouched(fn: any): void { }
   setDisabledState?(isDisabled: boolean): void { }
   propagateChange = (_: any) => { };
+
 }

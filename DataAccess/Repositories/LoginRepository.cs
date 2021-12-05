@@ -1,4 +1,6 @@
 ﻿using DataAccess.Repositories;
+using Microsoft.AspNetCore.Http;
+using NepFlex.Core.Entities.ResourceModels;
 using NepFlex.Core.Interfaces.Repositories;
 using NepFlex.DataAccess.Context;
 using NepFlex.DataAccess.Repositories.UserSetting;
@@ -21,12 +23,20 @@ namespace NepFlex.DataAccess.Repositories
     {
         private readonly IOnlinePasalContext _context;
         // private readonly IEncryptionService _encryptionService;
-
+        private ISessionManager _sessionManager;
         public UserInformationSettings _userInformationSettings { get { return new UserInformationSettings(_context); } }
 
-        public LoginRepository(IOnlinePasalContext context) : base(context)
+        public LocalObjectStore GetSession()
+        {
+            var sessionResult=_sessionManager.Get<LocalObjectStore>("UserSessionContext");
+
+            return sessionResult;
+        }
+
+        public LoginRepository(IOnlinePasalContext context, ISessionManager sessionManager) : base(context)
         {
             _context = context;
+            _sessionManager = sessionManager;
         }
 
         public SignInStatusResponse UserLoginProcess(UserLoginRequest login)
@@ -82,9 +92,30 @@ namespace NepFlex.DataAccess.Repositories
                ConfigBase.DBEncryptionKey,//dbkey
                PlatformTypes.NepFlexTypes.Base.SiteName.Site);
 
+            //verify inserted
 
-            _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
-            _status.StrMessage.Add(result[0].VER_Detail);
+            var customer = _userInformationSettings.GetUserByEmail(req.Email);
+
+            if (customer != null)
+            {
+                LocalObjectStore _storeObj = new LocalObjectStore
+                {
+                    UserID = customer.UserId,
+                    UserGuid = customer.Guid,
+                    UserRole = customer.FkRoleId.ToString(),
+                    AssignedAuthToken = Guid.NewGuid().ToString(),
+                    IsAuthenticated = true,
+                    FE_SessionID = Guid.NewGuid().ToString(),
+                    BE_SessionID = Guid.NewGuid().ToString(),
+                    RestrictPages = new List<string> { "Admin" }
+                };
+                _sessionManager.Set<LocalObjectStore>("UserSessionContext", _storeObj);
+                //_sessionManager.SetValue(_storeObj);
+                // SetUserSessionContext.SetCurrentUser = _storeObj;
+
+                _status.IsSuccess = result[0].Ver_Status == CONSTResponse.CONST_SUCCESS;
+                _status.StrMessage.Add(result[0].VER_Detail);
+            }
 
             return _status;
         }
@@ -99,18 +130,19 @@ namespace NepFlex.DataAccess.Repositories
                 StrMessage = new List<string>()
             };
 
-            UserSession userCntx = UserSessionContext.Current;
+            var userCntx = _sessionManager.Get<LocalObjectStore>("UserSessionContext");
+            //var userCntx = GetUserSessionContext.GetCurrentUser;
 
             //first check
-            if (req == null || req?.UID == null || req?.UserEmail == null)
+            if (req == null || userCntx?.UserID == null || userCntx?.UserGuid == null)
             {
                 _status = Helper.AppendStatus<ResponseBase>(ConstList.USER_UPDATE_CONST_FAILURE, _status);
                 return _status;
             }
 
             var _usrInfo = (from _usr in _context.MasterUsers
-                            where _usr.UserId == req.UID &&
-                             _usr.Email == req.UserEmail && _usr.Ui.ToLower() == CONSTUINAME.UI_NAME
+                            where _usr.UserId == userCntx.UserID &&
+                             _usr.Guid == userCntx.UserGuid && _usr.Ui.ToLower() == CONSTUINAME.UI_NAME
                             select _usr).FirstOrDefault();
 
             //second checks
@@ -269,8 +301,8 @@ namespace NepFlex.DataAccess.Repositories
                                 where _comp.UserId == req.UID
                                 select _comp).FirstOrDefault();
 
-            UserSession userCntx = UserSessionContext.Current;
-            
+            var userCntx = _sessionManager.Get<LocalObjectStore>("UserSessionContext");
+
             if (_companyInfo != null)
             {
                 if (_companyInfo.CompanyName != req.CompanyName && (!string.IsNullOrWhiteSpace(req.CompanyName)) && req.FieldUpdateRequest == CONST_Update_FormControlName.companyname)
@@ -389,14 +421,22 @@ namespace NepFlex.DataAccess.Repositories
             //if (result.RequiresVerification)
             //    _signInStatus.SignInStatus = SignInStatus.RequiresVerification;
 
-            UserSession userCntx = new UserSession();
-            userCntx.UserID = customer.UserId;
-            userCntx.IsAuthenticated = true;
-            userCntx.FE_SessionID = Guid.NewGuid().ToString();
-            userCntx.BE_SessionID = Guid.NewGuid().ToString();
+            LocalObjectStore _storeObj = new LocalObjectStore
+            {
+                UserID = customer.UserId,
+                UserGuid = customer.Guid,
+                UserRole = customer.FkRoleId.ToString(),
+                AssignedAuthToken = Guid.NewGuid().ToString(),
+                IsAuthenticated = true,
+                FE_SessionID = Guid.NewGuid().ToString(),
+                BE_SessionID = Guid.NewGuid().ToString(),
+                RestrictPages = new List<string> { "Admin" }
+            };
+
             var salt = EncryptionService.CreateSaltKey(2);
-            userCntx.AssignedAuthToken = EncryptionService.CreatePasswordHash("CurrentXAuthYTokenUSERZ", salt, "SHA1");
-            UserSessionContext.Current = userCntx;
+            _storeObj.AssignedAuthToken = EncryptionService.CreatePasswordHash("CurrentXAuthYTokenUSERZ", salt, "SHA1");
+
+            SetUserSessionContext.SetCurrentUser = _storeObj;
 
             _signInStatus = Helper.AppendStatus(ConstList.USER_VALID_SUCCESS, _signInStatus);
             _signInStatus.SignInStatus = SignInStatus.SUCCESS;
